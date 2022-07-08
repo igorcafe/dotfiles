@@ -1,0 +1,198 @@
+{
+  "tabnine.experimentalAutoImports": true,
+  "git.autofetch": true,
+  "editor.fontSize": 16,
+  "debug.console.fontSize": 15,
+  "terminal.integrated.fontSize": 16,
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "workbench.iconTheme": "material-icon-theme",
+  "files.exclude": {
+    "": true,
+    "**/.classpath": true,
+    "**/.factorypath": true,
+    "**/.git": false,
+    "**/.project": true,
+    "**/.settings": true
+  },
+  // "java.jdt.ls.lombokSupport.enabled": true,
+  // "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/home/igor/.vscode/extensions/vscjava.vscode-lombok-1.0.1/server/lombok.jar\"",
+  "workbench.editor.pinnedTabSizing": "shrink",
+  "workbench.editor.tabSizing": "shrink",
+  "git.confirmSync": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.tabSize": 2,
+  "editor.rulers": [80, 120],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "git.allowForcePush": true,
+  "window.menuBarVisibility": "toggle",
+  "blockhighlight.background": ["200", "100", "255", ".03"],
+  "window.enableMenuBarMnemonics": false,
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one",
+    "editor.wordWrapColumn": 80
+  },
+  // "java.imports.gradle.wrapper.checksums": [
+  //   {
+  //     "sha256": "2cae31aaabe2b362438e10dce5538f9a554e183056485df883f45aee08a008e0",
+  //     "allowed": false
+  //   }
+  // ],
+  "editor.minimap.enabled": false,
+  "zenMode.hideLineNumbers": false,
+  "files.trimTrailingWhitespace": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // "prettier.semi": false,
+  // "prettier.singleQuote": true,
+  "editor.cursorSurroundingLinesStyle": "all",
+  "editor.find.seedSearchStringFromSelection": "selection",
+  "editor.suggest.localityBonus": true,
+  "screencastMode.mouseIndicatorColor": "#FFFF66AA",
+  "screencastMode.onlyKeyboardShortcuts": true,
+  "screencastMode.fontSize": 30,
+  "screencastMode.verticalOffset": 3,
+  "screencastMode.keyboardShortcutsFormat": "keys",
+  "window.customMenuBarAltFocus": false,
+  "explorer.incrementalNaming": "smart",
+  "prettier.printWidth": 100,
+  "code-runner.clearPreviousOutput": true,
+  "vim.camelCaseMotion.enable": true,
+  "vim.smartRelativeLine": true,
+  "vim.handleKeys": {
+    "<C-k>": false,
+    "<C-b>": false,
+    "<C-f>": false
+  },
+  "vim.leader": "<space>",
+  "vim.insertModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<M-f>"],
+      "commands": ["cursorWordEndRight"]
+    },
+    {
+      "before": ["<M-b>"],
+      "commands": ["cursorWordLeft"]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["ç"],
+      "commands": ["cursorHome"]
+    },
+    {
+      "before": ["Ç"],
+      "commands": ["cursorEnd"]
+    }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": [">"],
+      "commands": ["editor.action.indentLines"]
+    },
+    {
+      "before": ["<"],
+      "commands": ["editor.action.outdentLines"]
+    }
+    // {
+    //   "before": ["p"],
+    //   "after": ["p", "g", "v", "y"]
+    // }
+  ],
+  "vim.statusBarColorControl": true,
+  "vim.statusBarColors.normal": ["#8FBCBB", "#000"],
+  "vim.statusBarColors.insert": ["#BF616A", "#000"],
+  "vim.statusBarColors.visual": ["#B48EAD", "#000"],
+  "vim.statusBarColors.visualline": ["#B48EAD", "#000"],
+  "vim.statusBarColors.visualblock": ["#A3BE8C", "#000"],
+  "vim.statusBarColors.replace": "#D08770",
+  "vim.statusBarColors.commandlineinprogress": "#007ACC",
+  "vim.statusBarColors.searchinprogressmode": "#007ACC",
+  "vim.statusBarColors.easymotionmode": "#007ACC",
+  "vim.statusBarColors.easymotioninputmode": "#007ACC",
+  "vim.statusBarColors.surroundinputmode": "#007ACC",
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#A3BE8C",
+    "statusBar.noFolderBackground": "#A3BE8C",
+    "statusBar.debuggingBackground": "#A3BE8C",
+    "statusBar.foreground": "#000",
+    "statusBar.debuggingForeground": "#000"
+  },
+  "vim.easymotion": true,
+  "vim.sneakUseIgnorecaseAndSmartcase": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "vim.enableNeovim": true,
+  "powermode.presets": "flames",
+  "powermode.combo.counterEnabled": "show",
+  "powermode.combo.location": "editor",
+  "terminal.integrated.fontFamily": "Firacode NF",
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "numso.prettier-standard-vscode"
+  },
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "FiraCode NF, 'Droid Sans Mono', 'monospace', monospace",
+  "workbench.colorTheme": "Ayu Mirage Bordered",
+  "powermode.enabled": false,
+  "powermode.shake.enabled": false,
+
+  "[rust]": {
+    "editor.formatOnSave": true
+  },
+  "dart.debugExternalPackageLibraries": true,
+  "dart.debugSdkLibraries": false,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[java]": {
+    "editor.defaultFormatter": "SimonSiefke.prettier-vscode"
+  },
+  "[cpp]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.formatOnPaste": true,
+    "editor.wordBasedSuggestions": false,
+    "editor.suggest.insertMode": "replace",
+    "editor.semanticHighlighting.enabled": true,
+    "editor.quickSuggestions": {
+      "comments": "on",
+      "strings": "on",
+      "other": "on"
+    }
+  },
+  "C_Cpp.vcFormat.space.beforeInitializerListOpenBrace": true,
+  "C_Cpp.vcFormat.newLine.beforeOpenBrace.block": "sameLine",
+  "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "sameLine",
+  "C_Cpp.vcFormat.newLine.beforeOpenBrace.lambda": "newLine",
+  "C_Cpp.vcFormat.newLine.beforeOpenBrace.namespace": "sameLine",
+  "C_Cpp.vcFormat.newLine.beforeOpenBrace.type": "sameLine",
+  "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
+  "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyType": true,
+  "code-runner.runInTerminal": true,
+  "window.confirmBeforeClose": "always",
+  "C_Cpp.vcFormat.indent.lambdaBracesWhenParameter": false,
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": false,
+    "javascript": true
+  },
+  "editor.inlineSuggest.enabled": true,
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/home/igor/.vscode/extensions/vscjava.vscode-lombok-1.0.1/server/lombok.jar\""
+
+  // "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
+  // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
+}
