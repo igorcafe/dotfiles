@@ -135,6 +135,10 @@ function grco() {
   [ $? -eq 0 ] && gco "$res"
 }
 
+function gac() {
+  git add $@ && git commit -m "$@"
+}
+
 function grank() {
   WIPE="\e[1A\e[K"
   O="\033[0;33m"
