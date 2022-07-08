@@ -1,0 +1,234 @@
+# [buf]
+# format = "[$symbol]($style)"
+# format = """$battery$all\n$character"""
+
+# format = "$all"
+
+
+
+# Which is equivalent to
+format = """
+$custom\
+$username\
+$hostname\
+$localip\
+$shlvl\
+$singularity\
+$kubernetes\
+$directory\
+$docker_context\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$haskell\
+$helm\
+$java\
+$julia\
+$kotlin\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$cmake\
+$cobol\
+$nix_shell\
+$conda\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$crystal\
+$env_var\
+$package\
+$vcsh\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$hg_branch\
+$buf\
+$container\
+$memory_usage\
+$sudo\
+$git_status\
+$cmd_duration\
+$line_break\
+$battery\
+$jobs\
+$time\
+$status\
+$shell\
+$character"""
+
+# ~/.config/starship.toml
+
+[battery]
+# full_symbol = "🔋"
+charging_symbol = "⚡️"
+# discharging_symbol = "💀"
+
+[[battery.display]]
+threshold = 100
+style = "bold green"
+
+
+[[battery.display]]
+threshold = 50
+style = "bold yellow"
+discharging_symbol = " "
+
+[[battery.display]]
+threshold = 30
+style = "bold red"
+discharging_symbol = " "
+
+[time]
+disabled = false
+time_format="%H:%M"
+format = '[\[ $time \]]($style) '
+
+[cmd_duration]
+min_time = 0
+format = "[$duration](bold yellow) "
+# [character]
+# success_symbol = "[➜](bold green)"
+
+[git_status]
+style = "white bold"
+ahead = '[⇡${count}](green)'
+behind = "[⇣${count}](yellow)"
+diverged = '[⇡${ahead_count}](green)[⇣${behind_count}](red)'
+# up_to_date = "[✓](blue)"
+# untracked = "?"
+# stashed = "📦"
+# modified = "📝"
+# modified = "📝"
+# staged = '[S](green)'
+# renamed = "R"
+# deleted = "🗑"
+
+
+[custom.hline]
+disabled = true
+command = """for i in $(seq 1 $(tput cols)); do echo -ne "─"; done"""
+when = "test true"
+format = "[$output](black)"
+
+# [line_break]
+# disabled = true
+
+[cmake]
+format = "[$symbol]($style)"
+
+[cobol]
+format = "[$symbol]($style)"
+
+[crystal]
+format = "[$symbol]($style)"
+
+[dart]
+format = "[$symbol]($style)"
+
+# [flutter]
+# format = "[$symbol]($style)"
+
+[deno]
+format = "[$symbol]($style)"
+
+[dotnet]
+format = "[$symbol(🎯 $tfm )]($style)"
+
+[elixir]
+format = '[$symbol]($style)'
+
+[elm]
+format = '[$symbol]($style)'
+
+[erlang]
+format = '[$symbol]($style)'
+
+[golang]
+format = '[$symbol]($style)'
+
+[helm]
+format = '[$symbol]($style)'
+
+[julia]
+format = '[$symbol]($style)'
+
+[kotlin]
+format = '[$symbol]($style)'
+
+[lua]
+format = '[$symbol]($style)'
+
+[nim]
+format = '[$symbol]($style)'
+
+[nodejs]
+format = '[$symbol]($style)'
+
+[java]
+format = '[$symbol]($style)'
+
+[ocaml]
+format = '[$symbol(\($switch_indicator$switch_name\) )]($style)'
+
+[perl]
+format = '[$symbol]($style)'
+
+[php]
+format = '[$symbol]($style)'
+
+[pulumi]
+format = '[$symbol$stack]($style)'
+
+[purescript]
+format = '[$symbol]($style)'
+
+[python]
+format = '[$symbol]($style)'
+
+[red]
+format = '[$symbol]($style)'
+
+[rlang]
+format = '[$symbol]($style)'
+
+[ruby]
+format = '[$symbol]($style)'
+
+[rust]
+format = '[$symbol]($style)'
+
+[swift]
+format = '[$symbol]($style)'
+
+[vagrant]
+format = '[$symbol]($style)'
+
+[vlang]
+format = '[$symbol]($style)'
+
+[zig]
+format = '[$symbol]($style)'
+
