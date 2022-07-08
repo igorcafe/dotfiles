@@ -1,0 +1,30 @@
+# indent
+set tabsize 2
+set autoindent
+
+# wrap
+set softwrap
+set atblanks
+
+# search
+set casesensitive
+set historylog
+
+# behavior
+set multibuffer
+set positionlog
+set afterends
+set smarthome
+set suspend
+
+#display
+set linenumbers
+set nohelp
+set quickblank
+
+# style
+set boldtext
+set titlecolor brightwhite,magenta
+set numbercolor brightwhite,magenta
+set keycolor brightblue,black
+set selectedcolor brightwhite,black
