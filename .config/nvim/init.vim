@@ -28,7 +28,11 @@ autocmd TermOpen * setlocal nonumber norelativenumber
 
 " terminal
 " nnoremap <M-t> :bel split \| resize 12 \| term<CR>
-
+vnoremap y "+y
+nnoremap p "+p
+nnoremap yy "+yy
+nnoremap ZA :qa!<CR>
+nnoremap ZW :w<CR>
 tnoremap <C-Space> <C-\><C-n>
 
 " saving
@@ -102,8 +106,6 @@ nmap <M-0> 0gt<CR>
 " nmap O O<Esc>A
 
 " close all files
-nnoremap ZA :qa!<CR>
-nnoremap ZW :w<CR>
 nnoremap ZO :so $MYVIMRC<CR>:noh<CR>
 
 " move lines

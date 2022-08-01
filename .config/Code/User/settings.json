@@ -63,60 +63,60 @@
   "explorer.incrementalNaming": "smart",
   "prettier.printWidth": 100,
   "code-runner.clearPreviousOutput": true,
-  "vim.camelCaseMotion.enable": true,
-  "vim.smartRelativeLine": true,
-  "vim.handleKeys": {
-    "<C-k>": false,
-    "<C-b>": false,
-    "<C-f>": false
-  },
-  "vim.leader": "<space>",
-  "vim.insertModeKeyBindingsNonRecursive": [
-    {
-      "before": ["<M-f>"],
-      "commands": ["cursorWordEndRight"]
-    },
-    {
-      "before": ["<M-b>"],
-      "commands": ["cursorWordLeft"]
-    }
-  ],
-  "vim.normalModeKeyBindingsNonRecursive": [
-    {
-      "before": ["ç"],
-      "commands": ["cursorHome"]
-    },
-    {
-      "before": ["Ç"],
-      "commands": ["cursorEnd"]
-    }
-  ],
-  "vim.visualModeKeyBindingsNonRecursive": [
-    {
-      "before": [">"],
-      "commands": ["editor.action.indentLines"]
-    },
-    {
-      "before": ["<"],
-      "commands": ["editor.action.outdentLines"]
-    }
-    // {
-    //   "before": ["p"],
-    //   "after": ["p", "g", "v", "y"]
-    // }
-  ],
-  "vim.statusBarColorControl": true,
-  "vim.statusBarColors.normal": ["#8FBCBB", "#000"],
-  "vim.statusBarColors.insert": ["#BF616A", "#000"],
-  "vim.statusBarColors.visual": ["#B48EAD", "#000"],
-  "vim.statusBarColors.visualline": ["#B48EAD", "#000"],
-  "vim.statusBarColors.visualblock": ["#A3BE8C", "#000"],
-  "vim.statusBarColors.replace": "#D08770",
-  "vim.statusBarColors.commandlineinprogress": "#007ACC",
-  "vim.statusBarColors.searchinprogressmode": "#007ACC",
-  "vim.statusBarColors.easymotionmode": "#007ACC",
-  "vim.statusBarColors.easymotioninputmode": "#007ACC",
-  "vim.statusBarColors.surroundinputmode": "#007ACC",
+  // "vim.camelCaseMotion.enable": true,
+  // "vim.smartRelativeLine": true,
+  // "vim.handleKeys": {
+  //   "<C-k>": false,
+  //   "<C-b>": false,
+  //   "<C-f>": false
+  // },
+  // "vim.leader": "<space>",
+  // "vim.insertModeKeyBindingsNonRecursive": [
+  //   {
+  //     "before": ["<M-f>"],
+  //     "commands": ["cursorWordEndRight"]
+  //   },
+  //   {
+  //     "before": ["<M-b>"],
+  //     "commands": ["cursorWordLeft"]
+  //   }
+  // ],
+  // "vim.normalModeKeyBindingsNonRecursive": [
+  //   {
+  //     "before": ["ç"],
+  //     "commands": ["cursorHome"]
+  //   },
+  //   {
+  //     "before": ["Ç"],
+  //     "commands": ["cursorEnd"]
+  //   }
+  // ],
+  // "vim.visualModeKeyBindingsNonRecursive": [
+  //   {
+  //     "before": [">"],
+  //     "commands": ["editor.action.indentLines"]
+  //   },
+  //   {
+  //     "before": ["<"],
+  //     "commands": ["editor.action.outdentLines"]
+  //   }
+  //   // {
+  //   //   "before": ["p"],
+  //   //   "after": ["p", "g", "v", "y"]
+  //   // }
+  // ],
+  // "vim.statusBarColorControl": true,
+  // "vim.statusBarColors.normal": ["#8FBCBB", "#000"],
+  // "vim.statusBarColors.insert": ["#BF616A", "#000"],
+  // "vim.statusBarColors.visual": ["#B48EAD", "#000"],
+  // "vim.statusBarColors.visualline": ["#B48EAD", "#000"],
+  // "vim.statusBarColors.visualblock": ["#A3BE8C", "#000"],
+  // "vim.statusBarColors.replace": "#D08770",
+  // "vim.statusBarColors.commandlineinprogress": "#007ACC",
+  // "vim.statusBarColors.searchinprogressmode": "#007ACC",
+  // "vim.statusBarColors.easymotionmode": "#007ACC",
+  // "vim.statusBarColors.easymotioninputmode": "#007ACC",
+  // "vim.statusBarColors.surroundinputmode": "#007ACC",
   "workbench.colorCustomizations": {
     "statusBar.background": "#A3BE8C",
     "statusBar.noFolderBackground": "#A3BE8C",
@@ -124,12 +124,12 @@
     "statusBar.foreground": "#000",
     "statusBar.debuggingForeground": "#000"
   },
-  "vim.easymotion": true,
-  "vim.sneakUseIgnorecaseAndSmartcase": true,
+  // "vim.easymotion": true,
+  // "vim.sneakUseIgnorecaseAndSmartcase": true,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "vim.enableNeovim": true,
+  // "vim.enableNeovim": true,
   "powermode.presets": "flames",
   "powermode.combo.counterEnabled": "show",
   "powermode.combo.location": "editor",
@@ -138,7 +138,7 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[vue]": {
-    "editor.defaultFormatter": "numso.prettier-standard-vscode"
+    "editor.defaultFormatter": "Vue.volar"
   },
   "editor.fontLigatures": true,
   "editor.fontFamily": "FiraCode NF, 'Droid Sans Mono', 'monospace', monospace",
@@ -191,8 +191,11 @@
     "javascript": true
   },
   "editor.inlineSuggest.enabled": true,
-  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/home/igor/.vscode/extensions/vscjava.vscode-lombok-1.0.1/server/lombok.jar\""
-
+  "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+  "workbench.list.automaticKeyboardNavigation": false,
+  "editor.scrollBeyondLastLine": true,
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/home/igor/.vscode/extensions/vscjava.vscode-lombok-1.0.1/server/lombok.jar\"",
+  "gitlens.keymap": "alternate",
   // "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
   // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
 }

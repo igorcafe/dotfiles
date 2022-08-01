@@ -53,7 +53,7 @@
     "when": "workbench.scm.active"
   },
   {
-    "key": "ctrl+shift+alt+j",
+    "key": "ctrl+shift+alt+8",
     "command": "workbench.action.toggleMaximizedPanel"
   },
   // {
@@ -74,16 +74,6 @@
   //         "by": "wrappedLine"
   //     }
   // },
-  {
-    "key": "ctrl+alt+j",
-    "command": "workbench.action.terminal.focus",
-    "when": "!terminalFocus"
-  },
-  {
-    "key": "ctrl+alt+j",
-    "command": "workbench.action.focusActiveEditorGroup",
-    "when": "terminalFocus"
-  },
   {
     "key": "ctrl+k ctrl+r",
     "command": "git.revertSelectedRanges"
@@ -146,7 +136,7 @@
     "command": "-indentation-level-movement.selectUp"
   },
   {
-    "key": "alt+n",
+    "key": "shift+alt+n",
     "command": "workbench.action.compareEditor.nextChange",
     "when": "textCompareEditorVisible"
   },
@@ -156,7 +146,7 @@
     "when": "textCompareEditorVisible"
   },
   {
-    "key": "alt+n",
+    "key": "shift+alt+n",
     "command": "workbench.action.editor.nextChange",
     "when": "editorTextFocus && !textCompareEditorActive"
   },
@@ -166,19 +156,9 @@
     "when": "editorTextFocus && !textCompareEditorActive"
   },
   {
-    "key": "shift+alt+n",
-    "command": "workbench.action.editor.previousChange",
-    "when": "editorTextFocus && !textCompareEditorActive"
-  },
-  {
     "key": "shift+alt+f5",
     "command": "-workbench.action.editor.previousChange",
     "when": "editorTextFocus && !textCompareEditorActive"
-  },
-  {
-    "key": "shift+alt+n",
-    "command": "workbench.action.compareEditor.previousChange",
-    "when": "textCompareEditorVisible"
   },
   {
     "key": "shift+alt+f5",
@@ -730,10 +710,6 @@
     "when": "quokka.hasActiveSession && !quokka.isLiveShareClient && !terminalFocus"
   },
   {
-    "key": "shift+alt+n",
-    "command": "merge-conflict.previous"
-  },
-  {
     "key": "alt+l",
     "command": "-toggleFindInSelection",
     "when": "editorFocus"
@@ -752,5 +728,169 @@
     "key": "ctrl+enter",
     "command": "-github.copilot.generate",
     "when": "editorTextFocus && github.copilot.activated"
+  },
+  {
+    "key": "ctrl+alt+.",
+    "command": "workbench.action.nextEditor"
+  },
+  {
+    "key": "ctrl+pagedown",
+    "command": "-workbench.action.nextEditor"
+  },
+  {
+    "key": "ctrl+alt+,",
+    "command": "workbench.action.previousEditor"
+  },
+  {
+    "key": "ctrl+pageup",
+    "command": "-workbench.action.previousEditor"
+  },
+  {
+    "key": "shift+alt+p",
+    "command": "workbench.action.editor.previousChange"
+  },
+  {
+    "key": "shift+alt+p",
+    "command": "workbench.action.compareEditor.previousChange"
+  },
+  {
+    "key": "meta+z",
+    "command": "deleteLeft",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "meta+x",
+    "command": "deleteRight",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "alt+j",
+    "command": "cursorLeft",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "alt+[Semicolon]",
+    "command": "cursorRight",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+alt+[Semicolon]",
+    "command": "cursorWordEndRight",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+alt+j",
+    "command": "cursorWordLeft",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+meta+z",
+    "command": "deleteWordLeft",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+meta+x",
+    "command": "deleteWordRight",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+meta+left",
+    "command": "gitlens.diffWithPreviousInDiffRight",
+    "when": "editorTextFocus && isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /tracked/"
+  },
+  {
+    "key": "alt+,",
+    "command": "-gitlens.diffWithPreviousInDiffRight",
+    "when": "editorTextFocus && isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /tracked/"
+  },
+  {
+    "key": "ctrl+shift+meta+right",
+    "command": "gitlens.diffWithNextInDiffRight",
+    "when": "editorTextFocus && isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /revision/"
+  },
+  {
+    "key": "alt+.",
+    "command": "-gitlens.diffWithNextInDiffRight",
+    "when": "editorTextFocus && isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /revision/"
+  },
+  {
+    "key": "shift+alt+b",
+    "command": "gitlens.toggleFileBlame",
+    "when": "editorTextFocus && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /blameable/"
+  },
+  {
+    "key": "alt+b",
+    "command": "-gitlens.toggleFileBlame",
+    "when": "editorTextFocus && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /blameable/"
+  },
+  {
+    "key": "shift+alt+b",
+    "command": "-gitlens.toggleCodeLens",
+    "when": "editorTextFocus && !gitlens:disabled && !gitlens:disabledToggleCodeLens && config.gitlens.keymap == 'alternate'"
+  },
+  {
+    "key": "alt+.",
+    "command": "-gitlens.diffWithNext",
+    "when": "editorTextFocus && !isInDiffEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /revision/"
+  },
+  {
+    "key": "ctrl+shift+meta+left",
+    "command": "gitlens.diffWithPrevious",
+    "when": "editorTextFocus && !isInDiffEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /tracked/"
+  },
+  {
+    "key": "alt+,",
+    "command": "-gitlens.diffWithPrevious",
+    "when": "editorTextFocus && !isInDiffEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /tracked/"
+  },
+  {
+    "key": "ctrl+shift+meta+left",
+    "command": "gitlens.diffWithPreviousInDiffLeft",
+    "when": "editorTextFocus && isInDiffEditor && !isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /tracked/"
+  },
+  {
+    "key": "alt+,",
+    "command": "-gitlens.diffWithPreviousInDiffLeft",
+    "when": "editorTextFocus && isInDiffEditor && !isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /tracked/"
+  },
+  {
+    "key": "ctrl+shift+meta+right",
+    "command": "gitlens.diffWithNextInDiffLeft",
+    "when": "editorTextFocus && isInDiffEditor && !isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /revision/"
+  },
+  {
+    "key": "alt+.",
+    "command": "-gitlens.diffWithNextInDiffLeft",
+    "when": "editorTextFocus && isInDiffEditor && !isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /revision/"
+  },
+  {
+    "key": "ctrl+shift+alt+j",
+    "command": "cursorWordLeftSelect",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+shift+alt+[Semicolon]",
+    "command": "cursorWordEndRightSelect",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "shift+meta+d",
+    "command": "cursorPageDown",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "pagedown",
+    "command": "-cursorPageDown",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "shift+meta+u",
+    "command": "cursorPageUp",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "pageup",
+    "command": "-cursorPageUp",
+    "when": "textInputFocus"
   }
 ]
