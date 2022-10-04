@@ -892,5 +892,21 @@
     "key": "pageup",
     "command": "-cursorPageUp",
     "when": "textInputFocus"
+  },
+  {
+    "key": "shift+alt+w c",
+    "command": "wipcommiter.commitStaged"
+  },
+  {
+    "key": "shift+alt+w r",
+    "command": "wipcommiter.resetWipsSoft"
+  },
+  {
+    "key": "shift+alt+w s",
+    "command": "wipcommiter.saveAndStage"
+  },
+  {
+    "key": "shift+alt+w f",
+    "command": "wipcommiter.saveStageAndCommit"
   }
 ]

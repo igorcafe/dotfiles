@@ -5,7 +5,6 @@
 # format = "$all"
 
 
-
 # Which is equivalent to
 format = """
 $custom\
@@ -85,6 +84,7 @@ $character"""
 # full_symbol = "🔋"
 charging_symbol = "⚡️"
 # discharging_symbol = "💀"
+disabled = true
 
 [[battery.display]]
 threshold = 100
@@ -102,9 +102,9 @@ style = "bold red"
 discharging_symbol = " "
 
 [time]
-disabled = false
-time_format="%H:%M"
+time_format = "%H:%M"
 format = '[\[ $time \]]($style) '
+disabled = true
 
 [cmd_duration]
 min_time = 0
@@ -231,4 +231,3 @@ format = '[$symbol]($style)'
 
 [zig]
 format = '[$symbol]($style)'
-

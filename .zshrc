@@ -91,7 +91,7 @@ function del () {
 alias nod="node ~/Git/pessoal/nod"
 
 function quasar () {
-  if [[ "$@" == "build" ]]; then
+  if [[ "$@" == "build" && "$(pwd)" == "/home/igor/Git/essia/essia-frontend-core" ]]; then
     command quasar build && \
     rm -r ../essia-desktop/src/client 2> /dev/null && \
     mkdir -p ../essia-desktop/src/client && \
@@ -118,8 +118,10 @@ alias gstl="git stash list --oneline"
 alias gpro="git pull --rebase origin"
 alias gprod="git pull --rebase origin develop"
 alias grl="git log --pretty=\"%C(reset)%<(7)%C(green)%h%C(reset)   %<(90,trunc)%s  %<(11,trunc)%an   %<(10,trunc)%C(yellow)%ar\" --color"
-alias gstau="git stash push -u"
-alias gstaum="git stash push -um"
+alias gstk="git stash --keep-index"
+alias gstuk="git stash --include-untracked --keep-index"
+# alias gstau="git stash push -u"
+# alias gstaum="git stash push -um"
 alias gwip="git commit --no-verify --no-gpg-sign -m '--wip-- [skip ci]'"
 
 # function grl() {
@@ -205,6 +207,7 @@ EXA_OPTS="-l -h --icons --git -F --color=always"
 alias l="exa $EXA_OPTS"
 alias la="exa $EXA_OPTS -a"
 alias lag="exa $EXA_OPTS -ag"
+alias ls="lsd"
 alias l="lsd"
 alias la="lsd -a"
 alias ll="lsd -l"
@@ -214,9 +217,11 @@ alias lal="lsd -al"
 alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,node_modules}'
 
 # .zshrc
-alias zshconf="nvim ~/.zshrc" # deprecated
-alias zshrc="nvim ~/.zshrc"
+# alias zshconf="nvim ~/.zshrc" # deprecated
+alias zshrc="lvim ~/.zshrc"
 alias sozsh="source ~/.zshrc"
+
+alias path="readlink -f"
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -358,3 +363,4 @@ colors=( cyan magenta green yellow blue )
 export DENO_INSTALL="/home/igor/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
+export PATH="$PATH:/home/igor/.dotnet"

@@ -47,7 +47,7 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   // "prettier.semi": false,
   // "prettier.singleQuote": true,
@@ -140,7 +140,7 @@
   "[vue]": {
     "editor.defaultFormatter": "Vue.volar"
   },
-  "editor.fontLigatures": true,
+  // "editor.fontLigatures": true,
   "editor.fontFamily": "FiraCode NF, 'Droid Sans Mono', 'monospace', monospace",
   "workbench.colorTheme": "Ayu Mirage Bordered",
   "powermode.enabled": false,
@@ -157,7 +157,7 @@
     "editor.defaultFormatter": "vscode.html-language-features"
   },
   "[java]": {
-    "editor.defaultFormatter": "SimonSiefke.prettier-vscode"
+    "editor.defaultFormatter": "redhat.java"
   },
   "[cpp]": {
     "editor.formatOnSave": true,
@@ -181,7 +181,6 @@
   "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
   "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyType": true,
   "code-runner.runInTerminal": true,
-  "window.confirmBeforeClose": "always",
   "C_Cpp.vcFormat.indent.lambdaBracesWhenParameter": false,
   "github.copilot.enable": {
     "*": true,
@@ -196,6 +195,12 @@
   "editor.scrollBeyondLastLine": true,
   "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/home/igor/.vscode/extensions/vscjava.vscode-lombok-1.0.1/server/lombok.jar\"",
   "gitlens.keymap": "alternate",
+  "go.testTimeout": "5s",
+  "godot_tools.editor_path": "/home/igor/Documentos/bin/Godot_v3.5-stable_x11.64",
+  "git.mergeEditor": true,
+  "omnisharp.dotnetPath": "/usr/bin/mono",
+  "omnisharp.sdkPath": "/home/igor/.dotnet/sdk/6.0.400",
+  "omnisharp.useModernNet": false,
   // "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
   // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
 }
