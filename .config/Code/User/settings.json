@@ -21,7 +21,6 @@
   "workbench.editor.tabSizing": "shrink",
   "git.confirmSync": false,
   "diffEditor.ignoreTrimWhitespace": false,
-  "editor.tabSize": 2,
   "editor.rulers": [80, 120],
   "editor.codeActionsOnSave": {
     "source.fixAll": true
@@ -61,7 +60,7 @@
   "screencastMode.keyboardShortcutsFormat": "keys",
   "window.customMenuBarAltFocus": false,
   "explorer.incrementalNaming": "smart",
-  "prettier.printWidth": 100,
+  // "prettier.printWidth": 100,
   "code-runner.clearPreviousOutput": true,
   // "vim.camelCaseMotion.enable": true,
   // "vim.smartRelativeLine": true,
@@ -138,7 +137,7 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[vue]": {
-    "editor.defaultFormatter": "Vue.volar"
+    // "editor.defaultFormatter": "Vue.volar"
   },
   // "editor.fontLigatures": true,
   "editor.fontFamily": "FiraCode NF, 'Droid Sans Mono', 'monospace', monospace",
@@ -201,6 +200,13 @@
   "omnisharp.dotnetPath": "/usr/bin/mono",
   "omnisharp.sdkPath": "/home/igor/.dotnet/sdk/6.0.400",
   "omnisharp.useModernNet": false,
+  "go.toolsManagement.autoUpdate": true,
+  "editor.tabSize": 2,
+  "html.format.wrapLineLength": 90,
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": [
+    "--fast"
+  ],
   // "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
   // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
 }
