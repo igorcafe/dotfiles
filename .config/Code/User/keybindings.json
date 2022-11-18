@@ -246,18 +246,13 @@
     "when": "textInputFocus"
   },
   {
-    "key": "alt+k",
+    "key": "alt+j",
     "command": "cursorDown",
     "when": "textInputFocus"
   },
   {
-    "key": "alt+l",
+    "key": "alt+k",
     "command": "cursorUp",
-    "when": "textInputFocus"
-  },
-  {
-    "key": "alt+h",
-    "command": "cursorLeft",
     "when": "textInputFocus"
   },
   {
@@ -764,12 +759,7 @@
     "when": "textInputFocus"
   },
   {
-    "key": "alt+j",
-    "command": "cursorLeft",
-    "when": "textInputFocus"
-  },
-  {
-    "key": "alt+[Semicolon]",
+    "key": "alt+l",
     "command": "cursorRight",
     "when": "textInputFocus"
   },
@@ -794,7 +784,7 @@
     "when": "textInputFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+shift+meta+left",
+    "key": "alt+,",
     "command": "gitlens.diffWithPreviousInDiffRight",
     "when": "editorTextFocus && isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /tracked/"
   },
@@ -804,7 +794,7 @@
     "when": "editorTextFocus && isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /tracked/"
   },
   {
-    "key": "ctrl+shift+meta+right",
+    "key": "alt+.",
     "command": "gitlens.diffWithNextInDiffRight",
     "when": "editorTextFocus && isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /revision/"
   },
@@ -834,7 +824,7 @@
     "when": "editorTextFocus && !isInDiffEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /revision/"
   },
   {
-    "key": "ctrl+shift+meta+left",
+    "key": "alt+,",
     "command": "gitlens.diffWithPrevious",
     "when": "editorTextFocus && !isInDiffEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /tracked/"
   },
@@ -844,7 +834,7 @@
     "when": "editorTextFocus && !isInDiffEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /tracked/"
   },
   {
-    "key": "ctrl+shift+meta+left",
+    "key": "alt+,",
     "command": "gitlens.diffWithPreviousInDiffLeft",
     "when": "editorTextFocus && isInDiffEditor && !isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /tracked/"
   },
@@ -854,7 +844,7 @@
     "when": "editorTextFocus && isInDiffEditor && !isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /tracked/"
   },
   {
-    "key": "ctrl+shift+meta+right",
+    "key": "alt+.",
     "command": "gitlens.diffWithNextInDiffLeft",
     "when": "editorTextFocus && isInDiffEditor && !isInDiffRightEditor && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /revision/"
   },
@@ -908,5 +898,20 @@
   {
     "key": "shift+alt+w f",
     "command": "wipcommiter.saveStageAndCommit"
+  },
+  {
+    "key": "alt+h",
+    "command": "cursorLeft",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "alt+g",
+    "command": "editor.action.revealDefinition",
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+  },
+  {
+    "key": "f12",
+    "command": "-editor.action.revealDefinition",
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
   }
 ]
