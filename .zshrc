@@ -38,11 +38,11 @@ ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=black,bold"
 source $ZSH/oh-my-zsh.sh
 
 # Preferred editor
-export EDITOR='nvim'
-export VISUAL='nvim'
-alias vim="nvim"
-alias v="nvim"
-alias vimrc="nvim ~/.config/nvim/init.vim"
+export EDITOR='lvim'
+export VISUAL='lvim'
+alias vim="lvim"
+alias v="lvim"
+alias vimrc="lvim ~/.config/nvim/init.vim"
 alias viter="vim -c ':ter'; exit"
 
 alias ipy=ipython3
@@ -107,7 +107,7 @@ alias gal="cat ~/.oh-my-zsh/plugins/git/README.md | grep -A10000 '## Aliases' | 
 alias gdc="git diff --cached"
 alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gla="git pull --all"
-alias gcm="git commit -m"
+# alias gcm="git commit -m"
 alias gacm="git add -A && git commit -m"
 alias grf="git reflog"
 alias grz="git reset"
@@ -123,7 +123,7 @@ alias gstuk="git stash --include-untracked --keep-index"
 # alias gstau="git stash push -u"
 # alias gstaum="git stash push -um"
 alias gwip="git commit --no-verify --no-gpg-sign -m '--wip-- [skip ci]'"
-
+alias glff="git pull --ff-only"
 # function grl() {
 	# base="--pretty=\"%C(reset)%<(7)%C(green)%h%C(reset)   %<(90,trunc)%s  %<(11,trunc)%an   %<(10,trunc)%C(yellow)%ar\" --color | sed -r 's/([0-9]{2}:[0-9]{2})\.\./\1/g' | less"
 	# cmd="git log $base"
@@ -266,6 +266,7 @@ if which apt &> /dev/null; then
 fi
 
 # docker
+alias docker="sudo docker"
 alias dockstart="sudo systemctl start docker"
 alias dockstop="sudo systemctl stop docker docker.socket"
 alias dockessia="docker start elasticsearch mysql rabbit-mq"
@@ -293,9 +294,9 @@ alias ffe="ffmpeg -v quiet -stats"
 alias ffp="ffplay"
 
 # httpie
-function req() {
-	http $@ --pretty=all -p="hb" | less
-}
+# function req() {
+# 	http $@ --pretty=all -p="hb" | less
+# }
 
 # emacs
 export PATH=$PATH:~/.emacs.d/bin
