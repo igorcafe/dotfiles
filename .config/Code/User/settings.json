@@ -207,6 +207,7 @@
   "go.lintFlags": [
     "--fast"
   ],
+  "vim.smartRelativeLine": true,
   // "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
   // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
 }
