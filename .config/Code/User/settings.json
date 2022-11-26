@@ -43,10 +43,10 @@
   "zenMode.hideLineNumbers": false,
   "files.trimTrailingWhitespace": true,
   "[javascript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
+    // "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
+    // "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   // "prettier.semi": false,
   // "prettier.singleQuote": true,
