@@ -124,6 +124,7 @@ alias gstuk="git stash --include-untracked --keep-index"
 # alias gstaum="git stash push -um"
 alias gwip="git commit --no-verify --no-gpg-sign -m '--wip-- [skip ci]'"
 alias glff="git pull --ff-only"
+alias gmoj="gitmoji -c"
 # function grl() {
 	# base="--pretty=\"%C(reset)%<(7)%C(green)%h%C(reset)   %<(90,trunc)%s  %<(11,trunc)%an   %<(10,trunc)%C(yellow)%ar\" --color | sed -r 's/([0-9]{2}:[0-9]{2})\.\./\1/g' | less"
 	# cmd="git log $base"
