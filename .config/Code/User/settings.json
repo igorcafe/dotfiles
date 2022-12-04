@@ -141,7 +141,7 @@
   },
   // "editor.fontLigatures": true,
   "editor.fontFamily": "FiraCode NF, 'Droid Sans Mono', 'monospace', monospace",
-  "workbench.colorTheme": "Visual Studio Light",
+  "workbench.colorTheme": "Default Light+",
   "powermode.enabled": false,
   "powermode.shake.enabled": false,
 
@@ -208,6 +208,7 @@
     "--fast"
   ],
   "vim.smartRelativeLine": true,
+  "window.zoomLevel": -1,
   // "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
   // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
 }
