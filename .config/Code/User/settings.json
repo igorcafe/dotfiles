@@ -81,11 +81,11 @@
   //   }
   // ],
   "vim.normalModeKeyBindingsNonRecursive": [
-    {
-      "before": ["<C-d>"],
-      "commands": ["<C-d>", "zz"],
-      // "commands": ["cursorHome"]
-    },
+    // {
+    //   "before": ["<C-d>"],
+    //   "commands": ["<C-d>", "zz"],
+    //   // "commands": ["cursorHome"]
+    // },
     // {
     //   "before": ["Ç"],
     //   "commands": ["cursorEnd"]
