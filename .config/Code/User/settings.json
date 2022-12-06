@@ -209,6 +209,7 @@
     "--fast"
   ],
   "vim.smartRelativeLine": true,
+  "window.zoomLevel": 1,
   // "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
   // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
 }
