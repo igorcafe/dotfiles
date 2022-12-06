@@ -190,7 +190,7 @@
     "javascript": true
   },
   "editor.inlineSuggest.enabled": true,
-  "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+  "vscode-neovim.neovimExecutablePaths.linux": "/snap/bin/nvim",
   "workbench.list.automaticKeyboardNavigation": false,
   "editor.scrollBeyondLastLine": true,
   "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/home/igor/.vscode/extensions/vscjava.vscode-lombok-1.0.1/server/lombok.jar\"",
@@ -211,7 +211,6 @@
   "vim.smartRelativeLine": true,
   "vscode-neovim.neovimInitVimPaths.linux": "/home/igor/.config/nvim/init.vim",
   "editor.lineNumbers": "relative",
-  "editor.cursorSurroundingLines": 100,
   // "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
   // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
 }
