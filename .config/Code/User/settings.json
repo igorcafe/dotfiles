@@ -142,7 +142,7 @@
   },
   // "editor.fontLigatures": true,
   "editor.fontFamily": "FiraCode NF, 'Droid Sans Mono', 'monospace', monospace",
-  "workbench.colorTheme": "Ayu Mirage Bordered",
+  "workbench.colorTheme": "Visual Studio Light",
   "powermode.enabled": false,
   "powermode.shake.enabled": false,
 
@@ -210,6 +210,7 @@
   ],
   "vim.smartRelativeLine": true,
   "vscode-neovim.neovimInitVimPaths.linux": "/home/igor/.config/nvim/init.vim",
+  "editor.lineNumbers": "relative",
   // "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
   // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
 }
