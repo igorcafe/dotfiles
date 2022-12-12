@@ -54,7 +54,6 @@
   "editor.find.seedSearchStringFromSelection": "selection",
   "editor.suggest.localityBonus": true,
   "screencastMode.mouseIndicatorColor": "#FFFF66AA",
-  "screencastMode.onlyKeyboardShortcuts": true,
   "screencastMode.fontSize": 30,
   "screencastMode.verticalOffset": 3,
   "screencastMode.keyboardShortcutsFormat": "keys",
