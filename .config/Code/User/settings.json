@@ -141,7 +141,7 @@
   },
   // "editor.fontLigatures": true,
   "editor.fontFamily": "FiraCode NF, 'Droid Sans Mono', 'monospace', monospace",
-  "workbench.colorTheme": "White",
+  "workbench.colorTheme": "Ayu Mirage Bordered",
   "powermode.enabled": false,
   "powermode.shake.enabled": false,
 
