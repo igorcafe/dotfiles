@@ -267,7 +267,7 @@ if which apt &> /dev/null; then
 fi
 
 # docker
-alias docker="sudo docker"
+# alias docker="sudo docker"
 alias dockstart="sudo systemctl start docker"
 alias dockstop="sudo systemctl stop docker docker.socket"
 alias dockessia="docker start elasticsearch mysql rabbit-mq"
