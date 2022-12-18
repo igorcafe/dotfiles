@@ -42,7 +42,7 @@ export EDITOR='lvim'
 export VISUAL='lvim'
 alias vim="lvim"
 alias v="lvim"
-alias vimrc="lvim ~/.config/nvim/init.vim"
+alias vimrc='lvim "+e $MYVIMRC"'
 alias viter="vim -c ':ter'; exit"
 
 alias ipy=ipython3
