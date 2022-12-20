@@ -64,11 +64,6 @@
       "before": ["<space>"],
       "commands": ["whichkey.show"]
     },
-    {
-      "before": ["<C-d>"],
-      "commands": ["extension.vim_ctrl+d"],
-      // "commands": ["cursorHome"]
-    },
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
