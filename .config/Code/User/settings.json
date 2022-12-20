@@ -5,7 +5,6 @@
   "debug.console.fontSize": 15,
   "terminal.integrated.fontSize": 16,
   "editor.suggestSelection": "first",
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "workbench.iconTheme": "material-icon-theme",
   "files.exclude": {
     "": true,
@@ -15,8 +14,6 @@
     "**/.project": true,
     "**/.settings": true
   },
-  // "java.jdt.ls.lombokSupport.enabled": true,
-  // "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/home/igor/.vscode/extensions/vscjava.vscode-lombok-1.0.1/server/lombok.jar\"",
   "workbench.editor.pinnedTabSizing": "shrink",
   "workbench.editor.tabSizing": "shrink",
   "git.confirmSync": false,
@@ -33,23 +30,9 @@
     "editor.defaultFormatter": "yzhang.markdown-all-in-one",
     "editor.wordWrapColumn": 80
   },
-  // "java.imports.gradle.wrapper.checksums": [
-  //   {
-  //     "sha256": "2cae31aaabe2b362438e10dce5538f9a554e183056485df883f45aee08a008e0",
-  //     "allowed": false
-  //   }
-  // ],
   "editor.minimap.enabled": false,
   "zenMode.hideLineNumbers": false,
   "files.trimTrailingWhitespace": true,
-  "[javascript]": {
-    // "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "[typescript]": {
-    // "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  // "prettier.semi": false,
-  // "prettier.singleQuote": true,
   "editor.cursorSurroundingLinesStyle": "all",
   "editor.find.seedSearchStringFromSelection": "selection",
   "editor.suggest.localityBonus": true,
@@ -59,37 +42,47 @@
   "screencastMode.keyboardShortcutsFormat": "keys",
   "window.customMenuBarAltFocus": false,
   "explorer.incrementalNaming": "smart",
-  // "prettier.printWidth": 100,
   "code-runner.clearPreviousOutput": true,
   // "vim.camelCaseMotion.enable": true,
-  // "vim.smartRelativeLine": true,
   // "vim.handleKeys": {
-  //   "<C-k>": false,
-  //   "<C-b>": false,
   //   "<C-f>": false
   // },
-  // "vim.leader": "<space>",
-  // "vim.insertModeKeyBindingsNonRecursive": [
-  //   {
-  //     "before": ["<M-f>"],
-  //     "commands": ["cursorWordEndRight"]
-  //   },
-  //   {
-  //     "before": ["<M-b>"],
-  //     "commands": ["cursorWordLeft"]
-  //   }
-  // ],
+  "vim.smartRelativeLine": true,
+  "vim.leader": " ",
+  "vim.insertModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<M-f>"],
+      "commands": ["cursorWordEndRight"]
+    },
+    {
+      "before": ["<M-b>"],
+      "commands": ["cursorWordLeft"]
+    }
+  ],
   "vim.normalModeKeyBindingsNonRecursive": [
-    // {
-    //   "before": ["<C-d>"],
-    //   "commands": ["<C-d>", "zz"],
-    //   // "commands": ["cursorHome"]
-    // },
+    {
+      "before": ["<space>"],
+      "commands": ["whichkey.show"]
+    },
+    {
+      "before": ["<C-d>"],
+      "commands": ["extension.vim_ctrl+d"],
+      // "commands": ["cursorHome"]
+    },
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<space>"],
+      "commands": ["whichkey.show"]
+    }
+  ],
+
+  // "vim.normalModeKeyBindingsNonRecursive": [
     // {
     //   "before": ["Ç"],
     //   "commands": ["cursorEnd"]
     // }
-  ],
+  // ],
   // "vim.visualModeKeyBindingsNonRecursive": [
   //   {
   //     "before": [">"],
@@ -207,9 +200,8 @@
   "go.lintFlags": [
     "--fast"
   ],
-  "vim.smartRelativeLine": true,
   "vscode-neovim.neovimInitVimPaths.linux": "/home/igor/.config/nvim/init.vim",
-  "editor.lineNumbers": "relative",
+  // "editor.lineNumbers": "relative",
   "boot-java.rewrite.reconcile": true,
   // "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
   // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
