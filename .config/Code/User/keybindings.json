@@ -921,5 +921,9 @@
     "key": "ctrl+d",
     "command": "-editor.action.addSelectionToNextFindMatch",
     "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+shift+alt+,",
+    "command": "workbench.action.openSettingsJson"
   }
 ]
