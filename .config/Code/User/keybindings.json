@@ -925,5 +925,10 @@
   {
     "key": "ctrl+shift+alt+,",
     "command": "workbench.action.openSettingsJson"
+  },
+  {
+    "key": "ctrl+k o",
+    "command": "-workbench.action.files.showOpenedFileInNewWindow",
+    "when": "emptyWorkspaceSupport"
   }
 ]
