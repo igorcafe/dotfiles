@@ -200,4 +200,7 @@
   "boot-java.rewrite.reconcile": true,
   // "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
   // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1
+  }
 }
