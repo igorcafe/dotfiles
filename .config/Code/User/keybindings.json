@@ -246,16 +246,6 @@
     "when": "textInputFocus"
   },
   {
-    "key": "alt+j",
-    "command": "cursorDown",
-    "when": "textInputFocus"
-  },
-  {
-    "key": "alt+k",
-    "command": "cursorUp",
-    "when": "textInputFocus"
-  },
-  {
     "key": "alt+down",
     "command": "-block-travel.jumpDown",
     "when": "editorTextFocus"
@@ -934,5 +924,15 @@
   {
     "key": "ctrl+k o",
     "command": "workbench.action.closeOtherEditors"
+  },
+  {
+    "key": "alt+j",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+k",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
   }
 ]
