@@ -184,7 +184,6 @@
   "gitlens.keymap": "alternate",
   "go.testTimeout": "5s",
   "godot_tools.editor_path": "/home/igor/Documentos/bin/Godot_v3.5-stable_x11.64",
-  "git.mergeEditor": true,
   "omnisharp.dotnetPath": "/usr/bin/mono",
   "omnisharp.sdkPath": "/home/igor/.dotnet/sdk/6.0.400",
   "omnisharp.useModernNet": false,
@@ -202,5 +201,7 @@
   // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
-  }
+  },
+  "git.mergeEditor": true,
+  "mergeEditor.diffAlgorithm": "smart"
 }
