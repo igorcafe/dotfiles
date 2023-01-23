@@ -129,7 +129,7 @@
   },
   // "editor.fontLigatures": true,
   "editor.fontFamily": "FiraCode NF, 'Droid Sans Mono', 'monospace', monospace",
-  "workbench.colorTheme": "Ayu Mirage Bordered",
+  "workbench.colorTheme": "Default Light+",
   "powermode.enabled": false,
   "powermode.shake.enabled": false,
 
@@ -203,5 +203,8 @@
     "vscodevim.vim": 1
   },
   "git.mergeEditor": true,
-  "mergeEditor.diffAlgorithm": "smart"
+  "mergeEditor.diffAlgorithm": "smart",
+  "[python]": {
+    "editor.formatOnType": true
+  }
 }
