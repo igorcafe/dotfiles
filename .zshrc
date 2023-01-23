@@ -291,8 +291,12 @@ alias ji="zi"
 alias jci="zci"
 
 # ffmpeg
-alias ffe="ffmpeg -v quiet -stats"
+alias ffe="ffmpeg -hide_banner -loglevel error -stats"
 alias ffp="ffplay"
+
+function ffspeed () {
+  ffe -i "$1" -af atempo=$2 -vf setpts=PTS/$2 "(${2}x) $1"
+}
 
 # httpie
 # function req() {
