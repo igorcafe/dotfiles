@@ -206,6 +206,5 @@
   "mergeEditor.diffAlgorithm": "smart",
   "[python]": {
     "editor.formatOnType": true
-  },
-  "window.zoomLevel": 1
+  }
 }
