@@ -934,5 +934,15 @@
     "key": "alt+k",
     "command": "editor.action.moveLinesUpAction",
     "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+alt+k",
+    "command": "editor.action.insertCursorAbove",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+alt+up",
+    "command": "-editor.action.insertCursorAbove",
+    "when": "editorTextFocus"
   }
 ]
