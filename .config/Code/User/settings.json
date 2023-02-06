@@ -129,7 +129,6 @@
   },
   // "editor.fontLigatures": true,
   "editor.fontFamily": "FiraCode NF, 'Droid Sans Mono', 'monospace', monospace",
-  "workbench.colorTheme": "Nope",
   "powermode.enabled": false,
   "powermode.shake.enabled": false,
 
@@ -206,5 +205,6 @@
   "mergeEditor.diffAlgorithm": "smart",
   "[python]": {
     "editor.formatOnType": true
-  }
+  },
+  "workbench.colorTheme": "Nope"
 }
