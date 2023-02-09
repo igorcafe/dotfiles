@@ -964,5 +964,10 @@
     "key": "ctrl+f",
     "command": "-actions.find",
     "when": "editorFocus || editorIsOpen"
+  },
+  {
+    "key": "ctrl+shift+v",
+    "command": "-markdown.showPreview",
+    "when": "!notebookEditorFocused && editorLangId == 'markdown'"
   }
 ]
