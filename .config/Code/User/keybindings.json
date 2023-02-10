@@ -969,5 +969,10 @@
     "key": "ctrl+shift+v",
     "command": "-markdown.showPreview",
     "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+  },
+  {
+    "key": "ctrl+b",
+    "command": "-markdown.extension.editing.toggleBold",
+    "when": "editorTextFocus && !editorReadonly && editorLangId =~ /^markdown$|^rmd$|^qmd$/"
   }
 ]
