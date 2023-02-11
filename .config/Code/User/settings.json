@@ -24,7 +24,6 @@
   },
   "git.allowForcePush": true,
   "window.menuBarVisibility": "toggle",
-  "blockhighlight.background": ["200", "100", "255", ".03"],
   "window.enableMenuBarMnemonics": false,
   "[markdown]": {
     "editor.defaultFormatter": "yzhang.markdown-all-in-one",
@@ -43,10 +42,6 @@
   "window.customMenuBarAltFocus": false,
   "explorer.incrementalNaming": "smart",
   "code-runner.clearPreviousOutput": true,
-  // "vim.camelCaseMotion.enable": true,
-  // "vim.handleKeys": {
-  //   "<C-f>": false
-  // },
   "vim.smartRelativeLine": true,
   "vim.leader": " ",
   "vim.insertModeKeyBindingsNonRecursive": [
@@ -72,38 +67,6 @@
     }
   ],
 
-  // "vim.normalModeKeyBindingsNonRecursive": [
-    // {
-    //   "before": ["Ç"],
-    //   "commands": ["cursorEnd"]
-    // }
-  // ],
-  // "vim.visualModeKeyBindingsNonRecursive": [
-  //   {
-  //     "before": [">"],
-  //     "commands": ["editor.action.indentLines"]
-  //   },
-  //   {
-  //     "before": ["<"],
-  //     "commands": ["editor.action.outdentLines"]
-  //   }
-  //   // {
-  //   //   "before": ["p"],
-  //   //   "after": ["p", "g", "v", "y"]
-  //   // }
-  // ],
-  // "vim.statusBarColorControl": true,
-  // "vim.statusBarColors.normal": ["#8FBCBB", "#000"],
-  // "vim.statusBarColors.insert": ["#BF616A", "#000"],
-  // "vim.statusBarColors.visual": ["#B48EAD", "#000"],
-  // "vim.statusBarColors.visualline": ["#B48EAD", "#000"],
-  // "vim.statusBarColors.visualblock": ["#A3BE8C", "#000"],
-  // "vim.statusBarColors.replace": "#D08770",
-  // "vim.statusBarColors.commandlineinprogress": "#007ACC",
-  // "vim.statusBarColors.searchinprogressmode": "#007ACC",
-  // "vim.statusBarColors.easymotionmode": "#007ACC",
-  // "vim.statusBarColors.easymotioninputmode": "#007ACC",
-  // "vim.statusBarColors.surroundinputmode": "#007ACC",
   "workbench.colorCustomizations": {
     "statusBar.background": "#A3BE8C",
     "statusBar.noFolderBackground": "#A3BE8C",
@@ -111,12 +74,11 @@
     "statusBar.foreground": "#000",
     "statusBar.debuggingForeground": "#000"
   },
-  // "vim.easymotion": true,
+  "vim.easymotion": true,
   // "vim.sneakUseIgnorecaseAndSmartcase": true,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  // "vim.enableNeovim": true,
   "powermode.presets": "flames",
   "powermode.combo.counterEnabled": "show",
   "powermode.combo.location": "editor",
