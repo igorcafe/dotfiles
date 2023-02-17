@@ -79,21 +79,11 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "powermode.presets": "flames",
-  "powermode.combo.counterEnabled": "show",
-  "powermode.combo.location": "editor",
   "terminal.integrated.fontFamily": "Firacode NF",
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
-  "[vue]": {
-    // "editor.defaultFormatter": "Vue.volar"
-  },
-  // "editor.fontLigatures": true,
   "editor.fontFamily": "FiraCode NF, 'Droid Sans Mono', 'monospace', monospace",
-  "powermode.enabled": false,
-  "powermode.shake.enabled": false,
-
   "[rust]": {
     "editor.formatOnSave": true
   },
@@ -130,24 +120,12 @@
   "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyType": true,
   "code-runner.runInTerminal": true,
   "C_Cpp.vcFormat.indent.lambdaBracesWhenParameter": false,
-  "github.copilot.enable": {
-    "*": true,
-    "yaml": false,
-    "plaintext": false,
-    "markdown": false,
-    "javascript": true
-  },
   "editor.inlineSuggest.enabled": true,
-  "vscode-neovim.neovimExecutablePaths.linux": "/snap/bin/nvim",
-  "workbench.list.automaticKeyboardNavigation": false,
   "editor.scrollBeyondLastLine": true,
   "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/home/igor/.vscode/extensions/vscjava.vscode-lombok-1.0.1/server/lombok.jar\"",
   "gitlens.keymap": "alternate",
   "go.testTimeout": "5s",
   "godot_tools.editor_path": "/home/igor/Documentos/bin/Godot_v3.5-stable_x11.64",
-  "omnisharp.dotnetPath": "/usr/bin/mono",
-  "omnisharp.sdkPath": "/home/igor/.dotnet/sdk/6.0.400",
-  "omnisharp.useModernNet": false,
   "go.toolsManagement.autoUpdate": true,
   "editor.tabSize": 2,
   "html.format.wrapLineLength": 90,
@@ -155,11 +133,7 @@
   "go.lintFlags": [
     "--fast"
   ],
-  "vscode-neovim.neovimInitVimPaths.linux": "/home/igor/.config/nvim/init.vim",
-  // "editor.lineNumbers": "relative",
   "boot-java.rewrite.reconcile": true,
-  // "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
-  // "C_Cpp.vcFormat.newLine.scopeBracesOnSeparateLines": false
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
   },
@@ -168,5 +142,5 @@
   "[python]": {
     "editor.formatOnType": true
   },
-  "workbench.colorTheme": "Nope"
+  "workbench.colorTheme": "Gruvbox Dark Soft"
 }
