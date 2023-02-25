@@ -5,5 +5,8 @@ update_info=delete_cursor_old_default_size.upd:DeleteCursorOldDefaultSize,kcminp
 PointerAcceleration=0.400
 TapToClick=true
 
+[Mouse]
+X11LibInputXAccelProfileFlat=false
+
 [Tmp]
 update_info=delete_cursor_old_default_size.upd:DeleteCursorOldDefaultSize

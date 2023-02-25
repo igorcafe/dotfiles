@@ -147,6 +147,10 @@ Theme=Materia-Manjaro-Breeze-Dark
 LookAndFeelPackage=Materia-Manjaro-Dark
 SingleClick=false
 
+[KScreen]
+ScaleFactor=1.1875
+ScreenScaleFactors=eDP-1=1.1875;HDMI-1-1=1.1875;eDP-1-2=1.1875;
+
 [KShortcutsDialog Settings]
 Dialog Size=600,480
 
