@@ -2,11 +2,24 @@
 
 wd="$(pwd)"
 
-dotfiles=(
-	.config/starship.toml
-	.zshrc
-)
+FORCE=0
+if [[ "$1" == "-f" ]]; then
+	FORCE=1
+fi
 
-for file in ${dotfiles[@]}; do
-	ln -s "$wd/$file" ~/"$file"
+function cmd () {
+	echo -e "> \033[1;30m$@\033[0m"
+	eval "($@)"
+	echo
+}
+
+for d in $(find .config -type d); do
+	cmd mkdir -p ~/"$d"
+done
+
+files=( .zshrc $(find .config -type f) )
+
+for file in ${files[@]}; do
+	[ $FORCE -eq 1 ] && cmd rm ~/"$file" 2> /dev/null
+	cmd ln -s "$wd/$file" ~/"$file"
 done
