@@ -1,0 +1,4 @@
+[General]
+IgnoreImages=false
+MaxClipItems=2048
+Version=5.27.1
