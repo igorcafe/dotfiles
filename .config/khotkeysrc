@@ -1,5 +1,5 @@
 [$Version]
-update_info=konsole_globalaccel.upd:konsole_globalaccel
+update_info=konsole_globalaccel.upd:konsole_globalaccel,spectacle_shortcuts.upd:spectacle-migrate-shortcuts
 
 [ColorEffects:Disabled]
 ChangeSelectionColor[$d]
@@ -142,7 +142,6 @@ DataCount=3
 Comment=KMenuEdit Global Shortcuts
 DataCount=1
 Enabled=true
-ImportId=defaults
 Name=KMenuEdit
 SystemGroup=1
 Type=ACTION_DATA_GROUP
@@ -995,6 +994,7 @@ GesturePointData=0,0.0625,-0.5,0.5,1,0.0625,0.0625,-0.5,0.5,0.875,0.125,0.0625,-
 Type=GESTURE
 
 [General]
+BrowserApplication[$d]
 ColorScheme[$d]
 ColorSchemeHash[$d]
 
@@ -1003,10 +1003,16 @@ Disabled=true
 MouseButton=2
 Timeout=300
 
+[GesturesExclude]
+Comment=
+WindowsCount=0
+
 [Icons]
 Theme[$d]
 
 [KDE]
+LookAndFeelPackage[$d]
+SingleClick[$d]
 widgetStyle[$d]
 
 [Main]
