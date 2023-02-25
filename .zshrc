@@ -74,7 +74,7 @@ alias jj="z -"
 alias ji="zi"
 alias jci="zci"
 
-# bat (TODO:)
+# bat
 export BAT_PAGER="less -R"
 
 # ffmpeg (TODO: use profiles)
@@ -84,3 +84,5 @@ alias ffmpeg="ffmpeg -hide_banner -loglevel error -stats"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
+
+eval "$(starship init zsh)"
