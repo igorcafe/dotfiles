@@ -31,10 +31,6 @@ wallpaperplugin=org.kde.image
 immutability=1
 plugin=org.kde.plasma.digitalclock
 
-[Containments][2][Applets][19]
-immutability=1
-plugin=org.kde.plasma.showdesktop
-
 [Containments][2][Applets][23]
 immutability=1
 plugin=org.kde.plasma.panelspacer
@@ -85,11 +81,11 @@ PreloadWeight=60
 SystrayContainmentId=8
 
 [Containments][2][ConfigDialog]
-DialogHeight=84
-DialogWidth=1670
+DialogHeight=70
+DialogWidth=1600
 
 [Containments][2][General]
-AppletOrder=3;4;23;5;24;6;7;18;19
+AppletOrder=3;4;23;5;24;6;7;18
 
 [Containments][8]
 activityId=
