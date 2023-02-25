@@ -147,6 +147,12 @@ Theme=Materia-Manjaro-Breeze-Dark
 LookAndFeelPackage=Materia-Manjaro-Dark
 SingleClick=false
 
+[KShortcutsDialog Settings]
+Dialog Size=600,480
+
+[PreviewSettings]
+MaximumRemoteSize=0
+
 [WM]
 activeBackground=38,38,38
 activeBlend=38,38,38
