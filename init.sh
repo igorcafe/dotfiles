@@ -17,7 +17,11 @@ for d in $(find .config -type d); do
 	cmd mkdir -p ~/"$d"
 done
 
-files=( .zshrc $(find .config -type f) )
+files=(
+	.zshrc
+	$(find .config -type f)
+	$(find .local -type f)
+)
 
 for file in ${files[@]}; do
 	[ $FORCE -eq 1 ] && cmd rm ~/"$file" 2> /dev/null
