@@ -3,6 +3,11 @@ _k_friendly_name=Activity Manager
 switch-to-activity-cbd78beb-1f8d-4cf5-8bbe-c6c3eff9a39c=none,none,Switch to activity "Default"
 
 [KDE Keyboard Layout Switcher]
+Switch keyboard layout to English (Carpalx, intl., with AltGr dead keys)=none,none,Switch keyboard layout to English (Carpalx\\, intl.\\, with AltGr dead keys)
+Switch keyboard layout to English (US, intl., AltGr Unicode combining)=none,none,Switch keyboard layout to English (US\\, intl.\\, AltGr Unicode combining)
+Switch keyboard layout to English (US, intl., with dead keys)=none,none,Switch keyboard layout to English (US\\, intl.\\, with dead keys)
+Switch keyboard layout to English (Western European AltGr dead keys)=none,none,Switch keyboard layout to English (Western European AltGr dead keys)
+Switch keyboard layout to English (intl., with AltGr dead keys)=none,none,Switch keyboard layout to English (intl.\\, with AltGr dead keys)
 Switch to Next Keyboard Layout=Meta+Alt+K,Meta+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=Keyboard Layout Switcher
 
@@ -202,11 +207,11 @@ view_zoom_out=Meta+-,Meta+-,Zoom Out
 
 [mediacontrol]
 _k_friendly_name=Media Controller
-mediavolumedown=none,none,Media volume down
-mediavolumeup=none,none,Media volume up
+mediavolumedown=none,,Media volume down
+mediavolumeup=none,,Media volume up
 nextmedia=Media Next,Media Next,Media playback next
 pausemedia=Media Pause,Media Pause,Pause media playback
-playmedia=none,none,Play media playback
+playmedia=none,,Play media playback
 playpausemedia=Media Play,Media Play,Play/Pause media playback
 previousmedia=Media Previous,Media Previous,Media playback previous
 stopmedia=Media Stop,Media Stop,Stop media playback
