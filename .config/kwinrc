@@ -9,6 +9,10 @@ Id_4=55ae01c4-edc6-4589-b223-0d591127b855
 Number=4
 Rows=1
 
+[NightColor]
+Active=true
+Mode=Constant
+
 [Tiling]
 padding=4
 
