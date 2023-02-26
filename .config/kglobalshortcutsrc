@@ -212,11 +212,11 @@ previousmedia=Media Previous,Media Previous,Media playback previous
 stopmedia=Media Stop,Media Stop,Stop media playback
 
 [org.flameshot.Flameshot.desktop]
-Capture=none,none,Take screenshot
+Capture=Meta+S,none,Take screenshot
 Configure=none,none,Configure
 Launcher=none,none,Open launcher
 _k_friendly_name=Flameshot
-_launch=Meta+S,none,Flameshot
+_launch=none,none,Flameshot
 
 [org.kde.dolphin.desktop]
 _k_friendly_name=Dolphin
