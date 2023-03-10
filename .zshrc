@@ -87,3 +87,14 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.config/emacs/bin"
 
 eval "$(starship init zsh)"
+
+function gotemp () {
+        cd /tmp
+        mkdir -p gotemp
+        cd gotemp
+	go mod init gotemp 2> /dev/null
+        if ! [ -f main.go ]; then
+                echo "package main\n\nfunc main() {\n\n}\n" > main.go
+        fi
+}
+
