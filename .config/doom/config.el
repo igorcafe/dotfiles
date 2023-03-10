@@ -77,3 +77,5 @@
 ;; they are implemented.
 
 (add-hook 'vue-mode-hook #'lsp!)
+
+(map! :i "C-c" #'evil-force-normal-state)
