@@ -10,7 +10,7 @@
     "": true,
     "**/.classpath": true,
     "**/.factorypath": true,
-    "**/.git": false,
+    "**/.git": true,
     "**/.project": true,
     "**/.settings": true
   },
@@ -142,5 +142,6 @@
   "[python]": {
     "editor.formatOnType": true
   },
-  "workbench.colorTheme": "Ayu Mirage Bordered"
+  "workbench.colorTheme": "Ayu Mirage Bordered",
+  "window.zoomLevel": 1
 }
