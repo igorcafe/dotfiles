@@ -515,11 +515,6 @@
     "command": "-workbench.action.gotoLine"
   },
   {
-    "key": "alt+h",
-    "command": "cursorWordLeft",
-    "when": "textInputFocus"
-  },
-  {
     "key": "ctrl+shift+alt+space",
     "command": "editor.action.triggerParameterHints",
     "when": "editorHasSignatureHelpProvider && editorTextFocus"
@@ -880,11 +875,6 @@
     "command": "wipcommiter.saveStageAndCommit"
   },
   {
-    "key": "alt+h",
-    "command": "cursorLeft",
-    "when": "textInputFocus"
-  },
-  {
     "key": "alt+g",
     "command": "editor.action.revealDefinition",
     "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
@@ -974,5 +964,23 @@
     "key": "ctrl+b",
     "command": "-markdown.extension.editing.toggleBold",
     "when": "editorTextFocus && !editorReadonly && editorLangId =~ /^markdown$|^rmd$|^qmd$/"
+  },
+  {
+    "key": "alt+h",
+    "command": "-gitlens.showQuickFileHistory",
+    "when": "!gitlens:disabled && config.gitlens.keymap == 'alternate'"
+  },
+  {
+    "key": "ctrl+alt+h",
+    "command": "workbench.action.replaceInFiles"
+  },
+  {
+    "key": "ctrl+shift+h",
+    "command": "-workbench.action.replaceInFiles"
+  },
+  {
+    "key": "alt+h",
+    "command": "editor.action.startFindReplaceAction",
+    "when": "editorFocus || editorIsOpen"
   }
 ]
