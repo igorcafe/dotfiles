@@ -24,6 +24,8 @@ files=(
 )
 
 for file in ${files[@]}; do
-	[ $FORCE -eq 1 ] && cmd rm ~/"$file" 2> /dev/null
+	if [ $FORCE -eq 1 ]; then
+		cmd rm ~/"$file" 2> /dev/null
+	fi
 	cmd ln -s "$wd/$file" ~/"$file"
 done
