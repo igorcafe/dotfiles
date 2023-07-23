@@ -9,16 +9,23 @@ vim.o.softtabstop = 4 -- TODO
 vim.o.shiftwidth = 4 -- TODO
 vim.o.hlsearch = false
 vim.o.signcolumn = "yes"
-vim.o.updatetime = 50
+vim.o.updatetime = 200
 vim.o.timeout = true
-vim.o.timeoutlen = 50
+vim.o.timeoutlen = 200
+vim.o.hidden = true
+vim.o.undofile = true
 
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<c-d>", "<c-d>zz")
 vim.keymap.set("n", "<c-u>", "<c-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
+
 vim.keymap.set("i", "<c-c>", "<esc>")
+vim.keymap.set("i", "<c-x>", "<esc>")
+vim.keymap.set("t", "<c-x>", "<c-\\><c-n>")
+vim.keymap.set("i", "jk", "<esc>")
+vim.keymap.set("t", "jk", "<c-\\><c-n>")
 
 vim.keymap.set("n", "<leader>y", "\"+y")
 vim.keymap.set("v", "<leader>y", "\"+y")
@@ -27,12 +34,10 @@ vim.keymap.set("v", "<leader>d", "\"_d")
 vim.keymap.set("v", "<leader>p", "\"0p")
 
 vim.keymap.set("n", "<leader><s-f>", "ggVG=<c-o>")
-vim.keymap.set("n", "<leader>ec", ":e $MYVIMRC<CR>")
+vim.keymap.set("n", "<leader>fp", ":e $MYVIMRC<CR>")
 vim.keymap.set("n", "<leader>hrc", ":so $MYVIMRC<CR>")
 vim.keymap.set("n", "<leader>bl", "<c-6>")
 vim.keymap.set("n", "<leader>hrr", ":so $MYVIMRC<CR>:PackerSync<CR>")
-vim.keymap.set("t", "<c-c>", "<c-\\><c-n>")
-vim.keymap.set("tn", "<c-c>", "<c-\\><c-n>")
 
 -- colorscheme
 require('ayu').setup({
@@ -49,10 +54,6 @@ require('packer').startup(function(use)
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
 	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
-	-- TODO undotree
-	--
-
-
 	use {
 		'VonHeikemen/lsp-zero.nvim',
 		branch = 'v2.x',
@@ -71,22 +72,18 @@ require('packer').startup(function(use)
 		}
 
 	}
+	use "folke/which-key.nvim"
+	use {"akinsho/toggleterm.nvim", tag = '*' }
+	use 'tpope/vim-fugitive'
+	use 'mbbill/undotree'
 	use {
-		"folke/which-key.nvim",
-		config = function()
-			require("which-key").setup {
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
-			}
-		end
-	}
-	use {
-		's1n7ax/nvim-terminal',
-		config = function()
-			vim.o.hidden = true
-			require('nvim-terminal').setup()
-		end
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons",
+			"MunifTanjim/nui.nvim",
+		}
 	}
 end)
 
@@ -106,6 +103,9 @@ cmp.setup({
 	}
 })
 
+-- which-key
+require("which-key")
+
 -- treesitter
 require('nvim-treesitter.configs').setup {
 	sync_install = false,
@@ -120,4 +120,24 @@ require('nvim-treesitter.configs').setup {
 -- telescope
 vim.keymap.set("n", "<c-p>", builtin.find_files)
 vim.keymap.set("n", "<leader><leader>", builtin.find_files)
-vim.keymap.set("n", "<leader>sk", builtin.keymaps)
+vim.keymap.set("n", "<leader>hk", builtin.keymaps)
+
+-- fugitive
+vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
+
+-- toggleterm
+require('toggleterm').setup({ persist_size = false })
+vim.keymap.set("n", "<M-t>", ":ToggleTerm size=200 9<CR>")
+vim.keymap.set("t", "<M-t>", "<c-\\><c-n>:ToggleTerm 9<CR>")
+vim.keymap.set("n", "<M-1>", ":ToggleTerm 1<CR>")
+vim.keymap.set("t", "<M-1>", "<c-\\><c-n>:ToggleTerm 1<CR>")
+vim.keymap.set("n", "<M-2>", ":ToggleTerm 2<CR>")
+vim.keymap.set("t", "<M-2>", "<c-\\><c-n>:ToggleTerm 2<CR>")
+vim.keymap.set("n", "<M-3>", ":ToggleTerm 3<CR>")
+vim.keymap.set("t", "<M-3>", "<c-\\><c-n>:ToggleTerm 3<CR>")
+
+-- undotree
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+
+-- neotree
+vim.keymap.set("n", "<leader>op", ":Neotree toggle<CR>")
