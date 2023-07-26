@@ -4,28 +4,28 @@ local builtin = require('telescope.builtin')
 vim.g.mapleader = " "
 vim.o.number = true
 vim.o.relativenumber = true
-vim.o.tabstop = 4 -- TODO
+vim.o.tabstop = 4     -- TODO
 vim.o.softtabstop = 4 -- TODO
-vim.o.shiftwidth = 4 -- TODO
+vim.o.shiftwidth = 4  -- TODO
 vim.o.hlsearch = false
 vim.o.signcolumn = "yes"
 vim.o.updatetime = 200
 vim.o.timeout = true
-vim.o.timeoutlen = 200
+vim.o.timeoutlen = 300
 vim.o.hidden = true
 vim.o.undofile = true
 
+vim.keymap.set("n", " ", "")
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<c-d>", "<c-d>zz")
 vim.keymap.set("n", "<c-u>", "<c-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
-vim.keymap.set("i", "<c-c>", "<esc>")
-vim.keymap.set("i", "<c-x>", "<esc>")
-vim.keymap.set("t", "<c-x>", "<c-\\><c-n>")
+vim.keymap.set("i", "<c-c>", "<nop>") -- bad habit :s
 vim.keymap.set("i", "jk", "<esc>")
 vim.keymap.set("t", "jk", "<c-\\><c-n>")
+vim.keymap.set("i", "<esc>", "<nop>")
 
 vim.keymap.set("n", "<leader>y", "\"+y")
 vim.keymap.set("v", "<leader>y", "\"+y")
@@ -51,31 +51,32 @@ require('packer').startup(function(use)
 	use 'Shatur/neovim-ayu'
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.2',
-		requires = { {'nvim-lua/plenary.nvim'} }
+		requires = { { 'nvim-lua/plenary.nvim' } }
 	}
-	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+	use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 	use {
 		'VonHeikemen/lsp-zero.nvim',
 		branch = 'v2.x',
 		requires = {
-			{'neovim/nvim-lspconfig'},
+			{ 'neovim/nvim-lspconfig' },
 			{
 				'williamboman/mason.nvim',
 				run = function()
 					pcall(vim.cmd, 'MasonUpdate')
 				end,
 			},
-			{'williamboman/mason-lspconfig.nvim'},
-			{'hrsh7th/nvim-cmp'},
-			{'hrsh7th/cmp-nvim-lsp'},
-			{'L3MON4D3/LuaSnip'},
+			{ 'williamboman/mason-lspconfig.nvim' },
+			{ 'hrsh7th/nvim-cmp' },
+			{ 'hrsh7th/cmp-nvim-lsp' },
+			{ 'L3MON4D3/LuaSnip' },
 		}
 
 	}
 	use "folke/which-key.nvim"
-	use {"akinsho/toggleterm.nvim", tag = '*' }
+	use { "akinsho/toggleterm.nvim", tag = '*' }
 	use 'tpope/vim-fugitive'
 	use 'mbbill/undotree'
+	use 'airblade/vim-gitgutter'
 	use {
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v3.x",
@@ -85,7 +86,13 @@ require('packer').startup(function(use)
 			"MunifTanjim/nui.nvim",
 		}
 	}
+	-- use 'jiangmiao/auto-pairs'
+	use 'itmammoth/doorboy.vim'
 end)
+
+-- gitgutter
+vim.keymap.set("n", "<space>gj", vim.cmd.GitGutterNextHunk)
+vim.keymap.set("n", "<leader>gk", vim.cmd.GitGutterPrevHunk)
 
 -- lsp
 local lsp = require('lsp-zero')
@@ -104,7 +111,7 @@ cmp.setup({
 })
 
 -- which-key
-require("which-key")
+require("which-key").setup()
 
 -- treesitter
 require('nvim-treesitter.configs').setup {
