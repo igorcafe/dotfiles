@@ -1,11 +1,7 @@
 {
   "tabnine.experimentalAutoImports": true,
   "git.autofetch": true,
-  "editor.fontSize": 16,
-  "debug.console.fontSize": 15,
-  "terminal.integrated.fontSize": 16,
   "editor.suggestSelection": "first",
-  "workbench.iconTheme": "material-icon-theme",
   "files.exclude": {
     "": true,
     "**/.classpath": true,
@@ -17,7 +13,6 @@
   "workbench.editor.pinnedTabSizing": "shrink",
   "workbench.editor.tabSizing": "shrink",
   "git.confirmSync": false,
-  "diffEditor.ignoreTrimWhitespace": false,
   "editor.rulers": [80, 120],
   "editor.codeActionsOnSave": {
     "source.fixAll": true
@@ -44,30 +39,55 @@
   "code-runner.clearPreviousOutput": true,
   "vim.smartRelativeLine": true,
   "vim.leader": " ",
+  "vim.timeout": 300,
   "vim.insertModeKeyBindingsNonRecursive": [
     {
-      "before": ["<M-f>"],
-      "commands": ["cursorWordEndRight"]
+      "before": ["j", "k"],
+      "after": ["<escape>"]
     },
     {
-      "before": ["<M-b>"],
-      "commands": ["cursorWordLeft"]
-    }
+      "before": ["<escape>"],
+      "after": ["<nop>"]
+    },
+    {
+      "before": ["<c-c>"],
+      "after": ["<nop>"]
+    },
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": ["<space>"],
-      "commands": ["whichkey.show"]
+      "before": ["<c-d>"],
+      "after": ["<c-d>", "z", "z"]
+    },
+    {
+      "before": ["<c-u>"],
+      "after": ["<c-u>", "z", "z"]
+    },
+    {
+      "before": ["<leader>t"],
+      "commands": ["workbench.action.terminal.toggleTerminal"]
+    },
+    {
+      "before": ["Y"],
+      "after": ["y", "$"]
     },
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
       "before": ["<space>"],
       "commands": ["whichkey.show"]
-    }
+    },
+    {
+      "before": ["j", "k"],
+      "after": ["<escape>"]
+    },
   ],
 
   "workbench.colorCustomizations": {
+
+    // "editor.foreground": "#fff",
+    // "editor.background": "#1a1a1a",
+		"editor.findMatchHighlightBorder": "#f00",
     "statusBar.background": "#A3BE8C",
     "statusBar.noFolderBackground": "#A3BE8C",
     "statusBar.debuggingBackground": "#A3BE8C",
@@ -87,7 +107,7 @@
   "[rust]": {
     "editor.formatOnSave": true
   },
-  "dart.debugExternalPackageLibraries": true,
+  "dart.debugExternalPackageLibraries": false,
   "dart.debugSdkLibraries": false,
   "editor.bracketPairColorization.enabled": false,
   "editor.guides.bracketPairs": "active",
@@ -142,6 +162,23 @@
   "[python]": {
     "editor.formatOnType": true
   },
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-11",
+      "path": "/usr/lib/jvm/java-11-openjdk",
+      "default": true
+    }
+  ],
+  "codeium.enableConfig": {
+    "*": true,
+    "java": false
+  },
+  "diffEditor.ignoreTrimWhitespace": false,
+  "workbench.iconTheme": "material-icon-theme",
+  "window.autoDetectColorScheme": true,
+  "workbench.preferredLightColorTheme": "Default Light Modern",
+  "workbench.preferredDarkColorTheme": "Ayu Mirage Bordered",
+  "window.autoDetectHighContrast": false,
   "workbench.colorTheme": "Ayu Mirage Bordered",
   "window.zoomLevel": 1
 }
