@@ -137,8 +137,7 @@ ForegroundVisited=15,203,245
 
 [General]
 BrowserApplication=google-chrome.desktop
-ColorScheme=MateriaManjaroDark
-ColorSchemeHash=8226d22b8dfe76a5c80def50e8a0f6c6344c5b3d
+ColorSchemeHash=f3d5a16757bc1c64d00111c20e75e5e5bd8b8812
 
 [Icons]
 Theme=Materia-Manjaro-Dark-2
@@ -165,7 +164,7 @@ Sort directories first=true
 Sort hidden files last=false
 Sort reversed=true
 Speedbar Width=138
-View Style=DetailTree
+View Style=Simple
 
 [KScreen]
 ScaleFactor=1.1875
