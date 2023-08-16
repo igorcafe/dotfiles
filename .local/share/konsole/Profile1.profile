@@ -1,6 +1,10 @@
 [Appearance]
+AntiAliasFonts=true
+BoldIntense=true
 DimmValue=72
-Font=Hack,14,-1,7,50,0,0,0,0,0
+Font=Hack [SRC],14,-1,5,50,0,0,0,0,0
+UseFontLineChararacters=false
+WordModeAscii=false
 
 [General]
 DimWhenInactive=true
