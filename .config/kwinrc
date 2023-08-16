@@ -12,7 +12,7 @@ Rows=1
 [NightColor]
 Active=true
 Mode=Constant
-NightTemperature=4100
+NightTemperature=3300
 
 [Plugins]
 slideEnabled=false
@@ -26,9 +26,23 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 [Tiling][213a9620-187e-58a6-b80b-85d8fb95dfce]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
+[Tiling][44bea82b-2de0-5111-957d-06ed811de8d0]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][58ca410b-ce44-58d6-82b9-fefe44aba0e3]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][689ba54f-21f1-56d3-9a0b-df562854c452]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][b0c7a45a-a146-57a7-9e81-085e727bb096]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
 [Xwayland]
 Scale=1.19921875
 
 [org.kde.kdecoration2]
+BorderSize=Tiny
+BorderSizeAuto=false
 library=org.kde.bismuth.decoration
 theme=Bismuth
