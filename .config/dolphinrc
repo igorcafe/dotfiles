@@ -9,9 +9,18 @@ RememberOpenedTabs=false
 Version=202
 ViewPropsTimestamp=2023,2,25,0,25,17.339
 
+[IconsMode]
+PreviewSize=96
+
 [KFileDialog Settings]
 Places Icons Auto-resize=false
 Places Icons Static Size=22
+
+[KPropertiesDialog]
+1617x909 screen: Height=616
+1617x909 screen: Width=438
+1920x1080 screen: Height=688
+1920x1080 screen: Width=540
 
 [MainWindow]
 MenuBar=Disabled
