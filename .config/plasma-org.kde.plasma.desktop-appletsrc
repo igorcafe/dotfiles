@@ -20,8 +20,8 @@ plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
 [Containments][1][ConfigDialog]
-DialogHeight=824
-DialogWidth=1600
+DialogHeight=1050
+DialogWidth=1914
 
 [Containments][1][General]
 ToolBoxButtonState=topcenter
@@ -75,9 +75,12 @@ DialogWidth=920
 
 [Containments][2][Applets][28][Configuration][General]
 boldFont=false
+capitalFont=false
 containmentType=Plasma
 lengthFirstMargin=12
 lengthLastMargin=12
+lengthPolicy=Maximum
+maximumLength=428
 showIcon=false
 style=Title
 
@@ -98,6 +101,14 @@ global=Alt+F1
 
 [Containments][2][Applets][3][Shortcuts]
 global=Alt+F1
+
+[Containments][2][Applets][30]
+immutability=1
+plugin=org.kde.plasma.icon
+
+[Containments][2][Applets][30][Configuration]
+localPath=/home/igor/.local/share/plasma_icons/5.mp4.desktop
+url=file:///home/igor/Downloads/Jujutsu Kaisen 2nd Season - 05 (720p)(Multiple Subtitle)(5F66D924)-Erai-raws[TGx]/5.mp4
 
 [Containments][2][Applets][4]
 immutability=1
@@ -120,6 +131,7 @@ DialogHeight=690
 DialogWidth=920
 
 [Containments][2][Applets][5][Configuration][General]
+indicateAudioStreams=false
 launchers=
 
 [Containments][2][Applets][6]
@@ -139,7 +151,16 @@ DialogHeight=86
 DialogWidth=1920
 
 [Containments][2][General]
-AppletOrder=3;4;28;23;5;24;6;7;18
+AppletOrder=3;4;28;23;5;24;30;6;7;18
+
+[Containments][29]
+activityId=cbd78beb-1f8d-4cf5-8bbe-c6c3eff9a39c
+formfactor=0
+immutability=1
+lastScreen=1
+location=0
+plugin=org.kde.plasma.folder
+wallpaperplugin=org.kde.image
 
 [Containments][8]
 activityId=
@@ -149,7 +170,7 @@ lastScreen=0
 location=3
 plugin=org.kde.plasma.private.systemtray
 popupHeight=576
-popupWidth=576
+popupWidth=577
 wallpaperplugin=org.kde.image
 
 [Containments][8][Applets][10][Configuration]
@@ -159,6 +180,9 @@ PreloadWeight=42
 immutability=1
 plugin=org.kde.plasma.keyboardindicator
 
+[Containments][8][Applets][11][Configuration]
+PreloadWeight=55
+
 [Containments][8][Applets][12]
 immutability=1
 plugin=org.kde.plasma.vault
@@ -166,6 +190,9 @@ plugin=org.kde.plasma.vault
 [Containments][8][Applets][13]
 immutability=1
 plugin=org.kde.plasma.devicenotifier
+
+[Containments][8][Applets][13][Configuration]
+PreloadWeight=100
 
 [Containments][8][Applets][14]
 immutability=1
@@ -185,6 +212,9 @@ migrated=true
 immutability=1
 plugin=org.kde.kscreen
 
+[Containments][8][Applets][16][Configuration]
+PreloadWeight=60
+
 [Containments][8][Applets][17]
 immutability=1
 plugin=org.kde.plasma.keyboardlayout
@@ -201,14 +231,14 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][8][Applets][21][Configuration]
-PreloadWeight=60
+PreloadWeight=100
 
 [Containments][8][Applets][22]
 immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][8][Applets][22][Configuration]
-PreloadWeight=60
+PreloadWeight=100
 
 [Containments][8][Applets][25]
 immutability=1
@@ -225,12 +255,15 @@ plugin=org.kde.plasma.clipboard
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
+[Containments][8][Applets][27][Configuration]
+PreloadWeight=100
+
 [Containments][8][Applets][9]
 immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][8][Applets][9][Configuration]
-PreloadWeight=55
+PreloadWeight=60
 
 [Containments][8][ConfigDialog]
 DialogHeight=690
@@ -244,3 +277,4 @@ shownItems=org.kde.plasma.nightcolorcontrol
 
 [ScreenMapping]
 itemsOnDisabledScreens=
+screenMapping=
