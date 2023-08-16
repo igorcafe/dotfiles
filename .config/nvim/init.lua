@@ -53,7 +53,7 @@ require('packer').startup(function(use)
 		'nvim-telescope/telescope.nvim', tag = '0.1.2',
 		requires = { { 'nvim-lua/plenary.nvim' } }
 	}
-	use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
+	use 'nvim-treesitter/nvim-treesitter'
 	use {
 		'VonHeikemen/lsp-zero.nvim',
 		branch = 'v2.x',
@@ -88,6 +88,15 @@ require('packer').startup(function(use)
 	}
 	-- use 'jiangmiao/auto-pairs'
 	use 'itmammoth/doorboy.vim'
+	use 'ray-x/lsp_signature.nvim'
+	use({
+		"kylechui/nvim-surround",
+		tag = "*",
+		config = function()
+			require("nvim-surround").setup({})
+		end
+	})
+	use 'jose-elias-alvarez/null-ls.nvim'
 end)
 
 -- gitgutter
@@ -109,6 +118,16 @@ cmp.setup({
 		['<C-Space>'] = cmp.mapping.complete(),
 	}
 })
+
+require('lsp_signature').setup({
+	bind = true,
+	handler_opts = {
+		border = "rounded"
+	}
+})
+
+-- null-ls
+local null_ls = require('null-ls')
 
 -- which-key
 require("which-key").setup()
