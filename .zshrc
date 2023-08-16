@@ -19,8 +19,8 @@ ZSH_HIGHLIGHT_STYLES[builtin]="fg=cyan,bold"
 ZSH_HIGHLIGHT_STYLES[command]="fg=cyan,bold"
 ZSH_HIGHLIGHT_STYLES[function]="fg=cyan,bold"
 ZSH_HIGHLIGHT_STYLES[alias]="fg=cyan,bold"
-ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=black,bold"
-ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=black,bold"
+# ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=black,bold"
+# ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=black,bold"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -85,6 +85,10 @@ export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.config/emacs/bin"
+export PATH="$PATH:$HOME/.nimble/bin"
+export PATH="$PATH:/opt/flutter/bin"
+
+CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
 
 eval "$(starship init zsh)"
 
@@ -98,3 +102,6 @@ function gotemp () {
         fi
 }
 
+source /usr/share/nvm/init-nvm.sh
+
+if [ -e /home/igor/.nix-profile/etc/profile.d/nix.sh ]; then . /home/igor/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
