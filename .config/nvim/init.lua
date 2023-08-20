@@ -1,4 +1,3 @@
-local builtin = require('telescope.builtin')
 
 -- sets
 vim.g.mapleader = " "
@@ -22,10 +21,11 @@ vim.keymap.set("n", "<c-u>", "<c-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
-vim.keymap.set("i", "<c-c>", "<nop>") -- bad habit :s
+-- vim.keymap.set("i", "<c-c>", "<nop>") -- bad habit :s
+-- vim.keymap.set("i", "<esc>", "<nop>")
+vim.keymap.set("i", "<c-c>", "<esc>")
 vim.keymap.set("i", "jk", "<esc>")
 vim.keymap.set("t", "jk", "<c-\\><c-n>")
-vim.keymap.set("i", "<esc>", "<nop>")
 
 vim.keymap.set("n", "<leader>y", "\"+y")
 vim.keymap.set("v", "<leader>y", "\"+y")
@@ -38,12 +38,6 @@ vim.keymap.set("n", "<leader>fp", ":e $MYVIMRC<CR>")
 vim.keymap.set("n", "<leader>hrc", ":so $MYVIMRC<CR>")
 vim.keymap.set("n", "<leader>bl", "<c-6>")
 vim.keymap.set("n", "<leader>hrr", ":so $MYVIMRC<CR>:PackerSync<CR>")
-
--- colorscheme
-require('ayu').setup({
-	mirage = true
-})
-vim.cmd.colorscheme('ayu')
 
 -- packer
 require('packer').startup(function(use)
@@ -98,6 +92,16 @@ require('packer').startup(function(use)
 	})
 	use 'jose-elias-alvarez/null-ls.nvim'
 end)
+
+
+-- colorscheme
+require('ayu').setup({
+	mirage = true
+})
+vim.cmd.colorscheme('ayu')
+
+-- telescope
+local builtin = require('telescope.builtin')
 
 -- gitgutter
 vim.keymap.set("n", "<space>gj", vim.cmd.GitGutterNextHunk)
