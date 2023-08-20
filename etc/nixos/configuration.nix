@@ -98,6 +98,8 @@
       kcalc
       signal-desktop
       git
+	  gcc
+	  sqlite
     ];
   };
 
