@@ -109,20 +109,20 @@
 
   nix = {
     package = pkgs.nixFlakes;
-    extraOptions = "experimental-features = nix-command flakes";
+	extraOptions = "experimental-features = nix-command flakes";
   };
 
-  #programs.steam = {
-  #  enable = true;
-  #  remotePlay.openFirewall = true;
-  #  dedicatedServer.openFirewall = true;
-  #};
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
 
-  #nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-  #  "steam"
-  #  "steam-original"
-  #  "steam-run"
-  #];
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "steam"
+    "steam-original"
+    "steam-run"
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
 
