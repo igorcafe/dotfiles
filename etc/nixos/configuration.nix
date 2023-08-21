@@ -99,7 +99,9 @@
 			signal-desktop
 			git
 			gcc
+			go
 			sqlite
+			vlc
 		];
 	};
 
