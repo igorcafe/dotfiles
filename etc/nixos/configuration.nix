@@ -102,6 +102,11 @@
 			go
 			sqlite
 			vlc
+			gimp
+			ffmpeg
+			obs-studio
+			spectacle
+			kdenlive
 		];
 	};
 
