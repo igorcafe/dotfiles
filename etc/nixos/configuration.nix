@@ -107,13 +107,16 @@
 			obs-studio
 			spectacle
 			kdenlive
+			unzip
+			stremio
+			insomnia
 		];
 	};
 
 	# To search, run: $ nix search wget
 	environment.systemPackages = with pkgs; [
+		ncdu
 		neovim
-		unzip
 	];
 
 	nix = {
