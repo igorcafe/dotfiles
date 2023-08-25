@@ -9,6 +9,61 @@
 		./hardware-configuration.nix
 	];
 
+	#packages
+
+	nixpkgs.config.allowUnfree = true;
+
+	users.users.user = {
+		isNormalUser = true;
+		description = "user";
+		extraGroups = [ "networkmanager" "wheel" ];
+		packages = with pkgs; [
+			firefox
+			kate
+			google-chrome
+			telegram-desktop
+			gnome.cheese
+			vscode
+			kcalc
+			signal-desktop
+			git
+			gcc
+			go
+			sqlite
+			vlc
+			gimp
+			ffmpeg
+			obs-studio
+			spectacle
+			kdenlive
+			unzip
+			stremio
+			insomnia
+		];
+	};
+
+	environment.systemPackages = with pkgs; [
+		ncdu
+		neovim
+	];
+
+	nix = {
+		package = pkgs.nixFlakes;
+		extraOptions = "experimental-features = nix-command flakes";
+	};
+
+	programs.steam = {
+		enable = true;
+		remotePlay.openFirewall = true;
+		dedicatedServer.openFirewall = true;
+	};
+
+	nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+		"steam"
+		"steam-original"
+		"steam-run"
+	];
+
 	# Bootloader.
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
@@ -81,60 +136,6 @@
 
 	# Enable touchpad support (enabled default in most desktopManager).
 	# services.xserver.libinput.enable = true;
-
-	nixpkgs.config.allowUnfree = true;
-
-	users.users.user = {
-		isNormalUser = true;
-		description = "user";
-		extraGroups = [ "networkmanager" "wheel" ];
-		packages = with pkgs; [
-			firefox
-			kate
-			google-chrome
-			telegram-desktop
-			gnome.cheese
-			vscode
-			kcalc
-			signal-desktop
-			git
-			gcc
-			go
-			sqlite
-			vlc
-			gimp
-			ffmpeg
-			obs-studio
-			spectacle
-			kdenlive
-			unzip
-			stremio
-			insomnia
-		];
-	};
-
-	# To search, run: $ nix search wget
-	environment.systemPackages = with pkgs; [
-		ncdu
-		neovim
-	];
-
-	nix = {
-		package = pkgs.nixFlakes;
-		extraOptions = "experimental-features = nix-command flakes";
-	};
-
-	programs.steam = {
-		enable = true;
-		remotePlay.openFirewall = true;
-		dedicatedServer.openFirewall = true;
-	};
-
-	nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-		"steam"
-		"steam-original"
-		"steam-run"
-	];
 
 	# Some programs need SUID wrappers, can be configured further or are
 
