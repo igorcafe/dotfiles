@@ -39,6 +39,9 @@
 			unzip
 			stremio
 			insomnia
+			lsd
+			fzf
+			zoxide
 		];
 	};
 
