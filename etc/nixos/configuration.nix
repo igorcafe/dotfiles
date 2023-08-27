@@ -15,6 +15,7 @@
 	nixpkgs.config.allowUnfree = true;
 
 	users.users.user.isNormalUser = true;
+	home-manager.useGlobalPkgs = true;
 	home-manager.users.user = { pkgs, ... }: {
 		home.stateVersion = "18.09";
 		home.packages = with pkgs; [
