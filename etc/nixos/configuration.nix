@@ -46,6 +46,19 @@
 		];
 	};
 
+	programs.zsh = {
+		enable = true;
+		ohMyZsh = {
+			enable = true;
+			plugins = [
+				"git"
+				"colored-man-pages"
+				"sudo"
+			];
+			theme = "robbyrussell";
+		};
+	};
+
 	environment.systemPackages = with pkgs; [
 		ncdu
 		neovim
