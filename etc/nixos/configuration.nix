@@ -53,8 +53,14 @@
 			lsd
 			fzf
 			zoxide
+			retroarchFull
 		];
 	};
+
+	environment.systemPackages = with pkgs; [
+		ncdu
+		neovim
+	];
 
 	programs.zsh = {
 		enable = true;
