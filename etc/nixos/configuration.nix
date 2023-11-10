@@ -10,11 +10,21 @@
 		<home-manager/nixos>
 	];
 
+	hardware.opengl.extraPackages = with pkgs; [
+		intel-compute-runtime
+	];
+	hardware.bluetooth.enable = true;
+	#services.blueman.enable = true;
+
 	#packages
 
 	nixpkgs.config.allowUnfree = true;
 
-	users.users.user.isNormalUser = true;
+	users.users.user = {
+		isNormalUser = true;
+		extraGroups = [ "wheel" "docker" ];
+	};
+
 	home-manager.useGlobalPkgs = true;
 	home-manager.users.user = { pkgs, ... }: {
 		home.stateVersion = "18.09";
