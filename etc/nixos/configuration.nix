@@ -54,6 +54,18 @@
 			fzf
 			zoxide
 			retroarchFull
+			audacity
+			godot
+			golangci-lint
+			htop
+			musescore
+			nodejs
+			p7zip
+			python3
+			qbittorrent
+			tealdeer
+			unrar
+			vulkan
 		];
 	};
 
