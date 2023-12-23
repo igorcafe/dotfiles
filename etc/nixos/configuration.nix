@@ -49,7 +49,7 @@
       zoxide
       retroarchFull
       audacity
-      godot
+      godot3
       golangci-lint
       htop
       musescore
@@ -65,6 +65,9 @@
       calibre
       qpwgraph
       rlwrap
+      clonehero
+      xonotic
+      jq
     ];
   };
 
