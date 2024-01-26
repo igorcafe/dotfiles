@@ -72,7 +72,6 @@
       calibre
       qpwgraph
       rlwrap
-      clonehero
       xonotic
       jq
     ];
