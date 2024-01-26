@@ -44,7 +44,7 @@
       go
       vlc
       gimp
-      ffmpeg
+      ffmpeg_6-full
       obs-studio
       spectacle
       kdenlive
