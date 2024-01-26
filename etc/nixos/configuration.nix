@@ -11,7 +11,14 @@
   ];
 
   hardware.opengl.extraPackages = with pkgs; [ intel-compute-runtime ];
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        ControllerMode = "bredr";
+      };
+    };
+  };
 
   nixpkgs.config.allowUnfree = true;
 
