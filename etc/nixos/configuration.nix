@@ -79,7 +79,7 @@
 
   virtualisation.docker.enable = true;
 
-  environment.systemPackages = with pkgs; [ ncdu neovim ];
+  environment.systemPackages = with pkgs; [ ncdu neovim gnumake ];
 
   programs.zsh = {
     enable = true;
