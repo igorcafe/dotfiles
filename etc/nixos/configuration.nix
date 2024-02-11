@@ -43,6 +43,35 @@
   home-manager.useGlobalPkgs = true;
   home-manager.users.user = { pkgs, ... }: {
     home.stateVersion = "18.09";
+
+    programs.zsh = {
+      enable = true;
+      enableAutosuggestions = true;
+      enableCompletion = true;
+      shellAliases = {
+        update = "sudo nixos-rebuild switch";
+        upgrade = "sudo nixos-rebuild --upgrade boot";
+        ffmpeg = "ffmpeg -hide_banner -loglevel error -stats";
+        ffplay = "ffplay -hide_banner";
+        ffprobe = "ffprobe -hide_banner";
+      };
+      zplug = {
+        enable = true;
+        plugins = [
+          { name = "plugins/git"; tags = [ from:oh-my-zsh ]; }
+          { name = "plugins/colored-man-pages"; tags = [ from:oh-my-zsh ]; }
+          { name = "plugins/sudo"; tags = [ from:oh-my-zsh ]; }
+          { name = "themes/robbyrussell"; tags = [ from:oh-my-zsh ]; }
+          { name = "zsh-users/zsh-autosuggestions"; }
+          { name = "zsh-users/zsh-syntax-highlighting"; }
+        ];
+      };
+      initExtra = ''
+      bindkey "^[[1;5C" forward-word
+      bindkey "^[[1;5D" backward-word
+      '';
+    };
+
     home.packages = with pkgs; [
       firefox
       kate
@@ -95,13 +124,11 @@
 
   environment.systemPackages = with pkgs; [ ncdu neovim gnumake ];
 
+  users.defaultUserShell = pkgs.zsh;
+  users.users.user.shell = pkgs.zsh;
+
   programs.zsh = {
     enable = true;
-    ohMyZsh = {
-      enable = true;
-      plugins = [ "git" "colored-man-pages" "sudo" ];
-      theme = "robbyrussell";
-    };
   };
 
   #programs.vscode = {
