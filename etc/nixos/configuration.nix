@@ -69,6 +69,11 @@
       initExtra = ''
       bindkey "^[[1;5C" forward-word
       bindkey "^[[1;5D" backward-word
+
+      gotemp () {
+        d=/tmp/gotemp-$RANDOM
+        mkdir $d && cd $d && echo "package main\n\nfunc main() {\n\t\n}\n" > main.go
+      }
       '';
     };
 
