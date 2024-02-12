@@ -7,7 +7,6 @@ DISABLE_MAGIC_FUNCTIONS="true"
 plugins=(
   git
   colored-man-pages
-  # dirhistory
   sudo
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -55,7 +54,7 @@ alias ll="lsd -l"
 alias lal="lsd -al"
 
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_COMPLETION_TRIGGER='@@'
 FZF_BAT="--preview='bat {} --style=numbers --color=always --line-range :200'"
 export FZF_DEFAULT_OPTS="--extended --height 100% --layout=reverse --border"
@@ -88,20 +87,20 @@ export PATH="$PATH:$HOME/.config/emacs/bin"
 export PATH="$PATH:$HOME/.nimble/bin"
 export PATH="$PATH:/opt/flutter/bin"
 
-CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
+CHROME_EXECUTABLE=$(which google-chrome-stable)
 
-eval "$(starship init zsh)"
+#eval "$(starship init zsh)"
 
 function gotemp () {
-        cd /tmp
-        mkdir -p gotemp
-        cd gotemp
+	cd /tmp
+	mkdir -p gotemp
+	cd gotemp
 	go mod init gotemp 2> /dev/null
-        if ! [ -f main.go ]; then
-                echo "package main\n\nfunc main() {\n\n}\n" > main.go
-        fi
+	if ! [ -f main.go ]; then
+		echo "package main\n\nfunc main() {\n\n}\n" > main.go
+	fi
 }
 
-source /usr/share/nvm/init-nvm.sh
+#source /usr/share/nvm/init-nvm.sh
 
 if [ -e /home/igor/.nix-profile/etc/profile.d/nix.sh ]; then . /home/igor/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
