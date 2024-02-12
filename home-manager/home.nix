@@ -56,7 +56,6 @@
       lsd
       fzf
       zoxide
-      retroarchFull
       audacity
       godot3
       golangci-lint
@@ -68,7 +67,6 @@
       qbittorrent
       tealdeer
       unrar
-      nixfmt
       sqlite
       appimage-run
       calibre
