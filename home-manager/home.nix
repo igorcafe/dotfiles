@@ -76,6 +76,11 @@
       jq
       postman
       nixpkgs-fmt
+      pgcli
+      yt-dlp
+      asdf-vm
+      rnix-lsp
+      google-cloud-sdk
     ];
   };
 
