@@ -82,7 +82,37 @@
   programs.vscode = {
     enable = true;
     enableUpdateCheck = false;
-    extensions = with pkgs.vscode-extensions; [ vscodevim.vim ];
+    extensions = with pkgs.vscode-extensions; [
+      jnoortheen.nix-ide
+      vscodevim.vim
+      eamodio.gitlens
+      golang.go
+    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+      {
+        name = "reload";
+        publisher = "natqe";
+        version = "0.0.6";
+        sha256 = "bTFLk3sCJb7ztkC/Cxci6n7RbcyNjEYNKREUf9wDQRU=";
+      }
+      {
+        name = "vscode-go-template";
+        publisher = "jinliming2";
+        version = "0.2.1";
+        sha256 = "kvWaSuE4O98fXU+EKkplFI0Cfy2I7IiJ0/hXrVsk+6g=";
+      }
+      {
+        name = "ayu";
+        publisher = "teabyii";
+        version = "1.0.5";
+        sha256 = "+IFqgWliKr+qjBLmQlzF44XNbN7Br5a119v9WAnZOu4=";
+      }
+      {
+        name = "material-icon-theme";
+        publisher = "PKief";
+        version = "4.33.0";
+        sha256 = "Rwpc5p7FOSodGa1WWrjgkexzAp8RlgZCYBXhep1G5Pk=";
+      }
+    ];
     keybindings = [
       {
         key = "ctrl+shift+c";
