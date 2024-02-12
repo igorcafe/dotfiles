@@ -10,12 +10,27 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, ...  }: {
-    # 'nixos-rebuild --flake .#nixos'
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
+  in {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
         system = "x86_64-linux";
         modules = [ ./configuration.nix ];
+      };
+    };
+
+    homeConfigurations = {
+      "user@nixos" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./home.nix];
       };
     };
   };

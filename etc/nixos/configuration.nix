@@ -7,7 +7,6 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    <home-manager/nixos>
   ];
 
   hardware.opengl.extraPackages = with pkgs; [ intel-compute-runtime ];
@@ -20,109 +19,9 @@
     };
   };
 
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [
-    (final: prev: {
-      postman = prev.postman.overrideAttrs(old: rec {
-        version = "20230716100528";
-        src = final.fetchurl {
-          url = "https://web.archive.org/web/${version}/https://dl.pstmn.io/download/latest/linux_64";
-          sha256 = "sha256-svk60K4pZh0qRdx9+5OUTu0xgGXMhqvQTGTcmqBOMq8=";
-
-          name = "${old.pname}-${version}.tar.gz";
-        };
-      });
-    })
-  ];
-
   users.users.user = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
-  };
-
-  home-manager.useGlobalPkgs = true;
-  home-manager.users.user = { pkgs, ... }: {
-    home.stateVersion = "18.09";
-
-    programs.zsh = {
-      enable = true;
-      enableAutosuggestions = true;
-      enableCompletion = true;
-      shellAliases = {
-        update = "sudo nixos-rebuild switch";
-        upgrade = "sudo nixos-rebuild --upgrade boot";
-        ffmpeg = "ffmpeg -hide_banner -loglevel error -stats";
-        ffplay = "ffplay -hide_banner";
-        ffprobe = "ffprobe -hide_banner";
-      };
-      zplug = {
-        enable = true;
-        plugins = [
-          { name = "plugins/git"; tags = [ from:oh-my-zsh ]; }
-          { name = "plugins/colored-man-pages"; tags = [ from:oh-my-zsh ]; }
-          { name = "plugins/sudo"; tags = [ from:oh-my-zsh ]; }
-          { name = "themes/robbyrussell"; tags = [ from:oh-my-zsh ]; }
-          { name = "zsh-users/zsh-autosuggestions"; }
-          { name = "zsh-users/zsh-syntax-highlighting"; }
-        ];
-      };
-      initExtra = ''
-      bindkey "^[[1;5C" forward-word
-      bindkey "^[[1;5D" backward-word
-
-      gotemp () {
-        d=/tmp/gotemp-$RANDOM
-        mkdir $d && cd $d && echo "package main\n\nfunc main() {\n\t\n}\n" > main.go
-      }
-      '';
-    };
-
-    home.packages = with pkgs; [
-      firefox
-      kate
-      google-chrome
-      telegram-desktop
-      gnome.cheese
-      vscode
-      kcalc
-      signal-desktop
-      git
-      gcc
-      go
-      vlc
-      gimp
-      ffmpeg_6-full
-      obs-studio
-      spectacle
-      kdenlive
-      unzip
-      stremio
-      insomnia
-      lsd
-      fzf
-      zoxide
-      retroarchFull
-      audacity
-      godot3
-      golangci-lint
-      htop
-      musescore
-      nodejs
-      p7zip
-      python3
-      qbittorrent
-      tealdeer
-      unrar
-      nixfmt
-      sqlite
-      appimage-run
-      calibre
-      qpwgraph
-      rlwrap
-      xonotic
-      jq
-      postman
-    ];
   };
 
   virtualisation.docker.enable = true;
@@ -133,16 +32,12 @@
   users.users.user.userDefaultShell = true;
   programs.zsh.enable = true;
 
-  #programs.vscode = {
-  #	enable = true;
-  #	extensions = with pkgs.vscode-extensions; [
-  #		vscodevim.vim
-  #	];
-  #};
-
   nix = {
     package = pkgs.nixFlakes;
-    extraOptions = "experimental-features = nix-command flakes";
+    settings = {
+      experimental-features = "nix-command flakes";
+      auto-optimise-store = true;
+    };
   };
 
   programs.steam = {
@@ -151,8 +46,6 @@
     dedicatedServer.openFirewall = true;
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "steam" "steam-original" "steam-run" ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
