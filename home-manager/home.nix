@@ -173,6 +173,7 @@
       "nix.enableLanguageServer" = true;
       "[nix]" = {
         "editor.defaultFormatter" = "jnoortheen.nix-ide";
+        "editor.formatOnSave" = true;
       };
 
       "files.trimTrailingWhitespace" = true;
