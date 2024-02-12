@@ -19,6 +19,8 @@
     };
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   users.users.user = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
@@ -29,7 +31,6 @@
   environment.systemPackages = with pkgs; [ ncdu neovim gnumake ];
 
   users.defaultUserShell = pkgs.zsh;
-  users.users.user.userDefaultShell = true;
   programs.zsh.enable = true;
 
   nix = {
