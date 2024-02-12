@@ -22,7 +22,7 @@
       nixos = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         system = "x86_64-linux";
-        modules = [ ./configuration.nix ];
+        modules = [ ./nixos/configuration.nix ];
       };
     };
 
@@ -30,7 +30,7 @@
       "user@nixos" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./home.nix];
+        modules = [./home-manager/home.nix];
       };
     };
   };

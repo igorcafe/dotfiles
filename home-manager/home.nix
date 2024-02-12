@@ -197,8 +197,8 @@
     enableAutosuggestions = true;
     enableCompletion = true;
     shellAliases = {
-      updatesys = "sudo nixos-rebuild switch --flake ~/Git/dotfiles/etc/nixos";
-      updatehome = "home-manager switch -b backup --flake ~/Git/dotfiles/etc/nixos";
+      updatesys = "sudo nixos-rebuild switch --flake ~/Git/dotfiles";
+      updatehome = "home-manager switch -b backup --flake ~/Git/dotfiles";
       ffmpeg = "ffmpeg -hide_banner -loglevel error -stats";
       ffplay = "ffplay -hide_banner";
       ffprobe = "ffprobe -hide_banner";
