@@ -81,7 +81,17 @@
     ];
   };
 
-  programs.git.enable = true;
+  programs.git = {
+    enable = true;
+    extraConfig = {
+      url = {
+        "git@github.com:" = {
+          insteadOf = "https://github.com/";
+        };
+      };
+    };
+  };
+
   programs.home-manager.enable = true;
 
   programs.zsh = {
