@@ -99,8 +99,8 @@
     enableAutosuggestions = true;
     enableCompletion = true;
     shellAliases = {
-      update = "sudo nixos-rebuild switch";
-      upgrade = "sudo nixos-rebuild --upgrade boot";
+      updatesys = "sudo nixos-rebuild switch --flake ~/Git/dotfiles/etc/nixos";
+      updatehome = "home-manager switch --flake ~/Git/dotfiles/etc/nixos";
       ffmpeg = "ffmpeg -hide_banner -loglevel error -stats";
       ffplay = "ffplay -hide_banner";
       ffprobe = "ffprobe -hide_banner";
