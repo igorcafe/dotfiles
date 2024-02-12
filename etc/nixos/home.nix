@@ -6,6 +6,7 @@
   ...
 }: {
   nixpkgs = {
+
     overlays = [
       (final: prev: {
         postman = prev.postman.overrideAttrs(old: rec {
@@ -21,7 +22,7 @@
     ];
 
     config = {
-      nixpkgs.config.allowUnfree = true;
+      allowUnfree = true;
       allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "steam" "steam-original" "steam-run" ];
     };
   };
@@ -31,7 +32,7 @@
   home = {
     username = "user";
     homeDirectory = "/home/user";
-    stateVersion = "18.09";
+    stateVersion = "23.11";
 
     packages = with pkgs; [
       firefox
