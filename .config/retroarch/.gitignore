@@ -8,6 +8,7 @@ autoconfig/
 cores/*.info
 
 # core binaries
+# online updater -> download core
 cores/*.so
 
 # online updater -> update cheats
@@ -23,8 +24,7 @@ database/rdb/
 system/dolphin-emu/
 shaders/shaders_glsl/
 
-# i believe 'saves' are save states and and 'states' are in game cartridge saves
-# you could version them but github won't like it
+# i believe 'saves' are save states and and 'states' are cartridge saves
 states/
 saves/
 
@@ -34,7 +34,7 @@ content_image_history.lpl
 content_music_history.lpl
 playlists/logs/
 
-# core system files that are usually unfree or can be downloaded through 
+# core system files that are usually unfree or can be downloaded through
 # online updater -> core system files downloader
 system/
 
