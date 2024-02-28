@@ -11,13 +11,13 @@
     {
       "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/007 - The World Is Not Enough (USA).zip#007 - The World Is Not Enough (USA).n64",
       "label": "007 - The World Is Not Enough (USA)",
-      "core_path": "/home/user/Git/dotfiles/.config/retroarch/cores/mupen64plus_next_libretro.so",
+      "core_path": "/home/user/.config/retroarch/cores/mupen64plus_next_libretro.so",
       "core_name": "Nintendo - Nintendo 64 (Mupen64Plus-Next)",
       "crc32": "34F0EE5B|crc",
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/1080 TenEighty Snowboarding (Japan, USA) (En,Ja).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/1080 TenEighty Snowboarding (Japan, USA) (En,Ja).n64",
       "label": "1080 Snowboarding (Japan, USA) (En,Ja)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -137,7 +137,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Banjo-Kazooie (USA) (Rev A).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Banjo-Kazooie (USA) (Rev A).n64",
       "label": "Banjo-Kazooie (USA) (Rev 1)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -257,7 +257,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Bomberman 64 - The Second Attack! (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Bomberman 64 - The Second Attack! (USA).n64",
       "label": "Bomberman 64 - The Second Attack! (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -273,7 +273,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Bomberman Hero (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Bomberman Hero (USA).n64",
       "label": "Bomberman Hero (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -369,7 +369,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Castlevania (USA) (Rev B).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Castlevania (USA) (Rev B).n64",
       "label": "Castlevania (USA) (Rev 2)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -385,7 +385,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Castlevania - Legacy of Darkness (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Castlevania - Legacy of Darkness (USA).n64",
       "label": "Castlevania - Legacy of Darkness (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -425,7 +425,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Charlie Blast's Territory (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Charlie Blast's Territory (USA).n64",
       "label": "Charlie Blast's Territory (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -641,7 +641,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Duke Nukem - Zero Hour (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Duke Nukem - Zero Hour (USA).n64",
       "label": "Duke Nukem - Zero Hour (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -713,7 +713,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/F-Zero X (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/F-Zero X (USA).n64",
       "label": "F-Zero X (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -849,7 +849,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Gex 3 - Deep Cover Gecko (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Gex 3 - Deep Cover Gecko (USA).n64",
       "label": "Gex 3 - Deep Cover Gecko (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -953,7 +953,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Kirby 64 - The Crystal Shards (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Kirby 64 - The Crystal Shards (USA).n64",
       "label": "Kirby 64 - The Crystal Shards (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -977,7 +977,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Legend of Zelda, The - Ocarina of Time (USA) (Rev B).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Legend of Zelda, The - Ocarina of Time (USA) (Rev B).n64",
       "label": "Legend of Zelda, The - Ocarina of Time (USA) (Rev 2)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -993,7 +993,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Mario Kart 64 (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Mario Kart 64 (USA).n64",
       "label": "Mario Kart 64 (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -1001,7 +1001,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Mario Party (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Mario Party (USA).n64",
       "label": "Mario Party (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -1009,7 +1009,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Mario Party 2 (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Mario Party 2 (USA).n64",
       "label": "Mario Party 2 (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -1019,13 +1019,13 @@
     {
       "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Mario Tennis (USA).zip#Mario Tennis (USA).n64",
       "label": "Mario Tennis (USA)",
-      "core_path": "/home/user/Git/dotfiles/.config/retroarch/cores/mupen64plus_next_libretro.so",
+      "core_path": "/home/user/.config/retroarch/cores/mupen64plus_next_libretro.so",
       "core_name": "Nintendo - Nintendo 64 (Mupen64Plus-Next)",
       "crc32": "995C9F24|crc",
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Paper Mario (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Paper Mario (USA).n64",
       "label": "Paper Mario (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -1041,7 +1041,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Rayman 2 - The Great Escape (USA) (En,Fr,De,Es,It).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Rayman 2 - The Great Escape (USA) (En,Fr,De,Es,It).n64",
       "label": "Rayman 2 - The Great Escape (USA) (En,Fr,De,Es,It)",
       "core_path": "DETECT",
       "core_name": "DETECT",
@@ -1051,7 +1051,7 @@
     {
       "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Road Rash 64 (USA).zip#Road Rash 64 (USA).n64",
       "label": "Road Rash 64 (USA)",
-      "core_path": "/home/user/Git/dotfiles/.config/retroarch/cores/mupen64plus_next_libretro.so",
+      "core_path": "/home/user/.config/retroarch/cores/mupen64plus_next_libretro.so",
       "core_name": "Nintendo - Nintendo 64 (Mupen64Plus-Next)",
       "crc32": "2DA44585|crc",
       "db_name": "Nintendo - Nintendo 64.lpl"
@@ -1081,7 +1081,7 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Nintendo 64/Super Mario 64 (USA).n64",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Super Mario 64 (USA).n64",
       "label": "Super Mario 64 (USA)",
       "core_path": "DETECT",
       "core_name": "DETECT",

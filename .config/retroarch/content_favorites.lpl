@@ -11,15 +11,15 @@
     {
       "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Mario Tennis (USA).zip#Mario Tennis (USA).n64",
       "label": "Mario Tennis (USA)",
-      "core_path": "/home/user/Git/dotfiles/.config/retroarch/cores/mupen64plus_next_libretro.so",
+      "core_path": "/home/user/.config/retroarch/cores/mupen64plus_next_libretro.so",
       "core_name": "Nintendo - Nintendo 64 (Mupen64Plus-Next)",
       "crc32": "995C9F24|crc",
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Microsoft - DOS/MDUEL/MDUEL.EXE",
+      "path": "/home/user/.config/retroarch/roms/Microsoft - DOS/MDUEL/MDUEL.EXE",
       "label": "Marshmallow Duel V2.0 (1997)",
-      "core_path": "/home/user/Git/dotfiles/.config/retroarch/cores/dosbox_core_libretro.so",
+      "core_path": "/home/user/.config/retroarch/cores/dosbox_core_libretro.so",
       "core_name": "DOS (DOSBox-core)",
       "crc32": "2151D1B3|crc",
       "db_name": "DOS.lpl"
@@ -27,7 +27,7 @@
     {
       "path": "/home/user/.config/retroarch/roms/Nintendo - DS/MarshmallowDuelDS-2.zip#MDuelDS.nds",
       "label": "MDuelDS",
-      "core_path": "/home/user/Git/dotfiles/.config/retroarch/cores/desmume2015_libretro.so",
+      "core_path": "/home/user/.config/retroarch/cores/desmume2015_libretro.so",
       "core_name": "Nintendo - DS (DeSmuME 2015)",
       "crc32": "",
       "db_name": "Nintendo - Nintendo DS|Nintendo - Nintendo DS (Download Play)"
@@ -35,13 +35,13 @@
     {
       "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Road Rash 64 (USA).zip#Road Rash 64 (USA).n64",
       "label": "Road Rash 64 (USA)",
-      "core_path": "/home/user/Git/dotfiles/.config/retroarch/cores/mupen64plus_next_libretro.so",
+      "core_path": "/home/user/.config/retroarch/cores/mupen64plus_next_libretro.so",
       "core_name": "Nintendo - Nintendo 64 (Mupen64Plus-Next)",
       "crc32": "2DA44585|crc",
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - SNES/Super Bomber Man 5 (Japan).zip",
+      "path": "/home/user/.config/retroarch/roms/Nintendo - SNES/Super Bomber Man 5 (Japan).zip",
       "label": "Super Bomberman 5 (Japan) (Caravan Event Ban)",
       "core_path": "DETECT",
       "core_name": "DETECT",

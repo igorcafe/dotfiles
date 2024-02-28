@@ -9,9 +9,9 @@
   "sort_mode": 0,
   "items": [
     {
-      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sony - PlayStation/Crash Team Racing [SCUS-94426].cue",
+      "path": "/home/user/.config/retroarch/roms/Sony - PlayStation/Crash Team Racing [SCUS-94426].cue",
       "label": "CTR - Crash Team Racing (USA)",
-      "core_path": "/home/user/Git/dotfiles/.config/retroarch/cores/mednafen_psx_hw_libretro.so",
+      "core_path": "/home/user/.config/retroarch/cores/mednafen_psx_hw_libretro.so",
       "core_name": "Sony - PlayStation (Beetle PSX HW)",
       "crc32": "SCUS-94426|serial",
       "db_name": "Sony - PlayStation.lpl"
