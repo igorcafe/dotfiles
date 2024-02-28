@@ -1,0 +1,51 @@
+# online updater -> update assets
+assets/
+
+# idk exactly what are these, but they are "auto" anyways
+autoconfig/
+
+# online updater -> update core info files
+cores/*.info
+
+# core binaries
+cores/*.so
+
+# online updater -> update cheats
+cheats/
+
+# screenshots taken by user
+screenshots/
+
+# online updater -> playlist thumbnails updater
+thumbnails/
+
+database/rdb/
+system/dolphin-emu/
+shaders/shaders_glsl/
+
+# i believe 'saves' are save states and and 'states' are in game cartridge saves
+# you could version them but github won't like it
+states/
+saves/
+
+# don't version history, last time played, and so on
+content_history.lpl
+content_image_history.lpl
+content_music_history.lpl
+playlists/logs/
+
+# core system files that are usually unfree or can be downloaded through 
+# online updater -> core system files downloader
+system/
+
+# overlays are some visual things like controllers for specific consoles
+# i think they are usually used on mobile devices
+# online updater ->	update overlays
+overlays/
+
+# my personal roms folder
+roms/*
+!roms/.gitkeep
+
+# don't need to version it
+cores/core_info.cache

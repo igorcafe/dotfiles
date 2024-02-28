@@ -1,0 +1,20 @@
+{
+  "version": "1.5",
+  "default_core_path": "",
+  "default_core_name": "",
+  "label_display_mode": 0,
+  "right_thumbnail_mode": 0,
+  "left_thumbnail_mode": 0,
+  "thumbnail_match_mode": 0,
+  "sort_mode": 0,
+  "items": [
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Microsoft - DOS/MDUEL/MDUEL.EXE",
+      "label": "Marshmallow Duel V2.0 (1997)",
+      "core_path": "/home/user/Git/dotfiles/.config/retroarch/cores/dosbox_core_libretro.so",
+      "core_name": "DOS (DOSBox-core)",
+      "crc32": "2151D1B3|crc",
+      "db_name": "DOS.lpl"
+    }
+  ]
+}
