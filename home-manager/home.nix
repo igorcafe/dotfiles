@@ -37,7 +37,6 @@
     packages = with pkgs; [
       firefox
       kate
-      google-chrome
       telegram-desktop
       gnome.cheese
       kcalc
@@ -82,6 +81,11 @@
       rnix-lsp
       google-cloud-sdk
     ];
+  };
+
+  programs.google-chrome = {
+    enable = true;
+    commandLineArgs = [ "--force-device-scale-factor=1.0" ];
   };
 
   programs.vscode = {
