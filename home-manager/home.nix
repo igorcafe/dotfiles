@@ -85,7 +85,7 @@
 
   programs.google-chrome = {
     enable = true;
-    commandLineArgs = [ "--force-device-scale-factor=1.0" ];
+    # commandLineArgs = [ "--force-device-scale-factor=1.0" ];
   };
 
   programs.vscode = {
@@ -218,6 +218,7 @@
       "editor.minimap.enabled" = false;
       "git.suggestSmartCommit" = false;
       "window.zoomLevel" = 1;
+      "git.confirmSync" = false;
     };
   };
 
