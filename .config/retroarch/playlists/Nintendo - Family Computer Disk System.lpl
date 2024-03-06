@@ -1,0 +1,44 @@
+{
+  "version": "1.5",
+  "default_core_path": "",
+  "default_core_name": "",
+  "label_display_mode": 0,
+  "right_thumbnail_mode": 0,
+  "left_thumbnail_mode": 0,
+  "thumbnail_match_mode": 0,
+  "sort_mode": 0,
+  "items": [
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/fds/All Night Nippon Super Mario Bros. (1986) (Japan).fds",
+      "label": "All Night Nippon Super Mario Brothers (Japan) (Promotion Card)",
+      "core_path": "/home/user/Git/dotfiles/.config/retroarch/cores/fceumm_libretro.so",
+      "core_name": "Nintendo - NES / Famicom (FCEUmm)",
+      "crc32": "B4D032CA|crc",
+      "db_name": "Nintendo - Family Computer Disk System.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/fds/Dracula 2 - Noroi no Fuuin (Japan).FDS",
+      "label": "Dracula II - Noroi no Fuuin (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2D1EC77C|crc",
+      "db_name": "Nintendo - Family Computer Disk System.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/fds/Karate Champ (Japan).FDS",
+      "label": "Karate Champ (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F868A8CB|crc",
+      "db_name": "Nintendo - Family Computer Disk System.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/fds/Super Mario Bros. 2 (1986) (Japan).fds",
+      "label": "Super Mario Brothers 2 (Japan) (DV 0)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "077B1892|crc",
+      "db_name": "Nintendo - Family Computer Disk System.lpl"
+    }
+  ]
+}

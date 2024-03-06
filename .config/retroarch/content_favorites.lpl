@@ -9,6 +9,14 @@
   "sort_mode": 0,
   "items": [
     {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - GameCube/Legend of Zelda, The - The Wind Waker (Europe) (En,Fr,De,Es,It).iso",
+      "label": "Legend of Zelda, The - The Wind Waker (Europe) (En,Fr,De,Es,It)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DL-DOL-GZLP-EUR|serial",
+      "db_name": "Nintendo - GameCube.lpl"
+    },
+    {
       "path": "/home/user/.config/retroarch/roms/Nintendo - Nintendo 64/Mario Tennis (USA).zip#Mario Tennis (USA).n64",
       "label": "Mario Tennis (USA)",
       "core_path": "/home/user/.config/retroarch/cores/mupen64plus_next_libretro.so",
@@ -41,11 +49,19 @@
       "db_name": "Nintendo - Nintendo 64.lpl"
     },
     {
-      "path": "/home/user/.config/retroarch/roms/Nintendo - SNES/Super Bomber Man 5 (Japan).zip",
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - SNES/Super Bomber Man 5 (Japan).zip",
       "label": "Super Bomberman 5 (Japan) (Caravan Event Ban)",
-      "core_path": "DETECT",
-      "core_name": "DETECT",
-      "crc32": "4590AE9D|crc",
+      "core_path": "/home/user/Git/dotfiles/.config/retroarch/cores/snes9x_libretro.so",
+      "core_name": "Nintendo - SNES / SFC (Snes9x)",
+      "crc32": "",
+      "db_name": ""
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - SNES/Super Mario World (USA).zip",
+      "label": "Super Mario World (USA)",
+      "core_path": "/home/user/Git/dotfiles/.config/retroarch/cores/snes9x_libretro.so",
+      "core_name": "Nintendo - SNES / SFC (Snes9x)",
+      "crc32": "B19ED489|crc",
       "db_name": "Nintendo - Super Nintendo Entertainment System.lpl"
     }
   ]
