@@ -32,6 +32,8 @@ saves/
 content_history.lpl
 content_image_history.lpl
 content_music_history.lpl
+# what the hell?
+content_video_history.lpl
 playlists/logs/
 
 # core system files that are usually unfree or can be downloaded through
