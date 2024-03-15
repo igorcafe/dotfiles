@@ -180,6 +180,14 @@
         command = "-git.stageSelectedRanges";
         when = "isInDiffEditor && !operationInProgress";
       }
+      {
+        key = "ctrl+shift+alt+o";
+        command = "workbench.action.showAllSymbols";
+      }
+      {
+        key = "ctrl+t";
+        command = "-workbench.action.showAllSymbols";
+      }
     ];
 
     userSettings = {
