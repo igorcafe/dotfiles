@@ -1,0 +1,308 @@
+{
+  "version": "1.5",
+  "default_core_path": "",
+  "default_core_name": "",
+  "label_display_mode": 0,
+  "right_thumbnail_mode": 0,
+  "left_thumbnail_mode": 0,
+  "thumbnail_match_mode": 0,
+  "sort_mode": 0,
+  "items": [
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Motocross Championship (USA).32x",
+      "label": "Motocross Championship (USA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A21C5761|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Kolibri (USA, Europe).32x",
+      "label": "Kolibri (USA, Europe)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "20CA53EF|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Brutal Unleashed - Above the Claw (USA).32x",
+      "label": "Brutal - Above the Claw (USA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7A72C939|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Primal Rage (USA, Europe).32x",
+      "label": "Primal Rage (USA, Europe)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E78A4D28|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Mortal Kombat II (Japan, USA).32x",
+      "label": "Mortal Kombat II (Japan, USA) (En)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "773C0A85|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/RBI Baseball '95 (USA).32x",
+      "label": "RBI Baseball '95 (USA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FF795FDC|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Tempo (Japan, USA).32x",
+      "label": "Tempo (Japan, USA) (En)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "14E5C575|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Space Harrier (Japan, USA).32x",
+      "label": "Space Harrier (Japan, USA) (En)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "86E7F989|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Chaotix (Japan, USA).32x",
+      "label": "Knuckles' Chaotix (Japan, USA) (En)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D0B0B842|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/After Burner (Japan, USA).32x",
+      "label": "After Burner Complete (Japan, USA) (En)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "204044C4|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Parasquad - Zaxxon's Motherbase 2000 (Japan, USA).32x",
+      "label": "Zaxxon's Motherbase 2000 (Japan, USA) (En)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "447D44BE|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/BC Racers (USA).32x",
+      "label": "BC Racers (USA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "936C3D27|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/X-Men (USA) (Proto).32x",
+      "label": "X-Men (USA) (Proto)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D61FEBC0|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/WWF WrestleMania - The Arcade Game (USA).32x",
+      "label": "WWF WrestleMania - The Arcade Game (USA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "61833503|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/FIFA Soccer '96 (Europe) (En,Fr,De,Es,It,Sv).32x",
+      "label": "FIFA Soccer 96 (Europe) (En,Fr,De,Es,It,Sv)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FB14A7C8|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Virtua Fighter (Japan, USA).32x",
+      "label": "Virtua Fighter (Japan, USA) (En)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B5DE9626|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Amazing Spider-Man, The - Web of Fire (USA).32x",
+      "label": "Amazing Spider-Man, The - Web of Fire (USA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "29DCE257|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Virtua Racing Deluxe (USA).32x",
+      "label": "Virtua Racing Deluxe (USA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7896B62E|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Doom (Japan, USA).32x",
+      "label": "Doom (Japan, USA) (En)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "208332FD|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Star Trek Starfleet Academy - Starship Bridge Simulator (USA).32x",
+      "label": "Star Trek - Starfleet Academy - Starship Bridge Simulator (USA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DD9708B9|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Darxide (Europe) (En,Fr,De,Es).32x",
+      "label": "Darxide (Europe) (En,Fr,De,Es)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "22D7C906|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/NFL Quarterback Club (World).32x",
+      "label": "NFL Quarterback Club (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0BC7018D|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Pitfall - The Mayan Adventure (USA).32x",
+      "label": "Pitfall - The Mayan Adventure (USA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F9126F15|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Cyber Brawl (Japan, USA).32x",
+      "label": "Cosmic Carnage (Japan, USA) (En)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7C7BE6A2|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/NBA Jam - Tournament Edition (World).32x",
+      "label": "NBA Jam - Tournament Edition (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6B7994AA|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/WWF Raw (World).32x",
+      "label": "WWF Raw (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8EB7CD2C|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Metal Head (Japan, USA) (En,Ja).32x",
+      "label": "Metal Head (Japan, USA) (En,Ja)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "EF5553FF|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Sangokushi IV (Japan).32x",
+      "label": "Sangokushi IV (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E4DE7625|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/T-Mek (USA, Europe).32x",
+      "label": "T-MEK (USA, Europe)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "66D2C48F|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Toughman Contest (USA, Europe).32x",
+      "label": "Toughman Contest (USA, Europe)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "14EAC7A6|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Shadow Squadron (USA, Europe).32x",
+      "label": "Stellar Assault (USA, Europe)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "60C49E4D|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Golf Magazine 36 Great Holes Starring Fred Couples (Japan, USA).32x",
+      "label": "Golf Magazine Presents - 36 Great Holes Starring Fred Couples (Japan, USA) (En)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D3D0A2FE|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Blackthorne (USA).32x",
+      "label": "Blackthorne (USA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D1A60A47|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/World Series Baseball Starring Deion Sanders (USA).32x",
+      "label": "World Series Baseball Starring Deion Sanders (USA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6DE1BC75|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Star Wars Arcade (USA).32x",
+      "label": "Star Wars Arcade (USA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2F16B44A|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Soulstar X (USA) (Proto).32x",
+      "label": "Soulstar X (T115) (USA) (Proto)[T-11505B-50]",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6472BAE4|crc",
+      "db_name": "Sega - 32X.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Sega - 32X/Virtua Hamster (USA) (Proto).32x",
+      "label": "Virtua Hamster (USA) (Proto)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "CD54AC37|crc",
+      "db_name": "Sega - 32X.lpl"
+    }
+  ]
+}

@@ -1,0 +1,4580 @@
+{
+  "version": "1.5",
+  "default_core_path": "",
+  "default_core_name": "",
+  "label_display_mode": 0,
+  "right_thumbnail_mode": 0,
+  "left_thumbnail_mode": 0,
+  "thumbnail_match_mode": 0,
+  "sort_mode": 0,
+  "items": [
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/tdfever.zip#td18ver2.8gh",
+      "label": "TouchDown Fever (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3924DA37|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sbagman.zip#5.9e",
+      "label": "Super Bagman (version 3?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1B1D6B0A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/phelios.zip#ps1mpr1.bin",
+      "label": "Phelios (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F5C0F883|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sfootbal.zip#sfbgr67.bin",
+      "label": "Street Football (11/12/86)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "42452A7A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/triplep.zip#triplep.2l",
+      "label": "Triple Punch (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "982CC3B9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/fax.zip#fxd-6a.64",
+      "label": "FAX",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BA67B7B2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/battlnts.zip#g03.8e",
+      "label": "Battlantis (program code G)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7BD44FEF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/snowbros.zip#sn5.bin",
+      "label": "Snow Bros. - Nick & Tom (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "AD310D3F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/baluba.zip#3",
+      "label": "Baluba-louk no Densetsu (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7AC24983|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/kicker.zip#kikra11.bin",
+      "label": "Kicker",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FF6CA5DF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/wb3.zip#epr12258.a5",
+      "label": "Wonder Boy III - Monster Lair (set 6, World, System 16B) (8751 317-0098)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "01F5898C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/medlanes.zip#medlanes.8b",
+      "label": "Meadows Lanes",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "44E5DE8F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/foodf.zip#307-8f.020",
+      "label": "Food Fight (rev 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "17828DBB|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hwrace.zip#hw_race.16",
+      "label": "High Way Race",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F7104668|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dondokod.zip#b95-wrld.7",
+      "label": "Don Doko Don (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6E4E1351|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hippodrm.zip#ew13",
+      "label": "Hippodrome (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "86BE5FA7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/fstarfrc.zip#fstarf02.rom",
+      "label": "Final Star Force (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B1A07761|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/stratgyx.zip#2e_2.bin",
+      "label": "Strategy X",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "926CB2D5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/strkforc.zip#sfu91.bin",
+      "label": "Strike Force (rev 1 02/25/91)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DA02547E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ccastles.zip#022-405.bin",
+      "label": "Crystal Castles (version 4)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "4BEFC296|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/smashtv.zip#u89.l8",
+      "label": "Smash T.V. (rev 8.00)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8E7FE463|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/metrocrs.zip#mc1-2.9b",
+      "label": "Metro-Cross (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5C846F35|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/headon2.zip#u20.bin",
+      "label": "Head On 2",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "25887FF2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/csprint.zip#2122-6n.045",
+      "label": "Championship Sprint (rev 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "87DDA6E5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/newsin7.zip#newsin.6",
+      "label": "New Sinbad 7 (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5CF2CD8D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/elevator.zip#ea-ic8.bin",
+      "label": "Elevator Action (5 pcb version, 1.1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DB7FF692|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sindbadm.zip#epr5427.new",
+      "label": "Sindbad Mystery",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A94F4D41|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pitfall2.zip#epr6457a.109",
+      "label": "Pitfall II (315-5093)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A016FD2A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/chasehq.zip#b52-136.29",
+      "label": "Chase H.Q. (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2F414DF0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/trackfld.zip#a05_e05.bin",
+      "label": "Track & Field",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F08C7B7E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/klax.zip#136075-6.007",
+      "label": "Klax (version 6)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D2021A88|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/nstocker.zip#cd6ef.u1a",
+      "label": "Night Stocker (10/6/86)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E77C1AEA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/actfancr.zip#fe09-2.bin",
+      "label": "Act-Fancer Cybernetick Hyper Weapon (World revision 2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "27CE2BB1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/spacezap.zip#0665.xx",
+      "label": "Space Zap",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3784228D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mooncrst.zip#mc8",
+      "label": "Moon Cresta (Nichibutsu)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "18CA312B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hattrick.zip#rom-gr1.u8b",
+      "label": "Hat Trick",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "951F08C9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rompers.zip#rp1prg7b.bin",
+      "label": "Rompers (Japan, new version (Rev B))",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "49D057E2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/totcarn.zip#tcu89.bin",
+      "label": "Total Carnage (rev LA1 03/10/92)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6761DAF3|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dyger.zip#dyger.003",
+      "label": "Dyger (Korea set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BAE9882E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/upndown.zip#epr-5535.3",
+      "label": "Up'n Down (315-5030)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "CF4E4C45|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rocnrope.zip#rr1.1h",
+      "label": "Roc'n Rope",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "83093134|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/exprraid.zip#cz00",
+      "label": "Express Raider (US, rev 5)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A81290BC|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bjtwin.zip#93087-2.bin",
+      "label": "Bombjack Twin (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "30FF678A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/midres.zip#fk_12.rom",
+      "label": "Midnight Resistance (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3494B8C9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pingpong.zip#pingpong.3j",
+      "label": "Konami's Ping-Pong",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3E04F06E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/lgtnfght.zip#939m03.e15",
+      "label": "Lightning Fighters (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6DB6659D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/vanguard.zip#sk4_ic13.bin",
+      "label": "Vanguard (SNK)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FDE157D0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/xsleena.zip#s-10.7d",
+      "label": "Xain'd Sleena (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "370164BE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/phozon.zip#8j.rom",
+      "label": "Phozon (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "15B12EF8|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/skylancr.zip#5.6b",
+      "label": "Sky Lancer (Esco Trading Co license)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "24CEC070|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/monymony.zip#1c",
+      "label": "Money Money (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6AEA9C01|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mk2.zip#ug12.l31",
+      "label": "Mortal Kombat II (rev L3.1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "582C7DFD|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/losttomb.zip#2h-easy",
+      "label": "Lost Tomb (easy)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "054481B6|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ozmawars.zip#mw06",
+      "label": "Ozma Wars (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "99CA2EAE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/offroadt.zip#ortpu59.bin",
+      "label": "Ironman Ivan Stewart's Super Off-Road Track-Pak",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "296DD3B6|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bombbee.zip#bombbee.4c",
+      "label": "Bomb Bee",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5F37D569|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/lasso.zip#82s123.70",
+      "label": "Lasso",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "09060F8C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/exerion.zip#exerion.09",
+      "label": "Exerion",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "34CC4D14|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bouldash.zip#fn-14",
+      "label": "Boulder Dash / Boulder Dash Part 2 (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "69B6112D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/jjack.zip#bprom1.bin",
+      "label": "Jumping Jack",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2F0955F2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/blockout.zip#bo29a1-2.bin",
+      "label": "Block Out (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5984D5A2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/kurikint.zip#b42-09.2",
+      "label": "Kuri Kinton (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E97C4394|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/vangrd2.zip#mb7054.5j",
+      "label": "Vanguard II",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2E21A79B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ambush.zip#ambush.h7",
+      "label": "Ambush (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "CE306563|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ordyne.zip#or1_ch7.bin",
+      "label": "Ordyne (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F050A152|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/deadeye.zip#de_snd",
+      "label": "Dead Eye",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C10A1B1A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hydra.zip#hydr1031.bin",
+      "label": "Hydra",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "453D076F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/jackrabt.zip#cpu-01.6h",
+      "label": "Jack Rabbit (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DD5979CF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/psychic5.zip#p5h",
+      "label": "Psychic 5 (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C411171A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/quartet.zip#epr7456a.7b",
+      "label": "Quartet (Rev A, 8751 315-5194)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "31CA583E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dogfight.zip#1.bpr",
+      "label": "Dog Fight (Thunderbolt)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "69A35AA5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/spnchout.zip#chs1-b.4d",
+      "label": "Super Punch-Out!! (Rev B)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "143AE5C6|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ldrun3.zip#snxb4cb.bin",
+      "label": "Lode Runner III - The Golden Labyrinth",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "585AA244|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/wboy.zip#epr-7490.109",
+      "label": "Wonder Boy (set 1, 315-5177)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9E656733|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pepper2.zip#main_6a",
+      "label": "Pepper II (version 8)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "515B1046|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rollerg.zip#999m02.g7",
+      "label": "Rollergames (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3DF8DB93|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/blstroid.zip#4122-4b.057",
+      "label": "Blasteroids (rev 4)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C364706E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/contra.zip#633e03.18a",
+      "label": "Contra (US / Asia, set 2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7FC0D8CF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/quester.zip#qs1_p7b.bin",
+      "label": "Quester (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F358A944|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sws92.zip#sss1mpr1.bin",
+      "label": "Super World Stadium '92 (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B5E6469A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/nbajam.zip#nbaug12.bin",
+      "label": "NBA Jam (rev 3.01 04/07/93)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "407D3390|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sharkatt.zip#sharkatt.12a",
+      "label": "Shark Attack",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5DD8785A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/astinvad.zip#ai_cpu_7.rom",
+      "label": "Astro Invader",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "16DCFEA4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/roadf.zip#g11_f04.bin",
+      "label": "Road Fighter (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B1283C77|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/robocop.zip#ep01-4.11b",
+      "label": "Robocop (World revision 4)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "77507C69|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rthun2.zip#spr1.bin",
+      "label": "Rolling Thunder 2",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "060EB393|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/madcrash.zip#p13",
+      "label": "Mad Crasher",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "48C4ADE0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/deadconx.zip#d28_12.5",
+      "label": "Dead Connection (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9B74E631|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/cclimber.zip#cc07",
+      "label": "Crazy Climber (US set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3E873BAF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bublbobl.zip#a78-05.52",
+      "label": "Bubble Bobble (Japan, Ver 0.0)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "53F4BC6E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bublbobl.zip#68705.bin",
+      "label": "Bubble Bobble (bootleg with 68705)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "78CAA635|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/lkage.zip#a54-02-1.38",
+      "label": "The Legend of Kage (older)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "27B509DA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/armwrest.zip#chv1-c.6p",
+      "label": "Arm Wrestling",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "31B52896|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gridiron.zip#gfight6.bin",
+      "label": "Gridiron Fight",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D05D463D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hwchamp.zip#speech1.bin",
+      "label": "Heavyweight Champ",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A4D53F7B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bmaster.zip#bm_d-l1.rom",
+      "label": "Blade Master (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6FF0C04E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/zzyzzyxx.zip#zzyzzyxx.e",
+      "label": "Zzyzzyxx (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5966FDBF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/toki.zip#k10_4e.bin",
+      "label": "Toki (World, set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "531BD3EF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/cheekyms.zip#cm.p3",
+      "label": "Cheeky Mouse",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6AC41516|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/abaseb.zip#34736-01.n1",
+      "label": "Atari Baseball (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "AF444EB0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/springer.zip#1c.vid",
+      "label": "Springer",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B95421F4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/moonal2.zip#ali11",
+      "label": "Moon Alien Part 2",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9E79A1C6|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mayday.zip#ic04-4.bin",
+      "label": "Mayday (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "EA6A4EC8|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/buckrog.zip#br-4.bin",
+      "label": "Buck Rogers: Planet of Zoom",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7D084C39|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/frontlin.zip#fl8.u8",
+      "label": "Front Line",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F73B0D5E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rodland.zip#rl_01.rom",
+      "label": "Rod-Land (World, set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2E748CA1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/avalnche.zip#30614.c3",
+      "label": "Avalanche",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A12D5D64|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/devilfsh.zip#u101.13",
+      "label": "Devil Fish",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8C4018B6|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/qbert.zip#qb-rom0.bin",
+      "label": "Q*bert (US set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8E318641|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/digger.zip#316-507",
+      "label": "Digger",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FDB22E8F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hiimpact.zip#la3u89.bin",
+      "label": "High Impact Football (rev LA3 12/27/90)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1CBC72A5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/robby.zip#rotox10.bin",
+      "label": "The Adventures of Robby Roto!",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E762CBDA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/blueprnt.zip#d20",
+      "label": "Blue Print (Midway)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2FCB4F26|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/kangaroo.zip#tvg_80.5",
+      "label": "Kangaroo",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2FC18049|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mk.zip#mkt-ug12.bin",
+      "label": "Mortal Kombat (rev 5.0 T-Unit 03/19/93)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B06AEAC1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/thehustl.zip#765-m02.7e",
+      "label": "The Hustler (Japan, program code M)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "934807B9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bchopper.zip#b-a3-b.rom",
+      "label": "Battle Chopper (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0F07B9B7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/kyukaidk.zip#ky1_mp1b.bin",
+      "label": "Kyuukai Douchuuki (Japan, new version (Rev B))",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "723553AF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ws.zip#ws1_obj3.bin",
+      "label": "World Stadium (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F2ED5309|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/spiker.zip#cd6ef.u1a",
+      "label": "Spiker",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F2C73ECE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mahoudai.zip#ra_ma_01.05",
+      "label": "Mahou Daisakusen (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C00D1E80|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/lotlot.zip#lot-k-2j",
+      "label": "Lot Lot",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E791EF2A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/armorcar.zip#cpu.2j",
+      "label": "Armored Car (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FB158D8C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/xevious.zip#xvi_4.2l",
+      "label": "Xevious (Namco)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C7D4BBF0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ddragon.zip#21j-1-5",
+      "label": "Double Dragon (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "42045DFD|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/battlane.zip#da01-5",
+      "label": "Battle Lane! Vol. 5 (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7A6C3F02|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/tnzs.zip#b53_11.38",
+      "label": "The NewZealand Story (Japan, old version) (P0-041A PCB)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9784D443|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rallybik.zip#b45-13.rom",
+      "label": "Rally Bike / Dash Yarou",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1683B07C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bsktball.zip#034758.b6",
+      "label": "Basketball",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F7BEA344|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/chiller.zip#cha3.1t",
+      "label": "Chiller (version 3.0)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3A3A48AF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/captaven.zip#hn_02-4.1k",
+      "label": "Captain America and The Avengers (Asia Rev 1.4)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "35D2681F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gondo.zip#dt-22.256",
+      "label": "Gondomania (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C1876A5F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dangseed.zip#dr_obj-2.bin",
+      "label": "Dangerous Seed (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7E3A78C0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/burnforc.zip#bumpr1c.bin",
+      "label": "Burning Force (Japan, new version (Rev C))",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3E6B4B1B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/popflame.zip#ic94.bin",
+      "label": "Pop Flamer (protected)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "AE5248AE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/crbaloon.zip#cl06.bin",
+      "label": "Crazy Balloon (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7D465691|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/raiden.zip#rai4.bin",
+      "label": "Raiden (set 3, newer hardware)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8D184B99|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/victory.zip#vic3.l1",
+      "label": "Victory",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7BB8E1F5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mhavoc.zip#136025.318",
+      "label": "Major Havoc (rev 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BA935067|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/brubber.zip#brubber.12d",
+      "label": "Burnin' Rubber",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B2CE51F5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/soldamj.zip#soldam18.bin",
+      "label": "Soldam (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7D8E4712|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gorf.zip#gorf-h.bin",
+      "label": "Gorf",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FE7B863D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/darkseal.zip#ga01-3.rom",
+      "label": "Dark Seal (World revision 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F409050E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/maniach.zip#mc-m92.bin",
+      "label": "Mania Challenge (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E209A500|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/yosakdon.zip#yd7.bin",
+      "label": "Yosaku To Donbei (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2744E68B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/circusc.zip#s05",
+      "label": "Circus Charlie (level select, set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "48FEAFCF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ultraman.zip#910-a06.c06",
+      "label": "Ultraman (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "28FA99C9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/argus.zip#ag_16.bin",
+      "label": "Argus",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "39A51714|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/fround.zip#870_m20.bin",
+      "label": "The Final Round (version M)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B1C79D6A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/88games.zip#861m02.k16",
+      "label": "'88 Games",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E19F15F6|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/plusalph.zip#pa-rom8.bin",
+      "label": "Plus Alpha",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "AE007750|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rastan.zip#ic09_43.bin",
+      "label": "Rastan (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C34B9152|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/kchamp.zip#b010.bin",
+      "label": "Karate Champ (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "489C9C04|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/helifire.zip#tub.i2b",
+      "label": "HeliFire (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D8B7A398|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ikari.zip#3.rom",
+      "label": "Ikari Warriors (US JAMMA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "56A26699|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mirninja.zip#mn_voi2.bin",
+      "label": "Mirai Ninja (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "466C3B47|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bayroute.zip#br.8b",
+      "label": "Bay Route (set 1, US) (unprotected)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D8DE78FF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pooyan.zip#7.9g",
+      "label": "Pooyan",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BBE6D6E4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/spelunk2.zip#sp2-r.2j",
+      "label": "Spelunker II - 23 no Kagi (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1ACBE2A5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gypsyjug.zip#gj.a6s",
+      "label": "Gypsy Juggler",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9E7BD71E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ga2u.zip#epr15145.b",
+      "label": "Golden Axe: The Revenge of Death Adder (US, Rev A)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0DA61782|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mrviking.zip#epr-5876.132",
+      "label": "Mister Viking (315-5041)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E77DB1DC|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/karnov.zip#dn11-5",
+      "label": "Karnov (US, rev 5)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "05669B4B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/firetrk.zip#32830-01.l5",
+      "label": "Fire Truck / Smokey Joe",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E4D8B685|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/streakng.zip#sk6",
+      "label": "Streaking (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A7089588|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rescue.zip#rb15ccpu.bin",
+      "label": "Rescue",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "058CD3D0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bombjack.zip#13.1r",
+      "label": "Bomb Jack (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "70E0244D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/genpeitd.zip#gt1-19.k3",
+      "label": "Genpei ToumaDen",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "38E11F6C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/plotting.zip#plot01.bin",
+      "label": "Plotting (World set 2, protected)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5B30BC25|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mrdo.zip#c4-02.bin",
+      "label": "Mr. Do!",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0ECDD39C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rmpgwt.zip#rwtr13.63",
+      "label": "Rampage: World Tour (rev 1.3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "403AE41E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rollingc.zip#rc12.bin",
+      "label": "Rolling Crash / Moon Base",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2052F6D9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/travrusa.zip#zippyrac.010",
+      "label": "Traverse USA / Zippy Race",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6FCC9FDB|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ga2j.zip#epr14940.9",
+      "label": "Golden Axe: The Revenge of Death Adder (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3B5B3084|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/poundfor.zip#ppa-l0-b.bin",
+      "label": "Pound for Pound (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BD997942|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mplanets.zip#rom0",
+      "label": "Mad Planets",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "74DE78AA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pballoon.zip#sk7_ic10.bin",
+      "label": "Pioneer Balloon",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7B88CBD4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/jungler.zip#jungr2",
+      "label": "Jungler",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DC99F1E3|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ladybug.zip#lb6.cpu",
+      "label": "Lady Bug",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "CF1ACCA4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/jedi.zip#136030.118",
+      "label": "Return of the Jedi",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "261FBFE7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/astrob.zip#925a",
+      "label": "Astro Blaster (version 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "790A7F4E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/digdug.zip#dd1.6b",
+      "label": "Dig Dug (rev 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "361EEB71|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sidepckt.zip#dh00",
+      "label": "Side Pocket (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "251B316E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/tazmania.zip#2k.cpu",
+      "label": "Tazz-Mania (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A1EB453B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/goindol.zip#r1w",
+      "label": "Goindol (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DF77C502|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/viofight.zip#c16-14.23",
+      "label": "Violence Fight (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DC934F6A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/crimec.zip#b99_14.28",
+      "label": "Crime City (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "71C8B4D7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/fnkyfish.zip#tvg_72.v3",
+      "label": "Funky Fish",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6AE9B584|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/snakjack.zip#rom-gr5.u4b",
+      "label": "Snacks'n Jaxson",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "345F94FB|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pandoras.zip#pandora.16b",
+      "label": "Pandora's Palace",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C89AF0C3|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/spinlbrk.zip#ic94",
+      "label": "Spinal Breakers (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C4385E03|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/zodiack.zip#ovg40c.2b",
+      "label": "Zodiack",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "21F77EC7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/chopper.zip#kk_04.rom",
+      "label": "Chopper I (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "004F7D9A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/drgnbstr.zip#db1-5.6n",
+      "label": "Dragon Buster",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5E2B3F74|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mappy.zip#mpx_1.1b",
+      "label": "Mappy (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "203766D4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pow.zip#dg2",
+      "label": "P.O.W. - Prisoners of War (US version 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "4287AFFC|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/roishtar.zip#ri1-4.6b",
+      "label": "The Return of Ishtar",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "552172B8|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/avspirit.zip#spirit06.rom",
+      "label": "Avenging Spirit",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "609F71FE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/athena.zip#up02_m4.rom",
+      "label": "Athena",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "61C69474|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/skysoldr.zip#ss.25",
+      "label": "Sky Soldiers (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "65138016|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/swat.zip#epr-5806.93",
+      "label": "SWAT (315-5048)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "26AC258C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dsaber.zip#mpr1.bin",
+      "label": "Dragon Saber (World, older?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "CBFC4CBA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/tmnt.zip#963-x22",
+      "label": "Teenage Mutant Ninja Turtles (World 4 Players, version X)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0A74E277|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dorunrun.zip#2764.n1",
+      "label": "Do! Run Run (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6A8160D1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/vaportra.zip#fl_00-1.bin",
+      "label": "Vapor Trail - Hyper Offence Formation (World revision 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C08CC048|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/quantum.zip#136016.208",
+      "label": "Quantum (rev 2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DAB4066B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hachoo.zip#ht.bin",
+      "label": "Hachoo!",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "85302B15|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rthunder.zip#rt3-1b.9c",
+      "label": "Rolling Thunder (rev 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7D252A1B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/assault.zip#at2mp1b.bin",
+      "label": "Assault (Rev B)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "72312D4F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hangon.zip#6915.rom",
+      "label": "Hang-On (Rev A)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "AC883240|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/alpine.zip#rh27.004",
+      "label": "Alpine Ski (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "425B52B0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mario.zip#mario.7e",
+      "label": "Mario Bros. (US, Revision G)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "116B3856|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gunforce.zip#gf_l1-c.rom",
+      "label": "Gunforce - Battle Fire Engulfed Terror Island (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B189F72A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/simpsons.zip#j12.15c",
+      "label": "The Simpsons (4 Players World, set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "479E12F2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/lsasquad.zip#a64-23.41",
+      "label": "Land Sea Air Squad / Riku Kai Kuu Saizensen",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "377A538B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sdi.zip#a2.rom",
+      "label": "SDI - Strategic Defense Initiative (bootleg, original hardware)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "369AF326|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bnj.zip#bnj12d.bin",
+      "label": "Bump 'n' Jump (Midway)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B88BC99E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/teamqb.zip#15619-03.59t",
+      "label": "John Elway's Team Quarterback (rev 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "40B3319F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/punkshot.zip#907-j03.i10",
+      "label": "Punk Shot (US 4 Players)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2151D1AB|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/starjack.zip#epr-5319.93",
+      "label": "Star Jacker (Sega)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "EBEE4999|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/solomon.zip#slmn_12.bin",
+      "label": "Solomon no Kagi (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "AA26DFCB|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/extrmatn.zip#b06-21.bin",
+      "label": "Extermination (US, World Games)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1614D6A2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/subs.zip#34219.e8",
+      "label": "Subs",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "99A5A49B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/theend.zip#ic31_1c.bin",
+      "label": "The End",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "4A48C999|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mikie.zip#007",
+      "label": "Mikie",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "31AFC153|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/baddudes.zip#baddudes.8",
+      "label": "Bad Dudes vs. Dragonninja (US revision 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3C87463E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/peterpak.zip#136028.137",
+      "label": "Peter Pack Rat",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8507E5EA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/roadblst.zip#1160-13a.048",
+      "label": "Road Blasters (upright, rev 4)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8BF22F7D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pinbo.zip#rom1.s8",
+      "label": "Pinbo (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "CA45A1BE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ninjemak.zip#ninjemak.5",
+      "label": "Ninja Emaki (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5F91DD30|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/vendetta.zip#081t01",
+      "label": "Vendetta (World, 4 Players, ver. T)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E76267F5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/lomakai.zip#lom_08.rom",
+      "label": "Legend of Makai (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BDB15E67|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/airwolf.zip#f.4a",
+      "label": "Airwolf",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "4DF44CE9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/cheyenne.zip#cya-1.1r",
+      "label": "Cheyenne (version 1.0)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DFD84E73|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/turtles.zip#turt_vid.2j",
+      "label": "Turtles",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FCD49FEF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/apb.zip#7129-6n.051",
+      "label": "APB - All Points Bulletin (rev 7)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "79ADB57F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/guzzler.zip#guzzler.001",
+      "label": "Guzzler",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "69089495|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/moguchan.zip#moguchan.2b",
+      "label": "Mogu Chan (bootleg?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9ABFDF40|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ldrun.zip#lr-a-4a",
+      "label": "Lode Runner (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "645E42AA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sbrkout.zip#033455.e1",
+      "label": "Super Breakout (rev 04)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E0A6871C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/blkhole.zip#bh8",
+      "label": "Black Hole",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "03D11020|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sheriff.zip#h1",
+      "label": "Sheriff",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E59EAB52|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/kageki.zip#b35-17.43e",
+      "label": "Kageki (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FDD9C246|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/crimfght.zip#821l02.f24",
+      "label": "Crime Fighters (US 4 Players)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "588E7DA6|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/berlwall.zip#bw300",
+      "label": "The Berlin Wall (bootleg?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B258737A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pitfight.zip#4029",
+      "label": "Pit Fighter (rev 4)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "13AE0D4F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/cbuster.zip#fx02.rom",
+      "label": "Crude Buster (World FX version)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B875266B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pang.zip#pang7.bin",
+      "label": "Pang (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "4A2E70F6|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/vindctr2.zip#3189-7b.059",
+      "label": "Vindicators Part II (rev 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "302E24B6|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/crossbow.zip#xba-1.1s",
+      "label": "Crossbow (version 2.0)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C9EAD134|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/olibochu.zip#c-3",
+      "label": "Oli-Boo-Chu",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "EFC4E408|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/edf.zip#edf_06.rom",
+      "label": "E.D.F. : Earth Defense Force (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "94DA2F0C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/cloak.zip#504.023",
+      "label": "Cloak & Dagger (rev 5)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D014A1C0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gghost.zip#ggh-gr5.bin",
+      "label": "Goalie Ghost",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D3DA0093|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/retofinv.zip#68705p3.bin",
+      "label": "Return of the Invaders (bootleg w/MCU)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "79BD6DED|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hotshock.zip#hotshock.h5",
+      "label": "Hot Shocker (early revision?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "4EF17453|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/calibr50.zip#uh001012.u46",
+      "label": "Caliber 50 (Ver. 1.01)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BB996547|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/svolley.zip#sps_11.bin",
+      "label": "Super Volleyball (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "51B025C9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/regulus.zip#epr5645a.134",
+      "label": "Regulus (315-5033, Rev A.)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6B4BF77C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/toypop.zip#tp1-5.2p",
+      "label": "Toypop",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "4D77FA5A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/skyfox.zip#skyfox7.bin",
+      "label": "Sky Fox",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FA2AB5B4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bladestl.zip#797t01.bin",
+      "label": "Blades of Steel (version T, Joystick)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "89D7185D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/route16.zip#route16.a0",
+      "label": "Route 16 (set 3, bootleg?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8F9101BD|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ghostb.zip#dz-05.rom",
+      "label": "The Real Ghostbusters (US 2 Players)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0315F691|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/demonwld.zip#rom09.v2",
+      "label": "Demon's World / Horror Story (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7BAEA7BA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/driftout.zip#do_45.rom",
+      "label": "Drift Out (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E3FE66B9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/combat.zip#6a",
+      "label": "Combat (version 3.0)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "AF3FEF5F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bosco.zip#bos3_6.bin",
+      "label": "Bosconian (new version)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "4543CF82|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/minefld.zip#ma15h",
+      "label": "Minefield",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "ED0DCCB1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/headon.zip#193a",
+      "label": "Head On (2 players)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "37A1DF4C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/blswhstl.zip#g09.bin",
+      "label": "Bells & Whistles (World, version L)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3C26D281|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/venture.zip#6a-cpu",
+      "label": "Venture (version 5 set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7B78CF49|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/freeze.zip#freeze.2a",
+      "label": "Freeze",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DD70DDD6|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gtmr.zip#u1.bin",
+      "label": "1000 Miglia: Great 1000 Miles Rally (Taiwan 94/07/18)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6238790A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dominos.zip#7440-01.r4",
+      "label": "Dominos",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "957DD8DF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/jumpbug.zip#jb7",
+      "label": "Jump Bug",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "83D71302|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sbasebal.zip#snksb2.bin",
+      "label": "Super Champion Baseball (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "35821339|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/outzone.zip#rom8.bin",
+      "label": "Out Zone (oldest set)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D19B3ECF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pistoldm.zip#pd_obj-7.bin",
+      "label": "Pistol Daimyo no Bouken (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "00D4A8F0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/vigilant.zip#s07_c15.bin",
+      "label": "Vigilante (bootleg)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7F2E91C5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pigout.zip#poutu59t.bin",
+      "label": "Pig Out: Dine Like a Swine! (rev 2?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "AB907762|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/roundup.zip#roundup.u33",
+      "label": "Round-Up",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2FA711F3|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bang.zip#bang.u14",
+      "label": "Bang!",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "858FCBF9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/blastoff.zip#bo1_obj4.bin",
+      "label": "Blast Off (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C2C1B9CB|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/uopoko.zip#u25j.bin",
+      "label": "Puzzle Uo Poko (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "68CB6211|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/inthunt.zip#ith-l1-b.rom",
+      "label": "In The Hunt (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "955A605A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dsoccr94.zip#ds_l0-c.rom",
+      "label": "Dream Soccer '94 (World, M107 hardware)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8AF0AFE2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/blazer.zip#bz_obj-3.bin",
+      "label": "Blazer (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9BC1DB71|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/docastle.zip#07n_a0.bin",
+      "label": "Mr. Do's Castle (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F23B5CDB|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/aliens.zip#e24_j02.bin",
+      "label": "Aliens (World set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "56C20971|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/spelunkr.zip#sprm.7b",
+      "label": "Spelunker",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "26BB25A4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/atlantis.zip#5h",
+      "label": "Battle of Atlantis (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E989F325|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/thunderj.zip#2002.14c",
+      "label": "ThunderJaws (rev 2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "173EC10D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dbz.zip#222a12.9f",
+      "label": "Dragon Ball Z (rev A)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6EBC6853|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/invadpt2.zip#pv.05",
+      "label": "Space Invaders Part II (Taito)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "19B505E9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/spacefb.zip#5e.cpu",
+      "label": "Space Firebird (rev. 03-e set 2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2D406678|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mpatrol.zip#mp-a.3j",
+      "label": "Moon Patrol",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DD05B587|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/lupin3.zip#lp18.bin",
+      "label": "Lupin III (set 2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2F07B4BA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sharrier.zip#ic84.bin",
+      "label": "Space Harrier (8751 315-5163)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "16DEAEB1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/checkman.zip#cm9",
+      "label": "Check Man",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3CD5C751|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/locomotn.zip#c2.cpu",
+      "label": "Loco-Motion",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C3035300|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/devstors.zip#890-z02.k11",
+      "label": "Devastators (ver. Z)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "EBEB306F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/crush.zip#crushkrl.6j",
+      "label": "Crush Roller (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D59FC251|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/intrepid.zip#ic23.6",
+      "label": "Intrepid (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "91CA7097|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/psychos.zip#p4",
+      "label": "Psycho Soldier (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "437D775A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bucky.zip#173ea.b02",
+      "label": "Bucky O'Hare (ver EAB)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9B45F122|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/superpac.zip#sp1.6",
+      "label": "Super Pac-Man",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "91C5935C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/indytemp.zip#136036.431",
+      "label": "Indiana Jones and the Temple of Doom (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B7AC7431|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/timeplt.zip#tm3",
+      "label": "Time Pilot",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FF4E0D83|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mainevt.zip#799c02.k11",
+      "label": "The Main Event (4 Players ver. Y)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E2E7DBD5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/shadowld.zip#yd3_obj5.bin",
+      "label": "Shadowland (YD3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1E4AA460|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/capbowl.zip#u6",
+      "label": "Capcom Bowling (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "14924C96|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/nrallyx.zip#nrallyx.8e",
+      "label": "New Rally X (bootleg?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "CA7A174A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hook.zip#h-l0-d.rom",
+      "label": "Hook (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "14567690|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hoccer.zip#hr4.cpu",
+      "label": "Hoccer (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9A788A2C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hbarrel.zip#hb08.bin",
+      "label": "Heavy Barrel (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "645C5B68|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ctribe.zip#ct_mr8.rom",
+      "label": "The Combatribes (bootleg set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9963A6BE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ctribe.zip#ic-25",
+      "label": "The Combatribes (US, rev 2, set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3221C755|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/cosmogng.zip#co2_v2",
+      "label": "Cosmo Gang the Video (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A27CB45A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dday.zip#k7_75o.bin",
+      "label": "D-Day",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5F8772E2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dynduke.zip#dd4.ef7",
+      "label": "Dynamite Duke (US, 25JUL89)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "EE4B87B3|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/xybots.zip#2115-19b.054",
+      "label": "Xybots (rev 2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "750AB1B0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pacmania.zip#pnx_s1.bin",
+      "label": "Pac-Mania",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F761ED5A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ldrun2.zip#lr2-h-3n",
+      "label": "Lode Runner II - The Bungeling Strikes Back",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2B28AEC5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/skyadvnt.zip#sa2.bin",
+      "label": "Sky Adventure (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "06074E72|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gravitar.zip#136010.306",
+      "label": "Gravitar (version 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3F3805AD|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/wseries.zip#13415-01.107",
+      "label": "World Series: The Season (rev 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "20B92EFF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gladiatr.zip#qc2-11",
+      "label": "Gladiator (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C9FECFFF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/naughtyb.zip#7.24",
+      "label": "Naughty Boy",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "00CAF9BE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sbasketb.zip#405g01",
+      "label": "Super Basketball (version G, encrypted)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1BD0CD2E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dangar.zip#dangar08.1b",
+      "label": "Ufo Robo Dangar (12/1/1986)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E52638F2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/kungfum.zip#a-4d-c.bin",
+      "label": "Kung-Fu Master (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7532918E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/circus.zip#circus.8a",
+      "label": "Circus / Acrobat TV",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "69CC409F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/tp84.zip#tp84_10j.bin",
+      "label": "Time Pilot '84 (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A45237C4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/wc90.zip#ic87_01.bin",
+      "label": "Tecmo World Cup '90 (World set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "4A1AFFBC|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/openice.zip#oiceu63.bin",
+      "label": "2 On 2 Open Ice Challenge (rev 1.21)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "97D308A3|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/friskyt.zip#ftom.12",
+      "label": "Frisky Tom (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3B8F40B5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/tinstar.zip#ts.8",
+      "label": "The Tin Star (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "519AED19|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/whodunit.zip#wda8.h1",
+      "label": "Who Dunit (version 8.0)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0090E5A7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/moonqsr.zip#vid_e6.bin",
+      "label": "Moon Quasar",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0B878B54|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rtypeleo.zip#rtl-l0-c",
+      "label": "R-Type Leo (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8156456B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/clshroad.zip#clashr3.bin",
+      "label": "Clash-Road",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "865C32AE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/empcity.zip#ec_02.rom",
+      "label": "Empire City: 1931 (bootleg?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B3CF1EF7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/citybomb.zip#g09.rom",
+      "label": "City Bomber (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "CE7DE262|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/atarifb.zip#03302702.n1",
+      "label": "Atari Football (revision 2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E7E916AE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/tndrcade.zip#ua10-5.8m",
+      "label": "Thundercade / Twin Formation",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8EFF6122|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/fhawk.zip#b70-11.bin",
+      "label": "Fighting Hawk (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7D9F7583|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hatris.zip#2-ic79.bin",
+      "label": "Hatris (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BBCADDBF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/shuuz.zip#4011.13p",
+      "label": "Shuuz (version 8.0)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6DB53A85|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/depthch.zip#55a",
+      "label": "Depthcharge",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9FC2EB41|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/curvebal.zip#cb-fg-0.chp",
+      "label": "Curve Ball",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E3A8230E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ikari3.zip#ik3-3.bin",
+      "label": "Ikari III - The Rescue (US, Rotary Joystick)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "50F2B83D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gangwars.zip#gwb_ic.315",
+      "label": "Gang Wars (bootleg)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E7C9B103|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/slyspy.zip#fa14-3.17l",
+      "label": "Sly Spy (US revision 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "54353A84|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ddragon2.zip#26ac-0e.63",
+      "label": "Double Dragon II - The Revenge (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "57ACAD2C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/silentd.zip#sr_15-1.rom",
+      "label": "Silent Dragon (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8C0A72AE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ginkun.zip#ginkun08.i18",
+      "label": "Ganbare Ginkun",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8B7583C7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mmaze.zip#mm1_p7.bin",
+      "label": "Marchen Maze (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "085E58CC|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/lrescue.zip#lrescue.5",
+      "label": "Lunar Rescue",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "58FDE8BC|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/snapjack.zip#sj9k.bin",
+      "label": "Snap Jack",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5B16FBD2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/kicknrun.zip#a87-07.bin",
+      "label": "Kick and Run (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6CB6EBFE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/myhero.zip#epr-6958.65",
+      "label": "My Hero (US, not encrypted)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "80920112|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/wecleman.zip#602f11.23h",
+      "label": "WEC Le Mans 24 (v2.00)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6BB4F1FA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/snakepit.zip#spit-gr5.bin",
+      "label": "Snake Pit",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DC27C970|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gaunt2.zip#1122-6b.043",
+      "label": "Gauntlet II",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E94AAA8A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/anteater.zip#ra6-5h",
+      "label": "Anteater",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B30C7C9F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/fireone.zip#fo-ic18.1c",
+      "label": "Fire One",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "771EE5BA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/garyoret.zip#dv11",
+      "label": "Garyo Retsuden (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B5948AEE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/64street.zip#64th_02.rom",
+      "label": "64th. Street - A Detective Story (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0621ED1D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/minigolf.zip#1a-ver2",
+      "label": "Mini Golf (11/25/85)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "60B6CD58|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pacland.zip#pl5_02.bin",
+      "label": "Pac-Land (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D903E84E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/aurail.zip#13576",
+      "label": "Aurail (set 3, US) (unprotected)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1E428D94|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hardhat.zip#hhl-1.11d",
+      "label": "Hard Hat",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DBCDF353|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/nemesis.zip#15c_08.bin",
+      "label": "Nemesis (ROM version)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "03C0B7F5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/eprom.zip#136069.10u",
+      "label": "Escape from the Planet of the Robot Monsters (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5D7AFCA2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/biomtoy.zip#c3",
+      "label": "Biomechanical Toy (Ver. 1.0.1885)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "914E4BBC|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/cninja.zip#gn04rev2.bin",
+      "label": "Caveman Ninja (World ver 4)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C98FCB62|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/galxwars.zip#univgw2.5",
+      "label": "Galaxy Wars (Universal set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6036D7BF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hcastle.zip#b06.k8",
+      "label": "Haunted Castle (version M)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "ABD07866|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/heiankyo.zip#ha1.u1",
+      "label": "Heiankyo Alien",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B8DA2B5E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/vindictr.zip#5120-f3.059",
+      "label": "Vindicators (rev 5)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A6AE4753|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hitnmiss.zip#hma3.1h",
+      "label": "Hit 'n Miss (version 3.0)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F718DA36|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/uccops.zip#uc_l1.rom",
+      "label": "Undercover Cops (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A8A402D8|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/devilw.zip#687_m14.d8",
+      "label": "Devil World",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D7338557|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pleiads.zip#ic47.r1",
+      "label": "Pleiads (Tehkan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "960212C8|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/nitedrvr.zip#6570-01.f2",
+      "label": "Night Driver",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BF5D77B1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bermudat.zip#bt_p3.rom",
+      "label": "Bermuda Triangle (World?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "53A82E50|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/magspot2.zip#ms.e8",
+      "label": "Magical Spot II",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "77C6D109|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/triothep.zip#ff01.bin",
+      "label": "Trio The Punch - Never Forget Me... (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "68D80A66|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/astdelux.zip#036800.02",
+      "label": "Asteroids Deluxe (rev 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BB8CABE1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/wwfmania.zip#wwf.63",
+      "label": "WWF: Wrestlemania (rev 1.30 08/10/95)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "09759529|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pacplus.zip#pacplus.4a",
+      "label": "Pac-Man Plus",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E271A166|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rtype2.zip#ic59.9b",
+      "label": "R-Type II (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0FD123BF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/thepit.zip#p33b",
+      "label": "The Pit (US set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "614EC454|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/powerins.zip#rom5",
+      "label": "Power Instinct (USA, bootleg set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "88579C8F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hharry.zip#a-l1-0.rom",
+      "label": "Hammerin' Harry (World, M81 PCB version)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BC6AC5F9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/showdown.zip#showda1.bin",
+      "label": "Showdown (version 5.0)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E4031507|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/scontra.zip#e03.k13",
+      "label": "Super Contra",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "00B02622|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hustler.zip#hustler.3",
+      "label": "Video Hustler",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9422226A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/matmania.zip#kr-02",
+      "label": "Mat Mania",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B057D3E3|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/faceoff.zip#fo1_o4.bin",
+      "label": "Face Off (Japan 2 Players)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "985F04C7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/arabian.zip#ic4rev2.90",
+      "label": "Arabian",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "32B77B44|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ldrun4.zip#lr4-v-1p",
+      "label": "Lode Runner IV - Teikoku Karano Dasshutsu (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0DF23EBE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/timetunl.zip#un18.8",
+      "label": "Time Tunnel",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E67FF377|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/shippumd.zip#ma02rom5.bin",
+      "label": "Shippu Mahou Daisakusen (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "116AE559|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sprint1.zip#6443-01.e1",
+      "label": "Sprint 1",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D6BB00D0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/irobot.zip#ir123.bin",
+      "label": "I, Robot",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "39FFF18F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/offroad.zip#22110-02.u6",
+      "label": "Ironman Ivan Stewart's Super Off-Road (rev 4)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F97BAD5C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rallyx.zip#rallyxn.1k",
+      "label": "Rally X (32k Ver.?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9AACCCF0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/grobda.zip#gr2-1",
+      "label": "Grobda (New Ver.)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0089B13A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/champwr.zip#c01-13.rom",
+      "label": "Champion Wrestler (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7EF47525|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mia.zip#808t21.j17",
+      "label": "M.I.A. - Missing in Action (version T)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "42A30416|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/senjyo.zip#08k_10b.bin",
+      "label": "Senjyo",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A9F41EC9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/timesold.zip#bf.4",
+      "label": "Time Soldiers (US Rev 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "34EBACCC|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/konamigt.zip#b09.rom",
+      "label": "Konami GT",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "539D0C49|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/citycon.zip#c11",
+      "label": "City Connection (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "139EB1AA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/valkyrie.zip#wd1voi2.bin",
+      "label": "Valkyrie no Densetsu (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E95C5CF3|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/opwolf.zip#opwlf.29",
+      "label": "Operation Wolf (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B71BC44C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/wiping.zip#wip-e11.bin",
+      "label": "Wiping",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E7400715|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/digdug2.zip#d21-7.5k",
+      "label": "Dig Dug II (New Ver.)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9C55FEDA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/jailbrek.zip#jailb8c.bin",
+      "label": "Jail Break (bootleg)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D91D15E3|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bssoccer.zip#10",
+      "label": "Back Street Soccer (KRB-0031 PCB)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1CA94D21|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/calipso.zip#calipso.clr",
+      "label": "Calipso",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "01165832|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/twincobr.zip#tc12",
+      "label": "Twin Cobra (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E37B3C44|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/spclaser.zip#la03",
+      "label": "Space Laser",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1083E9CC|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/asterix.zip#aster8d.bin",
+      "label": "Asterix (ver EAD)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "53AAC057|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/brkthru.zip#brkthru.2",
+      "label": "Break Thru (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FA8246D9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/p47.zip#p47us16.bin",
+      "label": "P-47 - The Phantom Fighter (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5A682C8F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/cshift.zip#cs-gr4.bin",
+      "label": "Chicken Shift",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A94CD35B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hyperspt.zip#c20",
+      "label": "Hyper Sports",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "183F4324|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rtype.zip#rt_r-l1-.bin",
+      "label": "R-Type (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "4821141C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/tmnt2po.zip#tmnt22.bin",
+      "label": "Teenage Mutant Ninja Turtles (Oceania 2 Players, version ?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "AEC4F1C3|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/megatack.zip#megattac.e1",
+      "label": "Megatack (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D9996B9F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gauntlet.zip#1410-7b.037",
+      "label": "Gauntlet (rev 14)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "931BD2A0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/wsf.zip#30021-01.u8",
+      "label": "World Soccer Finals (rev 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BB91DC10|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/turtship.zip#turtship.016",
+      "label": "Turtle Ship (Korea)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "AFFD51DD|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mars.zip#u101.2",
+      "label": "Mars",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C5DC627F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/leprechn.zip#lep3",
+      "label": "Leprechaun",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A2EAA016|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/cabal.zip#t6_128.bin",
+      "label": "Cabal (US set 1, Trackball)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1CCEE214|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/galivan.zip#gv2.3b",
+      "label": "Cosmo Police Galivan (12/16/1985)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0D1B3538|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dspirit.zip#ds3_p7.bin",
+      "label": "Dragon Spirit (new version (DS3))",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "820BEDB2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/stdragon.zip#jsd-23.bin",
+      "label": "Saint Dragon (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6B010E1A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/megazone.zip#319i03.bin",
+      "label": "Mega Zone (program code I)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0888B803|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/kaos.zip#kaossnd.e1",
+      "label": "Kaos",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "AB23D52A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/marble.zip#136033.630",
+      "label": "Marble Madness (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "687A09F7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/lnc.zip#sc-5m",
+      "label": "Lock'n'Chase",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2A976EBE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/umk3.zip#um312u63.bin",
+      "label": "Ultimate Mortal Kombat 3 (rev 1.2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6D301FAF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/champbas.zip#champbb.pr2",
+      "label": "Champion Base Ball",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2585FFB0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/amidar.zip#amidar.5h",
+      "label": "Amidar (older)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2F7F1C30|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/troangel.zip#ta-b-5c",
+      "label": "Tropical Angel",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C19134C9|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/yiear.zip#i07.8d",
+      "label": "Yie Ar Kung-Fu (program code I)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7DB7442E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/disco.zip#disco.w0",
+      "label": "Disco No.1",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7C26E76B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/vanvan.zip#van-4.53",
+      "label": "Van-Van Car",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B724CBE0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bankp.zip#pr6179.clr",
+      "label": "Bank Panic",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E53BAFDB|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/tsamurai.zip#13.4j",
+      "label": "Samurai Nihon-Ichi (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "73FEB0E2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/downtown.zip#ud2000.001",
+      "label": "DownTown / Mokugeki (set 2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1708AEBD|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/milliped.zip#milliped.106",
+      "label": "Millipede",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F4468045|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/shootout.zip#cu07.c12",
+      "label": "Shoot Out (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "19B6B94F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/galaga88.zip#g8x_p7.bin",
+      "label": "Galaga '88",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DF75B7FC|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/baraduke.zip#ch4.4m",
+      "label": "Baraduke",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E5DA0896|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/trog.zip#trogu89.bin",
+      "label": "Trog (rev LA4 03/11/91)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FDD7CC65|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/wwfwfest.zip#31a14-2.18",
+      "label": "WWF WrestleFest (US, rev 2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5D06BFD1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ninjak.zip#c85_xx.5",
+      "label": "The Ninja Kids (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0AC2CBA2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/karatblz.zip#rom2v3",
+      "label": "Karate Blazers (World, set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "01F772E1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/sidearms.zip#sa03.bin",
+      "label": "Side Arms - Hyper Dyne (World, 861129)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E10FE6A0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bowlrama.zip#ux7",
+      "label": "Bowl-O-Rama Rev 1.0",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8727432A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/fitegolf.zip#gu1",
+      "label": "Lee Trevino's Fighting Golf (World?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BC32568F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/loht.zip#tom_c-l0.rom",
+      "label": "Legend of Hero Tonma (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E788002F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/challeng.zip#chall.snd",
+      "label": "Challenger",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1B2BFFD2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/killcom.zip#killsnd.e1",
+      "label": "Killer Comet",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "77D4890D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/roadrunn.zip#231-13a.040",
+      "label": "Road Runner (rev 2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "722F2D3B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/kidniki.zip#dr11.8k",
+      "label": "Kid Niki - Radical Ninja (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "04D82D93|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gwarrior.zip#578-a05.12l",
+      "label": "Galactic Warriors",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "76240E2E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/frogger.zip#frsm3.7",
+      "label": "Frogger",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "ACA22AE0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/dinorex.zip#d39_16.8",
+      "label": "Dino Rex (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "CEDC8537|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/battroad.zip#br-c-1j",
+      "label": "The Battle-Road",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "78EB5D77|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bogeyman.zip#82s129.6k",
+      "label": "Bogey Manor",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B6127713|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/superbon.zip#5h.cpu",
+      "label": "Agent Super Bond (Super Cobra conversion)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "58C29927|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/kickridr.zip#kickridr.clr",
+      "label": "Kick Rider",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "73EC281C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/cop01.zip#cop10.3e",
+      "label": "Cop 01 (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "444CB19D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/eyes.zip#h7",
+      "label": "Eyes (US set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "22F7A719|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/blandia.zip#ux001014.070",
+      "label": "Blandia",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "86B49B4E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gbusters.zip#878n02.rom",
+      "label": "Gang Busters (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "51697AAA|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/wldcourt.zip#wc1_obj3.bin",
+      "label": "World Court (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1AA2DBC8|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/marvins.zip#marvmaze.j3",
+      "label": "Marvin's Maze",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DF9E6005|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/3stooges.zip#gv113rom.0",
+      "label": "The Three Stooges In Brides Is Brides (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "AB124329|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ataxx.zip#ataxx.038",
+      "label": "Ataxx (rev 4)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E1CF6236|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/pengo.zip#ep5119c.31",
+      "label": "Pengo (set 1 rev c)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "933950FE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/splatter.zip#sh1_prg7.bin",
+      "label": "Splatter House (Japan, SH1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "24C8CBD7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/tnk3.zip#tnk3-p14.bin",
+      "label": "T.N.K III (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1FD18C43|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/swimmer.zip#sw8",
+      "label": "Swimmer (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "33D6001E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/ebases.zip#m761d",
+      "label": "Extra Bases",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5173781A|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/block.zip#ble_05.bin",
+      "label": "Block Block (World 911106 Joystick)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FA2A4536|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/mk3.zip#mk321u63.bin",
+      "label": "Mortal Kombat 3 (rev 2.1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "64D34776|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/congo.zip#congo.u68",
+      "label": "Congo Bongo (Rev C, 2 board stack)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B788D8AE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/scion.zip#6.9f",
+      "label": "Scion (Cinematronics)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A66A0CE6|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/scion.zip#sc6",
+      "label": "Scion",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "09F5F9C1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bbbxing.zip#bbbx23.bin",
+      "label": "Best Bout Boxing (ver 1.3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B7875A23|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/gimeabrk.zip#gr23.u5b",
+      "label": "Gimme A Break (7/7/85)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0555D9C0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/seicross.zip#smc8",
+      "label": "Seicross (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2093461D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/jackal.zip#j-v03.rom",
+      "label": "Jackal (World, 8-way Joystick)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3E0DFB83|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/berabohm.zip#bm1_p7c.bin",
+      "label": "Beraboh Man (Japan, Rev C)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9694D7B2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/radrad.zip#9.j7",
+      "label": "Radical Radial (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "229939A3|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/chqflag.zip#717h02",
+      "label": "Chequered Flag",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F5BD4E78|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/spectar.zip#spl6a-2",
+      "label": "Spectar (revision 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0CB46B25|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/searchar.zip#bhw.3",
+      "label": "SAR - Search And Rescue (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "EE1F9374|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/rambo3.zip#r3-a4.rom",
+      "label": "Rambo III (Europe, Proto?)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9CF4C21B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/shackled.zip#dk-08.rom",
+      "label": "Shackled (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5E54E9F5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/bagman.zip#f1_b03s.bin",
+      "label": "Bagman",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DBA1EDA7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/jrpacman.zip#jrp8d.bin",
+      "label": "Jr. Pac-Man (11/9/83)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E3FA972E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/tumblep.zip#hl01-1.f13",
+      "label": "Tumble Pop (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D5A62A3F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/csilver.zip#a4",
+      "label": "Captain Silver (Japan, revision 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "02DD8CFC|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/canyon.zip#9496-01.d1",
+      "label": "Canyon Bomber",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8BE15080|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/fantasy.zip#ic17.cpu",
+      "label": "Fantasy (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F6AA5DE1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/oscar.zip#ed11",
+      "label": "Psycho-Nics Oscar (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "10E5D919|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/qbertqub.zip#qq-fg0.bin",
+      "label": "Q*bert's Qubes",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6192853F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/monsterb.zip#1518a.bin",
+      "label": "Monster Bash",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2D5932FE|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/hustle.zip#3160021.u43",
+      "label": "Hustle",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "B5083128|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/twinbee.zip#412-a05.12l",
+      "label": "TwinBee (ROM version)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2B357069|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/superman.zip#a03_13.bin",
+      "label": "Superman (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9F446A44|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/elim2.zip#1345",
+      "label": "Eliminator (2 Players, set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "40597A92|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/.config/retroarch/roms/MAME/skullxbo.zip#5153213c.072",
+      "label": "Skull & Crossbones (rev 5)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "FEF8297F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/dowild.zip",
+      "label": "Mr. Do's Wild Ride",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A703DEA5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/btime.zip",
+      "label": "Burger Time (Data East set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "368A25B5|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/usclssic.zip",
+      "label": "U.S. Classic",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C5FEA37C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/lazercmd.zip",
+      "label": "Lazer Command",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6D708EDD|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/280zzzap.zip",
+      "label": "280-ZZZAP",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "6E85AEAF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/nova2001.zip",
+      "label": "Nova 2001 (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "368CFFC0|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/wiz.zip",
+      "label": "Wiz",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "4D86B041|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/columns.zip",
+      "label": "Columns (World)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "9A426D9B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/bottom9.zip",
+      "label": "Bottom of the Ninth (version T)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2C10CED2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/ssriders.zip",
+      "label": "Sunset Riders (4 Players ver EAC)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5929818E|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/cnightst.zip",
+      "label": "Night Star (DECO Cassette) (US) (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C6F844CB|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/rranger.zip",
+      "label": "Rough Ranger (v2.0, bootleg)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "4FB4F096|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/boothill.zip",
+      "label": "Boot Hill",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "374529F4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/warpwarp.zip",
+      "label": "Warp & Warp",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "380994C8|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/simpsn2p.zip",
+      "label": "The Simpsons (2 Players World, set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "244F9289|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/pacnpal.zip",
+      "label": "Pac & Pal",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "15308BCF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/streetsm.zip",
+      "label": "Street Smart (US version 2)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "89E4EE6F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/crimfgtj.zip",
+      "label": "Crime Fighters (Japan 2 Players)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F33FA2E1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/cclimbr2.zip",
+      "label": "Crazy Climber 2 (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2AC7ED67|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/tehkanwc.zip",
+      "label": "Tehkan World Cup (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "34D6D5FF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/meteor.zip",
+      "label": "Meteoroids",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "CC97C890|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/bigkarnk.zip",
+      "label": "Big Karnak",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "26444AD1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/krull.zip",
+      "label": "Krull",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "7402DC19|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/radarscp.zip",
+      "label": "Radar Scope",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "79A7D831|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/rygar.zip",
+      "label": "Rygar (US set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "062CD55D|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/motos.zip",
+      "label": "Motos",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2ACCDFB4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/invad2ct.zip",
+      "label": "Space Invaders II (Midway, cocktail)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "EFDABB03|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/dfeveron.zip",
+      "label": "Dangun Feveron (Japan, Ver. 98/09/17)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E53A7DB3|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/fshark.zip",
+      "label": "Flying Shark (bootleg with 8741)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "016FE2F7|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/palamed.zip",
+      "label": "Palamedes (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "55A82BB2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/aso.zip",
+      "label": "ASO - Armored Scrum Object",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "8BAA2253|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/astyanax.zip",
+      "label": "The Astyanax",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1A1AD3CF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/sidetrac.zip",
+      "label": "Side Trak",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "3BD1ACC1|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/bloodbro.zip",
+      "label": "Blood Bros. (Japan)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "2D7E0FDF|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/gwar.zip",
+      "label": "Guerrilla War (US)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5BCFA7DC|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/reactor.zip",
+      "label": "Reactor",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "D1F20E15|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/paperboy.zip",
+      "label": "Paperboy (rev 3)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "BA251BC4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/pbaction.zip",
+      "label": "Pinball Action (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "0E53A91F|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/kyros.zip",
+      "label": "Kyros",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "5D0ACB4C|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/gaplus.zip",
+      "label": "Galaga 3 (GP3 rev. D)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "ECC01BDB|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/phantom2.zip",
+      "label": "Phantom II",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "DCDD2927|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/vendet2p.zip",
+      "label": "Vendetta (World, 2 Players, ver. W)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "CEE57132|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/astrof.zip",
+      "label": "Astro Fighter (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "322C09D2|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/sftm.zip",
+      "label": "Street Fighter: The Movie (v1.12)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "A004D382|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/gmissile.zip",
+      "label": "Guided Missile",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "F350146B|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/moo.zip",
+      "label": "Wild West C.O.W.-Boys of Moo Mesa (ver EA)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "E4E6FDA4|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/dogpatch.zip",
+      "label": "Dog Patch",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C12B1F60|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/colony7.zip",
+      "label": "Colony 7 (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "1BC97436|crc",
+      "db_name": "MAME.lpl"
+    },
+    {
+      "path": "/home/user/Git/dotfiles/.config/retroarch/roms/MAME/jack.zip",
+      "label": "Jack the Giantkiller (set 1)",
+      "core_path": "DETECT",
+      "core_name": "DETECT",
+      "crc32": "C8E73998|crc",
+      "db_name": "MAME.lpl"
+    }
+  ]
+}
