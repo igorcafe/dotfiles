@@ -1,7 +1,8 @@
-# $ man configuration.nix
-# $ nixos-help
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -9,51 +10,9 @@
     ./hardware-configuration.nix
   ];
 
-  hardware.opengl.extraPackages = with pkgs; [ intel-compute-runtime ];
-  hardware.bluetooth = {
-    enable = true;
-    settings = {
-      General = {
-        ControllerMode = "bredr";
-      };
-    };
-  };
-
-  nixpkgs.config.allowUnfree = true;
-
-  users.users.user = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ];
-  };
-
-  virtualisation.docker.enable = true;
-
-  environment.systemPackages = with pkgs; [ ncdu neovim gnumake ];
-
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
-
-  nix = {
-    package = pkgs.nixFlakes;
-    settings = {
-      experimental-features = "nix-command flakes";
-      auto-optimise-store = true;
-    };
-  };
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-  };
-
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # Setup keyfile
-  boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -83,42 +42,23 @@
     LC_TIME = "pt_BR.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-
-  # Configure keymap in X11
   services.xserver = {
+    # Enable the X11 windowing system.
+    enable = true;
+
+    videoDrivers = [ "amdgpu" ];
+
+    # Enable the KDE Plasma Desktop Environment.
+    displayManager.sddm.enable = true;
+    desktopManager.plasma5.enable = true;
+
+    # Configure keymap in X11
     xkb.layout = "us";
     xkb.variant = "";
   };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
-  services.power-profiles-daemon.enable = false;
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-      CPU_ENERGY_PERF_POLICY_ON_AC = "power";
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
-
-      CPU_MIN_PERF_ON_AC = 0;
-      CPU_MAX_PERF_ON_AC = 100;
-      CPU_MIN_PERF_ON_BAT = 0;
-      CPU_MAX_PERF_ON_BAT = 20;
-
-      START_CHARGE_THRESH_BAT0 = 30;
-      STOP_CHARGE_THRESH_BAT0 = 80;
-      USB_AUTOSUSPEND = 1;
-    };
-  };
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -140,8 +80,101 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Some programs need SUID wrappers, can be configured further or are
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        ControllerMode = "bredr";
+      };
+    };
+  };
 
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    extraPackages = with pkgs; [
+      rocmPackages.clr.icd
+      amdvlk
+    ];
+  };
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.user = {
+    isNormalUser = true;
+    description = "user";
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    packages = with pkgs; [
+      firefox
+      kate
+      #  thunderbird
+    ];
+  };
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  nix = {
+    package = pkgs.nixFlakes;
+    settings = {
+      experimental-features = "nix-command flakes";
+      auto-optimise-store = true;
+    };
+  };
+
+  environment.systemPackages = with pkgs; [
+    (retroarch.override {
+      cores = with libretro; [
+        # TODO:
+        # dinothaw
+        # game gear
+        # sega 32x
+        # sega cd
+        # atari 7800
+        # atari lynx
+        # pc engine
+        # nintendo ds
+        # famicom disk system
+        # gb, gba, vb
+        # fbneo
+        # mame
+        # dos
+        # msx
+        # phantomsystem
+
+        fceumm
+        snes9x
+        snes9x2010
+        mupen64plus
+        dolphin
+        beetle-psx-hw
+        pcsx2
+        ppsspp
+        genesis-plus-gx
+        picodrive
+        mrboom
+        stella2014
+      ];
+    })
+    ncdu
+    neovim
+    gnumake
+  ];
+
+  users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable = true;
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+
+
+  # virtualisation.docker = {
+  #   enable = true;
+  # };
+
+  # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {
@@ -155,7 +188,7 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 3000 ];
+  # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -166,6 +199,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
 
 }
