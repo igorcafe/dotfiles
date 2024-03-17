@@ -78,7 +78,6 @@
       pgcli
       yt-dlp
       asdf-vm
-      rnix-lsp
       google-cloud-sdk
       flameshot
     ];
