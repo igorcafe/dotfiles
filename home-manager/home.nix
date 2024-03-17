@@ -80,6 +80,7 @@
       asdf-vm
       rnix-lsp
       google-cloud-sdk
+      flameshot
     ];
   };
 
@@ -90,6 +91,19 @@
 
   programs.vscode = {
     enable = true;
+    package = pkgs.vscode.fhsWithPackages (ps: with ps; [
+      alsaLib.dev
+      glew
+      glfw
+      libGL.dev
+      openal
+      pkg-config
+      xorg.libXcursor
+      xorg.libXrandr
+      xorg.libXinerama
+      xorg.libXi
+      xorg.libXxf86vm
+    ]);
     enableUpdateCheck = false;
     extensions = with pkgs.vscode-extensions; [
       jnoortheen.nix-ide
