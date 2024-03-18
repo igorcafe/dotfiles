@@ -80,6 +80,9 @@
       asdf-vm
       google-cloud-sdk
       flameshot
+      ripgrep
+      nil
+      mangohud
     ];
   };
 
@@ -262,6 +265,9 @@
       ffmpeg = "ffmpeg -hide_banner -loglevel error -stats";
       ffplay = "ffplay -hide_banner";
       ffprobe = "ffprobe -hide_banner";
+      ls = "lsd";
+      ll = "lsd -l";
+      lla = "lsd -la";
     };
     zplug = {
       enable = true;
