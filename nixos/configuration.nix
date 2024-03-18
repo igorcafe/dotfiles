@@ -169,6 +169,7 @@
     dedicatedServer.openFirewall = true;
   };
 
+  programs.gamemode.enable = true;
 
   # virtualisation.docker = {
   #   enable = true;
