@@ -11,8 +11,8 @@
     {
       "path": "/home/user/Git/dotfiles/.config/retroarch/roms/Nintendo - Wii/New Super Mario Bros Wii [SMNE01].wbfs",
       "label": "New Super Mario Bros. Wii (USA)",
-      "core_path": "DETECT",
-      "core_name": "DETECT",
+      "core_path": "/nix/store/x7zh2zzc9fv4flkrwmxvwyiqcry7py9z-libretro-dolphin-unstable-2022-12-17/lib/retroarch/cores/dolphin_libretro.so",
+      "core_name": "Nintendo - GameCube / Wii (Dolphin)",
       "crc32": "SMNE01|serial",
       "db_name": "Nintendo - Wii.lpl"
     }
