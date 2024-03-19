@@ -232,6 +232,7 @@
 
       #nix
       "nix.enableLanguageServer" = true;
+      "nix.formatterPath" = "nixpkgs-fmt";
       "[nix]" = {
         "editor.defaultFormatter" = "jnoortheen.nix-ide";
         "editor.formatOnSave" = true;
