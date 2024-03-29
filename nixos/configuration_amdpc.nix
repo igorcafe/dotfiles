@@ -11,11 +11,21 @@
     ./hardware-configuration.nix
   ];
 
+
+  hardware.opengl.extraPackages = with pkgs; [
+    rocmPackages.clr.icd
+    amdvlk
+  ];
+
+  hardware.opengl.extraPackages32 = with pkgs; [
+    driversi686Linux.amdvlk
+  ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "amdpc"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary

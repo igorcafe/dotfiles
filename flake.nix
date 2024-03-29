@@ -21,10 +21,16 @@
     in
     {
       nixosConfigurations = {
-        nixos = nixpkgs.lib.nixosSystem {
+        amdpc = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           system = "x86_64-linux";
-          modules = [ ./nixos/configuration.nix ];
+          modules = [ ./nixos/configuration_amdpc.nix ];
+        };
+
+        intelpc = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          system = "x86_64-linux";
+          modules = [ ./nixos/configuration_intelpc.nix ];
         };
       };
 
