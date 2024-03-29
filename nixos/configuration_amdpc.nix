@@ -6,7 +6,6 @@
 
 {
   imports = [
-    # Include the results of the hardware scan.
     ./configuration_common.nix
     ./hardware-configuration_amdpc.nix
   ];

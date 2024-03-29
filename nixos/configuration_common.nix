@@ -46,6 +46,7 @@
     ncdu
     neovim
     gnumake
+    vulkan-tools
   ];
 
   users.defaultUserShell = pkgs.zsh;
