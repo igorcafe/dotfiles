@@ -35,7 +35,13 @@
       };
 
       homeConfigurations = {
-        "user@nixos" = home-manager.lib.homeManagerConfiguration {
+        "user@amdpc" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [ ./home-manager/home.nix ];
+        };
+
+        "user@intelpc" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home-manager/home.nix ];
