@@ -1,5 +1,5 @@
 #+title: My emacs settings
-#+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
+#+property: header-args:emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/init.el
 
 ** Packages
 
@@ -22,7 +22,6 @@ If you get 404 when trying to install packages, run ~M-x package-refresh-content
 (eval-when-compile (require 'use-package))
 (setq use-package-always-ensure t)
 #+end_src
-
 
 ** Visuals
 
@@ -78,14 +77,11 @@ I just use the default font with a bigger size.
 **** Doom Themes
 
 #+begin_src emacs-lisp
-  (use-package doom-themes
-  :config
-  (setq doom-themes-enable-bold t)
-  (setq doom-themes-enable-italic t))
-#+end_src
-
-#+begin_src emacs-lisp
-(load-theme 'doom-tomorrow-day)
+(use-package doom-themes
+    :config
+    (setq doom-themes-enable-bold t)
+    (setq doom-themes-enable-italic t)
+    (load-theme 'doom-tomorrow-day t))
 #+end_src
 
 *** Whitspaces
@@ -97,7 +93,6 @@ Colors trailing whitespaces in red.
 #+end_src
 
 **** TODO show symbols for spaces and tabs
-
 
 ** Org Mode
 
@@ -139,6 +134,10 @@ Replace ~-~ by ~•~ on unordered lists.
 
 ** Built-in modes and settings
 
+*** Custom variables file
+#+begin_src emacs-lisp
+  (setq custom-file "~/Git/dotfiles/.emacs.d/custom.el")
+#+end_src
 *** Persist minibuffers
 
 Persist minibuffers history, like in ~M-x~, ~C-x C-f~ and so on.
@@ -301,7 +300,8 @@ You can still use ~C-M-i~ to launch corfu.
 
 #+begin_src emacs-lisp
   (use-package diff-hl
-  :conf (diff-hl-mode 1))
+  :demand t
+  :config (diff-hl-mode 1))
 #+end_src
 
 ** Directory Tree
