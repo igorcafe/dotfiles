@@ -228,6 +228,8 @@ Eglot is a builtin LSP client for emacs.
 (use-package nix-mode)
 #+end_src
 
+*** TODO DAP
+
 ** Vim keybindings
 
 *** Vim-like keybindings
