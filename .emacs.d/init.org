@@ -27,10 +27,6 @@ Show relative line numbers.
 (setq display-line-numbers 'relative)
 #+end_src
 
-
-#+begin_src emacs-lisp
-#+end_src
-
 Wrap long lines.
 #+begin_src emacs-lisp
 (visual-line-mode 1)
@@ -138,108 +134,159 @@ Press escape to quit most prompts.
 
 ** Org Mode
 
-#+begin_src emacs-lisp
-; org mode lists
-; (font-lock-add-keywords 'org-mode
-;     '(("^ *\\([-]\\) "
-;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+*** Visuals
 
+Change title and heading sizes.
+
+#+begin_src emacs-lisp
 (add-hook 'org-mode-hook #'(lambda()
-			    ;(org-bullets-mode 1)
 			    (set-face-attribute 'org-document-title nil :height 1.8)
 			    (set-face-attribute 'org-level-1 nil :height 1.8)
 			    (set-face-attribute 'org-level-2 nil :height 1.5)
 			    (set-face-attribute 'org-level-3 nil :height 1.2)))
 #+end_src
 
+Replace ~-~ by ~•~ on unordered lists.
+
+#+begin_src emacs-lisp
+; org mode lists
+; (font-lock-add-keywords 'org-mode
+;     '(("^ *\\([-]\\) "
+;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+#+end_src
+
 ** Packages
+
+If you get 404 when trying to install packages, run ~M-x package-refresh-contents~.
+
+*** Setup MELPA
 
 #+begin_src emacs-lisp
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
+#+end_src
 
-(setq use-package-always-ensure t)
+*** Setup use-package
 
-; install use-package
+#+begin_src emacs-lisp
 (unless (package-installed-p 'use-package)
-(package-refresh-contents)
-(package-install 'use-package))
+    (package-refresh-contents)
+    (package-install 'use-package))
 (eval-when-compile (require 'use-package))
+(setq use-package-always-ensure t)
+#+end_src
 
+*** Keychord
+
+I only use it to map ~jk~ to ~<Escape>~.
+
+#+begin_src emacs-lisp
 (use-package key-chord
-:config
-(key-chord-mode 1))
+    :after evil
+    :config
+    (key-chord-mode 1)
+    (setq key-chord-two-keys-delay 0.2)
+    (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
+#+end_src
 
-; vim-like bindings
+*** Vim-like keybindings
+
+evil mode and evil-collection provide vim-like bindings.
+
+#+begin_src emacs-lisp
 (use-package evil
-:after key-chord
-:demand t
-:init
-(setq evil-want-C-u-scroll t)
-(setq evil-want-keybinding nil)
-:config
-(setq key-chord-two-keys-delay 0.2)
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-(evil-mode 1))
+    :demand t
+    :init
+    (setq evil-want-C-u-scroll t) ; C-u won't work by default
+    (setq evil-want-keybinding nil) ; what? idk
+    :config
+    (evil-mode 1))
 
 (use-package evil-collection
-:after evil
-:config
-(setq evil-want-integration t)
-(evil-collection-init))
+    :after evil
+    :config
+    (setq evil-want-integration t)
+    (evil-collection-init))
+#+end_src
 
-; lsp builtin client
+*** LSP with Eglot
+
+Eglot is a builtin LSP client for emacs.
+
+**** TODO move hooks for each language settings
+
+#+begin_src emacs-lisp
 (use-package eglot
-:hook
-(go-mode . eglot-ensure)
-:config
-(keymap-set eglot-mode-map "C-x r" #'eglot-rename))
+    :hook
+    (go-mode . eglot-ensure)
+    :config
+    (keymap-set eglot-mode-map "C-x r" #'eglot-rename))
 
 ; format on save
 (add-hook 'before-save-hook 'eglot-format)
+#+end_src
 
-; autosuggestions
-(use-package corfu
-:custom
-(corfu-auto t)
-:init
-(global-corfu-mode))
+*** Languages support
 
-; languages
+**** Go
+#+begin_src emacs-lisp
 (use-package go-mode)
+#+end_src
 
+**** Nix
+#+begin_src emacs-lisp
 (use-package nix-mode)
+#+end_src
 
-(use-package which-key
-:config (which-key-mode))
+*** Autosuggestion and Completion
 
+Emacs supports completion builtin with ~C-M-i~, but for a VSCode-like completion I use corfu.
+You can still use ~C-M-i~ to launch corfu.
+
+#+begin_src emacs-lisp
+(use-package corfu
+    :custom
+    (corfu-auto t) ; automatically pops up as you type
+    :init
+    (global-corfu-mode))
+#+end_src
+
+*** Which Key
+
+Suggests key combinations as you press them.
+
+#+begin_src emacs-lisp
+  (use-package which-key
+      :config (which-key-mode))
+#+end_src
+
+*** Vertico
+
+#+begin_src emacs-lisp
 (use-package vertico
-:config
-(vertico-mode 1)
-(keymap-set vertico-map "C-j" #'vertico-next)
-(keymap-set vertico-map "C-k" #'vertico-previous))
+    :config
+    (vertico-mode 1)
+    (keymap-set vertico-map "C-j" #'vertico-next)
+    (keymap-set vertico-map "C-k" #'vertico-previous))
+#+end_src
 
+*** Magit
+
+#+begin_src emacs-lisp
 (use-package magit)
+#+end_src
 
+*** NeoTree
+
+#+begin_src emacs-lisp
 (use-package neotree
-:config
-(global-set-key [f8] 'neotree-toggle))
+    :config
+    (global-set-key [f8] 'neotree-toggle))
+#+end_src
 
+*** Restart Emacs
+
+#+begin_src emacs-lisp
 (use-package restart-emacs)
-
-; --- ignore below ---
-(custom-set-variables
-;; custom-set-variables was added by Custom.
-;; If you edit it by hand, you could mess it up, so be careful.
-;; Your init file should contain only one such instance.
-;; If there is more than one, they won't work right.
-'(package-selected-packages
-    '(org-bullets restart-emacs neotree magit corfu nix-mode vertico which-key use-package lsp-mode key-chord ivy go-mode evil-collection command-log-mode)))
-(custom-set-faces
-;; custom-set-faces was added by Custom.
-;; If you edit it by hand, you could mess it up, so be careful.
-;; Your init file should contain only one such instance.
-;; If there is more than one, they won't work right.
-)
 #+end_src
