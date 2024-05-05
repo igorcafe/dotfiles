@@ -1,5 +1,28 @@
 #+title: My emacs settings
-#+property: header-args:emacs-lisp :tangle ./init.el
+#+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
+
+** Packages
+
+If you get 404 when trying to install packages, run ~M-x package-refresh-contents~.
+
+*** Setup MELPA
+
+#+begin_src emacs-lisp
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+#+end_src
+
+*** Setup use-package
+
+#+begin_src emacs-lisp
+(unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+(eval-when-compile (require 'use-package))
+(setq use-package-always-ensure t)
+#+end_src
+
 
 ** Visuals
 
@@ -17,7 +40,6 @@ No annoying bell sound nor flashing lights when something goes wrong.
 (blink-cursor-mode 0)
 (setq ring-bell-function 'ignore) ; this is actually sound, but...
 #+end_src
-
 
 *** Lines
 
@@ -46,18 +68,24 @@ But it improves scrolling for sure.
 
 *** Font and Theme
 
+**** Font
+
 I just use the default font with a bigger size.
 #+begin_src emacs-lisp
 (set-face-attribute 'default nil :height 140)
 #+end_src
 
-Global theme.
-#+begin_src emacs-lisp
-; looks like vscode light theme
-(load-theme 'leuven)
+**** Doom Themes
 
-; usable dark theme
-;(load-theme 'modus-vivendi)
+#+begin_src emacs-lisp
+  (use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t)
+  (setq doom-themes-enable-italic t))
+#+end_src
+
+#+begin_src emacs-lisp
+(load-theme 'doom-tomorrow-day)
 #+end_src
 
 *** Whitspaces
@@ -70,9 +98,46 @@ Colors trailing whitespaces in red.
 
 **** TODO show symbols for spaces and tabs
 
-** Behavior
 
-Make emacs behave more like an IDE.
+** Org Mode
+
+*** Visuals
+
+Show headings with special bullets instead o asterisks.
+
+#+begin_src emacs-lisp
+(use-package org)
+(use-package org-bullets
+    :after org)
+#+end_src
+
+Change title and heading sizes.
+
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook #'(lambda()
+			    (org-bullets-mode 1)
+			    (set-face-attribute 'org-document-title nil :height 1.8)
+			    (set-face-attribute 'org-level-1 nil :height 1.8)
+			    (set-face-attribute 'org-level-2 nil :height 1.5)
+			    (set-face-attribute 'org-level-3 nil :height 1.2)))
+#+end_src
+
+Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
+
+#+begin_src emacs-lisp
+(setq org-hide-emphasis-markers t)
+#+end_src
+
+Replace ~-~ by ~•~ on unordered lists.
+
+#+begin_src emacs-lisp
+; org mode lists
+; (font-lock-add-keywords 'org-mode
+;     '(("^ *\\([-]\\) "
+;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+#+end_src
+
+** Built-in modes and settings
 
 *** Persist minibuffers
 
@@ -132,83 +197,7 @@ Press escape to quit most prompts.
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+end_src
 
-** Org Mode
-
-*** Visuals
-
-Change title and heading sizes.
-
-#+begin_src emacs-lisp
-(add-hook 'org-mode-hook #'(lambda()
-			    (set-face-attribute 'org-document-title nil :height 1.8)
-			    (set-face-attribute 'org-level-1 nil :height 1.8)
-			    (set-face-attribute 'org-level-2 nil :height 1.5)
-			    (set-face-attribute 'org-level-3 nil :height 1.2)))
-#+end_src
-
-Replace ~-~ by ~•~ on unordered lists.
-
-#+begin_src emacs-lisp
-; org mode lists
-; (font-lock-add-keywords 'org-mode
-;     '(("^ *\\([-]\\) "
-;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-#+end_src
-
-** Packages
-
-If you get 404 when trying to install packages, run ~M-x package-refresh-contents~.
-
-*** Setup MELPA
-
-#+begin_src emacs-lisp
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-#+end_src
-
-*** Setup use-package
-
-#+begin_src emacs-lisp
-(unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-(eval-when-compile (require 'use-package))
-(setq use-package-always-ensure t)
-#+end_src
-
-*** Keychord
-
-I only use it to map ~jk~ to ~<Escape>~.
-
-#+begin_src emacs-lisp
-(use-package key-chord
-    :after evil
-    :config
-    (key-chord-mode 1)
-    (setq key-chord-two-keys-delay 0.2)
-    (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
-#+end_src
-
-*** Vim-like keybindings
-
-evil mode and evil-collection provide vim-like bindings.
-
-#+begin_src emacs-lisp
-(use-package evil
-    :demand t
-    :init
-    (setq evil-want-C-u-scroll t) ; C-u won't work by default
-    (setq evil-want-keybinding nil) ; what? idk
-    :config
-    (evil-mode 1))
-
-(use-package evil-collection
-    :after evil
-    :config
-    (setq evil-want-integration t)
-    (evil-collection-init))
-#+end_src
+** LSP, DAP and Languages
 
 *** LSP with Eglot
 
@@ -239,7 +228,44 @@ Eglot is a builtin LSP client for emacs.
 (use-package nix-mode)
 #+end_src
 
-*** Autosuggestion and Completion
+** Vim keybindings
+
+*** Vim-like keybindings
+
+evil mode and evil-collection provide vim-like bindings.
+
+#+begin_src emacs-lisp
+(use-package evil
+    :demand t
+    :init
+    (setq evil-want-C-u-scroll t) ; C-u won't work by default
+    (setq evil-want-keybinding nil) ; what? idk
+    :config
+    (evil-mode 1))
+
+(use-package evil-collection
+    :after evil
+    :config
+    (setq evil-want-integration t)
+    (evil-collection-init))
+#+end_src
+
+*** Keychord
+
+I only use it to map ~jk~ to ~<Escape>~.
+
+#+begin_src emacs-lisp
+(use-package key-chord
+    :after evil
+    :config
+    (key-chord-mode 1)
+    (setq key-chord-two-keys-delay 0.2)
+    (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
+#+end_src
+
+** Suggestion and Completion
+
+*** Autosuggestion and Completion for Code
 
 Emacs supports completion builtin with ~C-M-i~, but for a VSCode-like completion I use corfu.
 You can still use ~C-M-i~ to launch corfu.
@@ -252,14 +278,41 @@ You can still use ~C-M-i~ to launch corfu.
     (global-corfu-mode))
 #+end_src
 
-*** Which Key
+*** Autosuggestion for keybindings
 
-Suggests key combinations as you press them.
+~whick-key~ suggests key combinations as you press them.
 
 #+begin_src emacs-lisp
   (use-package which-key
       :config (which-key-mode))
 #+end_src
+
+** Git
+
+*** Magit
+
+#+begin_src emacs-lisp
+(use-package magit)
+#+end_src
+
+*** Diff Highlight
+
+#+begin_src emacs-lisp
+  (use-package diff-hl
+  :conf (diff-hl-mode 1))
+#+end_src
+
+** Directory Tree
+
+*** NeoTree
+
+#+begin_src emacs-lisp
+(use-package neotree
+    :config
+    (global-set-key [f8] 'neotree-toggle))
+#+end_src
+
+** Misc. packages
 
 *** Vertico
 
@@ -271,22 +324,9 @@ Suggests key combinations as you press them.
     (keymap-set vertico-map "C-k" #'vertico-previous))
 #+end_src
 
-*** Magit
-
-#+begin_src emacs-lisp
-(use-package magit)
-#+end_src
-
-*** NeoTree
-
-#+begin_src emacs-lisp
-(use-package neotree
-    :config
-    (global-set-key [f8] 'neotree-toggle))
-#+end_src
-
 *** Restart Emacs
 
 #+begin_src emacs-lisp
 (use-package restart-emacs)
 #+end_src
+
