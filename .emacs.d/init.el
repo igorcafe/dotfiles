@@ -1,5 +1,3 @@
-(setenv "PATH" (concat (getenv "PATH") "/home/user/go/bin"))
-
 ; reduce visual clutter
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1)
@@ -14,10 +12,16 @@
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers 'relative)
 
+(setq scroll-step 1)
+(setq scroll-margin 10)
+
+(visual-line-mode 1)
+
 ; change font size
 (set-face-attribute 'default nil :height 140)
 
 ; looks like vscode light theme
+; (load-theme 'leuven)
 (load-theme 'modus-vivendi)
 
 ; recent files with M-x recentf-open-files
@@ -27,17 +31,37 @@
 (setq history-length 25)
 (savehist-mode 1)
 
+(setq-default show-trailing-whitespace t)
+
+; save session when emacs is closed and restore when reopened
+(desktop-save-mode 1)
+
 ; save cursor position
 (save-place-mode 1)
 
 ; refresh buffers when files are changed in disk
 (global-auto-revert-mode 1)
 
+; auto close pairs '' "" [ ] { }
+(electric-pair-mode 1)
+
 ; useful for refreshing dired
 (setq global-auto-revert-non-file-buffers t)
 
 ; escape to quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+; org mode lists
+; (font-lock-add-keywords 'org-mode
+;     '(("^ *\\([-]\\) "
+;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+(add-hook 'org-mode-hook #'(lambda()
+			     ;(org-bullets-mode 1)
+			     (set-face-attribute 'org-document-title nil :height 1.8)
+			     (set-face-attribute 'org-level-1 nil :height 1.8)
+			     (set-face-attribute 'org-level-2 nil :height 1.5)
+			     (set-face-attribute 'org-level-3 nil :height 1.2)))
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -76,7 +100,12 @@
 ; lsp builtin client
 (use-package eglot
   :hook
-  (go-mode . eglot-ensure))
+  (go-mode . eglot-ensure)
+  :config
+  (keymap-set eglot-mode-map "C-x r" #'eglot-rename))
+
+; format on save
+(add-hook 'before-save-hook 'eglot-format)
 
 ; autosuggestions
 (use-package corfu
@@ -87,15 +116,25 @@
 
 ; languages
 (use-package go-mode)
+
 (use-package nix-mode)
 
 (use-package which-key
   :config (which-key-mode))
 
 (use-package vertico
-  :config (vertico-mode 1))
+  :config
+  (vertico-mode 1)
+  (keymap-set vertico-map "C-j" #'vertico-next)
+  (keymap-set vertico-map "C-k" #'vertico-previous))
 
 (use-package magit)
+
+(use-package neotree
+  :config
+  (global-set-key [f8] 'neotree-toggle))
+
+(use-package restart-emacs)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -103,7 +142,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(magit corfu nix-mode vertico which-key use-package lsp-mode key-chord ivy go-mode evil-collection command-log-mode)))
+   '(org-bullets restart-emacs neotree magit corfu nix-mode vertico which-key use-package lsp-mode key-chord ivy go-mode evil-collection command-log-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
