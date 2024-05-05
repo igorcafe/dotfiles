@@ -120,6 +120,12 @@
           "commands" = [ "editor.action.goToImplementation" ];
         }
       ];
+      "vim.insertModeKeyBindings" = [
+        {
+          "before" = [ "j" "k" ];
+          "after" = [ "<esc>" ];
+        }
+      ];
       "vim.smartRelativeLine" = true;
 
       # go
@@ -140,6 +146,7 @@
       "git.suggestSmartCommit" = false;
       "window.zoomLevel" = 1;
       "git.confirmSync" = false;
+      "diffEditor.ignoreTrimWhitespace" = false;
     };
   };
 }
