@@ -134,10 +134,43 @@ Replace ~-~ by ~•~ on unordered lists.
 
 ** Built-in modes and settings
 
+*** Y or N instead of Yes or No
+#+begin_src emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+end_src
+
+*** Disable lock files
+
+#+begin_src emacs-lisp
+  (setq create-lockfiles nil)
+#+end_src
+
+*** Emacs directories
+#+begin_src emacs-lisp
+  (setq user-emacs-directory "~/.cache/emacs/")
+  (when (not file-directory-p user-emacs-directory)
+    (make-directory user-emacs-directory))
+
+  ;; wtf
+  (setq backup-directory-alist
+	`((".*" . ,(expand-file-name "backups" user-emacs-directory
+				     backup-by-copying t
+				     version-control t
+				     delete-old-versions t
+				     vc-make-backup-files t
+				     kept-old-versions 10
+				     kept-new-versions 10))))
+
+#+end_src
+
 *** Custom variables file
+
+This way I can build init.el from init.org without loosing custom variables.
+
 #+begin_src emacs-lisp
   (setq custom-file "~/Git/dotfiles/.emacs.d/custom.el")
 #+end_src
+
 *** Persist minibuffers
 
 Persist minibuffers history, like in ~M-x~, ~C-x C-f~ and so on.
