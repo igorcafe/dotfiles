@@ -75,6 +75,7 @@
   :hook
   (go-mode . eglot-ensure)
   :config
+  (setq eglot-sync-connect nil)
   (keymap-set eglot-mode-map "C-x r" #'eglot-rename))
 
 ;; format on save
