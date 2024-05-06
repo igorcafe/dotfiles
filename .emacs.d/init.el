@@ -58,18 +58,18 @@
 (setq create-lockfiles nil)
 
 (setq user-emacs-directory "~/.cache/emacs/")
-(when (not file-directory-p user-emacs-directory)
+(when (not (file-directory-p user-emacs-directory))
   (make-directory user-emacs-directory))
 
 ;; wtf
 (setq backup-directory-alist
-      `((".*" . ,(expand-file-name "backups" user-emacs-directory
+      `((".*" . ,(expand-file-name "backups" user-emacs-directory)))
 				   backup-by-copying t
 				   version-control t
 				   delete-old-versions t
 				   vc-make-backup-files t
 				   kept-old-versions 10
-				   kept-new-versions 10))))
+				   kept-new-versions 10)
 
 (setq custom-file "~/Git/dotfiles/.emacs.d/custom.el")
 
