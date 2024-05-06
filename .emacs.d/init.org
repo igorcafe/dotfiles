@@ -8,19 +8,19 @@ If you get 404 when trying to install packages, run ~M-x package-refresh-content
 *** Setup MELPA
 
 #+begin_src emacs-lisp
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (package-initialize)
 #+end_src
 
 *** Setup use-package
 
 #+begin_src emacs-lisp
-(unless (package-installed-p 'use-package)
+  (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
-(eval-when-compile (require 'use-package))
-(setq use-package-always-ensure t)
+  (eval-when-compile (require 'use-package))
+  (setq use-package-always-ensure t)
 #+end_src
 
 ** Visuals
@@ -29,28 +29,28 @@ If you get 404 when trying to install packages, run ~M-x package-refresh-content
 
 Hides startup message, scroll bar and tool bar.
 #+begin_src emacs-lisp
-(setq inhibit-startup-message t)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
+  (setq inhibit-startup-message t)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
 #+end_src
 
 No annoying bell sound nor flashing lights when something goes wrong.
 #+begin_src emacs-lisp
-(blink-cursor-mode 0)
-(setq ring-bell-function 'ignore) ; this is actually sound, but...
+  (blink-cursor-mode 0)
+  (setq ring-bell-function 'ignore) ; this is actually sound, but...
 #+end_src
 
 *** Lines
 
 Show relative line numbers.
 #+begin_src emacs-lisp
-(global-display-line-numbers-mode 1)
-(setq display-line-numbers 'relative)
+  (global-display-line-numbers-mode 1)
+  (setq display-line-numbers 'relative)
 #+end_src
 
 Wrap long lines.
 #+begin_src emacs-lisp
-(visual-line-mode 1)
+  (visual-line-mode 1)
 #+end_src
 
 *** Scroll
@@ -59,10 +59,10 @@ I don't know how to explain this shit.
 But it improves scrolling for sure.
 
 #+begin_src emacs-lisp
-(setq scroll-step 1)
-(setq scroll-margin 10)
-(setq scroll-conservatively 1000)
-(setq scroll-preserve-screen-position 1)
+  (setq scroll-step 1)
+  (setq scroll-margin 10)
+  (setq scroll-conservatively 1000)
+  (setq scroll-preserve-screen-position 1)
 #+end_src
 
 *** Font and Theme
@@ -71,13 +71,13 @@ But it improves scrolling for sure.
 
 I just use the default font with a bigger size.
 #+begin_src emacs-lisp
-(set-face-attribute 'default nil :height 140)
+  (set-face-attribute 'default nil :height 140)
 #+end_src
 
 **** Doom Themes
 
 #+begin_src emacs-lisp
-(use-package doom-themes
+  (use-package doom-themes
     :config
     (setq doom-themes-enable-bold t)
     (setq doom-themes-enable-italic t)
@@ -89,7 +89,7 @@ I just use the default font with a bigger size.
 Colors trailing whitespaces in red.
 **** TODO only use for code. Its currently being applied to terminal too.
 #+begin_src emacs-lisp
-(setq-default show-trailing-whitespace t)
+  (setq-default show-trailing-whitespace t)
 #+end_src
 
 **** TODO show symbols for spaces and tabs
@@ -101,35 +101,35 @@ Colors trailing whitespaces in red.
 Show headings with special bullets instead o asterisks.
 
 #+begin_src emacs-lisp
-(use-package org)
-(use-package org-bullets
+  (use-package org)
+  (use-package org-bullets
     :after org)
 #+end_src
 
 Change title and heading sizes.
 
 #+begin_src emacs-lisp
-(add-hook 'org-mode-hook #'(lambda()
-			    (org-bullets-mode 1)
-			    (set-face-attribute 'org-document-title nil :height 1.8)
-			    (set-face-attribute 'org-level-1 nil :height 1.8)
-			    (set-face-attribute 'org-level-2 nil :height 1.5)
-			    (set-face-attribute 'org-level-3 nil :height 1.2)))
+  (add-hook 'org-mode-hook #'(lambda()
+			       (org-bullets-mode 1)
+			       (set-face-attribute 'org-document-title nil :height 1.8)
+			       (set-face-attribute 'org-level-1 nil :height 1.8)
+			       (set-face-attribute 'org-level-2 nil :height 1.5)
+			       (set-face-attribute 'org-level-3 nil :height 1.2)))
 #+end_src
 
 Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
 
 #+begin_src emacs-lisp
-(setq org-hide-emphasis-markers t)
+  (setq org-hide-emphasis-markers t)
 #+end_src
 
 Replace ~-~ by ~•~ on unordered lists.
 
 #+begin_src emacs-lisp
-; org mode lists
-; (font-lock-add-keywords 'org-mode
-;     '(("^ *\\([-]\\) "
-;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+					  ; org mode lists
+					  ; (font-lock-add-keywords 'org-mode
+					  ;     '(("^ *\\([-]\\) "
+					  ;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 #+end_src
 
 ** Built-in modes and settings
@@ -143,16 +143,16 @@ Replace ~-~ by ~•~ on unordered lists.
 Persist minibuffers history, like in ~M-x~, ~C-x C-f~ and so on.
 
 #+begin_src emacs-lisp
-(savehist-mode 1)
-(setq history-length 25)
+  (savehist-mode 1)
+  (setq history-length 25)
 #+end_src
 
 *** Auto close pairs
 
-Auto close pairs like ~''~, ~""~, ~[ ]~, ~{ }~, depending on the file type.
+Auto close pairs like '',"", [ ], { }, depending on the file type.
 
 #+begin_src emacs-lisp
-(electric-pair-mode 1)
+  (electric-pair-mode 1)
 #+end_src
 
 *** Recent opened files
@@ -160,7 +160,7 @@ Auto close pairs like ~''~, ~""~, ~[ ]~, ~{ }~, depending on the file type.
 Show recent files with ~M-x recentf~.
 
 #+begin_src emacs-lisp
-(recentf-mode 1)
+  (recentf-mode 1)
 #+end_src
 
 *** Save session
@@ -168,7 +168,7 @@ Show recent files with ~M-x recentf~.
 Save session when emacs is closed and restore when reopened.
 
 #+begin_src emacs-lisp
-(desktop-save-mode 1)
+  (desktop-save-mode 1)
 #+end_src
 
 *** Cursor position
@@ -176,7 +176,7 @@ Save session when emacs is closed and restore when reopened.
 Save cursor position per file.
 
 #+begin_src emacs-lisp
-(save-place-mode 1)
+  (save-place-mode 1)
 #+end_src
 
 *** Auto refresh files
@@ -184,8 +184,8 @@ Save cursor position per file.
 Refreshs file automatically when its changed by other program. Also refreshes dired.
 
 #+begin_src emacs-lisp
-(global-auto-revert-mode 1)
-(setq global-auto-revert-non-file-buffers t) ; for dired
+  (global-auto-revert-mode 1)
+  (setq global-auto-revert-non-file-buffers t) ; for dired
 #+end_src
 
 *** Escape to quit prompts
@@ -193,7 +193,7 @@ Refreshs file automatically when its changed by other program. Also refreshes di
 Press escape to quit most prompts.
 
 #+begin_src emacs-lisp
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+end_src
 
 ** LSP, DAP and Languages
@@ -205,26 +205,26 @@ Eglot is a builtin LSP client for emacs.
 **** TODO move hooks for each language settings
 
 #+begin_src emacs-lisp
-(use-package eglot
+  (use-package eglot
     :hook
     (go-mode . eglot-ensure)
     :config
     (keymap-set eglot-mode-map "C-x r" #'eglot-rename))
 
-; format on save
-(add-hook 'before-save-hook 'eglot-format)
+  ;; format on save
+  (add-hook 'before-save-hook 'eglot-format)
 #+end_src
 
 *** Languages support
 
 **** Go
 #+begin_src emacs-lisp
-(use-package go-mode)
+  (use-package go-mode)
 #+end_src
 
 **** Nix
 #+begin_src emacs-lisp
-(use-package nix-mode)
+  (use-package nix-mode)
 #+end_src
 
 *** TODO DAP
@@ -236,7 +236,7 @@ Eglot is a builtin LSP client for emacs.
 evil mode and evil-collection provide vim-like bindings.
 
 #+begin_src emacs-lisp
-(use-package evil
+  (use-package evil
     :demand t
     :init
     (setq evil-want-C-u-scroll t) ; C-u won't work by default
@@ -244,7 +244,7 @@ evil mode and evil-collection provide vim-like bindings.
     :config
     (evil-mode 1))
 
-(use-package evil-collection
+  (use-package evil-collection
     :after evil
     :config
     (setq evil-want-integration t)
@@ -256,7 +256,7 @@ evil mode and evil-collection provide vim-like bindings.
 I only use it to map ~jk~ to ~<Escape>~.
 
 #+begin_src emacs-lisp
-(use-package key-chord
+  (use-package key-chord
     :after evil
     :config
     (key-chord-mode 1)
@@ -272,7 +272,7 @@ Emacs supports completion builtin with ~C-M-i~, but for a VSCode-like completion
 You can still use ~C-M-i~ to launch corfu.
 
 #+begin_src emacs-lisp
-(use-package corfu
+  (use-package corfu
     :custom
     (corfu-auto t) ; automatically pops up as you type
     :init
@@ -285,7 +285,7 @@ You can still use ~C-M-i~ to launch corfu.
 
 #+begin_src emacs-lisp
   (use-package which-key
-      :config (which-key-mode))
+    :config (which-key-mode))
 #+end_src
 
 ** Git
@@ -293,15 +293,15 @@ You can still use ~C-M-i~ to launch corfu.
 *** Magit
 
 #+begin_src emacs-lisp
-(use-package magit)
+  (use-package magit)
 #+end_src
 
 *** Diff Highlight
 
 #+begin_src emacs-lisp
   (use-package diff-hl
-  :demand t
-  :config (diff-hl-mode 1))
+    :demand t
+    :config (diff-hl-mode 1))
 #+end_src
 
 ** Directory Tree
@@ -309,7 +309,7 @@ You can still use ~C-M-i~ to launch corfu.
 *** NeoTree
 
 #+begin_src emacs-lisp
-(use-package neotree
+  (use-package neotree
     :config
     (global-set-key [f8] 'neotree-toggle))
 #+end_src
@@ -319,7 +319,7 @@ You can still use ~C-M-i~ to launch corfu.
 *** Vertico
 
 #+begin_src emacs-lisp
-(use-package vertico
+  (use-package vertico
     :config
     (vertico-mode 1)
     (keymap-set vertico-map "C-j" #'vertico-next)
@@ -329,6 +329,6 @@ You can still use ~C-M-i~ to launch corfu.
 *** Restart Emacs
 
 #+begin_src emacs-lisp
-(use-package restart-emacs)
+  (use-package restart-emacs)
 #+end_src
 
