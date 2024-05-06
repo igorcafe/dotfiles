@@ -90,6 +90,7 @@
   :init
   (setq evil-want-C-u-scroll t) ; C-u won't work by default
   (setq evil-want-keybinding nil) ; what? idk
+  (setq evil-undo-system 'undo-redo)
   :config
   (evil-mode 1))
 
