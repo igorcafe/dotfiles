@@ -35,24 +35,6 @@
 
 (setq-default show-trailing-whitespace t)
 
-(use-package org)
-(use-package org-bullets
-  :after org)
-
-(add-hook 'org-mode-hook #'(lambda()
-			     (org-bullets-mode 1)
-			     (set-face-attribute 'org-document-title nil :height 1.8)
-			     (set-face-attribute 'org-level-1 nil :height 1.8)
-			     (set-face-attribute 'org-level-2 nil :height 1.5)
-			     (set-face-attribute 'org-level-3 nil :height 1.2)))
-
-(setq org-hide-emphasis-markers t)
-
-; org mode lists
-; (font-lock-add-keywords 'org-mode
-;     '(("^ *\\([-]\\) "
-;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq create-lockfiles nil)
@@ -88,6 +70,28 @@
 (setq global-auto-revert-non-file-buffers t) ; for dired
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(use-package pdf-tools
+  :config
+  (pdf-tools-install))
+
+(use-package org)
+(use-package org-bullets
+  :after org)
+
+(add-hook 'org-mode-hook #'(lambda()
+			     (org-bullets-mode 1)
+			     (set-face-attribute 'org-document-title nil :height 1.8)
+			     (set-face-attribute 'org-level-1 nil :height 1.8)
+			     (set-face-attribute 'org-level-2 nil :height 1.5)
+			     (set-face-attribute 'org-level-3 nil :height 1.2)))
+
+(setq org-hide-emphasis-markers t)
+
+; org mode lists
+; (font-lock-add-keywords 'org-mode
+;     '(("^ *\\([-]\\) "
+;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 (use-package eglot
   :hook
