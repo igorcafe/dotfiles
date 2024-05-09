@@ -15,7 +15,7 @@
 (blink-cursor-mode 0)
 (setq ring-bell-function 'ignore) ; this is actually sound, but...
 
-(global-display-line-numbers-mode 1)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (setq display-line-numbers 'relative)
 
 (visual-line-mode 1)

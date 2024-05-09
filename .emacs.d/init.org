@@ -1,7 +1,7 @@
 #+title: My emacs settings
 #+property: header-args:emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/init.el
 
-** Packages
+** Packages (pre-setup)
 
 If you get 404 when trying to install packages, run ~M-x package-refresh-contents~.
 
@@ -44,7 +44,7 @@ No annoying bell sound nor flashing lights when something goes wrong.
 
 Show relative line numbers.
 #+begin_src emacs-lisp
-  (global-display-line-numbers-mode 1)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (setq display-line-numbers 'relative)
 #+end_src
 
