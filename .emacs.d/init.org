@@ -1,6 +1,14 @@
 #+title: My emacs settings
 #+property: header-args:emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/init.el
 
+** TODOs
+***** DONE Orderless
+***** DONE Corfu delay + no 3 keys
+***** DONE Which key delay
+***** DONE echo area single line
+***** TODO DAP
+***** TODO Icon theme
+
 ** Packages (pre-setup)
 
 If you get 404 when trying to install packages, run ~M-x package-refresh-contents~.
@@ -32,6 +40,7 @@ Hides startup message, scroll bar and tool bar.
   (setq inhibit-startup-message t)
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
+  (menu-bar-mode -1)
 #+end_src
 
 No annoying bell sound nor flashing lights when something goes wrong.
@@ -42,10 +51,11 @@ No annoying bell sound nor flashing lights when something goes wrong.
 
 *** Lines
 
-Show relative line numbers.
+Show relative line numbers for code.
 #+begin_src emacs-lisp
-  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-  (setq display-line-numbers 'relative)
+  (add-hook 'prog-mode-hook '(lambda ()
+			       (display-line-numbers-mode)
+			       (setq display-line-numbers 'relative)))
 #+end_src
 
 Wrap long lines.
@@ -87,7 +97,7 @@ I just use the default font with a bigger size.
 *** Whitspaces
 
 #+begin_src emacs-lisp
-  (setq-default show-trailing-whitespace t)
+  (add-hook 'prog-mode '(setq show-trailing-whitespace t))
 #+end_src
 
 **** TODO show symbols for spaces and tabs
@@ -137,7 +147,7 @@ Persist minibuffers history, like in ~M-x~, ~C-x C-f~ and so on.
 
 #+begin_src emacs-lisp
   (savehist-mode 1)
-  (setq history-length 25)
+  (setq history-length 100)
 #+end_src
 
 *** Auto close pairs
@@ -247,25 +257,26 @@ Replace ~-~ by ~•~ on unordered lists.
 
 Eglot is a builtin LSP client for emacs.
 
-**** TODO move hooks for each language settings
-
 #+begin_src emacs-lisp
   (use-package eglot
-    :hook
-    (go-mode . eglot-ensure)
     :config
     (setq eglot-sync-connect nil)
     (keymap-set eglot-mode-map "C-x r" #'eglot-rename))
 
   ;; format on save
   (add-hook 'before-save-hook 'eglot-format)
+
+  ;; echo area
+  (setq eldoc-echo-area-use-multiline-p 1)
 #+end_src
 
 *** Languages support
 
 **** Go
 #+begin_src emacs-lisp
-  (use-package go-mode)
+  (use-package go-mode
+    :hook
+    (go-mode . eglot-ensure))
 #+end_src
 
 **** Nix
@@ -289,7 +300,13 @@ evil mode and evil-collection provide vim-like bindings.
     (setq evil-want-keybinding nil) ; what? idk
     (setq evil-undo-system 'undo-redo)
     :config
-    (evil-mode 1))
+    (evil-mode 1)
+    (define-key evil-normal-state-map (kbd "M-1") 'tab-previous)
+    (define-key evil-normal-state-map (kbd "TT") 'tab-bar-switch-to-tab)
+    (define-key evil-normal-state-map (kbd "Th") 'tab-previous)
+    (define-key evil-normal-state-map (kbd "Tl") 'tab-next)
+    (define-key evil-normal-state-map (kbd "Tn") 'tab-new)
+    (define-key evil-normal-state-map (kbd "Tc") 'tab-close))
 
   (use-package evil-collection
     :after evil
@@ -297,6 +314,7 @@ evil mode and evil-collection provide vim-like bindings.
     (setq evil-want-integration t)
     (evil-collection-init))
 #+end_src
+
 
 *** Keychord
 
@@ -322,6 +340,8 @@ You can still use ~C-M-i~ to launch corfu.
   (use-package corfu
     :custom
     (corfu-auto t) ; automatically pops up as you type
+    (corfu-auto-delay 200)
+    (corfu-auto-prefix 1)
     :init
     (global-corfu-mode))
 #+end_src
@@ -332,7 +352,9 @@ You can still use ~C-M-i~ to launch corfu.
 
 #+begin_src emacs-lisp
   (use-package which-key
-    :config (which-key-mode))
+    :config
+    (which-key-mode)
+    (setq which-key-idle-secondary-delay 0.1))
 #+end_src
 
 ** Git
@@ -356,9 +378,21 @@ You can still use ~C-M-i~ to launch corfu.
 *** NeoTree
 
 #+begin_src emacs-lisp
-  (use-package neotree
+  ;; (use-package neotree
+  ;;   :config
+  ;;   (global-set-key [f8] 'neotree-toggle))
+#+end_src
+
+*** TreeMacs
+
+#+begin_src emacs-lisp
+  (use-package treemacs
+    :demand t
     :config
-    (global-set-key [f8] 'neotree-toggle))
+    (setq treemacs-width 40)
+    :bind
+    (:map global-map
+	  ([f8] . treemacs)))
 #+end_src
 
 ** Misc. packages
@@ -379,3 +413,18 @@ You can still use ~C-M-i~ to launch corfu.
   (use-package restart-emacs)
 #+end_src
 
+*** Undo Tree
+
+#+begin_src emacs-lisp
+  (use-package undo-tree
+    :init (global-undo-tree-mode))
+#+end_src
+
+*** Orderless
+
+#+begin_src emacs-lisp
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless basic))
+    (completion-category-overrides '((file (stylees basic partial-completion)))))
+#+end_src

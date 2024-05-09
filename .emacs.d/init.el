@@ -11,12 +11,14 @@
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 
 (blink-cursor-mode 0)
 (setq ring-bell-function 'ignore) ; this is actually sound, but...
 
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
-(setq display-line-numbers 'relative)
+(add-hook 'prog-mode-hook '(lambda ()
+			     (display-line-numbers-mode)
+			     (setq display-line-numbers 'relative)))
 
 (visual-line-mode 1)
 
@@ -33,7 +35,7 @@
   (setq doom-themes-enable-italic t)
   (load-theme 'doom-tomorrow-day t))
 
-(setq-default show-trailing-whitespace t)
+(add-hook 'prog-mode '(setq show-trailing-whitespace t))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -56,7 +58,7 @@
 (setq custom-file "~/Git/dotfiles/.emacs.d/custom.el")
 
 (savehist-mode 1)
-(setq history-length 25)
+(setq history-length 100)
 
 (electric-pair-mode 1)
 
@@ -94,8 +96,6 @@
 ;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 (use-package eglot
-  :hook
-  (go-mode . eglot-ensure)
   :config
   (setq eglot-sync-connect nil)
   (keymap-set eglot-mode-map "C-x r" #'eglot-rename))
@@ -103,7 +103,12 @@
 ;; format on save
 (add-hook 'before-save-hook 'eglot-format)
 
-(use-package go-mode)
+;; echo area
+(setq eldoc-echo-area-use-multiline-p 1)
+
+(use-package go-mode
+  :hook
+  (go-mode . eglot-ensure))
 
 (use-package nix-mode)
 
@@ -114,7 +119,13 @@
   (setq evil-want-keybinding nil) ; what? idk
   (setq evil-undo-system 'undo-redo)
   :config
-  (evil-mode 1))
+  (evil-mode 1)
+  (define-key evil-normal-state-map (kbd "M-1") 'tab-previous)
+  (define-key evil-normal-state-map (kbd "TT") 'tab-bar-switch-to-tab)
+  (define-key evil-normal-state-map (kbd "Th") 'tab-previous)
+  (define-key evil-normal-state-map (kbd "Tl") 'tab-next)
+  (define-key evil-normal-state-map (kbd "Tn") 'tab-new)
+  (define-key evil-normal-state-map (kbd "Tc") 'tab-close))
 
 (use-package evil-collection
   :after evil
@@ -132,11 +143,15 @@
 (use-package corfu
   :custom
   (corfu-auto t) ; automatically pops up as you type
+  (corfu-auto-delay 200)
+  (corfu-auto-prefix 1)
   :init
   (global-corfu-mode))
 
 (use-package which-key
-  :config (which-key-mode))
+  :config
+  (which-key-mode)
+  (setq which-key-idle-secondary-delay 0.1))
 
 (use-package magit)
 
@@ -144,9 +159,17 @@
   :demand t
   :config (diff-hl-mode 1))
 
-(use-package neotree
+;; (use-package neotree
+;;   :config
+;;   (global-set-key [f8] 'neotree-toggle))
+
+(use-package treemacs
+  :demand t
   :config
-  (global-set-key [f8] 'neotree-toggle))
+  (setq treemacs-width 40)
+  :bind
+  (:map global-map
+	([f8] . treemacs)))
 
 (use-package vertico
   :config
@@ -155,3 +178,11 @@
   (keymap-set vertico-map "C-k" #'vertico-previous))
 
 (use-package restart-emacs)
+
+(use-package undo-tree
+  :init (global-undo-tree-mode))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (stylees basic partial-completion)))))
