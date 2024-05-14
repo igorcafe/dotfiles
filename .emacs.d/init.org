@@ -6,6 +6,7 @@
 ***** DONE Corfu delay + no 3 keys
 ***** DONE Which key delay
 ***** DONE echo area single line
+***** TODO undo tree
 ***** TODO DAP
 ***** TODO Icon theme
 
@@ -53,9 +54,8 @@ No annoying bell sound nor flashing lights when something goes wrong.
 
 Show relative line numbers for code.
 #+begin_src emacs-lisp
-  (add-hook 'prog-mode-hook '(lambda ()
-			       (display-line-numbers-mode)
-			       (setq display-line-numbers 'relative)))
+  (display-line-numbers-mode)
+  (setq display-line-numbers 'relative)
 #+end_src
 
 Wrap long lines.
@@ -98,6 +98,12 @@ I just use the default font with a bigger size.
 
 #+begin_src emacs-lisp
   (add-hook 'prog-mode '(setq show-trailing-whitespace t))
+#+end_src
+
+*** Suppress annoying warnings
+
+#+begin_src emacs-lisp
+  (setq warning-minimum-level :emergency)
 #+end_src
 
 **** TODO show symbols for spaces and tabs
@@ -220,7 +226,10 @@ Installing pdf-tools and opening a PDF file just works here.
 Show headings with special bullets instead o asterisks.
 
 #+begin_src emacs-lisp
-  (use-package org)
+  (use-package org
+    :config
+    (org-indent-mode 1))
+
   (use-package org-bullets
     :after org)
 #+end_src
@@ -338,11 +347,10 @@ You can still use ~C-M-i~ to launch corfu.
 
 #+begin_src emacs-lisp
   (use-package corfu
-    :custom
+    :init
     (corfu-auto t) ; automatically pops up as you type
     (corfu-auto-delay 200)
     (corfu-auto-prefix 1)
-    :init
     (global-corfu-mode))
 #+end_src
 
@@ -369,8 +377,7 @@ You can still use ~C-M-i~ to launch corfu.
 
 #+begin_src emacs-lisp
   (use-package diff-hl
-    :demand t
-    :config (diff-hl-mode 1))
+    :init (diff-hl-mode 1))
 #+end_src
 
 ** Directory Tree
@@ -427,4 +434,14 @@ You can still use ~C-M-i~ to launch corfu.
     :custom
     (completion-styles '(orderless basic))
     (completion-category-overrides '((file (stylees basic partial-completion)))))
+#+end_src
+
+*** Pomodoro
+
+#+begin_src emacs-lisp
+  ;; (use-package pomidor
+  ;;   :config
+  ;;   (setq pomidor-play-sound-file
+  ;; 	(lambda (file)
+  ;; 	  (start-process "aplay" nil "aplay" file))))
 #+end_src

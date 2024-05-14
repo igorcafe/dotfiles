@@ -16,9 +16,8 @@
 (blink-cursor-mode 0)
 (setq ring-bell-function 'ignore) ; this is actually sound, but...
 
-(add-hook 'prog-mode-hook '(lambda ()
-			     (display-line-numbers-mode)
-			     (setq display-line-numbers 'relative)))
+(display-line-numbers-mode)
+(setq display-line-numbers 'relative)
 
 (visual-line-mode 1)
 
@@ -36,6 +35,8 @@
   (load-theme 'doom-tomorrow-day t))
 
 (add-hook 'prog-mode '(setq show-trailing-whitespace t))
+
+(setq warning-minimum-level :emergency)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -77,7 +78,10 @@
   :config
   (pdf-tools-install))
 
-(use-package org)
+(use-package org
+  :config
+  (org-indent-mode 1))
+
 (use-package org-bullets
   :after org)
 
@@ -141,11 +145,10 @@
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
 (use-package corfu
-  :custom
+  :init
   (corfu-auto t) ; automatically pops up as you type
   (corfu-auto-delay 200)
   (corfu-auto-prefix 1)
-  :init
   (global-corfu-mode))
 
 (use-package which-key
@@ -156,8 +159,7 @@
 (use-package magit)
 
 (use-package diff-hl
-  :demand t
-  :config (diff-hl-mode 1))
+  :init (diff-hl-mode 1))
 
 ;; (use-package neotree
 ;;   :config
@@ -186,3 +188,9 @@
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (stylees basic partial-completion)))))
+
+;; (use-package pomidor
+;;   :config
+;;   (setq pomidor-play-sound-file
+;; 	(lambda (file)
+;; 	  (start-process "aplay" nil "aplay" file))))
