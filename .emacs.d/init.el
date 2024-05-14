@@ -16,8 +16,14 @@
 (blink-cursor-mode 0)
 (setq ring-bell-function 'ignore) ; this is actually sound, but...
 
-(display-line-numbers-mode)
-(setq display-line-numbers 'relative)
+(column-number-mode 1) ;; TODO
+
+(setq display-line-numbers-type 'relative)
+
+(dolist (mode '(text-mode-hook
+               prog-mode-hook
+               conf-mode-hook))
+  (add-hook mode #'display-line-numbers-mode))
 
 (visual-line-mode 1)
 
@@ -78,19 +84,18 @@
   :config
   (pdf-tools-install))
 
-(use-package org
-  :config
-  (org-indent-mode 1))
+(use-package org)
 
 (use-package org-bullets
   :after org)
 
-(add-hook 'org-mode-hook #'(lambda()
-			     (org-bullets-mode 1)
-			     (set-face-attribute 'org-document-title nil :height 1.8)
-			     (set-face-attribute 'org-level-1 nil :height 1.8)
-			     (set-face-attribute 'org-level-2 nil :height 1.5)
-			     (set-face-attribute 'org-level-3 nil :height 1.2)))
+(add-hook 'org-mode-hook (lambda()
+                             (org-bullets-mode 1)
+                             (org-indent-mode 1)
+                             (set-face-attribute 'org-document-title nil :height 1.8)
+                             (set-face-attribute 'org-level-1 nil :height 1.8)
+                             (set-face-attribute 'org-level-2 nil :height 1.5)
+                             (set-face-attribute 'org-level-3 nil :height 1.2)))
 
 (setq org-hide-emphasis-markers t)
 
@@ -124,7 +129,7 @@
   (setq evil-undo-system 'undo-redo)
   :config
   (evil-mode 1)
-  (define-key evil-normal-state-map (kbd "M-1") 'tab-previous)
+  (define-key evil-normal-state-map (kbd "gb") 'evil-switch-to-windows-last-buffer)
   (define-key evil-normal-state-map (kbd "TT") 'tab-bar-switch-to-tab)
   (define-key evil-normal-state-map (kbd "Th") 'tab-previous)
   (define-key evil-normal-state-map (kbd "Tl") 'tab-next)
@@ -159,7 +164,7 @@
 (use-package magit)
 
 (use-package diff-hl
-  :init (diff-hl-mode 1))
+  :init (global-diff-hl-mode 1))
 
 ;; (use-package neotree
 ;;   :config
@@ -179,15 +184,13 @@
   (keymap-set vertico-map "C-j" #'vertico-next)
   (keymap-set vertico-map "C-k" #'vertico-previous))
 
-(use-package restart-emacs)
-
 (use-package undo-tree
-  :init (global-undo-tree-mode))
+  :init (global-undo-tree-mode 1))
 
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (stylees basic partial-completion)))))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
 
 ;; (use-package pomidor
 ;;   :config

@@ -54,8 +54,14 @@ No annoying bell sound nor flashing lights when something goes wrong.
 
 Show relative line numbers for code.
 #+begin_src emacs-lisp
-  (display-line-numbers-mode)
-  (setq display-line-numbers 'relative)
+  (column-number-mode 1) ;; TODO
+
+  (setq display-line-numbers-type 'relative)
+
+  (dolist (mode '(text-mode-hook
+                 prog-mode-hook
+                 conf-mode-hook))
+    (add-hook mode #'display-line-numbers-mode))
 #+end_src
 
 Wrap long lines.
@@ -226,9 +232,7 @@ Installing pdf-tools and opening a PDF file just works here.
 Show headings with special bullets instead o asterisks.
 
 #+begin_src emacs-lisp
-  (use-package org
-    :config
-    (org-indent-mode 1))
+  (use-package org)
 
   (use-package org-bullets
     :after org)
@@ -237,12 +241,13 @@ Show headings with special bullets instead o asterisks.
 Change title and heading sizes.
 
 #+begin_src emacs-lisp
-  (add-hook 'org-mode-hook #'(lambda()
-			       (org-bullets-mode 1)
-			       (set-face-attribute 'org-document-title nil :height 1.8)
-			       (set-face-attribute 'org-level-1 nil :height 1.8)
-			       (set-face-attribute 'org-level-2 nil :height 1.5)
-			       (set-face-attribute 'org-level-3 nil :height 1.2)))
+  (add-hook 'org-mode-hook (lambda()
+                               (org-bullets-mode 1)
+                               (org-indent-mode 1)
+                               (set-face-attribute 'org-document-title nil :height 1.8)
+                               (set-face-attribute 'org-level-1 nil :height 1.8)
+                               (set-face-attribute 'org-level-2 nil :height 1.5)
+                               (set-face-attribute 'org-level-3 nil :height 1.2)))
 #+end_src
 
 Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
@@ -310,7 +315,7 @@ evil mode and evil-collection provide vim-like bindings.
     (setq evil-undo-system 'undo-redo)
     :config
     (evil-mode 1)
-    (define-key evil-normal-state-map (kbd "M-1") 'tab-previous)
+    (define-key evil-normal-state-map (kbd "gb") 'evil-switch-to-windows-last-buffer)
     (define-key evil-normal-state-map (kbd "TT") 'tab-bar-switch-to-tab)
     (define-key evil-normal-state-map (kbd "Th") 'tab-previous)
     (define-key evil-normal-state-map (kbd "Tl") 'tab-next)
@@ -377,7 +382,7 @@ You can still use ~C-M-i~ to launch corfu.
 
 #+begin_src emacs-lisp
   (use-package diff-hl
-    :init (diff-hl-mode 1))
+    :init (global-diff-hl-mode 1))
 #+end_src
 
 ** Directory Tree
@@ -414,17 +419,11 @@ You can still use ~C-M-i~ to launch corfu.
     (keymap-set vertico-map "C-k" #'vertico-previous))
 #+end_src
 
-*** Restart Emacs
-
-#+begin_src emacs-lisp
-  (use-package restart-emacs)
-#+end_src
-
 *** Undo Tree
 
 #+begin_src emacs-lisp
   (use-package undo-tree
-    :init (global-undo-tree-mode))
+    :init (global-undo-tree-mode 1))
 #+end_src
 
 *** Orderless
@@ -433,7 +432,7 @@ You can still use ~C-M-i~ to launch corfu.
   (use-package orderless
     :custom
     (completion-styles '(orderless basic))
-    (completion-category-overrides '((file (stylees basic partial-completion)))))
+    (completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
 
 *** Pomodoro
