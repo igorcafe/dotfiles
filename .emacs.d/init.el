@@ -40,6 +40,13 @@
   (setq doom-themes-enable-italic t)
   (load-theme 'doom-tomorrow-day t))
 
+(use-package all-the-icons
+  :if (display-graphic-p)
+  :config (all-the-icons-install-fonts t))
+
+(use-package doom-modeline
+  :init (doom-modeline-mode 1))
+
 (add-hook 'prog-mode '(setq show-trailing-whitespace t))
 
 (setq warning-minimum-level :emergency)
@@ -70,6 +77,9 @@
 (electric-pair-mode 1)
 
 (recentf-mode 1)
+(setq recentf-max-menu-items 100)
+(setq recentf-max-saved-items 100)
+(global-set-key "\C-x\ \C-r" 'recentf-open)
 
 (desktop-save-mode 1)
 

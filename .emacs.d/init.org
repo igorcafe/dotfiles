@@ -12,6 +12,8 @@
 ***** TODO startup time
 ***** TODO EMMS
 ***** TODO Org Roam
+***** TODO vterm
+***** TODO treemacs
 
 ** Packages (pre-setup)
 
@@ -84,7 +86,7 @@ But it improves scrolling for sure.
   (setq scroll-preserve-screen-position 1)
 #+end_src
 
-*** Font and Theme
+*** Font, Icons and Theme
 
 **** Font
 
@@ -101,6 +103,21 @@ I just use the default font with a bigger size.
     (setq doom-themes-enable-bold t)
     (setq doom-themes-enable-italic t)
     (load-theme 'doom-tomorrow-day t))
+#+end_src
+
+**** Icons
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons
+    :if (display-graphic-p)
+    :config (all-the-icons-install-fonts t))
+#+end_src
+
+**** Modeline
+
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :init (doom-modeline-mode 1))
 #+end_src
 
 *** Whitspaces
@@ -179,6 +196,9 @@ Show recent files with ~M-x recentf~.
 
 #+begin_src emacs-lisp
   (recentf-mode 1)
+  (setq recentf-max-menu-items 100)
+  (setq recentf-max-saved-items 100)
+  (global-set-key "\C-x\ \C-r" 'recentf-open)
 #+end_src
 
 *** Save session
