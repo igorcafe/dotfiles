@@ -84,10 +84,7 @@
   :config
   (pdf-tools-install))
 
-(use-package org)
-
-(use-package org-bullets
-  :after org)
+(use-package org-bullets)
 
 (add-hook 'org-mode-hook (lambda()
                              (org-bullets-mode 1)
@@ -95,7 +92,8 @@
                              (set-face-attribute 'org-document-title nil :height 1.8)
                              (set-face-attribute 'org-level-1 nil :height 1.8)
                              (set-face-attribute 'org-level-2 nil :height 1.5)
-                             (set-face-attribute 'org-level-3 nil :height 1.2)))
+                             (set-face-attribute 'org-level-3 nil :height 1.2)
+                             (org-overview)))
 
 (setq org-hide-emphasis-markers t)
 
@@ -105,15 +103,17 @@
 ;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 (use-package eglot
-  :config
+  :hook
+  (before-save . eglot-format)
+
+  :init
+  ;; do not block when loading lsp
   (setq eglot-sync-connect nil)
-  (keymap-set eglot-mode-map "C-x r" #'eglot-rename))
 
-;; format on save
-(add-hook 'before-save-hook 'eglot-format)
+  ;; don't use more than one line for eldoc, unless called with K
+  (setq eldoc-echo-area-use-multiline-p 1)
 
-;; echo area
-(setq eldoc-echo-area-use-multiline-p 1)
+  (define-key evil-normal-state-map (kbd "gi") 'eglot-find-implementation))
 
 (use-package go-mode
   :hook
