@@ -51,6 +51,11 @@
 
 (setq warning-minimum-level :emergency)
 
+(use-package doom-modeline
+  :demand t
+  :config
+  (doom-modeline-mode 1))
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq create-lockfiles nil)
@@ -91,7 +96,7 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (use-package pdf-tools
-  :config
+  :init
   (pdf-tools-install))
 
 (use-package org-bullets)
@@ -195,7 +200,10 @@
   (keymap-set vertico-map "C-k" #'vertico-previous))
 
 (use-package undo-tree
-  :init (global-undo-tree-mode 1))
+  :demand t
+  :config
+  (setq evil-undo-system 'undo-tree)
+  (global-undo-tree-mode 1))
 
 (use-package orderless
   :custom
