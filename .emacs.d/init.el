@@ -6,6 +6,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 (eval-when-compile (require 'use-package))
+
 (setq use-package-always-ensure t)
 
 (setq inhibit-startup-message t)
@@ -16,22 +17,6 @@
 (blink-cursor-mode 0)
 (setq ring-bell-function 'ignore) ; this is actually sound, but...
 
-(column-number-mode 1) ;; TODO
-
-(setq display-line-numbers-type 'relative)
-
-(dolist (mode '(text-mode-hook
-               prog-mode-hook
-               conf-mode-hook))
-  (add-hook mode #'display-line-numbers-mode))
-
-(visual-line-mode 1)
-
-(setq scroll-step 1)
-(setq scroll-margin 10)
-(setq scroll-conservatively 1000)
-(setq scroll-preserve-screen-position 1)
-
 (set-face-attribute 'default nil :height 140)
 
 (use-package doom-themes
@@ -41,8 +26,10 @@
   (load-theme 'doom-tomorrow-day t))
 
 (use-package all-the-icons
-  :if (display-graphic-p)
-  :config (all-the-icons-install-fonts t))
+  :if (display-graphic-p))
+
+;; run once
+;;(all-the-icons-install-fonts t)
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
@@ -51,12 +38,21 @@
 
 (setq warning-minimum-level :emergency)
 
-(use-package doom-modeline
-  :demand t
-  :config
-  (doom-modeline-mode 1))
+(column-number-mode 1) ;; TODO
 
-(defalias 'yes-or-no-p 'y-or-n-p)
+(setq display-line-numbers-type 'relative)
+
+(dolist (mode '(text-mode-hook
+               prog-mode-hook
+               conf-mode-hook))
+  (add-hook mode #'display-line-numbers-mode))
+
+(global-visual-line-mode 1)
+
+(setq scroll-step 1)
+(setq scroll-margin 1)
+(setq scroll-conservatively 1000)
+(setq scroll-preserve-screen-position 1)
 
 (setq create-lockfiles nil)
 
@@ -79,19 +75,44 @@
 (savehist-mode 1)
 (setq history-length 100)
 
-(electric-pair-mode 1)
+(use-package vertico
+  :config
+  (vertico-mode 1)
+  (keymap-set vertico-map "C-j" #'vertico-next)
+  (keymap-set vertico-map "C-k" #'vertico-previous))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package corfu
+  :init
+  (corfu-auto t) ; automatically pops up as you type
+  (corfu-auto-delay 200)
+  (corfu-auto-prefix 1)
+  (global-corfu-mode 1))
+
+(use-package which-key
+  :config
+  (which-key-mode)
+  (setq which-key-idle-secondary-delay 0.1))
+
+(desktop-save-mode 1)
+
+(save-place-mode 1)
 
 (recentf-mode 1)
 (setq recentf-max-menu-items 100)
 (setq recentf-max-saved-items 100)
 (global-set-key "\C-x\ \C-r" 'recentf-open)
 
-(desktop-save-mode 1)
-
-(save-place-mode 1)
-
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t) ; for dired
+
+(electric-pair-mode 1)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
@@ -130,6 +151,10 @@
 
   (define-key evil-normal-state-map (kbd "gi") 'eglot-find-implementation))
 
+(use-package eldoc-box
+  :config
+  (eldoc-box-hover-at-point-mode 1))
+
 (use-package go-mode
   :hook
   (go-mode . eglot-ensure))
@@ -164,26 +189,10 @@
   (setq key-chord-two-keys-delay 0.2)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
-(use-package corfu
-  :init
-  (corfu-auto t) ; automatically pops up as you type
-  (corfu-auto-delay 200)
-  (corfu-auto-prefix 1)
-  (global-corfu-mode))
-
-(use-package which-key
-  :config
-  (which-key-mode)
-  (setq which-key-idle-secondary-delay 0.1))
-
 (use-package magit)
 
 (use-package diff-hl
   :init (global-diff-hl-mode 1))
-
-;; (use-package neotree
-;;   :config
-;;   (global-set-key [f8] 'neotree-toggle))
 
 (use-package treemacs
   :demand t
@@ -193,25 +202,23 @@
   (:map global-map
 	([f8] . treemacs)))
 
-(use-package vertico
-  :config
-  (vertico-mode 1)
-  (keymap-set vertico-map "C-j" #'vertico-next)
-  (keymap-set vertico-map "C-k" #'vertico-previous))
-
 (use-package undo-tree
   :demand t
   :config
   (setq evil-undo-system 'undo-tree)
   (global-undo-tree-mode 1))
 
-(use-package orderless
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
-
 ;; (use-package pomidor
 ;;   :config
 ;;   (setq pomidor-play-sound-file
 ;; 	(lambda (file)
 ;; 	  (start-process "aplay" nil "aplay" file))))
+
+(use-package vterm)
+
+(use-package evil-mc)
+
+(use-package writeroom-mode
+  :init
+  (setq writeroom-restore-window-config t)
+  (setq writeroom-width 100))

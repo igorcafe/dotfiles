@@ -6,7 +6,13 @@
 ***** DONE Corfu delay + no 3 keys
 ***** DONE Which key delay
 ***** DONE echo area single line
-***** TODO eldoc-box
+***** DONE eldoc-box
+***** TODO multiple cursors
+***** TODO fullscreen
+***** TODO corfu not auto starting
+***** TODO vterm
+***** TODO protobuf-mode
+***** TODO snippets
 ***** TODO elfeed
 ***** TODO undo tree
 ***** TODO DAP
@@ -14,12 +20,13 @@
 ***** TODO startup time
 ***** TODO EMMS
 ***** TODO Org Roam
-***** TODO vterm
-***** TODO treemacs
+***** TODO Org Agenda
+***** TODO use treemacs full power
 
-** Packages (pre-setup)
+** Setup package manager
+For many of the following settings I'll need to install some packages, so its best to have it configured upfront.
 
-If you get 404 when trying to install packages, run ~M-x package-refresh-contents~.
+Note: if you get 404 when trying to install packages, run ~M-x package-refresh-contents~.
 
 *** Setup MELPA
 
@@ -31,17 +38,22 @@ If you get 404 when trying to install packages, run ~M-x package-refresh-content
 
 *** Setup use-package
 
+Install use-package if not installed, then require it.
+
 #+begin_src emacs-lisp
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
   (eval-when-compile (require 'use-package))
+#+end_src
+
+This ensures all packages from ~use-package~ are installed when emacs loads.
+
+#+begin_src emacs-lisp
   (setq use-package-always-ensure t)
 #+end_src
 
-** Visuals
-
-*** De-clutter
+** De-clutter
 
 Hides startup message, scroll bar and tool bar.
 #+begin_src emacs-lisp
@@ -57,47 +69,17 @@ No annoying bell sound nor flashing lights when something goes wrong.
   (setq ring-bell-function 'ignore) ; this is actually sound, but...
 #+end_src
 
-*** Lines
+** Font
 
-Show relative line numbers for code.
-#+begin_src emacs-lisp
-  (column-number-mode 1) ;; TODO
+Increase default font size
 
-  (setq display-line-numbers-type 'relative)
-
-  (dolist (mode '(text-mode-hook
-                 prog-mode-hook
-                 conf-mode-hook))
-    (add-hook mode #'display-line-numbers-mode))
-#+end_src
-
-Wrap long lines.
-#+begin_src emacs-lisp
-  (visual-line-mode 1)
-#+end_src
-
-*** Scroll
-
-I don't know how to explain this shit.
-But it improves scrolling for sure.
-
-#+begin_src emacs-lisp
-  (setq scroll-step 1)
-  (setq scroll-margin 10)
-  (setq scroll-conservatively 1000)
-  (setq scroll-preserve-screen-position 1)
-#+end_src
-
-*** Font, Icons and Theme
-
-**** Font
-
-I just use the default font with a bigger size.
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil :height 140)
 #+end_src
 
-**** Doom Themes
+** Theme
+
+*** Doom Themes
 
 #+begin_src emacs-lisp
   (use-package doom-themes
@@ -107,48 +89,92 @@ I just use the default font with a bigger size.
     (load-theme 'doom-tomorrow-day t))
 #+end_src
 
-**** Icons
+** Icons
 
 #+begin_src emacs-lisp
   (use-package all-the-icons
-    :if (display-graphic-p)
-    :config (all-the-icons-install-fonts t))
+    :if (display-graphic-p))
+
+  ;; run once
+  ;;(all-the-icons-install-fonts t)
 #+end_src
 
-**** Modeline
+** Modeline
+
+*** Doom Modeline
+Nicer modeline.
 
 #+begin_src emacs-lisp
   (use-package doom-modeline
     :init (doom-modeline-mode 1))
 #+end_src
 
-*** Whitspaces
+** TODO Whitspaces
+
+*** TODO Highlight trailing whitespaces
+
+TODO: add other modes
 
 #+begin_src emacs-lisp
   (add-hook 'prog-mode '(setq show-trailing-whitespace t))
 #+end_src
 
-*** Suppress annoying warnings
+*** TODO Show symbols for spaces and tabs
+TODO: show a symbol like ~>~ for tab and ~•~, ideally in visual mode.
+
+** Warnings
+
+Disable annoying warnings at startup.
 
 #+begin_src emacs-lisp
   (setq warning-minimum-level :emergency)
 #+end_src
 
-**** TODO show symbols for spaces and tabs
+** Lines
 
-*** Modeline
-#+begin_src emacs-lisp
-  (use-package doom-modeline
-    :demand t
-    :config
-    (doom-modeline-mode 1))
-#+end_src
-** Built-in modes and settings
+Show column number.
 
-*** Y or N instead of Yes or No
 #+begin_src emacs-lisp
-  (defalias 'yes-or-no-p 'y-or-n-p)
+  (column-number-mode 1) ;; TODO
 #+end_src
+
+Relative line numbers.
+
+#+begin_src emacs-lisp
+  (setq display-line-numbers-type 'relative)
+
+#+end_src
+
+Enable line numbers for some modes.
+
+#+begin_src emacs-lisp
+  (dolist (mode '(text-mode-hook
+                 prog-mode-hook
+                 conf-mode-hook))
+    (add-hook mode #'display-line-numbers-mode))
+#+end_src
+
+Wrap long lines.
+
+#+begin_src emacs-lisp
+  (global-visual-line-mode 1)
+#+end_src
+
+** Scroll
+
+I don't know how to explain this shit.
+But it improves scrolling for sure.
+
+#+begin_src emacs-lisp
+  (setq scroll-step 1)
+  (setq scroll-margin 1)
+  (setq scroll-conservatively 1000)
+  (setq scroll-preserve-screen-position 1)
+#+end_src
+
+** Emacs files
+
+Emacs creates a bunch of annoying files.
 
 *** Disable lock files
 
@@ -157,6 +183,7 @@ I just use the default font with a bigger size.
 #+end_src
 
 *** Emacs directories
+
 #+begin_src emacs-lisp
   (setq user-emacs-directory "~/.cache/emacs/")
   (when (not (file-directory-p user-emacs-directory))
@@ -182,6 +209,8 @@ This way I can build init.el from init.org without loosing custom variables.
   (setq custom-file "~/Git/dotfiles/.emacs.d/custom.el")
 #+end_src
 
+** Minibuffer
+
 *** Persist minibuffers
 
 Persist minibuffers history, like in ~M-x~, ~C-x C-f~ and so on.
@@ -191,24 +220,57 @@ Persist minibuffers history, like in ~M-x~, ~C-x C-f~ and so on.
   (setq history-length 100)
 #+end_src
 
-*** Auto close pairs
-
-Auto close pairs like '',"", [ ], { }, depending on the file type.
+*** Vertico
 
 #+begin_src emacs-lisp
-  (electric-pair-mode 1)
+  (use-package vertico
+    :config
+    (vertico-mode 1)
+    (keymap-set vertico-map "C-j" #'vertico-next)
+    (keymap-set vertico-map "C-k" #'vertico-previous))
 #+end_src
 
-*** Recent opened files
+** TODO Fuzzy Search
 
-Show recent files with ~M-x recentf~.
+*** Orderless
+
+Provides fuzzy search for files, commands, variables, and so on.
 
 #+begin_src emacs-lisp
-  (recentf-mode 1)
-  (setq recentf-max-menu-items 100)
-  (setq recentf-max-saved-items 100)
-  (global-set-key "\C-x\ \C-r" 'recentf-open)
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless basic))
+    (completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
+
+** Suggestion and Completion
+
+*** Autosuggestion and Completion for Code
+
+Emacs supports completion builtin with ~C-M-i~, but for a VSCode-like completion I use corfu.
+You can still use ~C-M-i~ to launch corfu.
+
+#+begin_src emacs-lisp
+  (use-package corfu
+    :init
+    (corfu-auto t) ; automatically pops up as you type
+    (corfu-auto-delay 200)
+    (corfu-auto-prefix 1)
+    (global-corfu-mode 1))
+#+end_src
+
+*** Autosuggestion for keybindings
+
+~whick-key~ suggests key combinations as you press them.
+
+#+begin_src emacs-lisp
+  (use-package which-key
+    :config
+    (which-key-mode)
+    (setq which-key-idle-secondary-delay 0.1))
+#+end_src
+
+** Save state
 
 *** Save session
 
@@ -226,7 +288,18 @@ Save cursor position per file.
   (save-place-mode 1)
 #+end_src
 
-*** Auto refresh files
+** Recent files
+
+Show recent files with ~M-x recentf~.
+
+#+begin_src emacs-lisp
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 100)
+  (setq recentf-max-saved-items 100)
+  (global-set-key "\C-x\ \C-r" 'recentf-open)
+#+end_src
+
+** Auto refresh files
 
 Refreshs file automatically when its changed by other program. Also refreshes dired.
 
@@ -235,7 +308,23 @@ Refreshs file automatically when its changed by other program. Also refreshes di
   (setq global-auto-revert-non-file-buffers t) ; for dired
 #+end_src
 
-*** Escape to quit prompts
+** Auto close pairs
+
+Auto close pairs like '',"", [ ], { }, depending on the file type.
+
+#+begin_src emacs-lisp
+  (electric-pair-mode 1)
+#+end_src
+
+** Prompts
+
+*** Y or N instead of Yes or No
+
+#+begin_src emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+end_src
+
+** Escape to quit prompts
 
 Press escape to quit most prompts.
 
@@ -243,7 +332,7 @@ Press escape to quit most prompts.
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+end_src
 
-** PDFs
+** PDF
 
 I tried default emacs doc-view-mode but it didn't work with the PDFs I tested.
 
@@ -259,7 +348,7 @@ Installing pdf-tools and opening a PDF file just works here.
 
 ** Org Mode
 
-*** Visuals
+*** TODO Visuals
 
 Show headings with special bullets instead o asterisks.
 
@@ -269,6 +358,7 @@ Show headings with special bullets instead o asterisks.
 
 Change title and heading sizes.
 
+TODO: move non-visuals to separate hook
 #+begin_src emacs-lisp
     (add-hook 'org-mode-hook (lambda()
                                  (org-bullets-mode 1)
@@ -295,9 +385,9 @@ Replace ~-~ by ~•~ on unordered lists.
 					  ;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 #+end_src
 
-** LSP, DAP and Languages
+** TODO LSP
 
-*** LSP with Eglot
+*** Eglot
 
 Eglot is a builtin LSP client for emacs.
 
@@ -316,25 +406,31 @@ Eglot is a builtin LSP client for emacs.
     (define-key evil-normal-state-map (kbd "gi") 'eglot-find-implementation))
 #+end_src
 
-*** Languages support
+*** Hover box
 
-**** Go
+#+begin_src emacs-lisp
+    (use-package eldoc-box
+      :config
+      (eldoc-box-hover-at-point-mode 1))
+#+end_src
+
+** Languages
+*** Go
 #+begin_src emacs-lisp
   (use-package go-mode
     :hook
     (go-mode . eglot-ensure))
 #+end_src
 
-**** Nix
+*** Nix
 #+begin_src emacs-lisp
   (use-package nix-mode)
 #+end_src
 
-*** TODO DAP
+** TODO DAP
+** TODO Vim keybindings
 
-** Vim keybindings
-
-*** Vim-like keybindings
+*** TODO Evil Mode
 
 evil mode and evil-collection provide vim-like bindings.
 
@@ -375,34 +471,7 @@ I only use it to map ~jk~ to ~<Escape>~.
     (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 #+end_src
 
-** Suggestion and Completion
-
-*** Autosuggestion and Completion for Code
-
-Emacs supports completion builtin with ~C-M-i~, but for a VSCode-like completion I use corfu.
-You can still use ~C-M-i~ to launch corfu.
-
-#+begin_src emacs-lisp
-  (use-package corfu
-    :init
-    (corfu-auto t) ; automatically pops up as you type
-    (corfu-auto-delay 200)
-    (corfu-auto-prefix 1)
-    (global-corfu-mode))
-#+end_src
-
-*** Autosuggestion for keybindings
-
-~whick-key~ suggests key combinations as you press them.
-
-#+begin_src emacs-lisp
-  (use-package which-key
-    :config
-    (which-key-mode)
-    (setq which-key-idle-secondary-delay 0.1))
-#+end_src
-
-** Git
+** TODO Git
 
 *** Magit
 
@@ -417,15 +486,7 @@ You can still use ~C-M-i~ to launch corfu.
     :init (global-diff-hl-mode 1))
 #+end_src
 
-** Directory Tree
-
-*** NeoTree
-
-#+begin_src emacs-lisp
-  ;; (use-package neotree
-  ;;   :config
-  ;;   (global-set-key [f8] 'neotree-toggle))
-#+end_src
+** TODO Directory Tree
 
 *** TreeMacs
 
@@ -439,19 +500,7 @@ You can still use ~C-M-i~ to launch corfu.
 	  ([f8] . treemacs)))
 #+end_src
 
-** Misc. packages
-
-*** Vertico
-
-#+begin_src emacs-lisp
-  (use-package vertico
-    :config
-    (vertico-mode 1)
-    (keymap-set vertico-map "C-j" #'vertico-next)
-    (keymap-set vertico-map "C-k" #'vertico-previous))
-#+end_src
-
-*** Undo Tree
+** TODO Undo Tree
 
 #+begin_src emacs-lisp
   (use-package undo-tree
@@ -461,16 +510,7 @@ You can still use ~C-M-i~ to launch corfu.
     (global-undo-tree-mode 1))
 #+end_src
 
-*** Orderless
-
-#+begin_src emacs-lisp
-  (use-package orderless
-    :custom
-    (completion-styles '(orderless basic))
-    (completion-category-overrides '((file (styles basic partial-completion)))))
-#+end_src
-
-*** Pomodoro
+** TODO Pomodoro
 
 #+begin_src emacs-lisp
   ;; (use-package pomidor
@@ -478,4 +518,25 @@ You can still use ~C-M-i~ to launch corfu.
   ;;   (setq pomidor-play-sound-file
   ;; 	(lambda (file)
   ;; 	  (start-process "aplay" nil "aplay" file))))
+#+end_src
+
+** TODO Terminal
+
+#+begin_src emacs-lisp
+  (use-package vterm)
+#+end_src
+
+** TODO Multiple Cursors
+
+#+begin_src emacs-lisp
+  (use-package evil-mc)
+#+end_src
+
+** TODO Zen Mode
+
+#+begin_src emacs-lisp
+  (use-package writeroom-mode
+    :init
+    (setq writeroom-restore-window-config t)
+    (setq writeroom-width 100))
 #+end_src
