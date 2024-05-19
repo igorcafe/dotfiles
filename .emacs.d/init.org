@@ -7,8 +7,8 @@
 ***** DONE Which key delay
 ***** DONE echo area single line
 ***** DONE eldoc-box
+***** DONE fullscreen
 ***** TODO multiple cursors
-***** TODO fullscreen
 ***** TODO corfu not auto starting
 ***** TODO vterm
 ***** TODO protobuf-mode
@@ -67,6 +67,11 @@ No annoying bell sound nor flashing lights when something goes wrong.
 #+begin_src emacs-lisp
   (blink-cursor-mode 0)
   (setq ring-bell-function 'ignore) ; this is actually sound, but...
+#+end_src
+
+Launch in fullscreen.
+#+begin_src emacs-lisp
+  (toggle-frame-fullscreen)
 #+end_src
 
 ** Font

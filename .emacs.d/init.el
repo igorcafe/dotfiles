@@ -17,6 +17,8 @@
 (blink-cursor-mode 0)
 (setq ring-bell-function 'ignore) ; this is actually sound, but...
 
+(toggle-frame-fullscreen)
+
 (set-face-attribute 'default nil :height 140)
 
 (use-package doom-themes
