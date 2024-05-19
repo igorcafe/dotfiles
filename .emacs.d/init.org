@@ -2,12 +2,8 @@
 #+property: header-args:emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/init.el
 
 ** TODOs
-***** DONE Orderless
 ***** DONE Corfu delay + no 3 keys
 ***** DONE Which key delay
-***** DONE echo area single line
-***** DONE eldoc-box
-***** DONE fullscreen
 ***** TODO multiple cursors
 ***** TODO corfu not auto starting
 ***** TODO vterm
@@ -235,7 +231,7 @@ Persist minibuffers history, like in ~M-x~, ~C-x C-f~ and so on.
     (keymap-set vertico-map "C-k" #'vertico-previous))
 #+end_src
 
-** TODO Fuzzy Search
+** Fuzzy Search
 
 *** Orderless
 
@@ -295,7 +291,7 @@ Save cursor position per file.
 
 ** Recent files
 
-Show recent files with ~M-x recentf~.
+Show recent files with ~C-x C-r~.
 
 #+begin_src emacs-lisp
   (recentf-mode 1)
@@ -304,7 +300,7 @@ Show recent files with ~M-x recentf~.
   (global-set-key "\C-x\ \C-r" 'recentf-open)
 #+end_src
 
-** Auto refresh files
+** Buffers
 
 Refreshs file automatically when its changed by other program. Also refreshes dired.
 
@@ -384,13 +380,13 @@ Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
 Replace ~-~ by ~•~ on unordered lists.
 
 #+begin_src emacs-lisp
-					  ; org mode lists
-					  ; (font-lock-add-keywords 'org-mode
-					  ;     '(("^ *\\([-]\\) "
-					  ;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+  ;; org mode lists
+  ;; (font-lock-add-keywords 'org-mode
+  ;;     '(("^ *\\([-]\\) "
+  ;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 #+end_src
 
-** TODO LSP
+** LSP
 
 *** Eglot
 
@@ -412,6 +408,8 @@ Eglot is a builtin LSP client for emacs.
 #+end_src
 
 *** Hover box
+
+Show docs as a hover box instead of using echo area.
 
 #+begin_src emacs-lisp
     (use-package eldoc-box
@@ -538,6 +536,8 @@ I only use it to map ~jk~ to ~<Escape>~.
 #+end_src
 
 ** TODO Zen Mode
+
+TODO: keybinding
 
 #+begin_src emacs-lisp
   (use-package writeroom-mode

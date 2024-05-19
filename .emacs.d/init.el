@@ -135,10 +135,10 @@
 
 (setq org-hide-emphasis-markers t)
 
-; org mode lists
-; (font-lock-add-keywords 'org-mode
-;     '(("^ *\\([-]\\) "
-;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+;; org mode lists
+;; (font-lock-add-keywords 'org-mode
+;;     '(("^ *\\([-]\\) "
+;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 (use-package eglot
   :hook
