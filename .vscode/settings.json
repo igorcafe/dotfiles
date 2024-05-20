@@ -1,0 +1,39 @@
+{
+    "workbench.colorTheme": "Default Light Modern",
+    "workbench.iconTheme": "material-icon-theme",
+    "inlineSQL.lintSQLFiles": true,
+    "editor.minimap.enabled": false,
+    "go.generateTestsFlags": [
+        "-v"
+    ],
+    "window.zoomLevel": 1,
+    "git.autofetch": true,
+    "go.testFlags": [
+        // "-v"
+    ],
+    "go.buildTags": "full",
+    "git.confirmSync": false,
+    "vim.normalModeKeyBindings": [
+        {
+            "before": ["g", "i"],
+            "commands": ["editor.action.goToImplementation"]
+        },
+        {
+            "before": ["K"],
+            "commands": ["editor.action.showDefinitionPreviewHover"]
+        }
+    ],
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["j", "k"],
+            "after":["<Esc>"],
+        }
+    ],
+    "workbench.editor.tabSizing": "fixed",
+    "editor.lineNumbers": "relative",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "window.nativeTabs": true,
+    "git.replaceTagsWhenPull": true,
+    "go.testTimeout": "5s",
+    "window.customTitleBarVisibility": "never",
+}
