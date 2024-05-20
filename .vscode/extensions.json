@@ -1,0 +1,17 @@
+{
+    "recommendations": [
+        "vscodevim.vim",
+        "natqe.reload",
+        "eamodio.gitlens",
+        "PKief.material-icon-theme",
+        "golang.go",
+        "jinliming2.vscode-go-template",
+        "mechatroner.rainbow-csv",
+        "peterj.proto",
+        "teabyii.ayu",
+        "Codeium.codeium",
+        "redhat.vscode-xml",
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+    ]
+}
