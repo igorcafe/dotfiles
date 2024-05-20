@@ -13,5 +13,6 @@
         "redhat.vscode-xml",
         "ms-azuretools.vscode-docker",
         "dbaeumer.vscode-eslint",
+        "jnoortheen.nix-ide",
     ]
 }
