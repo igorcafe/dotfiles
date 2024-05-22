@@ -1,9 +1,9 @@
 #+title: My emacs settings
-#+property: header-args:emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/init.el
 
 ** TODOs
 ***** DONE Corfu delay + no 3 keys
 ***** DONE Which key delay
+***** TODO blamer mode
 ***** TODO multiple cursors
 ***** TODO corfu not auto starting
 ***** TODO vterm
@@ -18,6 +18,14 @@
 ***** TODO Org Roam
 ***** TODO Org Agenda
 ***** TODO use treemacs full power
+
+** Early Init
+
+#+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
+  (setq package-enable-at-startup nil)
+#+end_src
+
+#+property: header-args:emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/init.el
 
 ** Setup package manager
 For many of the following settings I'll need to install some packages, so its best to have it configured upfront.
@@ -223,12 +231,21 @@ Persist minibuffers history, like in ~M-x~, ~C-x C-f~ and so on.
 
 *** Vertico
 
+Improves minibuffer by showing multiple options in a vertical list.
+
 #+begin_src emacs-lisp
   (use-package vertico
     :config
     (vertico-mode 1)
     (keymap-set vertico-map "C-j" #'vertico-next)
     (keymap-set vertico-map "C-k" #'vertico-previous))
+#+end_src
+
+Make vertico appear at the center of the screen.
+
+#+begin_src emacs-lisp
+  (use-package vertico-posframe
+    :config (vertico-posframe-mode))
 #+end_src
 
 ** Fuzzy Search
@@ -478,16 +495,22 @@ I only use it to map ~jk~ to ~<Escape>~.
 
 *** Magit
 
+TODO: hook to file save
+
 #+begin_src emacs-lisp
   (use-package magit)
 #+end_src
 
 *** Diff Highlight
 
+TODO: hook to magit
+
 #+begin_src emacs-lisp
   (use-package diff-hl
     :init (global-diff-hl-mode 1))
 #+end_src
+
+*** TODO Blamer
 
 ** TODO Directory Tree
 
