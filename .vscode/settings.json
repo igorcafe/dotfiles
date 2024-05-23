@@ -1,18 +1,24 @@
 {
-    "workbench.colorTheme": "Default Light Modern",
+    // Appearence
+    "workbench.colorTheme": "Ayu Mirage Bordered",
     "workbench.iconTheme": "material-icon-theme",
-    "inlineSQL.lintSQLFiles": true,
+    "workbench.editor.tabSizing": "fixed",
     "editor.minimap.enabled": false,
-    "go.generateTestsFlags": [
-        "-v"
-    ],
+    "editor.lineNumbers": "relative",
     "window.zoomLevel": 1,
+    "window.nativeTabs": true,
+    "window.customTitleBarVisibility": "never",
+
+    // Git
     "git.autofetch": true,
-    "go.testFlags": [
-        // "-v"
-    ],
-    "go.buildTags": "full",
     "git.confirmSync": false,
+    "git.replaceTagsWhenPull": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+
+    // Go
+    "go.testTimeout": "5s",
+
+    // VSCodeVim
     "vim.normalModeKeyBindings": [
         {
             "before": ["g", "i"],
@@ -37,11 +43,4 @@
             "after":["<Esc>"],
         }
     ],
-    "workbench.editor.tabSizing": "fixed",
-    "editor.lineNumbers": "relative",
-    "diffEditor.ignoreTrimWhitespace": false,
-    "window.nativeTabs": true,
-    "git.replaceTagsWhenPull": true,
-    "go.testTimeout": "5s",
-    "window.customTitleBarVisibility": "never",
 }
