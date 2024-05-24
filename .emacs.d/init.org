@@ -578,7 +578,18 @@ TODO: keybinding
     (setq writeroom-width 100))
 #+end_src
 
+** TODO Perspective
+
+#+begin_src emacs-lisp
+  (use-package perspective
+    :custom
+    (persp-mode-prefix-key (kbd "M-p"))
+    :init
+    (persp-mode))
+#+end_src
+
 ** Benchmark init
+
 #+begin_src emacs-lisp
   (use-package esup
     :defer

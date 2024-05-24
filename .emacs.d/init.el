@@ -236,6 +236,12 @@
   (setq writeroom-restore-window-config t)
   (setq writeroom-width 100))
 
+(use-package perspective
+  :custom
+  (persp-mode-prefix-key (kbd "M-p"))
+  :init
+  (persp-mode))
+
 (use-package esup
   :defer
   :config
