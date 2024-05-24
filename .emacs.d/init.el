@@ -85,16 +85,21 @@
   (keymap-set vertico-map "C-j" #'vertico-next)
   (keymap-set vertico-map "C-k" #'vertico-previous))
 
+(use-package vertico-posframe
+  :config (vertico-posframe-mode))
+
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package corfu
-  :init
-  (corfu-auto t) ; automatically pops up as you type
-  (corfu-auto-delay 200)
-  (corfu-auto-prefix 1)
+  :config
+  (setq corfu-auto t)
+  (setq corfu-auto-delay 0.2)
+  (setq corfu-auto-prefix 1)
+  (setq corfu-cycle t)
+  (global-set-key (kbd "C-SPC") #'completion-at-point)
   (global-corfu-mode 1))
 
 (use-package which-key
