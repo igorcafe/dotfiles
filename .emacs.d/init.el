@@ -22,6 +22,7 @@
 (set-face-attribute 'default nil :height 140)
 
 (use-package doom-themes
+  :defer 0.3
   :config
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic t)
@@ -34,7 +35,8 @@
 ;;(all-the-icons-install-fonts t)
 
 (use-package doom-modeline
-  :init (doom-modeline-mode 1))
+  :defer 1
+  :config (doom-modeline-mode 1))
 
 (add-hook 'prog-mode '(setq show-trailing-whitespace t))
 
@@ -119,10 +121,11 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (use-package pdf-tools
-  :init
+  :defer
+  :config
   (pdf-tools-install))
 
-(use-package org-bullets)
+(use-package org-bullets :defer)
 
 (add-hook 'org-mode-hook (lambda()
                              (org-bullets-mode 1)
@@ -158,10 +161,11 @@
   (eldoc-box-hover-at-point-mode 1))
 
 (use-package go-mode
+  :defer
   :hook
   (go-mode . eglot-ensure))
 
-(use-package nix-mode)
+(use-package nix-mode :defer)
 
 (use-package evil
   :demand t
@@ -191,13 +195,13 @@
   (setq key-chord-two-keys-delay 0.2)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
-(use-package magit)
+(use-package magit :defer)
 
 (use-package diff-hl
+  :defer 1
   :init (global-diff-hl-mode 1))
 
 (use-package treemacs
-  :demand t
   :config
   (setq treemacs-width 40)
   :bind
@@ -216,11 +220,16 @@
 ;; 	(lambda (file)
 ;; 	  (start-process "aplay" nil "aplay" file))))
 
-(use-package vterm)
+;;(use-package vterm)
 
-(use-package evil-mc)
+(use-package evil-mc :defer)
 
 (use-package writeroom-mode
   :init
   (setq writeroom-restore-window-config t)
   (setq writeroom-width 100))
+
+(use-package esup
+  :defer
+  :config
+  (setq esup-depth 0))

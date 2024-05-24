@@ -3,6 +3,7 @@
 ** TODOs
 ***** DONE Corfu delay + no 3 keys
 ***** DONE Which key delay
+***** TODO you surround
 ***** TODO blamer mode
 ***** TODO multiple cursors
 ***** TODO corfu not auto starting
@@ -92,6 +93,7 @@ Increase default font size
 
 #+begin_src emacs-lisp
   (use-package doom-themes
+    :defer 0.3
     :config
     (setq doom-themes-enable-bold t)
     (setq doom-themes-enable-italic t)
@@ -115,7 +117,8 @@ Nicer modeline.
 
 #+begin_src emacs-lisp
   (use-package doom-modeline
-    :init (doom-modeline-mode 1))
+    :defer 1
+    :config (doom-modeline-mode 1))
 #+end_src
 
 ** TODO Whitspaces
@@ -270,10 +273,12 @@ You can still use ~C-M-i~ to launch corfu.
 
 #+begin_src emacs-lisp
   (use-package corfu
-    :init
-    (corfu-auto t) ; automatically pops up as you type
-    (corfu-auto-delay 200)
-    (corfu-auto-prefix 1)
+    :config
+    (setq corfu-auto t)
+    (setq corfu-auto-delay 0.2)
+    (setq corfu-auto-prefix 1)
+    (setq corfu-cycle t)
+    (global-set-key (kbd "C-SPC") #'completion-at-point)
     (global-corfu-mode 1))
 #+end_src
 
@@ -360,7 +365,8 @@ Installing pdf-tools and opening a PDF file just works here.
 
 #+begin_src emacs-lisp
   (use-package pdf-tools
-    :init
+    :defer
+    :config
     (pdf-tools-install))
 #+end_src
 
@@ -371,7 +377,7 @@ Installing pdf-tools and opening a PDF file just works here.
 Show headings with special bullets instead o asterisks.
 
 #+begin_src emacs-lisp
-  (use-package org-bullets)
+  (use-package org-bullets :defer)
 #+end_src
 
 Change title and heading sizes.
@@ -438,13 +444,14 @@ Show docs as a hover box instead of using echo area.
 *** Go
 #+begin_src emacs-lisp
   (use-package go-mode
+    :defer
     :hook
     (go-mode . eglot-ensure))
 #+end_src
 
 *** Nix
 #+begin_src emacs-lisp
-  (use-package nix-mode)
+  (use-package nix-mode :defer)
 #+end_src
 
 ** TODO DAP
@@ -498,7 +505,7 @@ I only use it to map ~jk~ to ~<Escape>~.
 TODO: hook to file save
 
 #+begin_src emacs-lisp
-  (use-package magit)
+  (use-package magit :defer)
 #+end_src
 
 *** Diff Highlight
@@ -507,6 +514,7 @@ TODO: hook to magit
 
 #+begin_src emacs-lisp
   (use-package diff-hl
+    :defer 1
     :init (global-diff-hl-mode 1))
 #+end_src
 
@@ -518,7 +526,6 @@ TODO: hook to magit
 
 #+begin_src emacs-lisp
   (use-package treemacs
-    :demand t
     :config
     (setq treemacs-width 40)
     :bind
@@ -549,13 +556,13 @@ TODO: hook to magit
 ** TODO Terminal
 
 #+begin_src emacs-lisp
-  (use-package vterm)
+  ;;(use-package vterm)
 #+end_src
 
 ** TODO Multiple Cursors
 
 #+begin_src emacs-lisp
-  (use-package evil-mc)
+  (use-package evil-mc :defer)
 #+end_src
 
 ** TODO Zen Mode
@@ -567,4 +574,12 @@ TODO: keybinding
     :init
     (setq writeroom-restore-window-config t)
     (setq writeroom-width 100))
+#+end_src
+
+** Benchmark init
+#+begin_src emacs-lisp
+  (use-package esup
+    :defer
+    :config
+    (setq esup-depth 0))
 #+end_src
