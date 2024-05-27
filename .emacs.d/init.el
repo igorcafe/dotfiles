@@ -172,6 +172,8 @@
 
 (use-package nix-mode :defer)
 
+(use-package yaml-mode :defer)
+
 (use-package evil
   :demand t
   :init
@@ -207,6 +209,11 @@
 (use-package diff-hl
   :defer 1
   :init (global-diff-hl-mode 1))
+
+(use-package blamer
+  :defer 1
+  :config
+  (global-blamer-mode 1))
 
 (use-package treemacs
   :config

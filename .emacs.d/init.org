@@ -454,6 +454,11 @@ Show docs as a hover box instead of using echo area.
   (use-package nix-mode :defer)
 #+end_src
 
+*** YAML
+#+begin_src emacs-lisp
+  (use-package yaml-mode :defer)
+#+end_src
+
 ** TODO DAP
 ** TODO Vim keybindings
 
@@ -520,7 +525,16 @@ TODO: hook to magit
     :init (global-diff-hl-mode 1))
 #+end_src
 
-*** TODO Blamer
+*** Blamer
+
+Blamer shows a git blame similar to GitLens in VSCode.
+
+#+begin_src emacs-lisp
+  (use-package blamer
+    :defer 1
+    :config
+    (global-blamer-mode 1))
+#+end_src
 
 ** TODO Directory Tree
 
