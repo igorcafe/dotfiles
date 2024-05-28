@@ -26,13 +26,14 @@
   :config
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic t)
-  (load-theme 'doom-tomorrow-day t))
+  (load-theme 'doom-one t))
 
 (use-package all-the-icons
   :if (display-graphic-p))
 
 ;; run once
 ;;(all-the-icons-install-fonts t)
+;;(nerd-icons-install-fonts t)
 
 (use-package doom-modeline
   :defer 1
@@ -147,6 +148,21 @@
 ;; (font-lock-add-keywords 'org-mode
 ;;     '(("^ *\\([-]\\) "
 ;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+(use-package org-roam
+  :defer
+  :config
+  (when (not (file-directory-p "~/.Roam"))
+    (make-directory "~/.Roam"))
+  (setq org-roam-directory "~/.Roam")
+
+  (org-roam-db-autosync-enable)
+
+  :bind
+  (("C-c n f" . org-roam-node-find)
+   ("C-c n i" . org-roam-node-insert)))
+
+(use-package org-roam-ui :defer)
 
 (use-package eglot
   :hook

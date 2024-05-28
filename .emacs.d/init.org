@@ -23,12 +23,12 @@
 ** Early Init
 
 #+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
-  (setq package-enable-at-startup nil)
 #+end_src
 
 #+property: header-args:emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/init.el
 
 ** Setup package manager
+
 For many of the following settings I'll need to install some packages, so its best to have it configured upfront.
 
 Note: if you get 404 when trying to install packages, run ~M-x package-refresh-contents~.
@@ -97,7 +97,7 @@ Increase default font size
     :config
     (setq doom-themes-enable-bold t)
     (setq doom-themes-enable-italic t)
-    (load-theme 'doom-tomorrow-day t))
+    (load-theme 'doom-one t))
 #+end_src
 
 ** Icons
@@ -108,6 +108,7 @@ Increase default font size
 
   ;; run once
   ;;(all-the-icons-install-fonts t)
+  ;;(nerd-icons-install-fonts t)
 #+end_src
 
 ** Modeline
@@ -407,6 +408,32 @@ Replace ~-~ by ~•~ on unordered lists.
   ;; (font-lock-add-keywords 'org-mode
   ;;     '(("^ *\\([-]\\) "
   ;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+#+end_src
+
+*** Org Roam
+
+
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :defer
+    :config
+    (when (not (file-directory-p "~/.Roam"))
+      (make-directory "~/.Roam"))
+    (setq org-roam-directory "~/.Roam")
+
+    (org-roam-db-autosync-enable)
+
+    :bind
+    (("C-c n f" . org-roam-node-find)
+     ("C-c n i" . org-roam-node-insert)))
+#+end_src
+
+*** Org Roam UI
+
+Visualize Roam graph in real time
+
+#+begin_src emacs-lisp
+  (use-package org-roam-ui :defer)
 #+end_src
 
 ** LSP
