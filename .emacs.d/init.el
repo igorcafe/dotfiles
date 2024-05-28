@@ -177,6 +177,11 @@
 
   (define-key evil-normal-state-map (kbd "gi") 'eglot-find-implementation))
 
+  (add-hook 'before-save-hook
+            (lambda ()
+              (call-interactively 'eglot-code-action-organize-imports))
+            t nil))
+
 (use-package eldoc-box
   :config
   (eldoc-box-hover-at-point-mode 1))
