@@ -457,17 +457,23 @@ Eglot is a builtin LSP client for emacs.
     ;; don't use more than one line for eldoc, unless called with K
     (setq eldoc-echo-area-use-multiline-p 1)
 
-    (define-key evil-normal-state-map (kbd "gi") 'eglot-find-implementation))
+    (define-key evil-normal-state-map (kbd "gi") 'eglot-find-implementation)
+
+    (add-hook 'before-save-hook
+              (lambda ()
+                (call-interactively 'eglot-code-action-organize-imports))
+              t nil))
 #+end_src
 
-*** Hover box
+*** TODO Hover box
 
 Show docs as a hover box instead of using echo area.
 
 #+begin_src emacs-lisp
-    (use-package eldoc-box
-      :config
-      (eldoc-box-hover-at-point-mode 1))
+  ;; TODO hook to modes
+  (use-package eldoc-box
+    :config
+    (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-at-point-mode t))
 #+end_src
 
 ** Languages
