@@ -175,16 +175,17 @@
   ;; don't use more than one line for eldoc, unless called with K
   (setq eldoc-echo-area-use-multiline-p 1)
 
-  (define-key evil-normal-state-map (kbd "gi") 'eglot-find-implementation))
+  (define-key evil-normal-state-map (kbd "gi") 'eglot-find-implementation)
 
   (add-hook 'before-save-hook
             (lambda ()
               (call-interactively 'eglot-code-action-organize-imports))
             t nil))
 
+;; TODO hook to modes
 (use-package eldoc-box
   :config
-  (eldoc-box-hover-at-point-mode 1))
+  (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-at-point-mode t))
 
 (use-package go-mode
   :defer
@@ -202,7 +203,7 @@
   (setq evil-want-keybinding nil) ; what? idk
   (setq evil-undo-system 'undo-redo)
   :config
-  (evil-mode 1)
+  (evil-set-leader nil (kbd "SPC"))
   (define-key evil-normal-state-map (kbd "gb") 'evil-switch-to-windows-last-buffer)
   (define-key evil-normal-state-map (kbd "TT") 'tab-bar-switch-to-tab)
   (define-key evil-normal-state-map (kbd "Th") 'tab-previous)
@@ -211,6 +212,7 @@
   (advice-add 'evil-scroll-up :after 'evil-scroll-line-to-center)
   (advice-add 'evil-scroll-down :after 'evil-scroll-line-to-center)
   (define-key evil-normal-state-map (kbd "Tc") 'tab-close))
+  (evil-mode 1)
 
 (use-package evil-collection
   :after evil
@@ -246,6 +248,9 @@
 (use-package undo-tree
   :demand t
   :config
+  (when (not (file-directory-p "~/.emacs.d/undotree"))
+    (make-directory "~/.emacs.d/undotree"))
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undotree")))
   (setq evil-undo-system 'undo-tree)
   (global-undo-tree-mode 1))
 
@@ -255,7 +260,10 @@
 ;; 	(lambda (file)
 ;; 	  (start-process "aplay" nil "aplay" file))))
 
-(use-package vterm :defer)
+(use-package vterm
+  :defer
+  :config
+  (define-key evil-normal-state-map (kbd "<leader>t") 'vterm))
 
 (use-package evil-mc :defer)
 
