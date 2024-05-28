@@ -3,20 +3,23 @@
 ** TODOs
 ***** DONE Corfu delay + no 3 keys
 ***** DONE Which key delay
+***** DONE blamer mode
+***** DONE corfu not auto starting
+***** DONE Org Roam
+***** DONE vterm
+***** DONE undo tree
+***** TODO fix evil undo tree integration
+***** TODO elfeed
+***** TODO erc settings
+***** TODO ement.el
 ***** TODO you surround
-***** TODO blamer mode
 ***** TODO multiple cursors
-***** TODO corfu not auto starting
-***** TODO vterm
 ***** TODO protobuf-mode
 ***** TODO snippets
-***** TODO elfeed
-***** TODO undo tree
 ***** TODO DAP
 ***** TODO Icon theme
 ***** TODO startup time
 ***** TODO EMMS
-***** TODO Org Roam
 ***** TODO Org Agenda
 ***** TODO use treemacs full power
 
@@ -599,7 +602,7 @@ Blamer shows a git blame similar to GitLens in VSCode.
 ** TODO Terminal
 
 #+begin_src emacs-lisp
-  ;;(use-package vterm)
+  (use-package vterm :defer)
 #+end_src
 
 ** TODO Multiple Cursors

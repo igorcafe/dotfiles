@@ -250,7 +250,7 @@
 ;; 	(lambda (file)
 ;; 	  (start-process "aplay" nil "aplay" file))))
 
-;;(use-package vterm)
+(use-package vterm :defer)
 
 (use-package evil-mc :defer)
 
