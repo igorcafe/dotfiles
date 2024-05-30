@@ -58,6 +58,10 @@
       vterm
       ement
     ]))
+
+    # go
+    go
+    gopls
   ];
 
   services.emacs.enable = false;
