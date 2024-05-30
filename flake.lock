@@ -40,7 +40,28 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "telega-overlay": "telega-overlay"
+      }
+    },
+    "telega-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1716426619,
+        "narHash": "sha256-dvJvia1tyceIdz2DI+sZvxB1dQAumIVz/F4SVUiQxys=",
+        "owner": "ipvych",
+        "repo": "telega-overlay",
+        "rev": "bdd64171d6ef23eff7a7eb587a4bc937355271fa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipvych",
+        "repo": "telega-overlay",
+        "type": "github"
       }
     }
   },

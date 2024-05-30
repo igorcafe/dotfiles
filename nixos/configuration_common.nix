@@ -1,5 +1,9 @@
-{pkgs, ...}: {
+{pkgs, inputs, ...}: {
   nixpkgs.config.allowUnfree = true;
+
+  nixpkgs.overlays = [
+    inputs.telega-overlay.overlay
+  ];
 
   nix = {
     package = pkgs.nixFlakes;
