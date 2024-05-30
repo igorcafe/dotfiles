@@ -221,8 +221,8 @@
   (define-key evil-normal-state-map (kbd "Tn") 'tab-new)
   (advice-add 'evil-scroll-up :after 'evil-scroll-line-to-center)
   (advice-add 'evil-scroll-down :after 'evil-scroll-line-to-center)
-  (define-key evil-normal-state-map (kbd "Tc") 'tab-close))
-  (evil-mode 1)
+  (define-key evil-normal-state-map (kbd "Tc") 'tab-close)
+  (evil-mode 1))
 
 (use-package evil-collection
   :after evil
