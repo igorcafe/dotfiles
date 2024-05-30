@@ -54,6 +54,8 @@
 
 (global-visual-line-mode 1)
 
+(setq-default tab-width 4)
+
 (setq scroll-step 1)
 (setq scroll-margin 1)
 (setq scroll-conservatively 1000)
@@ -67,7 +69,7 @@
 
 ;; wtf
 (setq backup-directory-alist
-      `((".*" . ,(expand-file-name "backups" user-emacs-directory)))
+  `((".*" . ,(expand-file-name "backups" user-emacs-directory)))
 				   backup-by-copying t
 				   version-control t
 				   delete-old-versions t
@@ -195,6 +197,8 @@
 (use-package nix-mode :defer)
 
 (use-package yaml-mode :defer)
+
+(use-package markdown-mode :defer)
 
 (use-package evil
   :demand t

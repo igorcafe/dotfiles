@@ -158,7 +158,6 @@ Relative line numbers.
 
 #+begin_src emacs-lisp
   (setq display-line-numbers-type 'relative)
-
 #+end_src
 
 Enable line numbers for some modes.
@@ -176,6 +175,11 @@ Wrap long lines.
   (global-visual-line-mode 1)
 #+end_src
 
+** Text Tab
+
+#+begin_src emacs-lisp
+  (setq-default tab-width 4)
+#+end_src
 ** Scroll
 
 I don't know how to explain this shit.
@@ -493,6 +497,11 @@ Show docs as a hover box instead of using echo area.
 *** YAML
 #+begin_src emacs-lisp
   (use-package yaml-mode :defer)
+#+end_src
+
+*** Markdown
+#+begin_src emacs-lisp
+  (use-package markdown-mode :defer)
 #+end_src
 
 ** TODO DAP
