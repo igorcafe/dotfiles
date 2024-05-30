@@ -1,3 +1,14 @@
-elpa/
-auto-save-list/
-undotree/
+elpa
+auto-save-list
+url
+projects
+places
+history
+games
+eshell
+eln-cache
+.emacs.desktop
+.lsp-session-v1
+transient
+undotree
+recentf
