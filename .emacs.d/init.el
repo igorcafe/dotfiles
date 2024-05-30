@@ -241,6 +241,8 @@
 
 (use-package diff-hl
   :defer 1
+  :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
+         (magit-post-refresh . diff-hl-magit-post-refresh))
   :init (global-diff-hl-mode 1))
 
 (use-package blamer
