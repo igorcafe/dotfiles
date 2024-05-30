@@ -69,7 +69,7 @@
 
 ;; wtf
 (setq backup-directory-alist
-  `((".*" . ,(expand-file-name "backups" user-emacs-directory)))
+      `((".*" . ,(expand-file-name "backups" user-emacs-directory)))
 				   backup-by-copying t
 				   version-control t
 				   delete-old-versions t
@@ -107,8 +107,8 @@
 
 (use-package which-key
   :config
-  (which-key-mode)
-  (setq which-key-idle-secondary-delay 0.1))
+  (setq which-key-idle-secondary-delay 0.1)
+  (which-key-mode))
 
 (desktop-save-mode 1)
 
@@ -271,16 +271,17 @@
 
 (use-package evil-mc :defer)
 
+(use-package ement :defer)
+
 (use-package writeroom-mode
   :init
   (setq writeroom-restore-window-config t)
   (setq writeroom-width 100))
 
 (use-package perspective
+  :defer
   :custom
-  (persp-mode-prefix-key (kbd "M-p"))
-  :init
-  (persp-mode))
+  (persp-mode-prefix-key (kbd "M-p")))
 
 (use-package esup
   :defer

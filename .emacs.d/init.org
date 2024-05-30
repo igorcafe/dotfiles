@@ -8,6 +8,8 @@
 ***** DONE Org Roam
 ***** DONE vterm
 ***** DONE undo tree
+***** TODO leader key
+***** TODO ement
 ***** TODO fix evil undo tree integration
 ***** TODO elfeed
 ***** TODO erc settings
@@ -297,8 +299,8 @@ You can still use ~C-M-i~ to launch corfu.
 #+begin_src emacs-lisp
   (use-package which-key
     :config
-    (which-key-mode)
-    (setq which-key-idle-secondary-delay 0.1))
+    (setq which-key-idle-secondary-delay 0.1)
+    (which-key-mode))
 #+end_src
 
 ** Save state
@@ -633,6 +635,12 @@ Blamer shows a git blame similar to GitLens in VSCode.
   (use-package evil-mc :defer)
 #+end_src
 
+** Ement
+
+#+begin_src emacs-lisp
+  (use-package ement :defer)
+#+end_src
+
 ** TODO Zen Mode
 
 TODO: keybinding
@@ -648,10 +656,9 @@ TODO: keybinding
 
 #+begin_src emacs-lisp
   (use-package perspective
+    :defer
     :custom
-    (persp-mode-prefix-key (kbd "M-p"))
-    :init
-    (persp-mode))
+    (persp-mode-prefix-key (kbd "M-p")))
 #+end_src
 
 ** Benchmark init
