@@ -75,7 +75,7 @@
 
 ;; wtf
 (setq backup-directory-alist
-      `((".*" . ,(expand-file-name "backups" user-emacs-directory)))
+  `((".*" . ,(expand-file-name "backups" user-emacs-directory)))
 				   backup-by-copying t
 				   version-control t
 				   delete-old-versions t
