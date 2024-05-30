@@ -54,6 +54,12 @@
 
 (global-visual-line-mode 1)
 
+(use-package emacs
+  :config
+  (evil-define-key 'normal 'global (kbd "C-w u") 'winner-undo)
+  (evil-define-key 'normal 'global (kbd "C-w C-r") 'winner-redo)
+  (winner-mode 1))
+
 (setq-default tab-width 4)
 
 (setq scroll-step 1)

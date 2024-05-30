@@ -177,6 +177,20 @@ Wrap long lines.
   (global-visual-line-mode 1)
 #+end_src
 
+** Window
+
+*** Winner Mode
+
+Winner Mode can undo and redo window changes, like opening and closing.
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :config
+    (evil-define-key 'normal 'global (kbd "C-w u") 'winner-undo)
+    (evil-define-key 'normal 'global (kbd "C-w C-r") 'winner-redo)
+    (winner-mode 1))
+#+end_src
+
 ** Text Tab
 
 #+begin_src emacs-lisp
