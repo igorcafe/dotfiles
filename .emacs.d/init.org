@@ -571,6 +571,8 @@ I only use it to map ~jk~ to ~<Escape>~.
 
 *** Magit
 
+I use the default ~C-x g~ binding.
+
 TODO: hook to file save
 
 #+begin_src emacs-lisp
