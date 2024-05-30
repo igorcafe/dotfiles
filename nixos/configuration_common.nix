@@ -47,7 +47,16 @@
     neovim
     gnumake
     vulkan-tools
+
+    # emacs
+    ((emacsPackagesFor emacs).emacsWithPackages (epkgs: with epkgs; [
+      telega
+      vterm
+      ement
+    ]))
   ];
+
+  services.emacs.enable = false;
 
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
@@ -88,7 +97,6 @@
       };
     };
   };
-
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
