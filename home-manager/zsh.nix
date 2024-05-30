@@ -12,6 +12,7 @@
       ls = "lsd";
       ll = "lsd -l";
       lla = "lsd -la";
+      j = "z";
     };
     zplug = {
       enable = true;
@@ -55,6 +56,8 @@
       git clone --recurse-submodules "$1" "$dest"
       cd "$dest"
     }
+
+    eval "$(zoxide init zsh)"
     '';
   };
 }
