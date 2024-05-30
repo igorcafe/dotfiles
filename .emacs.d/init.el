@@ -272,7 +272,7 @@
 
 (use-package vterm
   :defer
-  :config
+  :init
   (define-key evil-normal-state-map (kbd "<leader>t") 'vterm))
 
 (use-package evil-mc :defer)
