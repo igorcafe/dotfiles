@@ -1,4 +1,5 @@
 #+title: My emacs settings
+#+auto_tangle: t
 
 ** Early Init
 
@@ -36,6 +37,14 @@ This ensures all packages from ~use-package~ are installed when emacs loads.
 
 #+begin_src emacs-lisp
   (setq use-package-always-ensure t)
+#+end_src
+
+** Auto-tangle config
+
+#+begin_src emacs-lisp
+  (use-package org-auto-tangle
+    :defer
+    :hook (org-mode . org-auto-tangle-mode))
 #+end_src
 
 ** De-clutter
@@ -437,7 +446,6 @@ Visualize Roam graph in real time
 ** Flymake
 
 #+begin_src emacs-lisp
- 
 #+end_src
 
 ** LSP
@@ -525,6 +533,7 @@ evil mode and evil-collection provide vim-like bindings.
     (advice-add 'evil-scroll-up :after 'evil-scroll-line-to-center)
     (advice-add 'evil-scroll-down :after 'evil-scroll-line-to-center)
     (define-key evil-normal-state-map (kbd "Tc") 'tab-close)
+    (evil-define-key 'normal 'global (kbd "<leader>u") 'universal-argument)
     (evil-mode 1))
 
   (use-package evil-collection
@@ -657,8 +666,8 @@ TODO: keybinding
 #+begin_src emacs-lisp
   (use-package perspective
     :defer
-    :custom
-    (persp-mode-prefix-key (kbd "<leader>p")))
+    :init
+    (persp-mode-set-prefix-key (kbd "<leader>p")))
 #+end_src
 
 ** Telega

@@ -9,6 +9,10 @@
 
 (setq use-package-always-ensure t)
 
+(use-package org-auto-tangle
+  :defer
+  :hook (org-mode . org-auto-tangle-mode))
+
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
@@ -75,7 +79,7 @@
 
 ;; wtf
 (setq backup-directory-alist
-  `((".*" . ,(expand-file-name "backups" user-emacs-directory)))
+      `((".*" . ,(expand-file-name "backups" user-emacs-directory)))
 				   backup-by-copying t
 				   version-control t
 				   delete-old-versions t
@@ -172,6 +176,8 @@
 
 (use-package org-roam-ui :defer)
 
+
+
 (use-package eglot
   :hook
   (before-save . eglot-format)
@@ -222,6 +228,7 @@
   (advice-add 'evil-scroll-up :after 'evil-scroll-line-to-center)
   (advice-add 'evil-scroll-down :after 'evil-scroll-line-to-center)
   (define-key evil-normal-state-map (kbd "Tc") 'tab-close)
+  (evil-define-key 'normal 'global (kbd "<leader>u") 'universal-argument)
   (evil-mode 1))
 
 (use-package evil-collection
@@ -289,8 +296,8 @@
 
 (use-package perspective
   :defer
-  :custom
-  (persp-mode-prefix-key (kbd "<leader>p")))
+  :init
+  (persp-mode-set-prefix-key (kbd "<leader>p")))
 
 (use-package telega
   :ensure nil
