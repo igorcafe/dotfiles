@@ -95,6 +95,9 @@ Increase default font size
   (use-package all-the-icons
     :if (display-graphic-p))
 
+  (use-package all-the-icons-dired
+    :hook (dired-mode . all-the-icons-dired-mode))
+
   ;; run once
   ;;(all-the-icons-install-fonts t)
   ;;(nerd-icons-install-fonts t)
@@ -248,6 +251,8 @@ Improves minibuffer by showing multiple options in a vertical list.
   (use-package vertico
     :config
     (vertico-mode 1)
+    (setq vertico-count 20)
+    (setq vertico-cycle t)
     (keymap-set vertico-map "C-j" #'vertico-next)
     (keymap-set vertico-map "C-k" #'vertico-previous))
 #+end_src
@@ -257,6 +262,18 @@ Make vertico appear at the center of the screen.
 #+begin_src emacs-lisp
   (use-package vertico-posframe
     :config (vertico-posframe-mode))
+#+end_src
+
+*** Marginalia
+
+- Adds description for commands in ~M-x~
+- Adds extra info to find file
+- Adds extra info to ~C-h v~
+
+#+begin_src emacs-lisp
+  (use-package marginalia
+    :init
+    (marginalia-mode))
 #+end_src
 
 ** Fuzzy Search
@@ -524,7 +541,7 @@ evil mode and evil-collection provide vim-like bindings.
     (setq evil-want-keybinding nil) ; what? idk
     (setq evil-undo-system 'undo-redo)
     :config
-    (evil-set-leader nil (kbd "SPC"))
+    (evil-set-leader 'normal (kbd "SPC"))
     (define-key evil-normal-state-map (kbd "gb") 'evil-switch-to-windows-last-buffer)
     (define-key evil-normal-state-map (kbd "TT") 'tab-bar-switch-to-tab)
     (define-key evil-normal-state-map (kbd "Th") 'tab-previous)
@@ -661,13 +678,19 @@ TODO: keybinding
     (setq writeroom-width 100))
 #+end_src
 
-** TODO Perspective
+** Perspective
 
 #+begin_src emacs-lisp
   (use-package perspective
-    :defer
-    :init
-    (persp-mode-set-prefix-key (kbd "<leader>p")))
+    :config
+    (persp-mode-set-prefix-key (kbd "<leader>p"))
+    (persp-mode 1))
+#+end_src
+
+** Focus
+
+#+begin_src emacs-lisp
+  (use-package focus :defer)
 #+end_src
 
 ** Telega
@@ -678,6 +701,7 @@ TODO: keybinding
     :init
     (setq telega-emoji-use-images nil))
 #+end_src
+
 
 ** Benchmark init
 

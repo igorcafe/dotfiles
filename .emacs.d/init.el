@@ -35,6 +35,9 @@
 (use-package all-the-icons
   :if (display-graphic-p))
 
+(use-package all-the-icons-dired
+  :hook (dired-mode . all-the-icons-dired-mode))
+
 ;; run once
 ;;(all-the-icons-install-fonts t)
 ;;(nerd-icons-install-fonts t)
@@ -95,11 +98,17 @@
 (use-package vertico
   :config
   (vertico-mode 1)
+  (setq vertico-count 20)
+  (setq vertico-cycle t)
   (keymap-set vertico-map "C-j" #'vertico-next)
   (keymap-set vertico-map "C-k" #'vertico-previous))
 
 (use-package vertico-posframe
   :config (vertico-posframe-mode))
+
+(use-package marginalia
+  :init
+  (marginalia-mode))
 
 (use-package orderless
   :custom
@@ -219,7 +228,7 @@
   (setq evil-want-keybinding nil) ; what? idk
   (setq evil-undo-system 'undo-redo)
   :config
-  (evil-set-leader nil (kbd "SPC"))
+  (evil-set-leader 'normal (kbd "SPC"))
   (define-key evil-normal-state-map (kbd "gb") 'evil-switch-to-windows-last-buffer)
   (define-key evil-normal-state-map (kbd "TT") 'tab-bar-switch-to-tab)
   (define-key evil-normal-state-map (kbd "Th") 'tab-previous)
@@ -295,9 +304,11 @@
   (setq writeroom-width 100))
 
 (use-package perspective
-  :defer
-  :init
-  (persp-mode-set-prefix-key (kbd "<leader>p")))
+  :config
+  (persp-mode-set-prefix-key (kbd "<leader>p"))
+  (persp-mode 1))
+
+(use-package focus :defer)
 
 (use-package telega
   :ensure nil
