@@ -19,7 +19,7 @@
 
 (toggle-frame-fullscreen)
 
-(set-face-attribute 'default nil :height 170)
+(set-face-attribute 'default nil :height 140)
 
 (use-package doom-themes
   :defer 0.3
@@ -273,6 +273,7 @@
 ;; 	  (start-process "aplay" nil "aplay" file))))
 
 (use-package vterm
+  :ensure nil
   :defer
   :init
   (define-key evil-normal-state-map (kbd "<leader>t") 'vterm))
@@ -290,6 +291,11 @@
   :defer
   :custom
   (persp-mode-prefix-key (kbd "<leader>p")))
+
+(use-package telega
+  :ensure nil
+  :init
+  (setq telega-emoji-use-images nil))
 
 (use-package esup
   :defer

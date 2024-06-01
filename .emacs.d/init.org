@@ -623,6 +623,7 @@ Blamer shows a git blame similar to GitLens in VSCode.
 
 #+begin_src emacs-lisp
   (use-package vterm
+    :ensure nil
     :defer
     :init
     (define-key evil-normal-state-map (kbd "<leader>t") 'vterm))
@@ -658,6 +659,15 @@ TODO: keybinding
     :defer
     :custom
     (persp-mode-prefix-key (kbd "<leader>p")))
+#+end_src
+
+** Telega
+
+#+begin_src emacs-lisp
+  (use-package telega
+    :ensure nil
+    :init
+    (setq telega-emoji-use-images nil))
 #+end_src
 
 ** Benchmark init
