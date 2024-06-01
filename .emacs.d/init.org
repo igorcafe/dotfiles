@@ -459,6 +459,12 @@ Visualize Roam graph in real time
   (use-package org-roam-ui :defer)
 #+end_src
 
+** Flymake
+
+#+begin_src emacs-lisp
+ 
+#+end_src
+
 ** LSP
 
 *** Eglot
@@ -676,7 +682,7 @@ TODO: keybinding
   (use-package perspective
     :defer
     :custom
-    (persp-mode-prefix-key (kbd "M-p")))
+    (persp-mode-prefix-key (kbd "<leader>p")))
 #+end_src
 
 ** Benchmark init

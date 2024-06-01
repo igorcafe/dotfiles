@@ -19,7 +19,7 @@
 
 (toggle-frame-fullscreen)
 
-(set-face-attribute 'default nil :height 140)
+(set-face-attribute 'default nil :height 170)
 
 (use-package doom-themes
   :defer 0.3
@@ -289,7 +289,7 @@
 (use-package perspective
   :defer
   :custom
-  (persp-mode-prefix-key (kbd "M-p")))
+  (persp-mode-prefix-key (kbd "<leader>p")))
 
 (use-package esup
   :defer
