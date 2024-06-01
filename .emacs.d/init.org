@@ -1,30 +1,5 @@
 #+title: My emacs settings
 
-** TODOs
-***** DONE Corfu delay + no 3 keys
-***** DONE Which key delay
-***** DONE blamer mode
-***** DONE corfu not auto starting
-***** DONE Org Roam
-***** DONE vterm
-***** DONE undo tree
-***** TODO leader key
-***** TODO ement
-***** TODO fix evil undo tree integration
-***** TODO elfeed
-***** TODO erc settings
-***** TODO ement.el
-***** TODO you surround
-***** TODO multiple cursors
-***** TODO protobuf-mode
-***** TODO snippets
-***** TODO DAP
-***** TODO Icon theme
-***** TODO startup time
-***** TODO EMMS
-***** TODO Org Agenda
-***** TODO use treemacs full power
-
 ** Early Init
 
 #+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
