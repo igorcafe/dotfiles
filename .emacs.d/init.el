@@ -13,62 +13,9 @@
   :defer
   :hook (org-mode . org-auto-tangle-mode))
 
-(setq inhibit-startup-message t)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-
-(blink-cursor-mode 0)
-(setq ring-bell-function 'ignore) ; this is actually sound, but...
-
-(toggle-frame-fullscreen)
-
-(set-face-attribute 'default nil :height 140)
-(when (eq system-type 'darwin)
-  (set-face-attribute 'default nil :height 170))
-
-(use-package doom-themes
-  :defer 0.3
-  :config
-  (setq doom-themes-enable-bold t)
-  (setq doom-themes-enable-italic t)
-  (load-theme 'doom-one t))
-
-(use-package all-the-icons
-  :if (display-graphic-p))
-
-(use-package all-the-icons-dired
-  :hook (dired-mode . all-the-icons-dired-mode))
-
-;; run once
-;;(all-the-icons-install-fonts t)
-;;(nerd-icons-install-fonts t)
-
-(use-package doom-modeline
-  :defer 1
-  :config (doom-modeline-mode 1))
-
-(add-hook 'prog-mode '(setq show-trailing-whitespace t))
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq warning-minimum-level :emergency)
-
-(column-number-mode 1) ;; TODO
-
-(setq display-line-numbers-type 'relative)
-
-(dolist (mode '(text-mode-hook
-               prog-mode-hook
-               conf-mode-hook))
-  (add-hook mode #'display-line-numbers-mode))
-
-(global-visual-line-mode 1)
-
-(setq-default tab-width 4)
-
-(setq scroll-step 1)
-(setq scroll-margin 1)
-(setq scroll-conservatively 1000)
-(setq scroll-preserve-screen-position 1)
 
 (setq create-lockfiles nil)
 
@@ -88,134 +35,16 @@
 
 (setq custom-file "~/Git/dotfiles/.emacs.d/custom.el")
 
-(savehist-mode 1)
-(setq history-length 100)
-
-(use-package vertico
-  :config
-  (vertico-mode 1)
-  (setq vertico-count 20)
-  (setq vertico-cycle t)
-  (keymap-set vertico-map "C-j" #'vertico-next)
-  (keymap-set vertico-map "C-k" #'vertico-previous))
-
-(use-package vertico-posframe
-  :config (vertico-posframe-mode))
-
-(use-package marginalia
-  :init
-  (marginalia-mode))
-
-(use-package orderless
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
-
-(use-package corfu
-  :config
-  (setq corfu-auto t)
-  (setq corfu-auto-delay 0.2)
-  (setq corfu-auto-prefix 1)
-  (setq corfu-cycle t)
-  (global-set-key (kbd "C-SPC") #'completion-at-point)
-  (global-corfu-mode 1))
-
-(use-package which-key
-  :config
-  (setq which-key-idle-secondary-delay 0.1)
-  (which-key-mode))
-
-(desktop-save-mode 1)
-
-(save-place-mode 1)
-
-(recentf-mode 1)
-(setq recentf-max-menu-items 100)
-(setq recentf-max-saved-items 100)
-(global-set-key "\C-x\ \C-r" 'recentf-open)
-
-(global-auto-revert-mode 1)
-(setq global-auto-revert-non-file-buffers t) ; for dired
-
-(electric-pair-mode 1)
-
-(defalias 'yes-or-no-p 'y-or-n-p)
-
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-(use-package pdf-tools
+(use-package esup
   :defer
   :config
-  (pdf-tools-install))
+  (setq esup-depth 0))
 
-(use-package org-bullets :defer)
-
-(add-hook 'org-mode-hook (lambda()
-                             (org-bullets-mode 1)
-                             (org-indent-mode 1)
-                             (set-face-attribute 'org-document-title nil :height 1.8)
-                             (set-face-attribute 'org-level-1 nil :height 1.8)
-                             (set-face-attribute 'org-level-2 nil :height 1.5)
-                             (set-face-attribute 'org-level-3 nil :height 1.2)
-                             (org-overview)))
-
-(setq org-hide-emphasis-markers t)
-
-;; org mode lists
-;; (font-lock-add-keywords 'org-mode
-;;     '(("^ *\\([-]\\) "
-;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
-(use-package org-roam
-  :defer
-  :config
-  (when (not (file-directory-p "~/.Roam"))
-    (make-directory "~/.Roam"))
-  (setq org-roam-directory "~/.Roam")
-
-  (org-roam-db-autosync-enable)
-
-  :bind
-  (("C-c n f" . org-roam-node-find)
-   ("C-c n i" . org-roam-node-insert)))
-
-(use-package org-roam-ui :defer)
-
-
-
-(use-package eglot
-  :hook
-  (before-save . eglot-format)
-
-  :bind
-  (:map evil-normal-state-map
-        ("gi" . eglot-find-implementation)) ;; TODO interactive??
-  :init
-  (setq eglot-sync-connect nil) ;; do not block when loading lsp
-
-
-  ;; TODO
-  (add-hook 'before-save-hook
-            (lambda ()
-              (call-interactively 'eglot-code-action-organize-imports))
-            t nil))
-
-(use-package eldoc-box
-    :config
-    (eldoc-box-hover-at-point-mode 1)
-    (setq eldoc-echo-area-use-multiline-p 1)
-    (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
-
-(use-package go-mode
-  :defer
-  :hook
-  (go-mode . eglot-ensure))
-
-(use-package nix-mode :defer)
-
-(use-package yaml-mode :defer)
-
-(use-package markdown-mode :defer)
+(set-face-attribute 'default nil :height 140)
+(when (eq system-type 'darwin)
+  (set-face-attribute 'default nil :height 170))
 
 (use-package undo-tree
   :demand t
@@ -262,6 +91,120 @@
   (setq key-chord-two-keys-delay 0.2)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
+(column-number-mode 1) ;; TODO
+
+(setq display-line-numbers-type 'relative)
+
+(dolist (mode '(text-mode-hook
+               prog-mode-hook
+               conf-mode-hook))
+  (add-hook mode #'display-line-numbers-mode))
+
+(global-visual-line-mode 1)
+
+(setq-default tab-width 4)
+
+;; (setq scroll-step 1)
+;; (setq scroll-margin 1)
+;; (setq scroll-conservatively 1000)
+;; (setq scroll-preserve-screen-position 1)
+
+(add-hook 'prog-mode '(setq show-trailing-whitespace t))
+
+(use-package focus :defer)
+
+(use-package evil-mc :defer)
+
+(setq inhibit-startup-message t)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+
+(blink-cursor-mode 0)
+(setq ring-bell-function 'ignore) ; this is actually sound, but...
+
+(toggle-frame-fullscreen)
+
+(use-package doom-themes
+  :defer 0.3
+  :config
+  (setq doom-themes-enable-bold t)
+  (setq doom-themes-enable-italic t)
+  (load-theme 'doom-one t))
+
+(use-package all-the-icons
+  :if (display-graphic-p))
+
+(use-package all-the-icons-dired
+  :hook (dired-mode . all-the-icons-dired-mode))
+
+;; run once
+;;(all-the-icons-install-fonts t)
+;;(nerd-icons-install-fonts t)
+
+(use-package doom-modeline
+  :defer 1
+  :config (doom-modeline-mode 1))
+
+(electric-pair-mode 1)
+
+(use-package go-mode
+  :defer
+  :hook
+  (go-mode . eglot-ensure))
+
+(use-package nix-mode :defer)
+
+(use-package yaml-mode :defer)
+
+(use-package markdown-mode :defer)
+
+(use-package eglot
+  :hook
+  (before-save . eglot-format)
+
+  :bind
+  (:map evil-normal-state-map
+        ("gi" . eglot-find-implementation)) ;; TODO interactive??
+  :init
+  (setq eglot-sync-connect nil) ;; do not block when loading lsp
+
+
+  ;; TODO
+  (add-hook 'before-save-hook
+            (lambda ()
+              (call-interactively 'eglot-code-action-organize-imports))
+            t nil))
+
+(use-package eldoc-box
+    :config
+    (eldoc-box-hover-at-point-mode 1)
+    (setq eldoc-echo-area-use-multiline-p 1)
+    (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
+
+(use-package corfu
+  :config
+  (setq corfu-auto t)
+  (setq corfu-auto-delay 0.2)
+  (setq corfu-auto-prefix 1)
+  (setq corfu-cycle t)
+  (global-set-key (kbd "C-SPC") #'completion-at-point)
+  (global-corfu-mode 1))
+
+(recentf-mode 1)
+(setq recentf-max-menu-items 100)
+(setq recentf-max-saved-items 100)
+(global-set-key "\C-x\ \C-r" 'recentf-open)
+
+(use-package writeroom-mode
+  :init
+  (setq writeroom-restore-window-config t)
+  (setq writeroom-width 100))
+
+(desktop-save-mode 1)
+
+(save-place-mode 1)
+
 (use-package emacs
   :bind
   (:map evil-normal-state-map
@@ -283,12 +226,15 @@
   :config
   (global-blamer-mode 1))
 
-(use-package treemacs
+(use-package perspective
   :config
-  (setq treemacs-width 40)
-  :bind
-  (:map global-map
-	([f8] . treemacs)))
+  (persp-mode-set-prefix-key (kbd "<leader>p"))
+  (persp-mode 1))
+
+(use-package which-key
+  :config
+  (setq which-key-idle-secondary-delay 0.1)
+  (which-key-mode))
 
 (use-package vterm
   :ensure nil
@@ -296,24 +242,48 @@
   :init
   (define-key evil-normal-state-map (kbd "SPC t") 'vterm))
 
-(use-package evil-mc :defer)
+(setq global-auto-revert-non-file-buffers t)
 
-(use-package perspective
+(use-package treemacs
   :config
-  (persp-mode-set-prefix-key (kbd "<leader>p"))
-  (persp-mode 1))
+  (setq treemacs-width 40)
+  :bind
+  (:map global-map
+	([f8] . treemacs)))
 
-(use-package focus :defer)
+(global-auto-revert-mode 1)
 
-(use-package writeroom-mode
+(savehist-mode 1)
+(setq history-length 100)
+
+(use-package vertico
+  :config
+  (vertico-mode 1)
+  (setq vertico-count 20)
+  (setq vertico-cycle t)
+  (keymap-set vertico-map "C-j" #'vertico-next)
+  (keymap-set vertico-map "C-k" #'vertico-previous))
+
+(use-package vertico-posframe
+  :config (vertico-posframe-mode))
+
+(use-package marginalia
   :init
-  (setq writeroom-restore-window-config t)
-  (setq writeroom-width 100))
+  (marginalia-mode))
 
-(use-package esup
-  :defer
-  :config
-  (setq esup-depth 0))
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package org-roam-ui :defer)
+
+(use-package telega
+  :ensure nil ;; installed and built through nix
+  :init
+  (setq telega-emoji-use-images nil))
+
+(use-package ement :defer)
 
 (use-package elfeed
   :config
@@ -329,9 +299,7 @@
           "https://thehackernews.com/feeds/posts/default" ; The Hacker News
           )))
 
-(use-package telega
-  :ensure nil ;; installed and built through nix
-  :init
-  (setq telega-emoji-use-images nil))
-
-(use-package ement :defer)
+(use-package pdf-tools
+  :defer
+  :config
+  (pdf-tools-install))

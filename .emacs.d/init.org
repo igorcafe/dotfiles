@@ -1,6 +1,8 @@
 #+title: My emacs settings
 #+auto_tangle: t
 
+* Basic setup
+
 ** Early Init
 
 #+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
@@ -47,140 +49,22 @@ This ensures all packages from ~use-package~ are installed when emacs loads.
     :hook (org-mode . org-auto-tangle-mode))
 #+end_src
 
-** De-clutter
+** Prompts
 
-Hides startup message, scroll bar and tool bar.
-#+begin_src emacs-lisp
-  (setq inhibit-startup-message t)
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1)
-  (menu-bar-mode -1)
-#+end_src
-
-No annoying bell sound nor flashing lights when something goes wrong.
-#+begin_src emacs-lisp
-  (blink-cursor-mode 0)
-  (setq ring-bell-function 'ignore) ; this is actually sound, but...
-#+end_src
-
-Launch in fullscreen.
-#+begin_src emacs-lisp
-  (toggle-frame-fullscreen)
-#+end_src
-
-** Font
-
-Increase default font size
+*** Y or N instead of Yes or No
 
 #+begin_src emacs-lisp
-  (set-face-attribute 'default nil :height 140)
-  (when (eq system-type 'darwin)
-    (set-face-attribute 'default nil :height 170))
+  (defalias 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
-** Theme
-
-*** Doom Themes
-
-#+begin_src emacs-lisp
-  (use-package doom-themes
-    :defer 0.3
-    :config
-    (setq doom-themes-enable-bold t)
-    (setq doom-themes-enable-italic t)
-    (load-theme 'doom-one t))
-#+end_src
-
-** Icons
-
-#+begin_src emacs-lisp
-  (use-package all-the-icons
-    :if (display-graphic-p))
-
-  (use-package all-the-icons-dired
-    :hook (dired-mode . all-the-icons-dired-mode))
-
-  ;; run once
-  ;;(all-the-icons-install-fonts t)
-  ;;(nerd-icons-install-fonts t)
-#+end_src
-
-** Modeline
-
-*** Doom Modeline
-Nicer modeline.
-
-#+begin_src emacs-lisp
-  (use-package doom-modeline
-    :defer 1
-    :config (doom-modeline-mode 1))
-#+end_src
-
-** TODO Whitspaces
-
-*** TODO Highlight trailing whitespaces
-
-TODO: add other modes
-
-#+begin_src emacs-lisp
-  (add-hook 'prog-mode '(setq show-trailing-whitespace t))
-#+end_src
-
-*** TODO Show symbols for spaces and tabs
-TODO: show a symbol like ~>~ for tab and ~•~, ideally in visual mode.
-
-** Warnings
+** TODO Warnings
 
 Disable annoying warnings at startup.
 
+TODO: check all available levels
+
 #+begin_src emacs-lisp
   (setq warning-minimum-level :emergency)
-#+end_src
-
-** Lines
-
-Show column number.
-
-#+begin_src emacs-lisp
-  (column-number-mode 1) ;; TODO
-#+end_src
-
-Relative line numbers.
-
-#+begin_src emacs-lisp
-  (setq display-line-numbers-type 'relative)
-#+end_src
-
-Enable line numbers for some modes.
-
-#+begin_src emacs-lisp
-  (dolist (mode '(text-mode-hook
-                 prog-mode-hook
-                 conf-mode-hook))
-    (add-hook mode #'display-line-numbers-mode))
-#+end_src
-
-Wrap long lines.
-
-#+begin_src emacs-lisp
-  (global-visual-line-mode 1)
-#+end_src
-
-** Text Tab
-
-#+begin_src emacs-lisp
-  (setq-default tab-width 4)
-#+end_src
-** Scroll
-
-I don't know how to explain this shit.
-But it improves scrolling for sure.
-
-#+begin_src emacs-lisp
-  (setq scroll-step 1)
-  (setq scroll-margin 1)
-  (setq scroll-conservatively 1000)
-  (setq scroll-preserve-screen-position 1)
 #+end_src
 
 ** Emacs files
@@ -220,146 +104,6 @@ This way I can build init.el from init.org without loosing custom variables.
   (setq custom-file "~/Git/dotfiles/.emacs.d/custom.el")
 #+end_src
 
-** Minibuffer
-
-*** Persist minibuffers
-
-Persist minibuffers history, like in ~M-x~, ~C-x C-f~ and so on.
-
-#+begin_src emacs-lisp
-  (savehist-mode 1)
-  (setq history-length 100)
-#+end_src
-
-*** Vertico
-
-Improves minibuffer by showing multiple options in a vertical list.
-
-#+begin_src emacs-lisp
-  (use-package vertico
-    :config
-    (vertico-mode 1)
-    (setq vertico-count 20)
-    (setq vertico-cycle t)
-    (keymap-set vertico-map "C-j" #'vertico-next)
-    (keymap-set vertico-map "C-k" #'vertico-previous))
-#+end_src
-
-Make vertico appear at the center of the screen.
-
-#+begin_src emacs-lisp
-  (use-package vertico-posframe
-    :config (vertico-posframe-mode))
-#+end_src
-
-*** Marginalia
-
-- Adds description for commands in ~M-x~
-- Adds extra info to find file
-- Adds extra info to ~C-h v~
-
-#+begin_src emacs-lisp
-  (use-package marginalia
-    :init
-    (marginalia-mode))
-#+end_src
-
-** Fuzzy Search
-
-*** Orderless
-
-Provides fuzzy search for files, commands, variables, and so on.
-
-#+begin_src emacs-lisp
-  (use-package orderless
-    :custom
-    (completion-styles '(orderless basic))
-    (completion-category-overrides '((file (styles basic partial-completion)))))
-#+end_src
-
-** Suggestion and Completion
-
-*** Autosuggestion and Completion for Code
-
-Emacs supports completion builtin with ~C-M-i~, but for a VSCode-like completion I use corfu.
-You can still use ~C-M-i~ to launch corfu.
-
-#+begin_src emacs-lisp
-  (use-package corfu
-    :config
-    (setq corfu-auto t)
-    (setq corfu-auto-delay 0.2)
-    (setq corfu-auto-prefix 1)
-    (setq corfu-cycle t)
-    (global-set-key (kbd "C-SPC") #'completion-at-point)
-    (global-corfu-mode 1))
-#+end_src
-
-*** Autosuggestion for keybindings
-
-~whick-key~ suggests key combinations as you press them.
-
-#+begin_src emacs-lisp
-  (use-package which-key
-    :config
-    (setq which-key-idle-secondary-delay 0.1)
-    (which-key-mode))
-#+end_src
-
-** Save state
-
-*** Save session
-
-Save session when emacs is closed and restore when reopened.
-
-#+begin_src emacs-lisp
-  (desktop-save-mode 1)
-#+end_src
-
-*** Cursor position
-
-Save cursor position per file.
-
-#+begin_src emacs-lisp
-  (save-place-mode 1)
-#+end_src
-
-** Recent files
-
-Show recent files with ~C-x C-r~.
-
-#+begin_src emacs-lisp
-  (recentf-mode 1)
-  (setq recentf-max-menu-items 100)
-  (setq recentf-max-saved-items 100)
-  (global-set-key "\C-x\ \C-r" 'recentf-open)
-#+end_src
-
-** Buffers
-
-Refreshs file automatically when its changed by other program. Also refreshes dired.
-
-#+begin_src emacs-lisp
-  (global-auto-revert-mode 1)
-  (setq global-auto-revert-non-file-buffers t) ; for dired
-#+end_src
-
-** Auto close pairs
-
-Auto close pairs like '',"", [ ], { }, depending on the file type.
-
-#+begin_src emacs-lisp
-  (electric-pair-mode 1)
-#+end_src
-
-** Prompts
-
-*** Y or N instead of Yes or No
-
-#+begin_src emacs-lisp
-  (defalias 'yes-or-no-p 'y-or-n-p)
-#+end_src
-
 ** Escape to quit prompts
 
 Press escape to quit most prompts.
@@ -368,159 +112,34 @@ Press escape to quit most prompts.
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+end_src
 
-** PDF
+** Benchmark init
 
-I tried default emacs doc-view-mode but it didn't work with the PDFs I tested.
-
-*** pdf-tools
-
-Installing pdf-tools and opening a PDF file just works here.
+I was getting very bad startup times so I added this just to be sure.
 
 #+begin_src emacs-lisp
-  (use-package pdf-tools
+  (use-package esup
     :defer
     :config
-    (pdf-tools-install))
+    (setq esup-depth 0))
 #+end_src
 
-** Org Mode
+* Editor
 
-*** TODO Visuals
+Basic editor settings. For more advanced tools see [[IDE]].
 
-Show headings with special bullets instead o asterisks.
+** Font
+
+Increase default font size
 
 #+begin_src emacs-lisp
-  (use-package org-bullets :defer)
+  (set-face-attribute 'default nil :height 140)
+  (when (eq system-type 'darwin)
+    (set-face-attribute 'default nil :height 170))
 #+end_src
 
-Change title and heading sizes.
-
-TODO: move non-visuals to separate hook
-#+begin_src emacs-lisp
-    (add-hook 'org-mode-hook (lambda()
-                                 (org-bullets-mode 1)
-                                 (org-indent-mode 1)
-                                 (set-face-attribute 'org-document-title nil :height 1.8)
-                                 (set-face-attribute 'org-level-1 nil :height 1.8)
-                                 (set-face-attribute 'org-level-2 nil :height 1.5)
-                                 (set-face-attribute 'org-level-3 nil :height 1.2)
-                                 (org-overview)))
-#+end_src
-
-Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
-
-#+begin_src emacs-lisp
-  (setq org-hide-emphasis-markers t)
-#+end_src
-
-Replace ~-~ by ~•~ on unordered lists.
-
-#+begin_src emacs-lisp
-  ;; org mode lists
-  ;; (font-lock-add-keywords 'org-mode
-  ;;     '(("^ *\\([-]\\) "
-  ;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-#+end_src
-
-*** Org Roam
-
-
-#+begin_src emacs-lisp
-  (use-package org-roam
-    :defer
-    :config
-    (when (not (file-directory-p "~/.Roam"))
-      (make-directory "~/.Roam"))
-    (setq org-roam-directory "~/.Roam")
-
-    (org-roam-db-autosync-enable)
-
-    :bind
-    (("C-c n f" . org-roam-node-find)
-     ("C-c n i" . org-roam-node-insert)))
-#+end_src
-
-*** Org Roam UI
-
-Visualize Roam graph in real time
-
-#+begin_src emacs-lisp
-  (use-package org-roam-ui :defer)
-#+end_src
-
-** Flymake
-
-#+begin_src emacs-lisp
-#+end_src
-
-** LSP
-
-*** Eglot
-
-Eglot is a builtin LSP client for emacs.
-
-#+begin_src emacs-lisp
-  (use-package eglot
-    :hook
-    (before-save . eglot-format)
-
-    :bind
-    (:map evil-normal-state-map
-          ("gi" . eglot-find-implementation)) ;; TODO interactive??
-    :init
-    (setq eglot-sync-connect nil) ;; do not block when loading lsp
-
-
-    ;; TODO
-    (add-hook 'before-save-hook
-              (lambda ()
-                (call-interactively 'eglot-code-action-organize-imports))
-              t nil))
-#+end_src
-
-*** Eldoc and Eldoc box
-
-Show docs as a hover box instead of using echo area.
-
-#+begin_src emacs-lisp
-  (use-package eldoc-box
-      :config
-      (eldoc-box-hover-at-point-mode 1)
-      (setq eldoc-echo-area-use-multiline-p 1)
-      (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
-#+end_src
-
-** Languages
-*** Go
-#+begin_src emacs-lisp
-  (use-package go-mode
-    :defer
-    :hook
-    (go-mode . eglot-ensure))
-#+end_src
-
-*** Nix
-#+begin_src emacs-lisp
-  (use-package nix-mode :defer)
-#+end_src
-
-*** YAML
-#+begin_src emacs-lisp
-  (use-package yaml-mode :defer)
-#+end_src
-
-*** Markdown
-#+begin_src emacs-lisp
-  (use-package markdown-mode :defer)
-#+end_src
-
-** TODO DAP
-
-** TODO Undo Tree
+** Undo Tree
 
 ~C-x u~ launches the undo tree visualization.
-
-TODO: fix evil integration.
 
 #+begin_src emacs-lisp
   (use-package undo-tree
@@ -533,9 +152,9 @@ TODO: fix evil integration.
     (global-undo-tree-mode 1))
 #+end_src
 
-** TODO Vim keybindings
+** Vim keybindings
 
-*** TODO Evil Mode
+*** Evil Mode
 
 evil mode and evil-collection provide vim-like bindings.
 
@@ -584,9 +203,273 @@ I only use it to map ~jk~ to ~<Escape>~.
     (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 #+end_src
 
-** Window
+** Lines
 
-*** Winner Mode
+Show column number.
+
+#+begin_src emacs-lisp
+  (column-number-mode 1) ;; TODO
+#+end_src
+
+Relative line numbers.
+
+#+begin_src emacs-lisp
+  (setq display-line-numbers-type 'relative)
+#+end_src
+
+Enable line numbers for some modes.
+
+#+begin_src emacs-lisp
+  (dolist (mode '(text-mode-hook
+                 prog-mode-hook
+                 conf-mode-hook))
+    (add-hook mode #'display-line-numbers-mode))
+#+end_src
+
+Wrap long lines.
+
+#+begin_src emacs-lisp
+  (global-visual-line-mode 1)
+#+end_src
+
+** Tabs
+
+#+begin_src emacs-lisp
+  (setq-default tab-width 4)
+#+end_src
+
+** Scroll
+
+I don't know how to explain this shit.
+But it improves scrolling for sure.
+
+TODO: check what each settings do.
+
+#+begin_src emacs-lisp
+  ;; (setq scroll-step 1)
+  ;; (setq scroll-margin 1)
+  ;; (setq scroll-conservatively 1000)
+  ;; (setq scroll-preserve-screen-position 1)
+#+end_src
+
+** TODO Whitspaces
+
+*** TODO Highlight trailing whitespaces
+
+TODO: add other modes
+
+#+begin_src emacs-lisp
+  (add-hook 'prog-mode '(setq show-trailing-whitespace t))
+#+end_src
+
+*** TODO Show symbols for spaces and tabs
+TODO: show a symbol like ~>~ for tab and ~•~, ideally in visual mode.
+
+** Focus
+
+Makes only the current area highlighted.
+
+#+begin_src emacs-lisp
+  (use-package focus :defer)
+#+end_src
+
+** TODO Multiple Cursors
+
+#+begin_src emacs-lisp
+  (use-package evil-mc :defer)
+#+end_src
+
+
+* Visuals
+
+** De-clutter
+
+Hides startup message, scroll bar and tool bar.
+#+begin_src emacs-lisp
+  (setq inhibit-startup-message t)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+#+end_src
+
+No annoying bell sound nor flashing lights when something goes wrong.
+#+begin_src emacs-lisp
+  (blink-cursor-mode 0)
+  (setq ring-bell-function 'ignore) ; this is actually sound, but...
+#+end_src
+
+Launch in fullscreen.
+#+begin_src emacs-lisp
+  (toggle-frame-fullscreen)
+#+end_src
+
+** Theme
+
+*** Doom Themes
+
+#+begin_src emacs-lisp
+  (use-package doom-themes
+    :defer 0.3
+    :config
+    (setq doom-themes-enable-bold t)
+    (setq doom-themes-enable-italic t)
+    (load-theme 'doom-one t))
+#+end_src
+
+** Icons
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons
+    :if (display-graphic-p))
+
+  (use-package all-the-icons-dired
+    :hook (dired-mode . all-the-icons-dired-mode))
+
+  ;; run once
+  ;;(all-the-icons-install-fonts t)
+  ;;(nerd-icons-install-fonts t)
+#+end_src
+
+** Modeline
+
+*** Doom Modeline
+Nicer modeline.
+
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :defer 1
+    :config (doom-modeline-mode 1))
+#+end_src
+
+* IDE
+
+** Auto close pairs
+
+Auto close pairs like '',"", [ ], { }, depending on the file type.
+
+#+begin_src emacs-lisp
+  (electric-pair-mode 1)
+#+end_src
+
+** Languages
+*** Go
+#+begin_src emacs-lisp
+  (use-package go-mode
+    :defer
+    :hook
+    (go-mode . eglot-ensure))
+#+end_src
+
+*** Nix
+#+begin_src emacs-lisp
+  (use-package nix-mode :defer)
+#+end_src
+
+*** YAML
+#+begin_src emacs-lisp
+  (use-package yaml-mode :defer)
+#+end_src
+
+*** Markdown
+#+begin_src emacs-lisp
+  (use-package markdown-mode :defer)
+#+end_src
+
+** LSP
+
+*** Eglot
+
+Eglot is a builtin LSP client for emacs.
+
+#+begin_src emacs-lisp
+  (use-package eglot
+    :hook
+    (before-save . eglot-format)
+
+    :bind
+    (:map evil-normal-state-map
+          ("gi" . eglot-find-implementation)) ;; TODO interactive??
+    :init
+    (setq eglot-sync-connect nil) ;; do not block when loading lsp
+
+
+    ;; TODO
+    (add-hook 'before-save-hook
+              (lambda ()
+                (call-interactively 'eglot-code-action-organize-imports))
+              t nil))
+#+end_src
+
+*** Eldoc and Eldoc box
+
+Show docs as a hover box instead of using echo area.
+
+#+begin_src emacs-lisp
+  (use-package eldoc-box
+      :config
+      (eldoc-box-hover-at-point-mode 1)
+      (setq eldoc-echo-area-use-multiline-p 1)
+      (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
+#+end_src
+
+** Autosuggestion and Completion
+
+Emacs supports completion builtin with ~C-M-i~, but for a VSCode-like completion I use corfu.
+You can still use ~C-M-i~ to launch corfu.
+
+#+begin_src emacs-lisp
+  (use-package corfu
+    :config
+    (setq corfu-auto t)
+    (setq corfu-auto-delay 0.2)
+    (setq corfu-auto-prefix 1)
+    (setq corfu-cycle t)
+    (global-set-key (kbd "C-SPC") #'completion-at-point)
+    (global-corfu-mode 1))
+#+end_src
+
+** TODO DAP
+** Recent files
+
+Show recent files with ~C-x C-r~.
+
+#+begin_src emacs-lisp
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 100)
+  (setq recentf-max-saved-items 100)
+  (global-set-key "\C-x\ \C-r" 'recentf-open)
+#+end_src
+
+** Writeroom Mode
+
+It's like zen mode from VSCode.
+
+#+begin_src emacs-lisp
+  (use-package writeroom-mode
+    :init
+    (setq writeroom-restore-window-config t)
+    (setq writeroom-width 100))
+#+end_src
+
+** Save emacs state
+
+Save session when emacs is closed and restore when reopened.
+
+#+begin_src emacs-lisp
+  (desktop-save-mode 1)
+#+end_src
+
+** Cursor position
+
+Save cursor position per file.
+
+#+begin_src emacs-lisp
+  (save-place-mode 1)
+#+end_src
+
+* Window
+
+** Winner Mode
 
 Winner Mode can undo and redo window changes, like opening and closing.
 
@@ -600,9 +483,9 @@ Winner Mode can undo and redo window changes, like opening and closing.
     (winner-mode 1))
 #+end_src
 
-** TODO Git
+* Git
 
-*** Magit
+** Magit
 
 I use the default ~C-x g~ binding.
 
@@ -612,7 +495,7 @@ TODO: hook to file save
   (use-package magit :defer)
 #+end_src
 
-*** Diff Highlight
+** Diff Highlight
 
 TODO: hook to magit
 
@@ -624,7 +507,7 @@ TODO: hook to magit
     :init (global-diff-hl-mode 1))
 #+end_src
 
-*** Blamer
+** Blamer
 
 Blamer shows a git blame similar to GitLens in VSCode.
 
@@ -635,34 +518,7 @@ Blamer shows a git blame similar to GitLens in VSCode.
     (global-blamer-mode 1))
 #+end_src
 
-** TODO Directory Tree
-
-*** TreeMacs
-
-#+begin_src emacs-lisp
-  (use-package treemacs
-    :config
-    (setq treemacs-width 40)
-    :bind
-    (:map global-map
-	  ([f8] . treemacs)))
-#+end_src
-
-** TODO Terminal
-
-#+begin_src emacs-lisp
-  (use-package vterm
-    :ensure nil
-    :defer
-    :init
-    (define-key evil-normal-state-map (kbd "SPC t") 'vterm))
-#+end_src
-
-** TODO Multiple Cursors
-
-#+begin_src emacs-lisp
-  (use-package evil-mc :defer)
-#+end_src
+* Workspaces
 
 ** Perspective
 
@@ -673,36 +529,200 @@ Blamer shows a git blame similar to GitLens in VSCode.
     (persp-mode 1))
 #+end_src
 
-** Focus
+* Keybindings
 
-*** Focus
+** Which Key
 
-Makes only the current area highlighted.
-
-#+begin_src emacs-lisp
-  (use-package focus :defer)
-#+end_src
-
-*** Writeroom Mode
-
-It's like zen mode from VSCode.
+~whick-key~ suggests key combinations as you press them.
 
 #+begin_src emacs-lisp
-  (use-package writeroom-mode
-    :init
-    (setq writeroom-restore-window-config t)
-    (setq writeroom-width 100))
-#+end_src
-
-
-** Benchmark init
-
-#+begin_src emacs-lisp
-  (use-package esup
-    :defer
+  (use-package which-key
     :config
-    (setq esup-depth 0))
+    (setq which-key-idle-secondary-delay 0.1)
+    (which-key-mode))
 #+end_src
+
+* Integrated Terminal
+
+** Vterm
+
+#+begin_src emacs-lisp
+  (use-package vterm
+    :ensure nil
+    :defer
+    :init
+    (define-key evil-normal-state-map (kbd "SPC t") 'vterm))
+#+end_src
+
+* File Manager
+** Dired
+
+Automatically update dired when a file is changed.
+
+#+begin_src emacs-lisp
+  (setq global-auto-revert-non-file-buffers t)
+#+end_src
+
+** TreeMacs
+
+File tree on the left side.
+
+#+begin_src emacs-lisp
+  (use-package treemacs
+    :config
+    (setq treemacs-width 40)
+    :bind
+    (:map global-map
+	  ([f8] . treemacs)))
+#+end_src
+
+* Buffers
+
+** File buffers
+Refreshs file automatically when its changed by other program. Also refreshes dired.
+
+#+begin_src emacs-lisp
+  (global-auto-revert-mode 1)
+#+end_src
+
+** Minibuffer
+
+*** Persist minibuffers
+
+Persist minibuffers history, like in ~M-x~, ~C-x C-f~ and so on.
+
+#+begin_src emacs-lisp
+  (savehist-mode 1)
+  (setq history-length 100)
+#+end_src
+
+*** Vertico
+
+Improves minibuffer by showing multiple options in a vertical list.
+
+#+begin_src emacs-lisp
+  (use-package vertico
+    :config
+    (vertico-mode 1)
+    (setq vertico-count 20)
+    (setq vertico-cycle t)
+    (keymap-set vertico-map "C-j" #'vertico-next)
+    (keymap-set vertico-map "C-k" #'vertico-previous))
+#+end_src
+
+Make vertico appear at the center of the screen.
+
+#+begin_src emacs-lisp
+  (use-package vertico-posframe
+    :config (vertico-posframe-mode))
+#+end_src
+
+*** Marginalia
+
+- Adds description for commands in ~M-x~
+- Adds extra info to find file
+- Adds extra info to ~C-h v~
+
+#+begin_src emacs-lisp
+  (use-package marginalia
+    :init
+    (marginalia-mode))
+#+end_src
+
+*** Orderless
+
+Provides fuzzy search for files, commands, variables, and so on.
+
+#+begin_src emacs-lisp
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless basic))
+    (completion-category-overrides '((file (styles basic partial-completion)))))
+#+end_src
+
+* Org Mode
+
+** TODO Visuals
+
+how headings with special bullets instead o asterisks.
+
++begin_src emacs-lisp
+ (use-package org-bullets :defer)
++end_src
+
+hange title and heading sizes.
+
+ODO: move non-visuals to separate hook
++begin_src emacs-lisp
+   (add-hook 'org-mode-hook (lambda()
+                                (org-bullets-mode 1)
+                                (org-indent-mode 1)
+                                (set-face-attribute 'org-document-title nil :height 1.8)
+                                (set-face-attribute 'org-level-1 nil :height 1.8)
+                                (set-face-attribute 'org-level-2 nil :height 1.5)
+                                (set-face-attribute 'org-level-3 nil :height 1.2)
+                                (org-overview)))
++end_src
+
+hether to hide or not symbols for emphasis like ~a~, *b*, /c/...
+
++begin_src emacs-lisp
+ (setq org-hide-emphasis-markers t)
++end_src
+
+eplace ~-~ by ~•~ on unordered lists.
+
++begin_src emacs-lisp
+ ;; org mode lists
+ ;; (font-lock-add-keywords 'org-mode
+ ;;     '(("^ *\\([-]\\) "
+ ;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
++end_src
+
+** Org Roam
+
+
++begin_src emacs-lisp
+ (use-package org-roam
+   :defer
+   :config
+   (when (not (file-directory-p "~/.Roam"))
+     (make-directory "~/.Roam"))
+   (setq org-roam-directory "~/.Roam")
+
+   (org-roam-db-autosync-enable)
+
+   :bind
+   (("C-c n f" . org-roam-node-find)
+    ("C-c n i" . org-roam-node-insert)))
++end_src
+
+** Org Roam UI
+
+Visualize Roam graph in real time
+
+#+begin_src emacs-lisp
+  (use-package org-roam-ui :defer)
+#+end_src
+
+* Social
+
+** Telegram
+
+#+begin_src emacs-lisp
+  (use-package telega
+    :ensure nil ;; installed and built through nix
+    :init
+    (setq telega-emoji-use-images nil))
+#+end_src
+
+** Matrix
+
+#+begin_src emacs-lisp
+  (use-package ement :defer)
+#+end_src
+
+* News
 
 ** RSS
 
@@ -722,17 +742,17 @@ It's like zen mode from VSCode.
             )))
 #+end_src
 
-** Telegram
+* PDF
+
+** pdf-tools
+
+I tried default emacs doc-view-mode but it didn't work with the PDFs I tested.
+
+Installing pdf-tools and opening a PDF file just works here.
 
 #+begin_src emacs-lisp
-  (use-package telega
-    :ensure nil ;; installed and built through nix
-    :init
-    (setq telega-emoji-use-images nil))
-#+end_src
-
-** Matrix
-
-#+begin_src emacs-lisp
-  (use-package ement :defer)
+  (use-package pdf-tools
+    :defer
+    :config
+    (pdf-tools-install))
 #+end_src
