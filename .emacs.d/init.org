@@ -1,6 +1,72 @@
 #+title: My emacs settings
 #+auto_tangle: t
 
+* Table of Contents :TOC:TOC:
+- [[#basic-setup][Basic setup]]
+  - [[#early-init][Early Init]]
+  - [[#setup-package-manager][Setup package manager]]
+  - [[#auto-tangle-config][Auto-tangle config]]
+  - [[#prompts][Prompts]]
+  - [[#warnings][Warnings]]
+  - [[#emacs-files][Emacs files]]
+  - [[#escape-to-quit-prompts][Escape to quit prompts]]
+  - [[#benchmark-init][Benchmark init]]
+- [[#editor][Editor]]
+  - [[#font][Font]]
+  - [[#undo-tree][Undo Tree]]
+  - [[#vim-keybindings][Vim keybindings]]
+  - [[#lines][Lines]]
+  - [[#tabs][Tabs]]
+  - [[#scroll][Scroll]]
+  - [[#whitspaces][Whitspaces]]
+  - [[#focus][Focus]]
+  - [[#multiple-cursors][Multiple Cursors]]
+- [[#visuals][Visuals]]
+  - [[#de-clutter][De-clutter]]
+  - [[#theme][Theme]]
+  - [[#icons][Icons]]
+  - [[#modeline][Modeline]]
+- [[#ide][IDE]]
+  - [[#auto-close-pairs][Auto close pairs]]
+  - [[#languages][Languages]]
+  - [[#lsp][LSP]]
+  - [[#autosuggestion-and-completion][Autosuggestion and Completion]]
+  - [[#dap][DAP]]
+  - [[#recent-files][Recent files]]
+  - [[#writeroom-mode][Writeroom Mode]]
+  - [[#save-emacs-state][Save emacs state]]
+  - [[#cursor-position][Cursor position]]
+- [[#window][Window]]
+  - [[#winner-mode][Winner Mode]]
+- [[#git][Git]]
+  - [[#magit][Magit]]
+  - [[#diff-highlight][Diff Highlight]]
+  - [[#blamer][Blamer]]
+- [[#workspaces][Workspaces]]
+  - [[#perspective][Perspective]]
+- [[#keybindings][Keybindings]]
+  - [[#which-key][Which Key]]
+- [[#integrated-terminal][Integrated Terminal]]
+  - [[#vterm][Vterm]]
+- [[#file-manager][File Manager]]
+  - [[#dired][Dired]]
+  - [[#treemacs][TreeMacs]]
+- [[#buffers][Buffers]]
+  - [[#file-buffers][File buffers]]
+  - [[#minibuffer][Minibuffer]]
+- [[#org-mode][Org Mode]]
+  - [[#visuals-1][Visuals]]
+  - [[#org-roam][Org Roam]]
+  - [[#org-roam-ui][Org Roam UI]]
+  - [[#toc-org][TOC ORG]]
+- [[#social][Social]]
+  - [[#telegram][Telegram]]
+  - [[#matrix][Matrix]]
+- [[#news][News]]
+  - [[#rss][RSS]]
+- [[#pdf][PDF]]
+  - [[#pdf-tools][pdf-tools]]
+
 * Basic setup
 
 ** Early Init
@@ -278,7 +344,6 @@ Makes only the current area highlighted.
 #+begin_src emacs-lisp
   (use-package evil-mc :defer)
 #+end_src
-
 
 * Visuals
 
@@ -702,6 +767,16 @@ Visualize Roam graph in real time.
 
 #+begin_src emacs-lisp
   (use-package org-roam-ui :defer)
+#+end_src
+
+** TOC ORG
+
+Generate a table-of-contents automatically.
+
+#+begin_src emacs-lisp
+  (use-package toc-org
+    :hook
+    (org-mode . toc-org-mode))
 #+end_src
 
 * Social

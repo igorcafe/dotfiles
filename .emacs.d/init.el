@@ -309,6 +309,10 @@
 
 (use-package org-roam-ui :defer)
 
+(use-package toc-org
+  :hook
+  (org-mode . toc-org-mode))
+
 (use-package telega
   :ensure nil ;; installed and built through nix
   :init
