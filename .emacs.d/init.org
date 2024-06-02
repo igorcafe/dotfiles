@@ -191,7 +191,7 @@ I was getting very bad startup times so I added this just to be sure.
 
 * Editor
 
-Basic editor settings. For more advanced tools see [[IDE]].
+Basic editor settings. For more advanced tools see [[#ide][IDE]].
 
 ** Font
 
@@ -225,34 +225,24 @@ Increase default font size
 evil mode and evil-collection provide vim-like bindings.
 
 #+begin_src emacs-lisp
-   (use-package evil
-     :demand t
-     :custom
-     (evil-want-integration t)
-     (evil-want-C-u-scroll t) ; C-u won't be enabled by default
-     (evil-want-keybinding nil) ; what? idk
-     (evil-undo-system 'undo-tree)
-     :bind
-     (:map evil-normal-state-map
-           ("SPC u" . universal-argument))
-     :config
-     (evil-set-leader 'normal (kbd "SPC"))
-     (define-key evil-normal-state-map (kbd "gb") 'evil-switch-to-windows-last-buffer)
-     ;; (define-key evil-normal-state-map (kbd "TT") 'tab-bar-switch-to-tab)
-     ;; (define-key evil-normal-state-map (kbd "Th") 'tab-previous)
-     ;; (define-key evil-normal-state-map (kbd "Tl") 'tab-next)
-     ;; (define-key evil-normal-state-map (kbd "Tn") 'tab-new)
-     ;; (define-key evil-normal-state-map (kbd "Tc") 'tab-close)
-     ;; (advice-add 'evil-scroll-up :after 'evil-scroll-line-to-center)
+  (use-package evil
+    :demand t
+    :custom
+    (evil-want-integration t)
+    (evil-want-C-u-scroll t) ; C-u won't be enabled by default
+    (evil-want-keybinding nil) ; what? idk
+    (evil-undo-system 'undo-tree)
+    :bind
+    (:map evil-normal-state-map
+          ("SPC u" . universal-argument))
+    :config
+    (evil-set-leader 'normal (kbd "SPC"))
+    (evil-mode 1))
 
-     ;; (advice-add 'evil-scroll-down :after 'evil-scroll-line-to-center)
-     ;; (evil-define-key 'normal 'global (kbd "<leader>u") 'universal-argument)
-     (evil-mode 1))
-
-   (use-package evil-collection
-     :after evil
-     :config
-     (evil-collection-init))
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
 #+end_src
 
 
@@ -647,7 +637,13 @@ File tree on the left side.
 Refreshs file automatically when its changed by other program. Also refreshes dired.
 
 #+begin_src emacs-lisp
-  (global-auto-revert-mode 1)
+  (use-package emacs
+    :bind
+    (:map evil-normal-state-map
+          (("gb" . evil-switch-to-windows-last-buffer)))
+    :config
+    (global-auto-revert-mode 1))
+
 #+end_src
 
 ** Minibuffer

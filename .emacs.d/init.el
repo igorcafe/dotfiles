@@ -67,16 +67,6 @@
         ("SPC u" . universal-argument))
   :config
   (evil-set-leader 'normal (kbd "SPC"))
-  (define-key evil-normal-state-map (kbd "gb") 'evil-switch-to-windows-last-buffer)
-  ;; (define-key evil-normal-state-map (kbd "TT") 'tab-bar-switch-to-tab)
-  ;; (define-key evil-normal-state-map (kbd "Th") 'tab-previous)
-  ;; (define-key evil-normal-state-map (kbd "Tl") 'tab-next)
-  ;; (define-key evil-normal-state-map (kbd "Tn") 'tab-new)
-  ;; (define-key evil-normal-state-map (kbd "Tc") 'tab-close)
-  ;; (advice-add 'evil-scroll-up :after 'evil-scroll-line-to-center)
-
-  ;; (advice-add 'evil-scroll-down :after 'evil-scroll-line-to-center)
-  ;; (evil-define-key 'normal 'global (kbd "<leader>u") 'universal-argument)
   (evil-mode 1))
 
 (use-package evil-collection
@@ -251,7 +241,12 @@
   (:map global-map
 	([f8] . treemacs)))
 
-(global-auto-revert-mode 1)
+(use-package emacs
+  :bind
+  (:map evil-normal-state-map
+        (("gb" . evil-switch-to-windows-last-buffer)))
+  :config
+  (global-auto-revert-mode 1))
 
 (savehist-mode 1)
 (setq history-length 100)
