@@ -24,6 +24,8 @@
 (toggle-frame-fullscreen)
 
 (set-face-attribute 'default nil :height 140)
+(when (eq system-type 'darwin)
+  (set-face-attribute 'default nil :height 170))
 
 (use-package doom-themes
   :defer 0.3
@@ -60,12 +62,6 @@
   (add-hook mode #'display-line-numbers-mode))
 
 (global-visual-line-mode 1)
-
-(use-package emacs
-  :config
-  (evil-define-key 'normal 'global (kbd "C-w u") 'winner-undo)
-  (evil-define-key 'normal 'global (kbd "C-w C-r") 'winner-redo)
-  (winner-mode 1))
 
 (setq-default tab-width 4)
 
@@ -191,24 +187,24 @@
   :hook
   (before-save . eglot-format)
 
+  :bind
+  (:map evil-normal-state-map
+        ("gi" . eglot-find-implementation)) ;; TODO interactive??
   :init
-  ;; do not block when loading lsp
-  (setq eglot-sync-connect nil)
+  (setq eglot-sync-connect nil) ;; do not block when loading lsp
 
-  ;; don't use more than one line for eldoc, unless called with K
-  (setq eldoc-echo-area-use-multiline-p 1)
 
-  (define-key evil-normal-state-map (kbd "gi") 'eglot-find-implementation)
-
+  ;; TODO
   (add-hook 'before-save-hook
             (lambda ()
               (call-interactively 'eglot-code-action-organize-imports))
             t nil))
 
-;; TODO hook to modes
 (use-package eldoc-box
-  :config
-  (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-at-point-mode t))
+    :config
+    (eldoc-box-hover-at-point-mode 1)
+    (setq eldoc-echo-area-use-multiline-p 1)
+    (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
 
 (use-package go-mode
   :defer
@@ -221,29 +217,42 @@
 
 (use-package markdown-mode :defer)
 
+(use-package undo-tree
+  :demand t
+  :config
+  (when (not (file-directory-p "~/.emacs.d/undotree"))
+    (make-directory "~/.emacs.d/undotree"))
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undotree")))
+  (setq evil-undo-system 'undo-tree)
+  (global-undo-tree-mode 1))
+
 (use-package evil
   :demand t
-  :init
-  (setq evil-want-C-u-scroll t) ; C-u won't work by default
-  (setq evil-want-keybinding nil) ; what? idk
-  (setq evil-undo-system 'undo-redo)
+  :custom
+  (evil-want-integration t)
+  (evil-want-C-u-scroll t) ; C-u won't be enabled by default
+  (evil-want-keybinding nil) ; what? idk
+  (evil-undo-system 'undo-tree)
+  :bind
+  (:map evil-normal-state-map
+        ("SPC u" . universal-argument))
   :config
   (evil-set-leader 'normal (kbd "SPC"))
   (define-key evil-normal-state-map (kbd "gb") 'evil-switch-to-windows-last-buffer)
-  (define-key evil-normal-state-map (kbd "TT") 'tab-bar-switch-to-tab)
-  (define-key evil-normal-state-map (kbd "Th") 'tab-previous)
-  (define-key evil-normal-state-map (kbd "Tl") 'tab-next)
-  (define-key evil-normal-state-map (kbd "Tn") 'tab-new)
-  (advice-add 'evil-scroll-up :after 'evil-scroll-line-to-center)
-  (advice-add 'evil-scroll-down :after 'evil-scroll-line-to-center)
-  (define-key evil-normal-state-map (kbd "Tc") 'tab-close)
-  (evil-define-key 'normal 'global (kbd "<leader>u") 'universal-argument)
+  ;; (define-key evil-normal-state-map (kbd "TT") 'tab-bar-switch-to-tab)
+  ;; (define-key evil-normal-state-map (kbd "Th") 'tab-previous)
+  ;; (define-key evil-normal-state-map (kbd "Tl") 'tab-next)
+  ;; (define-key evil-normal-state-map (kbd "Tn") 'tab-new)
+  ;; (define-key evil-normal-state-map (kbd "Tc") 'tab-close)
+  ;; (advice-add 'evil-scroll-up :after 'evil-scroll-line-to-center)
+
+  ;; (advice-add 'evil-scroll-down :after 'evil-scroll-line-to-center)
+  ;; (evil-define-key 'normal 'global (kbd "<leader>u") 'universal-argument)
   (evil-mode 1))
 
 (use-package evil-collection
   :after evil
   :config
-  (setq evil-want-integration t)
   (evil-collection-init))
 
 (use-package key-chord
@@ -252,6 +261,14 @@
   (key-chord-mode 1)
   (setq key-chord-two-keys-delay 0.2)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
+
+(use-package emacs
+  :bind
+  (:map evil-normal-state-map
+        ("C-w u" . winner-undo)
+        ("C-w C-r" . winner-redo))
+  :config
+  (winner-mode 1))
 
 (use-package magit :defer)
 
@@ -273,35 +290,13 @@
   (:map global-map
 	([f8] . treemacs)))
 
-(use-package undo-tree
-  :demand t
-  :config
-  (when (not (file-directory-p "~/.emacs.d/undotree"))
-    (make-directory "~/.emacs.d/undotree"))
-  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undotree")))
-  (setq evil-undo-system 'undo-tree)
-  (global-undo-tree-mode 1))
-
-;; (use-package pomidor
-;;   :config
-;;   (setq pomidor-play-sound-file
-;; 	(lambda (file)
-;; 	  (start-process "aplay" nil "aplay" file))))
-
 (use-package vterm
   :ensure nil
   :defer
   :init
-  (define-key evil-normal-state-map (kbd "<leader>t") 'vterm))
+  (define-key evil-normal-state-map (kbd "SPC t") 'vterm))
 
 (use-package evil-mc :defer)
-
-(use-package ement :defer)
-
-(use-package writeroom-mode
-  :init
-  (setq writeroom-restore-window-config t)
-  (setq writeroom-width 100))
 
 (use-package perspective
   :config
@@ -310,12 +305,33 @@
 
 (use-package focus :defer)
 
-(use-package telega
-  :ensure nil
+(use-package writeroom-mode
   :init
-  (setq telega-emoji-use-images nil))
+  (setq writeroom-restore-window-config t)
+  (setq writeroom-width 100))
 
 (use-package esup
   :defer
   :config
   (setq esup-depth 0))
+
+(use-package elfeed
+  :config
+  (setq elfeed-feeds
+        '(
+          "https://world.hey.com/dhh/feed.atom" ; DHH
+          "https://martinfowler.com/feed.atom" ; Martin Fowler
+          "https://go.dev/blog/feed.atom" ; Go Blog
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" ; ThePrimeTime
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" ; Mental Outlaw
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA" ; Fireship
+          "https://www.lakka.tv/articles/feed.xml" ; Lakka News
+          "https://thehackernews.com/feeds/posts/default" ; The Hacker News
+          )))
+
+(use-package telega
+  :ensure nil ;; installed and built through nix
+  :init
+  (setq telega-emoji-use-images nil))
+
+(use-package ement :defer)
