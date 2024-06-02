@@ -53,10 +53,11 @@
     vulkan-tools
 
     # emacs
-    ((emacsPackagesFor emacs).emacsWithPackages (epkgs: with epkgs; [
-      telega
-      vterm
-      ement
+    (emacs-gtk.pkgs.withPackages (epkgs: with epkgs; [
+        melpaPackages.telega
+        vterm
+        ement
+    ]))
     ]))
 
     # go
@@ -64,7 +65,10 @@
     gopls
   ];
 
-  services.emacs.enable = false;
+  services.emacs = {
+    enable = true;
+    package = pkgs.emacs-gtk;
+  };
 
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
