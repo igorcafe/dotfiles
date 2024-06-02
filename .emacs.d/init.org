@@ -644,16 +644,16 @@ Provides fuzzy search for files, commands, variables, and so on.
 
 ** TODO Visuals
 
-how headings with special bullets instead o asterisks.
+Show headings with special bullets instead o asterisks.
 
-+begin_src emacs-lisp
+#+begin_src emacs-lisp
  (use-package org-bullets :defer)
-+end_src
+#+end_src
 
-hange title and heading sizes.
+Change title and heading sizes.
 
-ODO: move non-visuals to separate hook
-+begin_src emacs-lisp
+TODO: move non-visuals to separate hook
+#+begin_src emacs-lisp
    (add-hook 'org-mode-hook (lambda()
                                 (org-bullets-mode 1)
                                 (org-indent-mode 1)
@@ -662,27 +662,26 @@ ODO: move non-visuals to separate hook
                                 (set-face-attribute 'org-level-2 nil :height 1.5)
                                 (set-face-attribute 'org-level-3 nil :height 1.2)
                                 (org-overview)))
-+end_src
+#+end_src
 
-hether to hide or not symbols for emphasis like ~a~, *b*, /c/...
+Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
 
-+begin_src emacs-lisp
+#+begin_src emacs-lisp
  (setq org-hide-emphasis-markers t)
-+end_src
+#+end_src
 
-eplace ~-~ by ~•~ on unordered lists.
+Replace ~-~ by ~•~ on unordered lists.
 
-+begin_src emacs-lisp
+#+begin_src emacs-lisp
  ;; org mode lists
  ;; (font-lock-add-keywords 'org-mode
  ;;     '(("^ *\\([-]\\) "
  ;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-+end_src
+#+end_src
 
 ** Org Roam
 
-
-+begin_src emacs-lisp
+#+begin_src emacs-lisp
  (use-package org-roam
    :defer
    :config
@@ -695,11 +694,11 @@ eplace ~-~ by ~•~ on unordered lists.
    :bind
    (("C-c n f" . org-roam-node-find)
     ("C-c n i" . org-roam-node-insert)))
-+end_src
+#+end_src
 
 ** Org Roam UI
 
-Visualize Roam graph in real time
+Visualize Roam graph in real time.
 
 #+begin_src emacs-lisp
   (use-package org-roam-ui :defer)

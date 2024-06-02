@@ -276,6 +276,37 @@
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
+(use-package org-bullets :defer)
+
+(add-hook 'org-mode-hook (lambda()
+                             (org-bullets-mode 1)
+                             (org-indent-mode 1)
+                             (set-face-attribute 'org-document-title nil :height 1.8)
+                             (set-face-attribute 'org-level-1 nil :height 1.8)
+                             (set-face-attribute 'org-level-2 nil :height 1.5)
+                             (set-face-attribute 'org-level-3 nil :height 1.2)
+                             (org-overview)))
+
+(setq org-hide-emphasis-markers t)
+
+;; org mode lists
+;; (font-lock-add-keywords 'org-mode
+;;     '(("^ *\\([-]\\) "
+;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+(use-package org-roam
+  :defer
+  :config
+  (when (not (file-directory-p "~/.Roam"))
+    (make-directory "~/.Roam"))
+  (setq org-roam-directory "~/.Roam")
+
+  (org-roam-db-autosync-enable)
+
+  :bind
+  (("C-c n f" . org-roam-node-find)
+   ("C-c n i" . org-roam-node-insert)))
+
 (use-package org-roam-ui :defer)
 
 (use-package telega
