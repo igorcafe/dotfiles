@@ -196,6 +196,12 @@
 
 (save-place-mode 1)
 
+(use-package consult
+  :defer
+  :bind
+  (:map evil-normal-state-map
+        ("SPC g s" . consult-grep)))
+
 (use-package emacs
   :bind
   (:map evil-normal-state-map

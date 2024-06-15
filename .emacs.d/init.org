@@ -36,6 +36,7 @@
   - [[#writeroom-mode][Writeroom Mode]]
   - [[#save-emacs-state][Save emacs state]]
   - [[#cursor-position][Cursor position]]
+  - [[#search-and-navigation][Search and Navigation]]
 - [[#window][Window]]
   - [[#winner-mode][Winner Mode]]
 - [[#git][Git]]
@@ -409,6 +410,7 @@ Auto close pairs like '',"", [ ], { }, depending on the file type.
 
 ** Languages
 *** Go
+
 #+begin_src emacs-lisp
   (use-package go-mode
     :defer
@@ -521,6 +523,16 @@ Save cursor position per file.
 
 #+begin_src emacs-lisp
   (save-place-mode 1)
+#+end_src
+
+** Search and Navigation
+
+#+begin_src emacs-lisp
+  (use-package consult
+    :defer
+    :bind
+    (:map evil-normal-state-map
+          ("SPC g s" . consult-grep)))
 #+end_src
 
 * Window
