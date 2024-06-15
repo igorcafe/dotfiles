@@ -61,6 +61,7 @@
   (evil-want-integration t)
   (evil-want-C-u-scroll t) ; C-u won't be enabled by default
   (evil-want-keybinding nil) ; what? idk
+  (evil-want-minibuffer t)
   (evil-undo-system 'undo-tree)
   :bind
   (:map evil-normal-state-map
