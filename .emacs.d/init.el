@@ -218,9 +218,12 @@
   (global-blamer-mode 1))
 
 (use-package perspective
-  :config
-  (persp-mode-set-prefix-key (kbd "<leader>p"))
-  (persp-mode 1))
+  :bind
+  (:map evil-normal-state-map
+        ("SPC SPC p" . persp-mode)
+        ("SPC SPC s" . persp-switch)
+        ("SPC SPC l" . persp-next)
+        ("SPC SPC h" . persp-prev)))
 
 (use-package which-key
   :config
