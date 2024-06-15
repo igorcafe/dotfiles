@@ -418,6 +418,12 @@ Auto close pairs like '',"", [ ], { }, depending on the file type.
     (go-mode . eglot-ensure))
 #+end_src
 
+Tool for adding/removing struct tags.
+
+#+begin_src emacs-lisp
+  (use-package go-tag :defer)
+#+end_src
+
 *** Nix
 #+begin_src emacs-lisp
   (use-package nix-mode :defer)

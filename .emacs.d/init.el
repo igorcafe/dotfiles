@@ -144,6 +144,8 @@
   :hook
   (go-mode . eglot-ensure))
 
+(use-package go-tag :defer)
+
 (use-package nix-mode :defer)
 
 (use-package yaml-mode :defer)
