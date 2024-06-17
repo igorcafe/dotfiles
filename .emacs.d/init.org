@@ -493,6 +493,11 @@ You can still use ~C-M-i~ to launch corfu.
 #+end_src
 
 ** TODO DAP
+
+#+begin_src emacs-lisp
+  (use-package dap-mode)
+#+end_src
+
 ** Recent files
 
 Show recent files with ~C-x C-r~.
