@@ -57,6 +57,8 @@
   - [[#minibuffer][Minibuffer]]
 - [[#org-mode][Org Mode]]
   - [[#visuals-1][Visuals]]
+  - [[#org-capture][Org Capture]]
+  - [[#org-agenda][Org Agenda]]
   - [[#org-roam][Org Roam]]
   - [[#org-roam-ui][Org Roam UI]]
   - [[#toc-org][TOC ORG]]
@@ -765,6 +767,35 @@ Replace ~-~ by ~•~ on unordered lists.
  ;; (font-lock-add-keywords 'org-mode
  ;;     '(("^ *\\([-]\\) "
  ;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+#+end_src
+
+** Org Capture
+
+#+begin_src emacs-lisp
+  (use-package org
+    :bind
+    (:map global-map
+          ("C-c c" . org-capture))
+    :config
+    (setq org-capture-templates
+          '(("t"
+             "todo item"
+             entry
+             (file+headline org-default-notes-file "Tasks")
+             "* TODO %?\n"))))
+#+end_src
+
+** Org Agenda
+
+#+begin_src emacs-lisp
+  (use-package org
+    :init
+    (setq org-agenda-files
+          '("~/.OrgAgenda/TODO.org"))
+    :bind
+    (:map global-map
+          ("C-c a" . org-agenda)
+          ("SPC a f" . org-cycle-agenda-files)))
 #+end_src
 
 ** Org Roam

@@ -303,6 +303,27 @@
 ;;     '(("^ *\\([-]\\) "
 ;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
+(use-package org
+  :bind
+  (:map global-map
+        ("C-c c" . org-capture))
+  :config
+  (setq org-capture-templates
+        '(("t"
+           "todo item"
+           entry
+           (file+headline org-default-notes-file "Tasks")
+           "* TODO %?\n"))))
+
+(use-package org
+  :init
+  (setq org-agenda-files
+        '("~/.OrgAgenda/TODO.org"))
+  :bind
+  (:map global-map
+        ("C-c a" . org-agenda)
+        ("SPC a f" . org-cycle-agenda-files)))
+
 (use-package org-roam
   :defer
   :config
