@@ -237,7 +237,7 @@
 
 (use-package which-key
   :config
-  (setq which-key-idle-secondary-delay 0.1)
+  (setq which-key-idle-delay 0.5)
   (which-key-mode))
 
 (use-package vterm
