@@ -56,9 +56,12 @@
   - [[#file-buffers][File buffers]]
   - [[#minibuffer][Minibuffer]]
 - [[#org-mode][Org Mode]]
+  - [[#refile][Refile]]
+  - [[#todos][TODOs]]
   - [[#visuals-1][Visuals]]
   - [[#org-capture][Org Capture]]
   - [[#org-agenda][Org Agenda]]
+  - [[#org-alert][Org Alert]]
   - [[#org-roam][Org Roam]]
   - [[#org-roam-ui][Org Roam UI]]
   - [[#toc-org][TOC ORG]]
@@ -454,7 +457,11 @@ Eglot is a builtin LSP client for emacs.
 
     :bind
     (:map evil-normal-state-map
-          ("gi" . eglot-find-implementation)) ;; TODO interactive??
+          ("gi" . eglot-find-implementation)
+          ("SPC l r" . eglot-rename)
+          ("SPC l R" . eglot-reconnect)
+          ("SPC l a a" . eglot-code-actions)
+          ("SPC l a e" . eglot-code-action-extract))
     :init
     (setq eglot-sync-connect nil) ;; do not block when loading lsp
 
@@ -731,27 +738,49 @@ Provides fuzzy search for files, commands, variables, and so on.
 #+end_src
 
 * Org Mode
+** Refile
 
-** TODO Visuals
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (advice-add 'org-refile :after 'org-save-all-org-buffers))
+#+end_src
+
+** TODOs
+
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (setq org-log-done 'item)
+    (setq org-todo-keywords
+          '((sequence "TODO" "|" "DONE")))) ;; changed my mind
+#+end_src
+
+** Visuals
 
 Show headings with special bullets instead o asterisks.
 
 #+begin_src emacs-lisp
- (use-package org-bullets :defer)
+  (use-package org-bullets :defer
+    :hook (org-mode . org-bullets-mode))
+#+end_src
+
+Visually indent text inside headings.
+
+#+begin_src emacs-lisp
+  (use-package org
+    :hook (org-mode . org-indent-mode))
 #+end_src
 
 Change title and heading sizes.
 
-TODO: move non-visuals to separate hook
 #+begin_src emacs-lisp
-   (add-hook 'org-mode-hook (lambda()
-                                (org-bullets-mode 1)
-                                (org-indent-mode 1)
-                                (set-face-attribute 'org-document-title nil :height 1.8)
-                                (set-face-attribute 'org-level-1 nil :height 1.8)
-                                (set-face-attribute 'org-level-2 nil :height 1.5)
-                                (set-face-attribute 'org-level-3 nil :height 1.2)
-                                (org-overview)))
+  ;; (use-package org
+  ;;   :hook (org-mode . (lambda()
+  ;;                       (set-face-attribute 'org-document-title nil :height 1.8)
+  ;;                       (set-face-attribute 'org-level-1 nil :height 1.3)
+  ;;                       (set-face-attribute 'org-level-2 nil :height 1.2)
+  ;;                       (set-face-attribute 'org-level-3 nil :height 1.1))))
 #+end_src
 
 Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
@@ -763,10 +792,9 @@ Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
 Replace ~-~ by ~•~ on unordered lists.
 
 #+begin_src emacs-lisp
- ;; org mode lists
- ;; (font-lock-add-keywords 'org-mode
- ;;     '(("^ *\\([-]\\) "
- ;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+  (font-lock-add-keywords 'org-mode
+      '(("^ *\\([-]\\) "
+      (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 #+end_src
 
 ** Org Capture
@@ -791,11 +819,25 @@ Replace ~-~ by ~•~ on unordered lists.
   (use-package org
     :init
     (setq org-agenda-files
-          '("~/.OrgAgenda/TODO.org"))
+          '("~/Org/Agenda/Todo.org"
+            "~/Org/Agenda/Done.org"
+            "~/Org/Agenda/Backlog.org"
+            "~/Org/Agenda/Dates.org"))
     :bind
     (:map global-map
-          ("C-c a" . org-agenda)
-          ("SPC a f" . org-cycle-agenda-files)))
+          ("C-c a l" . org-agenda-list)
+          ("C-c a f" . org-cycle-agenda-files)))
+#+end_src
+
+** Org Alert
+
+#+begin_src emacs-lisp
+  (use-package org-alert
+    :config
+    (setq org-alert-interval 300)
+    (setq org-alert-notify-cutoff 10)
+    (setq org-alert-notify-after-event-cutoff 10)
+    )
 #+end_src
 
 ** Org Roam
@@ -804,9 +846,9 @@ Replace ~-~ by ~•~ on unordered lists.
  (use-package org-roam
    :defer
    :config
-   (when (not (file-directory-p "~/.Roam"))
-     (make-directory "~/.Roam"))
-   (setq org-roam-directory "~/.Roam")
+   (when (not (file-directory-p "~/Org/Roam"))
+     (make-directory "~/Org/Roam"))
+   (setq org-roam-directory "~/Org/Roam")
 
    (org-roam-db-autosync-enable)
 

@@ -158,7 +158,11 @@
 
   :bind
   (:map evil-normal-state-map
-        ("gi" . eglot-find-implementation)) ;; TODO interactive??
+        ("gi" . eglot-find-implementation)
+        ("SPC l r" . eglot-rename)
+        ("SPC l R" . eglot-reconnect)
+        ("SPC l a a" . eglot-code-actions)
+        ("SPC l a e" . eglot-code-action-extract))
   :init
   (setq eglot-sync-connect nil) ;; do not block when loading lsp
 
@@ -285,23 +289,34 @@
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
-(use-package org-bullets :defer)
+(use-package org
+  :config
+  (advice-add 'org-refile :after 'org-save-all-org-buffers))
 
-(add-hook 'org-mode-hook (lambda()
-                             (org-bullets-mode 1)
-                             (org-indent-mode 1)
-                             (set-face-attribute 'org-document-title nil :height 1.8)
-                             (set-face-attribute 'org-level-1 nil :height 1.8)
-                             (set-face-attribute 'org-level-2 nil :height 1.5)
-                             (set-face-attribute 'org-level-3 nil :height 1.2)
-                             (org-overview)))
+(use-package org
+  :config
+  (setq org-log-done 'item)
+  (setq org-todo-keywords
+        '((sequence "TODO" "|" "DONE")))) ;; changed my mind
+
+(use-package org-bullets :defer
+  :hook (org-mode . org-bullets-mode))
+
+(use-package org
+  :hook (org-mode . org-indent-mode))
+
+;; (use-package org
+;;   :hook (org-mode . (lambda()
+;;                       (set-face-attribute 'org-document-title nil :height 1.8)
+;;                       (set-face-attribute 'org-level-1 nil :height 1.3)
+;;                       (set-face-attribute 'org-level-2 nil :height 1.2)
+;;                       (set-face-attribute 'org-level-3 nil :height 1.1))))
 
 (setq org-hide-emphasis-markers t)
 
-;; org mode lists
-;; (font-lock-add-keywords 'org-mode
-;;     '(("^ *\\([-]\\) "
-;;     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+(font-lock-add-keywords 'org-mode
+    '(("^ *\\([-]\\) "
+    (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 (use-package org
   :bind
@@ -318,18 +333,28 @@
 (use-package org
   :init
   (setq org-agenda-files
-        '("~/.OrgAgenda/TODO.org"))
+        '("~/Org/Agenda/Todo.org"
+          "~/Org/Agenda/Done.org"
+          "~/Org/Agenda/Backlog.org"
+          "~/Org/Agenda/Dates.org"))
   :bind
   (:map global-map
-        ("C-c a" . org-agenda)
-        ("SPC a f" . org-cycle-agenda-files)))
+        ("C-c a l" . org-agenda-list)
+        ("C-c a f" . org-cycle-agenda-files)))
+
+(use-package org-alert
+  :config
+  (setq org-alert-interval 300)
+  (setq org-alert-notify-cutoff 10)
+  (setq org-alert-notify-after-event-cutoff 10)
+  )
 
 (use-package org-roam
   :defer
   :config
-  (when (not (file-directory-p "~/.Roam"))
-    (make-directory "~/.Roam"))
-  (setq org-roam-directory "~/.Roam")
+  (when (not (file-directory-p "~/Org/Roam"))
+    (make-directory "~/Org/Roam"))
+  (setq org-roam-directory "~/Org/Roam")
 
   (org-roam-db-autosync-enable)
 
