@@ -57,6 +57,9 @@
   - [[#minibuffer][Minibuffer]]
 - [[#org-mode][Org Mode]]
   - [[#refile][Refile]]
+  - [[#habit][Habit]]
+  - [[#priority][Priority]]
+  - [[#tables][Tables]]
   - [[#todos][TODOs]]
   - [[#visuals-1][Visuals]]
   - [[#org-capture][Org Capture]]
@@ -738,6 +741,7 @@ Provides fuzzy search for files, commands, variables, and so on.
 #+end_src
 
 * Org Mode
+
 ** Refile
 
 #+begin_src emacs-lisp
@@ -745,6 +749,38 @@ Provides fuzzy search for files, commands, variables, and so on.
     :config
     (setq org-directory "~/Org")
     (advice-add 'org-refile :after 'org-save-all-org-buffers))
+#+end_src
+
+** Habit
+
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (require 'org-habit)
+    (add-to-list 'org-modules 'org-habit))
+#+end_src
+
+
+** Priority
+
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (setq org-priority-highest 0)
+    (setq org-priority-lowest 5)
+    (setq org-priority-default 5))
+#+end_src
+
+** Tables
+
+#+begin_src emacs-lisp
+  (use-package org
+    :bind
+    (:map org-mode-map
+          ("C-c h" . org-table-move-cell-left)
+          ("C-c l" . org-table-move-cell-right)
+          ("C-c k" . org-table-move-cell-up)
+          ("C-c j" . org-table-move-cell-down)))
 #+end_src
 
 ** TODOs
@@ -755,7 +791,7 @@ Provides fuzzy search for files, commands, variables, and so on.
     (setq org-log-done 'item)
     (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
     (setq org-todo-keywords
-          '((sequence "TODO" "|" "DONE")))) ;; changed my mind
+          '((sequence "TODO" "|" "DONE"))))
 #+end_src
 
 ** Visuals
@@ -835,24 +871,35 @@ Replace ~-~ by ~•~ on unordered lists.
     (setq org-alert-interval 300)
     (setq org-alert-notify-cutoff 10)
     (setq org-alert-notify-after-event-cutoff 10)
-    )
+    ;; default:
+    ;; (setq org-agenda-prefix-format
+    ;; 		'((agenda . " %i %-12:c%?-12t% s")
+    ;; 		 (todo . " %i %-12:c")
+    ;; 		 (tags . " %i %-12:c")
+    ;; 		 (search . " %i %-12:c")))
+    (setq org-agenda-prefix-format
+          '((agenda . " %?-12t% s")
+           (todo . " %i %-12:c")
+           (tags . " %i %-12:c")
+           (search . " %i %-12:c"))))
 #+end_src
 
 ** Org Roam
 
 #+begin_src emacs-lisp
- (use-package org-roam
-   :defer
-   :config
-   (when (not (file-directory-p "~/Org/Roam"))
-     (make-directory "~/Org/Roam"))
-   (setq org-roam-directory "~/Org/Roam")
+  (use-package org-roam
+    :defer
+    :config
+    (when (not (file-directory-p "~/Org/Roam"))
+      (make-directory "~/Org/Roam"))
+    (setq org-roam-directory "~/Org/Roam")
 
-   (org-roam-db-autosync-enable)
+    (org-roam-db-autosync-enable)
 
-   :bind
-   (("C-c n f" . org-roam-node-find)
-    ("C-c n i" . org-roam-node-insert)))
+    :bind
+    (("C-c n f" . org-roam-node-find)
+     ("C-c n i" . org-roam-node-insert)
+     ("C-c n d d" . org-roam-dailies-goto-today)))
 #+end_src
 
 ** Org Roam UI

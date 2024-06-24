@@ -296,10 +296,29 @@
 
 (use-package org
   :config
+  (require 'org-habit)
+  (add-to-list 'org-modules 'org-habit))
+
+(use-package org
+  :config
+  (setq org-priority-highest 0)
+  (setq org-priority-lowest 5)
+  (setq org-priority-default 5))
+
+(use-package org
+  :bind
+  (:map org-mode-map
+        ("C-c h" . org-table-move-cell-left)
+        ("C-c l" . org-table-move-cell-right)
+        ("C-c k" . org-table-move-cell-up)
+        ("C-c j" . org-table-move-cell-down)))
+
+(use-package org
+  :config
   (setq org-log-done 'item)
   (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
   (setq org-todo-keywords
-        '((sequence "TODO" "|" "DONE")))) ;; changed my mind
+        '((sequence "TODO" "|" "DONE"))))
 
 (use-package org-bullets :defer
   :hook (org-mode . org-bullets-mode))
@@ -345,7 +364,17 @@
   (setq org-alert-interval 300)
   (setq org-alert-notify-cutoff 10)
   (setq org-alert-notify-after-event-cutoff 10)
-  )
+  ;; default:
+  ;; (setq org-agenda-prefix-format
+  ;; 		'((agenda . " %i %-12:c%?-12t% s")
+  ;; 		 (todo . " %i %-12:c")
+  ;; 		 (tags . " %i %-12:c")
+  ;; 		 (search . " %i %-12:c")))
+  (setq org-agenda-prefix-format
+        '((agenda . " %?-12t% s")
+         (todo . " %i %-12:c")
+         (tags . " %i %-12:c")
+         (search . " %i %-12:c"))))
 
 (use-package org-roam
   :defer
@@ -358,7 +387,8 @@
 
   :bind
   (("C-c n f" . org-roam-node-find)
-   ("C-c n i" . org-roam-node-insert)))
+   ("C-c n i" . org-roam-node-insert)
+   ("C-c n d d" . org-roam-dailies-goto-today)))
 
 (use-package org-roam-ui :defer)
 
