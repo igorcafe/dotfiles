@@ -291,11 +291,13 @@
 
 (use-package org
   :config
+  (setq org-directory "~/Org")
   (advice-add 'org-refile :after 'org-save-all-org-buffers))
 
 (use-package org
   :config
   (setq org-log-done 'item)
+  (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
   (setq org-todo-keywords
         '((sequence "TODO" "|" "DONE")))) ;; changed my mind
 
@@ -333,14 +335,10 @@
 (use-package org
   :init
   (setq org-agenda-files
-        '("~/Org/Agenda/Todo.org"
-          "~/Org/Agenda/Done.org"
-          "~/Org/Agenda/Backlog.org"
-          "~/Org/Agenda/Dates.org"))
+        '("Roam/20240620102058-tasks.org"))
   :bind
   (:map global-map
-        ("C-c a l" . org-agenda-list)
-        ("C-c a f" . org-cycle-agenda-files)))
+        ("C-c a" . org-agenda)))
 
 (use-package org-alert
   :config

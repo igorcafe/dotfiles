@@ -743,6 +743,7 @@ Provides fuzzy search for files, commands, variables, and so on.
 #+begin_src emacs-lisp
   (use-package org
     :config
+    (setq org-directory "~/Org")
     (advice-add 'org-refile :after 'org-save-all-org-buffers))
 #+end_src
 
@@ -752,6 +753,7 @@ Provides fuzzy search for files, commands, variables, and so on.
   (use-package org
     :config
     (setq org-log-done 'item)
+    (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
     (setq org-todo-keywords
           '((sequence "TODO" "|" "DONE")))) ;; changed my mind
 #+end_src
@@ -816,17 +818,13 @@ Replace ~-~ by ~•~ on unordered lists.
 ** Org Agenda
 
 #+begin_src emacs-lisp
-  (use-package org
-    :init
-    (setq org-agenda-files
-          '("~/Org/Agenda/Todo.org"
-            "~/Org/Agenda/Done.org"
-            "~/Org/Agenda/Backlog.org"
-            "~/Org/Agenda/Dates.org"))
-    :bind
-    (:map global-map
-          ("C-c a l" . org-agenda-list)
-          ("C-c a f" . org-cycle-agenda-files)))
+    (use-package org
+      :init
+      (setq org-agenda-files
+            '("Roam/20240620102058-tasks.org"))
+      :bind
+      (:map global-map
+            ("C-c a" . org-agenda)))
 #+end_src
 
 ** Org Alert
