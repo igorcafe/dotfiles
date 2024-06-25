@@ -757,7 +757,8 @@ Provides fuzzy search for files, commands, variables, and so on.
   (use-package org
     :config
     (require 'org-habit)
-    (add-to-list 'org-modules 'org-habit))
+    (add-to-list 'org-modules 'org-habit)
+    (setq org-habit-graph-column 60))
 #+end_src
 
 

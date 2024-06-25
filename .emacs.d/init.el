@@ -297,7 +297,8 @@
 (use-package org
   :config
   (require 'org-habit)
-  (add-to-list 'org-modules 'org-habit))
+  (add-to-list 'org-modules 'org-habit)
+  (setq org-habit-graph-column 60))
 
 (use-package org
   :config
