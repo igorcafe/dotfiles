@@ -91,9 +91,13 @@
                conf-mode-hook))
   (add-hook mode #'display-line-numbers-mode))
 
-(global-visual-line-mode 1)
+;;(global-visual-line-mode 1)
+
+(set-default 'truncate-lines t)
 
 (setq-default tab-width 4)
+
+;;(add-hook 'visual-line-mode 'adaptive-wrap-prefix-mode)
 
 ;; (setq scroll-step 1)
 ;; (setq scroll-margin 1)
@@ -195,10 +199,12 @@
 (setq recentf-max-saved-items 100)
 (global-set-key "\C-x\ \C-r" 'recentf-open)
 
-(use-package writeroom-mode
-  :init
-  (setq writeroom-restore-window-config t)
-  (setq writeroom-width 100))
+(use-package visual-fill-column
+  :hook
+  (visual-fill-column-mode .
+                           (lambda ()
+                             (setq visual-fill-column-center-text t)
+                             (setq visual-fill-column-width 100))))
 
 (desktop-save-mode 1)
 
@@ -226,10 +232,7 @@
          (magit-post-refresh . diff-hl-magit-post-refresh))
   :init (global-diff-hl-mode 1))
 
-(use-package blamer
-  :defer 1
-  :config
-  (global-blamer-mode 1))
+(use-package blamer :defer)
 
 (use-package perspective
   :bind
@@ -334,6 +337,15 @@
 ;;                       (set-face-attribute 'org-level-2 nil :height 1.2)
 ;;                       (set-face-attribute 'org-level-3 nil :height 1.1))))
 
+(use-package org
+  :hook
+  (org-mode . (lambda ()
+                (dolist (face '(('org-document-title . 1.8)
+                                ('org-level-1 . 1.6)
+                                ('org-level-2 . 1.4)
+                                ('org-level-3 . 1.2)))
+                  (set-face-attribute (car face) nil :height (cdr face))))))
+
 (setq org-hide-emphasis-markers t)
 
 (font-lock-add-keywords 'org-mode
@@ -359,6 +371,13 @@
   :bind
   (:map global-map
         ("C-c a" . org-agenda)))
+
+(use-package org-present
+  :defer
+  :bind
+  (:map evil-normal-state-map
+        ("C-j" . org-present-next)
+        ("C-k" . org-present-prev)))
 
 (use-package org-alert
   :config
@@ -419,6 +438,5 @@
           )))
 
 (use-package pdf-tools
-  :defer
   :config
   (pdf-tools-install))

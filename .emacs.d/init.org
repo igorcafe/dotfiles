@@ -33,7 +33,7 @@
   - [[#autosuggestion-and-completion][Autosuggestion and Completion]]
   - [[#dap][DAP]]
   - [[#recent-files][Recent files]]
-  - [[#writeroom-mode][Writeroom Mode]]
+  - [[#zen-mode]["Zen Mode"]]
   - [[#save-emacs-state][Save emacs state]]
   - [[#cursor-position][Cursor position]]
   - [[#search-and-navigation][Search and Navigation]]
@@ -64,6 +64,7 @@
   - [[#visuals-1][Visuals]]
   - [[#org-capture][Org Capture]]
   - [[#org-agenda][Org Agenda]]
+  - [[#org-present][Org Present]]
   - [[#org-alert][Org Alert]]
   - [[#org-roam][Org Roam]]
   - [[#org-roam-ui][Org Roam UI]]
@@ -295,13 +296,25 @@ Enable line numbers for some modes.
 Wrap long lines.
 
 #+begin_src emacs-lisp
-  (global-visual-line-mode 1)
+  ;;(global-visual-line-mode 1)
+#+end_src
+
+Truncate long lines.
+
+#+begin_src emacs-lisp
+  (set-default 'truncate-lines t)
 #+end_src
 
 ** Tabs
 
 #+begin_src emacs-lisp
   (setq-default tab-width 4)
+#+end_src
+
+Indent wrapped lines.
+
+#+begin_src emacs-lisp
+  ;;(add-hook 'visual-line-mode 'adaptive-wrap-prefix-mode)
 #+end_src
 
 ** Scroll
@@ -521,15 +534,15 @@ Show recent files with ~C-x C-r~.
   (global-set-key "\C-x\ \C-r" 'recentf-open)
 #+end_src
 
-** Writeroom Mode
-
-It's like zen mode from VSCode.
+** "Zen Mode"
 
 #+begin_src emacs-lisp
-  (use-package writeroom-mode
-    :init
-    (setq writeroom-restore-window-config t)
-    (setq writeroom-width 100))
+  (use-package visual-fill-column
+    :hook
+    (visual-fill-column-mode .
+                             (lambda ()
+                               (setq visual-fill-column-center-text t)
+                               (setq visual-fill-column-width 100))))
 #+end_src
 
 ** Save emacs state
@@ -574,6 +587,7 @@ Winner Mode can undo and redo window changes, like opening and closing.
     (winner-mode 1))
 #+end_src
 
+
 * Git
 
 ** Magit
@@ -603,10 +617,7 @@ TODO: hook to magit
 Blamer shows a git blame similar to GitLens in VSCode.
 
 #+begin_src emacs-lisp
-  (use-package blamer
-    :defer 1
-    :config
-    (global-blamer-mode 1))
+  (use-package blamer :defer)
 #+end_src
 
 * Workspaces
@@ -814,12 +825,14 @@ Visually indent text inside headings.
 Change title and heading sizes.
 
 #+begin_src emacs-lisp
-  ;; (use-package org
-  ;;   :hook (org-mode . (lambda()
-  ;;                       (set-face-attribute 'org-document-title nil :height 1.8)
-  ;;                       (set-face-attribute 'org-level-1 nil :height 1.3)
-  ;;                       (set-face-attribute 'org-level-2 nil :height 1.2)
-  ;;                       (set-face-attribute 'org-level-3 nil :height 1.1))))
+  (use-package org
+    :hook
+    (org-mode . (lambda ()
+                  (dolist (face '((org-document-title . 1.8)
+                                  (org-level-1 . 1.6)
+                                  (org-level-2 . 1.4)
+                                  (org-level-3 . 1.2)))
+                    (set-face-attribute (car face) nil :height (cdr face))))))
 #+end_src
 
 Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
@@ -855,13 +868,35 @@ Replace ~-~ by ~•~ on unordered lists.
 ** Org Agenda
 
 #+begin_src emacs-lisp
-    (use-package org
-      :init
-      (setq org-agenda-files
-            '("Roam/20240620102058-tasks.org"))
-      :bind
-      (:map global-map
-            ("C-c a" . org-agenda)))
+  (use-package org
+	:init
+	(setq org-agenda-files
+		  '("Roam/20240620102058-tasks.org"))
+	;; default:
+	;; (setq org-agenda-prefix-format
+	;; 		'((agenda . " %i %-12:c%?-12t% s")
+	;; 		 (todo . " %i %-12:c")
+	;; 		 (tags . " %i %-12:c")
+	;; 		 (search . " %i %-12:c")))
+	(setq org-agenda-prefix-format
+		  '((agenda . " %?-12t% s")
+			(todo . " ")
+			(tags . " ")
+			(search . " ")))
+	:bind
+	(:map global-map
+		  ("C-c a" . org-agenda)))
+#+end_src
+
+** Org Present
+
+#+begin_src emacs-lisp
+  (use-package org-present
+    :defer
+    :bind
+    (:map global-map
+          ("C-p C-j" . org-present-next)
+          ("C-p C-k" . org-present-prev)))
 #+end_src
 
 ** Org Alert
@@ -871,18 +906,7 @@ Replace ~-~ by ~•~ on unordered lists.
     :config
     (setq org-alert-interval 300)
     (setq org-alert-notify-cutoff 10)
-    (setq org-alert-notify-after-event-cutoff 10)
-    ;; default:
-    ;; (setq org-agenda-prefix-format
-    ;; 		'((agenda . " %i %-12:c%?-12t% s")
-    ;; 		 (todo . " %i %-12:c")
-    ;; 		 (tags . " %i %-12:c")
-    ;; 		 (search . " %i %-12:c")))
-    (setq org-agenda-prefix-format
-          '((agenda . " %?-12t% s")
-           (todo . " %i %-12:c")
-           (tags . " %i %-12:c")
-           (search . " %i %-12:c"))))
+    (setq org-alert-notify-after-event-cutoff 10))
 #+end_src
 
 ** Org Roam
@@ -968,7 +992,6 @@ Installing pdf-tools and opening a PDF file just works here.
 
 #+begin_src emacs-lisp
   (use-package pdf-tools
-    :defer
     :config
     (pdf-tools-install))
 #+end_src
