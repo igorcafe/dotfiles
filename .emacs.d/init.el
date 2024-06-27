@@ -338,15 +338,19 @@
 (use-package org
   :hook (org-mode . org-indent-mode))
 
-(use-package org
-      :hook
-      (org-mode
-       . (lambda ()
-	       (dolist (face '((org-document-title . 1.8)
-					       (org-level-1 . 1.6)
-					       (org-level-2 . 1.4)
-					       (org-level-3 . 1.2)))
-		 (set-face-attribute (car face) nil :height (cdr face))))))
+(defvar my/org-big-fonts '((org-document-title . 1.8)
+                           (org-level-1 . 1.6)
+                           (org-level-2 . 1.4)
+                           (org-level-3 . 1.2)))
+(defun my/org-big ()
+  (interactive)
+  (dolist (face my/org-big-fonts)
+    (set-face-attribute (car face) nil :height (cdr face))))
+
+(defun my/org-smol ()
+  (interactive)
+  (dolist (face my/org-big-fonts)
+    (set-face-attribute (car face) nil :height 1.0)))
 
 (setq org-hide-emphasis-markers t)
 
