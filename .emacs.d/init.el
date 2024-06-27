@@ -386,7 +386,17 @@
 		("C-c a" . org-agenda)))
 
 (use-package org-present
-  :defer)
+  :defer
+  :hook ((org-present-mode
+          . (lambda ()
+              (org-present-hide-cursor)
+			      (setq display-line-numbers-type nil)
+              (display-line-numbers-mode 1)))
+         (org-present-mode-quit
+          . (lambda ()
+              (org-present-show-cursor)
+			      (setq display-line-numbers-type 'relative)
+              (display-line-numbers-mode 1)))))
 
 (use-package org-alert
   :config
