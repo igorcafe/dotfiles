@@ -210,7 +210,7 @@ Increase default font size
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil :height 140)
   (when (eq system-type 'darwin)
-    (set-face-attribute 'default nil :height 170))
+    (set-face-attribute 'default nil :height 160))
 #+end_src
 
 ** Undo Tree
@@ -278,10 +278,18 @@ Show column number.
   (column-number-mode 1) ;; TODO
 #+end_src
 
-Relative line numbers.
+Absolute line numbers for insert state and relative for others.
 
 #+begin_src emacs-lisp
-  (setq display-line-numbers-type 'relative)
+  (use-package emacs
+	:hook ((evil-insert-state-entry
+			. (lambda ()
+				(setq display-line-numbers-type t)
+				(display-line-numbers-mode 1)))
+		   (evil-insert-state-exit
+			. (lambda ()
+				(setq display-line-numbers-type 'relative)
+				(display-line-numbers-mode 1)))))
 #+end_src
 
 Enable line numbers for some modes.
@@ -538,11 +546,11 @@ Show recent files with ~C-x C-r~.
 
 #+begin_src emacs-lisp
   (use-package visual-fill-column
-    :hook
-    (visual-fill-column-mode .
-                             (lambda ()
-                               (setq visual-fill-column-center-text t)
-                               (setq visual-fill-column-width 100))))
+    :init
+    (setq visual-fill-column-center-text t)
+    (setq visual-fill-column-width 110)
+    :config
+    (global-visual-fill-column-mode 1))
 #+end_src
 
 ** Save emacs state
@@ -811,7 +819,7 @@ Provides fuzzy search for files, commands, variables, and so on.
 Show headings with special bullets instead o asterisks.
 
 #+begin_src emacs-lisp
-  (use-package org-bullets :defer
+  (use-package org-bullets
     :hook (org-mode . org-bullets-mode))
 #+end_src
 
@@ -826,13 +834,14 @@ Change title and heading sizes.
 
 #+begin_src emacs-lisp
   (use-package org
-    :hook
-    (org-mode . (lambda ()
-                  (dolist (face '((org-document-title . 1.8)
-                                  (org-level-1 . 1.6)
-                                  (org-level-2 . 1.4)
-                                  (org-level-3 . 1.2)))
-                    (set-face-attribute (car face) nil :height (cdr face))))))
+	:hook
+	(org-mode
+	 . (lambda ()
+		 (dolist (face '((org-document-title . 1.8)
+						 (org-level-1 . 1.6)
+						 (org-level-2 . 1.4)
+						 (org-level-3 . 1.2)))
+		   (set-face-attribute (car face) nil :height (cdr face))))))
 #+end_src
 
 Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
@@ -892,11 +901,7 @@ Replace ~-~ by ~•~ on unordered lists.
 
 #+begin_src emacs-lisp
   (use-package org-present
-    :defer
-    :bind
-    (:map global-map
-          ("C-p C-j" . org-present-next)
-          ("C-p C-k" . org-present-prev)))
+    :defer)
 #+end_src
 
 ** Org Alert

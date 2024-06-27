@@ -44,7 +44,7 @@
 
 (set-face-attribute 'default nil :height 140)
 (when (eq system-type 'darwin)
-  (set-face-attribute 'default nil :height 170))
+  (set-face-attribute 'default nil :height 160))
 
 (use-package undo-tree
   :demand t
@@ -84,7 +84,15 @@
 
 (column-number-mode 1) ;; TODO
 
-(setq display-line-numbers-type 'relative)
+(use-package emacs
+      :hook ((evil-insert-state-entry
+		      . (lambda ()
+			      (setq display-line-numbers-type t)
+			      (display-line-numbers-mode 1)))
+		 (evil-insert-state-exit
+		      . (lambda ()
+			      (setq display-line-numbers-type 'relative)
+			      (display-line-numbers-mode 1)))))
 
 (dolist (mode '(text-mode-hook
                prog-mode-hook
@@ -200,11 +208,11 @@
 (global-set-key "\C-x\ \C-r" 'recentf-open)
 
 (use-package visual-fill-column
-  :hook
-  (visual-fill-column-mode .
-                           (lambda ()
-                             (setq visual-fill-column-center-text t)
-                             (setq visual-fill-column-width 100))))
+  :init
+  (setq visual-fill-column-center-text t)
+  (setq visual-fill-column-width 110)
+  :config
+  (global-visual-fill-column-mode 1))
 
 (desktop-save-mode 1)
 
@@ -324,27 +332,21 @@
   (setq org-todo-keywords
         '((sequence "TODO" "|" "DONE"))))
 
-(use-package org-bullets :defer
+(use-package org-bullets
   :hook (org-mode . org-bullets-mode))
 
 (use-package org
   :hook (org-mode . org-indent-mode))
 
-;; (use-package org
-;;   :hook (org-mode . (lambda()
-;;                       (set-face-attribute 'org-document-title nil :height 1.8)
-;;                       (set-face-attribute 'org-level-1 nil :height 1.3)
-;;                       (set-face-attribute 'org-level-2 nil :height 1.2)
-;;                       (set-face-attribute 'org-level-3 nil :height 1.1))))
-
 (use-package org
-  :hook
-  (org-mode . (lambda ()
-                (dolist (face '(('org-document-title . 1.8)
-                                ('org-level-1 . 1.6)
-                                ('org-level-2 . 1.4)
-                                ('org-level-3 . 1.2)))
-                  (set-face-attribute (car face) nil :height (cdr face))))))
+      :hook
+      (org-mode
+       . (lambda ()
+	       (dolist (face '((org-document-title . 1.8)
+					       (org-level-1 . 1.6)
+					       (org-level-2 . 1.4)
+					       (org-level-3 . 1.2)))
+		 (set-face-attribute (car face) nil :height (cdr face))))))
 
 (setq org-hide-emphasis-markers t)
 
@@ -365,36 +367,32 @@
            "* TODO %?\n"))))
 
 (use-package org
-  :init
-  (setq org-agenda-files
-        '("Roam/20240620102058-tasks.org"))
-  :bind
-  (:map global-map
-        ("C-c a" . org-agenda)))
+      :init
+      (setq org-agenda-files
+		'("Roam/20240620102058-tasks.org"))
+      ;; default:
+      ;; (setq org-agenda-prefix-format
+      ;; 		'((agenda . " %i %-12:c%?-12t% s")
+      ;; 		 (todo . " %i %-12:c")
+      ;; 		 (tags . " %i %-12:c")
+      ;; 		 (search . " %i %-12:c")))
+      (setq org-agenda-prefix-format
+		'((agenda . " %?-12t% s")
+		      (todo . " ")
+		      (tags . " ")
+		      (search . " ")))
+      :bind
+      (:map global-map
+		("C-c a" . org-agenda)))
 
 (use-package org-present
-  :defer
-  :bind
-  (:map evil-normal-state-map
-        ("C-j" . org-present-next)
-        ("C-k" . org-present-prev)))
+  :defer)
 
 (use-package org-alert
   :config
   (setq org-alert-interval 300)
   (setq org-alert-notify-cutoff 10)
-  (setq org-alert-notify-after-event-cutoff 10)
-  ;; default:
-  ;; (setq org-agenda-prefix-format
-  ;; 		'((agenda . " %i %-12:c%?-12t% s")
-  ;; 		 (todo . " %i %-12:c")
-  ;; 		 (tags . " %i %-12:c")
-  ;; 		 (search . " %i %-12:c")))
-  (setq org-agenda-prefix-format
-        '((agenda . " %?-12t% s")
-         (todo . " %i %-12:c")
-         (tags . " %i %-12:c")
-         (search . " %i %-12:c"))))
+  (setq org-alert-notify-after-event-cutoff 10))
 
 (use-package org-roam
   :defer
