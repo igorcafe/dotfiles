@@ -214,7 +214,7 @@
   :config
   (global-visual-fill-column-mode 1))
 
-(desktop-save-mode 1)
+;;(desktop-save-mode 1)
 
 (save-place-mode 1)
 
@@ -420,7 +420,9 @@
   :bind
   (("C-c n f" . org-roam-node-find)
    ("C-c n i" . org-roam-node-insert)
-   ("C-c n d d" . org-roam-dailies-goto-today)))
+   ("C-c n d d" . org-roam-dailies-goto-today)
+   ("C-c n d y" . org-roam-dailies-goto-yesterday)
+   ("C-c n d t" . org-roam-dailies-goto-tomorrow)))
 
 (use-package org-roam-ui :defer)
 

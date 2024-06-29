@@ -558,7 +558,7 @@ Show recent files with ~C-x C-r~.
 Save session when emacs is closed and restore when reopened.
 
 #+begin_src emacs-lisp
-  (desktop-save-mode 1)
+  ;;(desktop-save-mode 1)
 #+end_src
 
 ** Cursor position
@@ -943,7 +943,9 @@ Replace ~-~ by ~•~ on unordered lists.
     :bind
     (("C-c n f" . org-roam-node-find)
      ("C-c n i" . org-roam-node-insert)
-     ("C-c n d d" . org-roam-dailies-goto-today)))
+     ("C-c n d d" . org-roam-dailies-goto-today)
+     ("C-c n d y" . org-roam-dailies-goto-yesterday)
+     ("C-c n d t" . org-roam-dailies-goto-tomorrow)))
 #+end_src
 
 ** Org Roam UI
