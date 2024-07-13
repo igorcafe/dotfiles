@@ -227,6 +227,16 @@
         ("SPC g s" . consult-grep)))
 
 (use-package emacs
+  :config
+  (setq tab-bar-tab-hints t)
+  :bind
+  (:map evil-normal-state-map
+        ("gc" . tab-bar-close-tab)
+        ("gn" . tab-bar-new-tab)
+        ("gh" . tab-bar-switch-to-prev-tab)
+        ("gl" . tab-bar-switch-to-next-tab)))
+
+(use-package emacs
   :bind
   (:map evil-normal-state-map
         ("C-w u" . winner-undo)
