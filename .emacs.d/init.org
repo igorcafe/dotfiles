@@ -953,9 +953,12 @@ Replace ~-~ by ~•~ on unordered lists.
 #+begin_src emacs-lisp
   (use-package org-alert
     :config
-    (setq org-alert-interval 300)
+    (when (eq system-type 'darwin)
+      (setq alert-default-style 'osx-notifier))
+    (setq org-alert-interval 60)
     (setq org-alert-notify-cutoff 10)
-    (setq org-alert-notify-after-event-cutoff 10))
+    (setq org-alert-notify-after-event-cutoff 2)
+    (org-alert-enable))
 #+end_src
 
 ** Org Roam

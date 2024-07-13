@@ -420,9 +420,12 @@
 
 (use-package org-alert
   :config
-  (setq org-alert-interval 300)
+  (when (eq system-type 'darwin)
+    (setq alert-default-style 'osx-notifier))
+  (setq org-alert-interval 60)
   (setq org-alert-notify-cutoff 10)
-  (setq org-alert-notify-after-event-cutoff 10))
+  (setq org-alert-notify-after-event-cutoff 2)
+  (org-alert-enable))
 
 (use-package org-roam
   :defer
