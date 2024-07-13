@@ -65,6 +65,7 @@
   - [[#org-capture][Org Capture]]
   - [[#org-agenda][Org Agenda]]
   - [[#org-present][Org Present]]
+  - [[#org-drill][Org Drill]]
   - [[#org-alert][Org Alert]]
   - [[#org-roam][Org Roam]]
   - [[#org-roam-ui][Org Roam UI]]
@@ -916,6 +917,14 @@ Replace ~-~ by ~•~ on unordered lists.
                 (org-present-show-cursor)
 				(setq display-line-numbers-type 'relative)
                 (display-line-numbers-mode 1)))))
+#+end_src
+
+** Org Drill
+
+#+begin_src emacs-lisp
+  (use-package org-drill
+    :config
+    (add-to-list 'org-modules 'org-drill))
 #+end_src
 
 ** Org Alert

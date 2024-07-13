@@ -402,6 +402,10 @@
 			      (setq display-line-numbers-type 'relative)
               (display-line-numbers-mode 1)))))
 
+(use-package org-drill
+  :config
+  (add-to-list 'org-modules 'org-drill))
+
 (use-package org-alert
   :config
   (setq org-alert-interval 300)
