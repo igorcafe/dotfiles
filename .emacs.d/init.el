@@ -314,8 +314,9 @@
 
 (use-package org
   :config
-  (setq org-directory "~/Org")
-  (advice-add 'org-refile :after 'org-save-all-org-buffers))
+  (setq org-directory "~/Org"))
+
+;; (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
 (use-package org
   :config
