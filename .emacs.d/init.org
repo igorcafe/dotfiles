@@ -314,6 +314,12 @@ Truncate long lines.
   (set-default 'truncate-lines t)
 #+end_src
 
+Automatically break line wider than 80 cols.
+
+#+begin_src emacs-lisp
+  (setq-default fill-column 80)
+#+end_src
+
 ** Tabs
 
 #+begin_src emacs-lisp

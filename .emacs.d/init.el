@@ -103,6 +103,8 @@
 
 (set-default 'truncate-lines t)
 
+(setq-default fill-column 80)
+
 (setq-default tab-width 4)
 
 ;;(add-hook 'visual-line-mode 'adaptive-wrap-prefix-mode)
