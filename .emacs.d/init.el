@@ -460,14 +460,20 @@
   :config
   (setq elfeed-feeds
         '(
-          "https://world.hey.com/dhh/feed.atom" ; DHH
-          "https://martinfowler.com/feed.atom" ; Martin Fowler
-          "https://go.dev/blog/feed.atom" ; Go Blog
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" ; ThePrimeTime
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" ; Mental Outlaw
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA" ; Fireship
-          "https://www.lakka.tv/articles/feed.xml" ; Lakka News
-          "https://thehackernews.com/feeds/posts/default" ; The Hacker News
+          ;; DHH
+          "https://world.hey.com/dhh/feed.atom"
+          ;; Martin Fowler
+          "https://martinfowler.com/feed.atom"
+          ;; Go Blog
+          "https://go.dev/blog/feed.atom"
+          ;; ThePrimeTime
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ"
+          ;; Mental Outlaw
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA"
+          ;; Fireship
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA"
+          ;; Lakka News
+          "https://www.lakka.tv/articles/feed.xml"
           )))
 
 (use-package pdf-tools
