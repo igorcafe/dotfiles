@@ -57,6 +57,7 @@
   - [[#file-buffers][File buffers]]
   - [[#minibuffer][Minibuffer]]
 - [[#org-mode][Org Mode]]
+  - [[#fold-drawer][Fold drawer]]
   - [[#refile][Refile]]
   - [[#habit][Habit]]
   - [[#priority][Priority]]
@@ -537,6 +538,15 @@ You can still use ~C-M-i~ to launch corfu.
 
 #+begin_src emacs-lisp
   (use-package dap-mode)
+
+
+
+  (advice-add 'org-drill-time-to-inactive-org-timestamp :override
+              (lambda (time)
+                "Convert TIME into org-mode timestamp."
+                (format-time-string
+                 (concat "[" (cdr org-time-stamp-formats) "]")
+                 time)))
 #+end_src
 
 ** Recent files
@@ -782,6 +792,13 @@ Provides fuzzy search for files, commands, variables, and so on.
 #+end_src
 
 * Org Mode
+** Fold drawer
+
+#+begin_src emacs-lisp
+  (defun my/org-fold-hide-drawer-all ()
+    (interactive)
+    (org-fold-hide-drawer-all))
+#+end_src
 
 ** Refile
 
@@ -831,7 +848,7 @@ Provides fuzzy search for files, commands, variables, and so on.
 #+begin_src emacs-lisp
   (use-package org
     :config
-    (setq org-log-done 'item)
+    ;;(setq org-log-done 'item)
     (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
     (setq org-todo-keywords
           '((sequence "TODO" "|" "DONE"))))

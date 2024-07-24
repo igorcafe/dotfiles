@@ -204,6 +204,15 @@
 
 (use-package dap-mode)
 
+
+
+(advice-add 'org-drill-time-to-inactive-org-timestamp :override
+            (lambda (time)
+              "Convert TIME into org-mode timestamp."
+              (format-time-string
+               (concat "[" (cdr org-time-stamp-formats) "]")
+               time)))
+
 (recentf-mode 1)
 (setq recentf-max-menu-items 100)
 (setq recentf-max-saved-items 100)
@@ -312,6 +321,10 @@
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
+(defun my/org-fold-hide-drawer-all ()
+  (interactive)
+  (org-fold-hide-drawer-all))
+
 (use-package org
   :config
   (setq org-directory "~/Org"))
@@ -340,7 +353,7 @@
 
 (use-package org
   :config
-  (setq org-log-done 'item)
+  ;;(setq org-log-done 'item)
   (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
   (setq org-todo-keywords
         '((sequence "TODO" "|" "DONE"))))
@@ -462,19 +475,19 @@
   (setq elfeed-feeds
         '(
           ;; DHH
-          "https://world.hey.com/dhh/feed.atom"
+          "https://world.hey.com/dhh/feed.atom" 
           ;; Martin Fowler
-          "https://martinfowler.com/feed.atom"
+          "https://martinfowler.com/feed.atom" 
           ;; Go Blog
-          "https://go.dev/blog/feed.atom"
+          "https://go.dev/blog/feed.atom" 
           ;; ThePrimeTime
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ"
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" 
           ;; Mental Outlaw
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA"
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" 
           ;; Fireship
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA"
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA" 
           ;; Lakka News
-          "https://www.lakka.tv/articles/feed.xml"
+          "https://www.lakka.tv/articles/feed.xml" 
           )))
 
 (use-package pdf-tools
