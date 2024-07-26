@@ -22,7 +22,6 @@
   - [[#focus][Focus]]
   - [[#multiple-cursors][Multiple Cursors]]
 - [[#visuals][Visuals]]
-  - [[#de-clutter][De-clutter]]
   - [[#theme][Theme]]
   - [[#icons][Icons]]
   - [[#modeline][Modeline]]
@@ -84,7 +83,34 @@
 
 ** Early Init
 
+#+property: header-args:emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
+
+Hides startup message, scroll bar and tool bar.
+
 #+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
+  (setq inhibit-startup-message t)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+#+end_src
+
+No annoying bell sound nor flashing lights when something goes wrong.
+
+#+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
+  (blink-cursor-mode 0)
+  (setq ring-bell-function 'ignore) ; this is actually sound, but...
+#+end_src
+
+Launch in fullscreen.
+
+#+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
+  (toggle-frame-fullscreen)
+#+end_src
+
+Set default theme before loading doom themes.
+
+#+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
+  (load-theme 'modus-vivendi)
 #+end_src
 
 #+property: header-args:emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/init.el
@@ -105,18 +131,8 @@ Note: if you get 404 when trying to install packages, run ~M-x package-refresh-c
 
 *** Setup use-package
 
-Install use-package if not installed, then require it.
-
 #+begin_src emacs-lisp
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
   (eval-when-compile (require 'use-package))
-#+end_src
-
-This ensures all packages from ~use-package~ are installed when emacs loads.
-
-#+begin_src emacs-lisp
   (setq use-package-always-ensure t)
 #+end_src
 
@@ -172,7 +188,6 @@ Emacs creates a bunch of annoying files.
 				     vc-make-backup-files t
 				     kept-old-versions 10
 				     kept-new-versions 10)
-
 #+end_src
 
 *** Custom variables file
@@ -376,27 +391,6 @@ Makes only the current area highlighted.
 #+end_src
 
 * Visuals
-
-** De-clutter
-
-Hides startup message, scroll bar and tool bar.
-#+begin_src emacs-lisp
-  (setq inhibit-startup-message t)
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1)
-  (menu-bar-mode -1)
-#+end_src
-
-No annoying bell sound nor flashing lights when something goes wrong.
-#+begin_src emacs-lisp
-  (blink-cursor-mode 0)
-  (setq ring-bell-function 'ignore) ; this is actually sound, but...
-#+end_src
-
-Launch in fullscreen.
-#+begin_src emacs-lisp
-  (toggle-frame-fullscreen)
-#+end_src
 
 ** Theme
 
@@ -754,11 +748,15 @@ Improves minibuffer by showing multiple options in a vertical list.
 #+begin_src emacs-lisp
   (use-package vertico
     :config
-    (vertico-mode 1)
+    (vertico-mode)
+    (vertico-mouse-mode)
     (setq vertico-count 20)
     (setq vertico-cycle t)
-    (keymap-set vertico-map "C-j" #'vertico-next)
-    (keymap-set vertico-map "C-k" #'vertico-previous))
+
+    :bind
+    (:map vertico-map
+          ("C-j" . vertico-next)
+          ("C-k" . vertico-previous)))
 #+end_src
 
 Make vertico appear at the center of the screen.

@@ -2,11 +2,7 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
 (eval-when-compile (require 'use-package))
-
 (setq use-package-always-ensure t)
 
 (use-package org-auto-tangle
@@ -119,16 +115,6 @@
 (use-package focus :defer)
 
 (use-package evil-mc :defer)
-
-(setq inhibit-startup-message t)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-
-(blink-cursor-mode 0)
-(setq ring-bell-function 'ignore) ; this is actually sound, but...
-
-(toggle-frame-fullscreen)
 
 (use-package doom-themes
   :defer 0.3
@@ -303,11 +289,15 @@
 
 (use-package vertico
   :config
-  (vertico-mode 1)
+  (vertico-mode)
+  (vertico-mouse-mode)
   (setq vertico-count 20)
   (setq vertico-cycle t)
-  (keymap-set vertico-map "C-j" #'vertico-next)
-  (keymap-set vertico-map "C-k" #'vertico-previous))
+
+  :bind
+  (:map vertico-map
+        ("C-j" . vertico-next)
+        ("C-k" . vertico-previous)))
 
 (use-package vertico-posframe
   :config (vertico-posframe-mode))
