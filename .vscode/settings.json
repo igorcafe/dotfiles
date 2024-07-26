@@ -1,6 +1,6 @@
 {
     // Appearence
-    "workbench.colorTheme": "Ayu Mirage Bordered",
+    "workbench.colorTheme": "Default Light+",
     "workbench.iconTheme": "material-icon-theme",
     "workbench.editor.tabSizing": "fixed",
     "editor.minimap.enabled": false,
@@ -43,4 +43,7 @@
             "after":["<Esc>"],
         }
     ],
+    "go.toolsEnvVars": {
+        "GOPATH": "/Users/igor.melo/go",
+    },
 }

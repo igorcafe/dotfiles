@@ -96,5 +96,25 @@
         "key": "cmd+k alt+cmd+s",
         "command": "-git.stageSelectedRanges",
         "when": "isInDiffEditor && !operationInProgress"
+    },
+    {
+        "key": "alt+right",
+        "command": "workbench.action.showNextWindowTab"
+    },
+    {
+        "key": "alt+left",
+        "command": "workbench.action.showPreviousWindowTab"
+    },
+    {
+        "key": "ctrl+w",
+        "command": "-workbench.action.switchWindow"
+    },
+    {
+        "key": "alt+x",
+        "command": "workbench.action.showCommands"
+    },
+    {
+        "key": "shift+cmd+p",
+        "command": "-workbench.action.showCommands"
     }
 ]
