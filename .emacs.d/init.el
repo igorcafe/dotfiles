@@ -284,6 +284,9 @@
   :config
   (global-auto-revert-mode 1))
 
+(use-package emacs
+  :bind ("C-x C-b" . ibuffer))
+
 (savehist-mode 1)
 (setq history-length 100)
 

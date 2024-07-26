@@ -718,6 +718,7 @@ File tree on the left side.
 * Buffers
 
 ** File buffers
+
 Refreshs file automatically when its changed by other program. Also refreshes dired.
 
 #+begin_src emacs-lisp
@@ -728,6 +729,13 @@ Refreshs file automatically when its changed by other program. Also refreshes di
     :config
     (global-auto-revert-mode 1))
 
+#+end_src
+
+Use ibuffer instead of list-buffers.
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :bind ("C-x C-b" . ibuffer))
 #+end_src
 
 ** Minibuffer
