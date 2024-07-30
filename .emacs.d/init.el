@@ -1,3 +1,5 @@
+(toggle-frame-fullscreen)
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
@@ -38,10 +40,6 @@
   :config
   (setq esup-depth 0))
 
-(set-face-attribute 'default nil :height 140)
-(when (eq system-type 'darwin)
-  (set-face-attribute 'default nil :height 160))
-
 (use-package undo-tree
   :demand t
   :config
@@ -57,7 +55,7 @@
   (evil-want-integration t)
   (evil-want-C-u-scroll t) ; C-u won't be enabled by default
   (evil-want-keybinding nil) ; what? idk
-  (evil-want-minibuffer t)
+  ;;(evil-want-minibuffer t)
   (evil-undo-system 'undo-tree)
   :bind
   (:map evil-normal-state-map
@@ -314,6 +312,9 @@
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
+(use-package org
+  :hook (org-mode . auto-fill-mode))
+
 (defun my/org-fold-hide-drawer-all ()
   (interactive)
   (org-fold-hide-drawer-all))
@@ -349,7 +350,7 @@
   ;;(setq org-log-done 'item)
   (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
   (setq org-todo-keywords
-        '((sequence "TODO" "|" "DONE"))))
+        '((sequence "PENDING" "BACKLOG" "TODO" "BLOCKED" "DOING" "REVIEW" "|" "DONE"))))
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode))

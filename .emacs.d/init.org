@@ -4,6 +4,8 @@
 * Table of Contents :TOC:TOC:
 - [[#basic-setup][Basic setup]]
   - [[#early-init][Early Init]]
+  - [[#font][Font]]
+  - [[#init][Init]]
   - [[#setup-package-manager][Setup package manager]]
   - [[#auto-tangle-config][Auto-tangle config]]
   - [[#prompts][Prompts]]
@@ -12,7 +14,6 @@
   - [[#escape-to-quit-prompts][Escape to quit prompts]]
   - [[#benchmark-init][Benchmark init]]
 - [[#editor][Editor]]
-  - [[#font][Font]]
   - [[#undo-tree][Undo Tree]]
   - [[#vim-keybindings][Vim keybindings]]
   - [[#lines][Lines]]
@@ -56,6 +57,7 @@
   - [[#file-buffers][File buffers]]
   - [[#minibuffer][Minibuffer]]
 - [[#org-mode][Org Mode]]
+  - [[#auto-fill][Auto fill]]
   - [[#fold-drawer][Fold drawer]]
   - [[#refile][Refile]]
   - [[#habit][Habit]]
@@ -101,19 +103,31 @@ No annoying bell sound nor flashing lights when something goes wrong.
   (setq ring-bell-function 'ignore) ; this is actually sound, but...
 #+end_src
 
-Launch in fullscreen.
-
-#+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
-  (toggle-frame-fullscreen)
-#+end_src
-
 Set default theme before loading doom themes.
 
 #+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
-  (load-theme 'modus-vivendi)
+  ;;(load-theme 'modus-vivendi)
 #+end_src
 
 #+property: header-args:emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/init.el
+
+** Font
+
+Increase default font size
+
+#+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
+  (set-face-attribute 'default nil :height 140)
+  (when (eq system-type 'darwin)
+    (set-face-attribute 'default nil :height 160))
+#+end_src
+
+** Init
+
+Launch in fullscreen.
+
+#+begin_src emacs-lisp
+  (toggle-frame-fullscreen)
+#+end_src
 
 ** Setup package manager
 
@@ -221,16 +235,6 @@ I was getting very bad startup times so I added this just to be sure.
 
 Basic editor settings. For more advanced tools see [[#ide][IDE]].
 
-** Font
-
-Increase default font size
-
-#+begin_src emacs-lisp
-  (set-face-attribute 'default nil :height 140)
-  (when (eq system-type 'darwin)
-    (set-face-attribute 'default nil :height 160))
-#+end_src
-
 ** Undo Tree
 
 ~C-x u~ launches the undo tree visualization.
@@ -259,7 +263,7 @@ evil mode and evil-collection provide vim-like bindings.
     (evil-want-integration t)
     (evil-want-C-u-scroll t) ; C-u won't be enabled by default
     (evil-want-keybinding nil) ; what? idk
-    (evil-want-minibuffer t)
+    ;;(evil-want-minibuffer t)
     (evil-undo-system 'undo-tree)
     :bind
     (:map evil-normal-state-map
@@ -798,6 +802,14 @@ Provides fuzzy search for files, commands, variables, and so on.
 #+end_src
 
 * Org Mode
+
+** Auto fill
+
+#+begin_src emacs-lisp
+  (use-package org
+    :hook (org-mode . auto-fill-mode))
+#+end_src
+
 ** Fold drawer
 
 #+begin_src emacs-lisp
@@ -857,7 +869,7 @@ Provides fuzzy search for files, commands, variables, and so on.
     ;;(setq org-log-done 'item)
     (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
     (setq org-todo-keywords
-          '((sequence "TODO" "|" "DONE"))))
+          '((sequence "PENDING" "BACKLOG" "TODO" "BLOCKED" "DOING" "REVIEW" "|" "DONE"))))
 #+end_src
 
 ** Visuals
