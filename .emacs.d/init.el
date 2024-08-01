@@ -350,7 +350,8 @@
   ;;(setq org-log-done 'item)
   (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
   (setq org-todo-keywords
-        '((sequence "PENDING" "BACKLOG" "TODO" "BLOCKED" "DOING" "REVIEW" "|" "DONE"))))
+        '((sequence "TASK" "|" "DONE")
+          (sequence "PENDING" "BACKLOG" "TODO" "BLOCKED" "DOING" "REVIEW" "|" "DONE"))))
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode))
