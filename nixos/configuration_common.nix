@@ -58,16 +58,19 @@
         vterm
         ement
     ]))
-    ]))
 
-    # go
     go
     gopls
+    gomodifytags
   ];
 
   services.emacs = {
     enable = true;
     package = pkgs.emacs-gtk;
+  };
+
+  services.redis.servers."" = {
+    enable = true;
   };
 
   users.defaultUserShell = pkgs.zsh;
@@ -153,12 +156,11 @@
 
 
   services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm.enable = true;
+
   services.xserver = {
     # Enable the X11 windowing system.
     enable = true;
-
-    # Enable the KDE Plasma Desktop Environment.
-    displayManager.sddm.enable = true;
 
     # Configure keymap in X11
     xkb.layout = "us";
