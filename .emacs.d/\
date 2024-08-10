@@ -71,6 +71,7 @@
   - [[#org-agenda][Org Agenda]]
   - [[#org-present][Org Present]]
   - [[#org-drill][Org Drill]]
+  - [[#org-alert][Org Alert]]
   - [[#toc-org][TOC ORG]]
 - [[#social][Social]]
   - [[#telegram][Telegram]]
@@ -542,8 +543,7 @@ You can still use ~C-M-i~ to launch corfu.
 #+begin_src emacs-lisp
   (use-package corfu
     :config
-    (setq corfu-auto nil)
-    (setq corfu-preview-current nil)
+    (setq corfu-auto t)
     (setq corfu-auto-delay 0.2)
     (setq corfu-auto-prefix 1)
     (setq corfu-cycle t)
@@ -561,11 +561,13 @@ Completion-at-point extensions.
     (dolist (mode '(text-mode-hook
                     prog-mode-hook
                     conf-mode-hook))
-      (add-hook mode (lambda ()
-                       (add-to-list 'completion-at-point-functions #'cape-tex)
-                       (add-to-list 'completion-at-point-functions #'cape-emoji)
-                       (add-to-list 'completion-at-point-functions #'cape-file)))))
+      (dolist (cmp '(cape-tex
+                     cape-emoji
+                     cape-file))
+        (add-hook mode (lambda ()
+                         (add-hook 'completion-at-point-functions 'cmp))))))
 #+end_src
+
 
 ** TODO DAP
 
@@ -1047,18 +1049,16 @@ Visualize Roam graph in real time.
     (add-to-list 'org-modules 'org-drill))
 #+end_src
 
-** COMMENT Org Alert
+** Org Alert
 
 #+begin_src emacs-lisp
   (use-package org-alert
     :config
-    (setq alert-default-style 'libnotify)
     (when (eq system-type 'darwin)
       (setq alert-default-style 'osx-notifier))
     (setq org-alert-interval 60)
     (setq org-alert-notify-cutoff 10)
     (setq org-alert-notify-after-event-cutoff 2)
-    (setq org-alert-notification-title "ORG AGENDA")
     (org-alert-enable))
 #+end_src
 

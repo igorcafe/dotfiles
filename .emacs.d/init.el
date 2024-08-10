@@ -13,7 +13,7 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(setq warning-minimum-level :emergency)
+;;(setq warning-minimum-level :emergency)
 
 (setq create-lockfiles nil)
 
@@ -53,10 +53,11 @@
   :demand t
   :custom
   (evil-want-integration t)
-  (evil-want-C-u-scroll t) ; C-u won't be enabled by default
+  (evil-want-C-u-scroll t)
   (evil-want-keybinding nil) ; what? idk
   ;;(evil-want-minibuffer t)
   (evil-undo-system 'undo-tree)
+  (evil-cross-lines t)
   :bind
   (:map evil-normal-state-map
         ("SPC u" . universal-argument))
@@ -68,6 +69,13 @@
   :after evil
   :config
   (evil-collection-init))
+
+(use-package evil-goggles
+  :config
+  (evil-goggles-use-diff-faces)
+  (setq evil-goggles-pulse t)
+  (setq evil-goggles-duration 0.1)
+  (evil-goggles-mode))
 
 (use-package key-chord
   :after evil
@@ -88,10 +96,10 @@
 			      (setq display-line-numbers-type 'relative)
 			      (display-line-numbers-mode 1)))))
 
-(dolist (mode '(text-mode-hook
-               prog-mode-hook
-               conf-mode-hook))
-  (add-hook mode #'display-line-numbers-mode))
+(use-package emacs
+  :hook ((text-mode
+          prog-mode
+          conf-mode) . display-line-numbers-mode))
 
 ;;(global-visual-line-mode 1)
 
@@ -179,12 +187,23 @@
 
 (use-package corfu
   :config
-  (setq corfu-auto t)
+  (setq corfu-auto nil)
+  (setq corfu-preview-current nil)
   (setq corfu-auto-delay 0.2)
   (setq corfu-auto-prefix 1)
   (setq corfu-cycle t)
   (global-set-key (kbd "C-SPC") #'completion-at-point)
   (global-corfu-mode 1))
+
+(use-package cape
+  :init
+  (dolist (mode '(text-mode-hook
+                  prog-mode-hook
+                  conf-mode-hook))
+    (add-hook mode (lambda ()
+                     (add-to-list 'completion-at-point-functions #'cape-tex)
+                     (add-to-list 'completion-at-point-functions #'cape-emoji)
+                     (add-to-list 'completion-at-point-functions #'cape-file)))))
 
 (use-package dap-mode)
 
@@ -206,8 +225,7 @@
   :init
   (setq visual-fill-column-center-text t)
   (setq visual-fill-column-width 110)
-  :config
-  (global-visual-fill-column-mode 1))
+  :hook ((prog-mode eww-mode text-mode conf-mode) . visual-fill-column-mode))
 
 ;;(desktop-save-mode 1)
 
@@ -321,7 +339,7 @@
 
 (use-package org
   :config
-  (setq org-directory "~/Org"))
+  (setq org-directory "~/Git/Org"))
 
 ;; (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
@@ -350,8 +368,7 @@
   ;;(setq org-log-done 'item)
   (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
   (setq org-todo-keywords
-        '((sequence "TASK" "|" "DONE")
-          (sequence "PENDING" "BACKLOG" "TODO" "BLOCKED" "DOING" "REVIEW" "|" "DONE"))))
+        '((sequence "WAIT" "TODO" "|" "DONE" "WONT"))))
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode))
@@ -391,10 +408,28 @@
            (file+headline org-default-notes-file "Tasks")
            "* TODO %?\n"))))
 
+(use-package org-roam
+  :defer
+  :config
+  (when (not (file-directory-p "~/Git/Org/Roam"))
+    (make-directory "~/Git/Org/Roam"))
+  (setq org-roam-directory "~/Git/Org/Roam")
+
+  (org-roam-db-autosync-enable)
+
+  :bind
+  (("C-c n f" . org-roam-node-find)
+   ("C-c n i" . org-roam-node-insert)
+   ("C-c n d d" . org-roam-dailies-goto-today)
+   ("C-c n d y" . org-roam-dailies-goto-yesterday)
+   ("C-c n d t" . org-roam-dailies-goto-tomorrow)))
+
+(use-package org-roam-ui :defer)
+
 (use-package org
       :init
       (setq org-agenda-files
-		'("Roam/20240620102058-tasks.org"))
+		'("tasks.org"))
       ;; default:
       ;; (setq org-agenda-prefix-format
       ;; 		'((agenda . " %i %-12:c%?-12t% s")
@@ -426,33 +461,6 @@
 (use-package org-drill
   :config
   (add-to-list 'org-modules 'org-drill))
-
-(use-package org-alert
-  :config
-  (when (eq system-type 'darwin)
-    (setq alert-default-style 'osx-notifier))
-  (setq org-alert-interval 60)
-  (setq org-alert-notify-cutoff 10)
-  (setq org-alert-notify-after-event-cutoff 2)
-  (org-alert-enable))
-
-(use-package org-roam
-  :defer
-  :config
-  (when (not (file-directory-p "~/Org/Roam"))
-    (make-directory "~/Org/Roam"))
-  (setq org-roam-directory "~/Org/Roam")
-
-  (org-roam-db-autosync-enable)
-
-  :bind
-  (("C-c n f" . org-roam-node-find)
-   ("C-c n i" . org-roam-node-insert)
-   ("C-c n d d" . org-roam-dailies-goto-today)
-   ("C-c n d y" . org-roam-dailies-goto-yesterday)
-   ("C-c n d t" . org-roam-dailies-goto-tomorrow)))
-
-(use-package org-roam-ui :defer)
 
 (use-package toc-org
   :hook
@@ -488,3 +496,6 @@
 (use-package pdf-tools
   :config
   (pdf-tools-install))
+
+(use-package emacs
+  :hook (eww-mode . visual-line-mode))
