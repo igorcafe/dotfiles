@@ -3,8 +3,18 @@ update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-
 
 [Desktops]
 Id_1=7013e42b-6bbe-4171-a78a-1230ba60001e
-Number=1
+Id_2=9501f50b-3981-45bc-ab5e-c3bedef6ff66
+Id_3=e825860b-e565-452c-bc4a-cfa40d822224
+Id_4=a363656f-44f9-46b3-9e77-b6a9467c1df7
+Number=4
 Rows=1
+
+[Plugins]
+desktopchangeosdEnabled=true
+slideEnabled[$d]
+
+[Script-desktopchangeosd]
+TextOnly=false
 
 [Tiling]
 padding=4
