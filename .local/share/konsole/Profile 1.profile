@@ -1,4 +1,5 @@
 [Appearance]
+ColorScheme=Breeze
 DimmValue=72
 Font=Hack,14,-1,7,50,0,0,0,0,0
 
