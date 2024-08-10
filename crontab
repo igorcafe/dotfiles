@@ -1,2 +1,0 @@
-# m h  dom mon dow   command
-0,15,30,45 * * * * ~/Git/dotfiles/commit_files.sh
