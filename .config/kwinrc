@@ -14,6 +14,7 @@ desktopchangeosdEnabled=true
 slideEnabled[$d]
 
 [Script-desktopchangeosd]
+PopupHideDelay=500
 TextOnly=false
 
 [Tiling]
