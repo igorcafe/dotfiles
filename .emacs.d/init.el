@@ -427,23 +427,31 @@
 (use-package org-roam-ui :defer)
 
 (use-package org
-      :init
-      (setq org-agenda-files
-		'("tasks.org"))
-      ;; default:
-      ;; (setq org-agenda-prefix-format
-      ;; 		'((agenda . " %i %-12:c%?-12t% s")
-      ;; 		 (todo . " %i %-12:c")
-      ;; 		 (tags . " %i %-12:c")
-      ;; 		 (search . " %i %-12:c")))
-      (setq org-agenda-prefix-format
-		'((agenda . " %?-12t% s")
-		      (todo . " ")
-		      (tags . " ")
-		      (search . " ")))
-      :bind
-      (:map global-map
-		("C-c a" . org-agenda)))
+  :init
+  (setq org-deadline-warning-days 3)
+  (setq org-agenda-start-day "-5d")
+  (setq org-agenda-span 20)
+  (setq org-agenda-show-all-dates nil)
+  (setq org-agenda-files
+        '("tasks.org"))
+  (setq org-agenda-custom-commands
+        '(("d" "Today"
+           ((agenda "" ((org-agenda-span 'day)
+                        (org-agenda-start-day "0d")))))))
+  ;; default:
+  ;; (setq org-agenda-prefix-format
+  ;; 		'((agenda . " %i %-12:c%?-12t% s")
+  ;; 		 (todo . " %i %-12:c")
+  ;; 		 (tags . " %i %-12:c")
+  ;; 		 (search . " %i %-12:c")))
+  (setq org-agenda-prefix-format
+        '((agenda . " %?-12t% s")
+          (todo . " ")
+          (tags . " ")
+          (search . " ")))
+  :bind
+  (:map global-map
+        ("C-c a" . org-agenda)))
 
 (use-package org-present
   :defer
