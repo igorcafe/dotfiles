@@ -1028,7 +1028,8 @@ Visualize Roam graph in real time.
             (search . " ")))
     :bind
     (:map global-map
-          ("C-c a" . org-agenda)))
+          ("C-c a" . org-agenda)
+          ("C-'" . org-cycle-agenda-files)))
 #+end_src
 
 ** Org Present

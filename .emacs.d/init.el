@@ -454,7 +454,8 @@
           (search . " ")))
   :bind
   (:map global-map
-        ("C-c a" . org-agenda)))
+        ("C-c a" . org-agenda)
+        ("C-'" . org-cycle-agenda-files)))
 
 (use-package org-present
   :defer
