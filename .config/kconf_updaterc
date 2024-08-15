@@ -1,169 +1,195 @@
 updateInfoAdded=true
 
 [ark.upd]
-ctime=1723241025
+ctime=1723242918
 done=add-hamburgermenu-to-toolbar
 mtime=1
 
 [breezehighcontrasttobreezedark.upd]
-ctime=1723241063
+ctime=1723242921
 mtime=1
 
 [breezetobreezeclassic.upd]
-ctime=1723241063
+ctime=1723242921
 mtime=1
 
 [breezetobreezelight.upd]
-ctime=1723241063
+ctime=1723242921
 mtime=1
 
 [delete_cursor_old_default_size.upd]
-ctime=1723241113
+ctime=1723242962
 done=DeleteCursorOldDefaultSize
 mtime=1
 
 [disable_kmix.upd]
-ctime=1723241010
+ctime=1723242909
 done=PlasmaVolume_DisableKMixAutostart
 mtime=1
 
 [dolphin_detailsmodesettings.upd]
-ctime=1723241069
+ctime=1723242923
 done=rename-leading-padding,move-content-display
 mtime=1
 
 [filepicker.upd]
-ctime=1723241002
+ctime=1723242897
 done=filepicker-remove-old-previews-entry
 mtime=1
 
 [fonts_akregator.upd]
-ctime=1723241068
+ctime=1723242957
 done=Plasma_Fonts_Akregator
 mtime=1
 
 [fonts_global.upd]
-ctime=1723241068
+ctime=1723242957
 done=Fonts_Global
 mtime=1
 
 [fonts_global_toolbar.upd]
-ctime=1723241068
+ctime=1723242957
 done=Fonts_Global_Toolbar
 mtime=1
 
 [fonts_kate.upd]
-ctime=1723241068
+ctime=1723242957
 done=Plasma_Fonts_Kate
 mtime=1
 
 [gtkconfig.upd]
-ctime=1723241017
+ctime=1723670002
 done=dont_use_gtk_css_for_window_decorations
 mtime=1
 
 [gwenview.upd]
-ctime=1723241085
+ctime=1723242924
 done=SideBar_StatusBar_Rename,ImageView_AlphaBackgroundMode_Update,DeleteThumbnailSetting_Rename
 mtime=1
 
 [icons_remove_effects.upd]
-ctime=1723241113
+ctime=1723242962
 done=IconsRemoveEffects
 mtime=1
 
 [katesession_migration.upd]
-ctime=1723241091
+ctime=1723242931
 done=migrate_kate_sessions_applet_to_kdeplasma-addons
 mtime=1
 
 [kcm_rename_plasma_desktop.upd]
-ctime=1723241131
+ctime=1723242968
 done=5.24PlasmaDesktopKCMRename
 mtime=1
 
 [kcminputrc_fix_botched_5_21_0.upd]
-ctime=1723241131
+ctime=1723242968
 done=kcminputrc_fix_botched_5_21_0_pre,kcminputrc_fix_botched_5_21_0
 mtime=1
 
 [kcminputrc_repeat.upd]
-ctime=1723241131
+ctime=1723242968
 done=kcminputrc_migrate_key_repeat
 mtime=1
 
 [konsole.upd]
-ctime=1723241026
+ctime=1723242915
 done=konsole_globalaccel
 mtime=1
 
 [krunnerglobalshortcuts2.upd]
-ctime=1723241113
+ctime=1723242962
 mtime=1
 
 [krunnerhistory.upd]
-ctime=1723241113
+ctime=1723242962
 mtime=1
 
 [kscreenlocker.upd]
-ctime=1723241054
+ctime=1723242921
 done=0.1-autolock
 mtime=1
 
 [ksmserver_update_loginMode_value.upd]
-ctime=1723241131
+ctime=1723242968
 done=ksmserver_update_loginMode_value_default_enum
 mtime=1
 
 [kwin.upd]
-ctime=1723241102
+ctime=1723670049
 done=replace-scalein-with-scale,port-minimizeanimation-effect-to-js,port-scale-effect-to-js,port-dimscreen-effect-to-js,auto-bordersize,make-translucency-effect-disabled-by-default,enable-scale-effect-by-default,animation-speed-cleanup,replace-cascaded-zerocornered
 mtime=1
 
 [kwinrules.upd]
-ctime=1723241102
+ctime=1723242960
 done=replace-placement-string-to-enum,use-virtual-desktop-ids
 mtime=1
 
 [kxkb.upd]
-ctime=1723241131
+ctime=1723242968
 done=remove-empty-lists,add-back-resetoptions
 mtime=1
 
 [kxkb_variants.upd]
-ctime=1723241131
+ctime=1723242968
 done=split-variants
 mtime=1
 
+[migrate-calendar-to-plugin-id.upd]
+ctime=1723670052
+done=migrate-calendar-plugins
+mtime=1
+
 [okular.upd]
-ctime=1723241049
+ctime=1723242926
 done=annotation-toolbar,builtin-annotations
 mtime=1
 
+[plasma6.0-remove-dpi-settings.upd]
+ctime=1723670052
+done=migrate-calendar-plugins
+mtime=1
+
+[plasma6.0-remove-old-shortcuts.upd]
+ctime=1723670052
+mtime=1
+
 [plasmashell-5.27-use-panel-thickness-in-default-group.upd]
-ctime=1723241113
+ctime=1723242962
+mtime=1
+
+[plasmashell-6.0-keep-custom-position-of-panels.upd]
+ctime=1723670052
+mtime=1
+
+[plasmashell-6.0-keep-default-floating-setting-for-plasma-5-panels.upd]
+ctime=1723670052
+mtime=1
+
+[spectacle.upd]
+ctime=1723670020
 mtime=1
 
 [spectacle_clipboard.upd]
-ctime=1723241083
+ctime=1723242926
 done=clipboard-settings-change
 mtime=1
 
 [spectacle_newConfig.upd]
-ctime=1723241084
+ctime=1723242926
 mtime=1
 
 [spectacle_rememberregion.upd]
-ctime=1723241084
+ctime=1723242926
 done=spectacle-migrate-rememberregion
 mtime=1
 
 [spectacle_shortcuts.upd]
-ctime=1723241084
+ctime=1723242926
 done=spectacle-migrate-shortcuts
 mtime=1
 
 [style_widgetstyle_default_breeze.upd]
-ctime=1723241113
+ctime=1723242962
 done=StyleWidgetStyleDefaultBreeze
 mtime=1

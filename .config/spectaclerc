@@ -1,2 +1,14 @@
 [$Version]
 update_info=spectacle_clipboard.upd:clipboard-settings-change,spectacle_rememberregion.upd:spectacle-migrate-rememberregion
+
+[GuiConfig]
+captureMode=0
+
+[ImageSave]
+translatedScreenshotsFolder=Screenshots
+
+[Save]
+lastSaveLocation=file:///home/igor/Pictures/Screenshot_20240813_120030.png
+
+[VideoSave]
+translatedScreencastsFolder=Screencasts

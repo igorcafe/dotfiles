@@ -14,7 +14,7 @@ desktopchangeosdEnabled=true
 slideEnabled[$d]
 
 [Script-desktopchangeosd]
-PopupHideDelay=500
+PopupHideDelay=200
 TextOnly=false
 
 [Tiling]
@@ -22,3 +22,12 @@ padding=4
 
 [Tiling][213a9620-187e-58a6-b80b-85d8fb95dfce]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][b50aaf68-33aa-5ee9-a147-e8b6f39251a6]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][ce7e3f7d-602a-5432-a12c-fa9172df6e7c]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Xwayland]
+Scale=1.25

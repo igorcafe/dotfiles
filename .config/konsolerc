@@ -5,6 +5,8 @@ DefaultProfile=Profile 1.profile
 ConfigVersion=1
 
 [MainWindow]
+1536x864 screen: Height=660
+1536x864 screen: Width=1258
 1920x1080 screen: Height=1008
 1920x1080 screen: Width=960
 1920x1080 screen: Window-Maximized=true
