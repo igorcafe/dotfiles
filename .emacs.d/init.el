@@ -430,12 +430,17 @@
   (setq org-agenda-start-day "-5d")
   (setq org-agenda-span 20)
   (setq org-agenda-show-all-dates nil)
+  (setq org-agenda-skip-deadline-if-done t)
+  (setq org-agenda-skip-scheduled-if-done t)
+  (setq org-deadline-warning-days 0)
   (setq org-agenda-files
         '("tasks.org"))
   (setq org-agenda-custom-commands
         '(("d" "Today"
            ((agenda "" ((org-agenda-span 'day)
-                        (org-agenda-start-day "0d")))))))
+                        (org-agenda-start-day "0d")
+                        (org-deadline-warning-days 3)))))))
+
   ;; default:
   ;; (setq org-agenda-prefix-format
   ;; 		'((agenda . " %i %-12:c%?-12t% s")
