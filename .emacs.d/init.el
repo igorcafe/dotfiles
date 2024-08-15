@@ -366,7 +366,7 @@
   ;;(setq org-log-done 'item)
   (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
   (setq org-todo-keywords
-        '((sequence "WAIT" "TODO" "|" "DONE" "WONT"))))
+        '((sequence "TODO" "|" "DONE"))))
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode))
