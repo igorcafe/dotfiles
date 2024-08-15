@@ -280,20 +280,16 @@ evil mode and evil-collection provide vim-like bindings.
     (evil-collection-init))
 #+end_src
 
-**** Evil Goggles
+*** Evil Surround
 
-show visual hint for evil motions.
+Like you surround.
 
 #+begin_src emacs-lisp
-  (use-package evil-goggles
+  (use-package evil-surround
+    :ensure t
     :config
-    (evil-goggles-use-diff-faces)
-    (setq evil-goggles-pulse t)
-    (setq evil-goggles-duration 0.1)
-    (evil-goggles-mode))
+    (global-evil-surround-mode 1))
 #+end_src
-
-
 
 *** Keychord
 

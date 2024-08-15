@@ -70,12 +70,10 @@
   :config
   (evil-collection-init))
 
-(use-package evil-goggles
+(use-package evil-surround
+  :ensure t
   :config
-  (evil-goggles-use-diff-faces)
-  (setq evil-goggles-pulse t)
-  (setq evil-goggles-duration 0.1)
-  (evil-goggles-mode))
+  (global-evil-surround-mode 1))
 
 (use-package key-chord
   :after evil
