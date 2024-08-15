@@ -86,11 +86,11 @@
 
 ** Early Init
 
-#+property: header-args:emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
+#+property: header-args:emacs-lisp :tangle ~/.emacs.d/early-init.el
 
 Hides startup message, scroll bar and tool bar.
 
-#+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
   (setq inhibit-startup-message t)
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
@@ -99,24 +99,24 @@ Hides startup message, scroll bar and tool bar.
 
 No annoying bell sound nor flashing lights when something goes wrong.
 
-#+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
   (blink-cursor-mode 0)
   (setq ring-bell-function 'ignore) ; this is actually sound, but...
 #+end_src
 
 Set default theme before loading doom themes.
 
-#+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
   ;;(load-theme 'modus-vivendi)
 #+end_src
 
-#+property: header-args:emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/init.el
+#+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
 
 ** Font
 
 Increase default font size
 
-#+begin_src emacs-lisp :tangle ~/Git/dotfiles/.emacs.d/early-init.el
+#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
   (set-face-attribute 'default nil :height 140)
   (when (eq system-type 'darwin)
     (set-face-attribute 'default nil :height 160))
@@ -210,7 +210,7 @@ Emacs creates a bunch of annoying files.
 This way I can build init.el from init.org without loosing custom variables.
 
 #+begin_src emacs-lisp
-  (setq custom-file "~/Git/dotfiles/.emacs.d/custom.el")
+  (setq custom-file "~/.emacs.d/custom.el")
 #+end_src
 
 ** Escape to quit prompts

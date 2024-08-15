@@ -31,7 +31,7 @@
 				   kept-old-versions 10
 				   kept-new-versions 10)
 
-(setq custom-file "~/Git/dotfiles/.emacs.d/custom.el")
+(setq custom-file "~/.emacs.d/custom.el")
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
