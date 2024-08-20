@@ -20,6 +20,11 @@
     driversi686Linux.amdvlk
   ];
 
+  services.ollama = {
+    enable = true;
+    # acceleration = "rocm";
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
