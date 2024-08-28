@@ -3,8 +3,10 @@ _k_friendly_name=Activity Manager
 switch-to-activity-fe4af186-ea05-46d7-a1a7-ca7a30a2e3a0=none,none,Switch to activity "Default"
 
 [KDE Keyboard Layout Switcher]
-Switch to Last-Used Keyboard Layout=Meta+Alt+L,Meta+Alt+L,Switch to Last-Used Keyboard Layout
-Switch to Next Keyboard Layout=Meta+Alt+K,Meta+Alt+K,Switch to Next Keyboard Layout
+Switch keyboard layout to English (US)=none,none,Switch keyboard layout to English (US)
+Switch keyboard layout to Portuguese (Brazil)=none,none,Switch keyboard layout to Portuguese (Brazil)
+Switch to Last-Used Keyboard Layout=,Meta+Alt+L,Switch to Last-Used Keyboard Layout
+Switch to Next Keyboard Layout=Meta+Shift+K,Meta+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=Keyboard Layout Switcher
 
 [kaccess]
@@ -14,7 +16,7 @@ _k_friendly_name=Accessibility
 [kcm_touchpad]
 Disable Touchpad=Touchpad Off,Touchpad Off,Disable Touchpad
 Enable Touchpad=Touchpad On,Touchpad On,Enable Touchpad
-Toggle Touchpad=Touchpad Toggle,Touchpad Toggle,Toggle Touchpad
+Toggle Touchpad=Touchpad Toggle,Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku,Toggle Touchpad
 _k_friendly_name=Touchpad
 
 [khotkeys]
@@ -35,9 +37,9 @@ mute=Volume Mute,Volume Mute,Mute
 [ksmserver]
 Halt Without Confirmation=none,,Shut Down Without Confirmation
 Lock Session=Meta+L\tScreensaver,Meta+L\tScreensaver,Lock Session
-Log Out=Ctrl+Alt+Del,Ctrl+Alt+Del,Show Logout Prompt
+Log Out=Ctrl+Alt+Del,Ctrl+Alt+Del,Log Out
 Log Out Without Confirmation=none,,Log Out Without Confirmation
-LogOut=none,,Log Out
+LogOut=none,none,Log Out
 Reboot=none,,Reboot
 Reboot Without Confirmation=none,,Reboot Without Confirmation
 Shut Down=none,,Shut Down
@@ -112,7 +114,7 @@ Switch to Screen Above=none,,Switch to Screen Above
 Switch to Screen Below=none,,Switch to Screen Below
 Switch to Screen to the Left=none,,Switch to Screen to the Left
 Switch to Screen to the Right=none,,Switch to Screen to the Right
-Toggle Night Color=none,none,Suspend/Resume Night Light
+Toggle Night Color=none,none,Toggle Night Light
 Toggle Window Raise/Lower=none,,Toggle Window Raise/Lower
 Walk Through Desktop List=none,none,Walk Through Desktop List
 Walk Through Desktop List (Reverse)=none,none,Walk Through Desktop List (Reverse)
