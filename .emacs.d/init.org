@@ -71,6 +71,7 @@
   - [[#org-agenda][Org Agenda]]
   - [[#org-present][Org Present]]
   - [[#org-drill][Org Drill]]
+  - [[#org-alert][Org Alert]]
   - [[#toc-org][TOC ORG]]
 - [[#social][Social]]
   - [[#telegram][Telegram]]
@@ -1057,7 +1058,7 @@ Visualize Roam graph in real time.
     (add-to-list 'org-modules 'org-drill))
 #+end_src
 
-** COMMENT Org Alert
+** Org Alert
 
 #+begin_src emacs-lisp
   (use-package org-alert
