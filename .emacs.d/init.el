@@ -21,15 +21,7 @@
 (when (not (file-directory-p user-emacs-directory))
   (make-directory user-emacs-directory))
 
-;; wtf
-(setq backup-directory-alist
-      `((".*" . ,(expand-file-name "backups" user-emacs-directory)))
-				   backup-by-copying t
-				   version-control t
-				   delete-old-versions t
-				   vc-make-backup-files t
-				   kept-old-versions 10
-				   kept-new-versions 10)
+(setq make-backup-files nil)
 
 (setq custom-file "~/.emacs.d/custom.el")
 
