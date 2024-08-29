@@ -419,6 +419,7 @@
 (use-package org
   :init
   (setq org-deadline-warning-days 3)
+  (setq org-scheduled-past-days 0)
   (setq org-agenda-start-day "-5d")
   (setq org-agenda-span 20)
   (setq org-agenda-show-all-dates nil)
