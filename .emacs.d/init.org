@@ -38,6 +38,7 @@
   - [[#cursor-position][Cursor position]]
   - [[#search-and-navigation][Search and Navigation]]
   - [[#tab-bar][Tab Bar]]
+  - [[#http-server][HTTP Server]]
 - [[#window][Window]]
   - [[#winner-mode][Winner Mode]]
 - [[#git][Git]]
@@ -632,6 +633,11 @@ Save cursor position per file.
           ("gl" . tab-bar-switch-to-next-tab)))
 #+end_src
 
+** HTTP Server
+
+#+begin_src emacs-lisp
+  (use-package simple-httpd)
+#+end_src
 * Window
 
 ** Winner Mode

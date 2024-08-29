@@ -237,6 +237,8 @@
         ("gh" . tab-bar-switch-to-prev-tab)
         ("gl" . tab-bar-switch-to-next-tab)))
 
+(use-package simple-httpd)
+
 (use-package emacs
   :bind
   (:map evil-normal-state-map
