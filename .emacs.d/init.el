@@ -23,6 +23,9 @@
 
 (setq make-backup-files nil)
 
+(setq auto-save-file-name-transforms
+  `((".*" "~/.cache/emacs/" t)))
+
 (setq custom-file "~/.emacs.d/custom.el")
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)

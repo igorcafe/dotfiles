@@ -200,6 +200,12 @@ Emacs creates a bunch of annoying files.
   (setq make-backup-files nil)
 #+end_src
 
+*** Auto-save files
+
+#+begin_src emacs-lisp
+  (setq auto-save-file-name-transforms
+    `((".*" "~/.cache/emacs/" t)))
+#+end_src
 *** Custom variables file
 
 This way I can build init.el from init.org without loosing custom variables.
