@@ -482,12 +482,12 @@
 
 (use-package org-alert
   :config
-  (setq alert-default-style 'libnotify)
+  (setq alert-default-style 'notifications)
   (when (eq system-type 'darwin)
     (setq alert-default-style 'osx-notifier))
-  (setq org-alert-interval 60)
-  (setq org-alert-notify-cutoff 10)
-  (setq org-alert-notify-after-event-cutoff 2)
+  (setq org-alert-interval (* 5 60))
+  (setq org-alert-notify-cutoff 60)
+  (setq org-alert-notify-after-event-cutoff 5)
   (setq org-alert-notification-title "ORG AGENDA")
   (org-alert-enable))
 
