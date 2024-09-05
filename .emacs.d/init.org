@@ -32,6 +32,7 @@
   - [[#lsp][LSP]]
   - [[#autosuggestion-and-completion][Autosuggestion and Completion]]
   - [[#dap][DAP]]
+  - [[#direnv][Direnv]]
   - [[#recent-files][Recent files]]
   - [[#zen-mode]["Zen Mode"]]
   - [[#save-emacs-state][Save emacs state]]
@@ -572,6 +573,14 @@ Completion-at-point extensions.
                  time)))
 #+end_src
 
+** Direnv
+
+#+begin_src emacs-lisp
+  (use-package direnv
+    ;; :config
+    ;; (direnv-mode)
+    )
+#+end_src
 ** Recent files
 
 Show recent files with ~C-x C-r~.

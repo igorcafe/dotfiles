@@ -206,6 +206,11 @@
                (concat "[" (cdr org-time-stamp-formats) "]")
                time)))
 
+(use-package direnv
+  ;; :config
+  ;; (direnv-mode)
+  )
+
 (recentf-mode 1)
 (setq recentf-max-menu-items 100)
 (setq recentf-max-saved-items 100)
