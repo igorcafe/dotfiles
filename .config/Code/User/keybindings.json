@@ -8,7 +8,7 @@
         "command": "-workbench.action.openRecent"
     },
     {
-        "key": "cmd+k o",
+        "key": "ctrl+k o",
         "command": "workbench.action.closeOtherEditors"
     },
     {
@@ -176,5 +176,10 @@
         "key": "ctrl+f",
         "command": "-extension.vim_ctrl+f",
         "when": "editorTextFocus && vim.active && vim.use<C-f> && !inDebugRepl && vim.mode != 'Insert'"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "-workbench.action.files.openFile",
+        "when": "true"
     }
 ]
