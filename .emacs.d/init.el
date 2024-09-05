@@ -148,6 +148,9 @@
 
 (use-package markdown-mode :defer)
 
+(use-package emacs
+  :hook (python-mode . eglot-ensure))
+
 (use-package eglot
   :hook
   (before-save . eglot-format)

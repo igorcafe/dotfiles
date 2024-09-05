@@ -482,6 +482,16 @@ Tool for adding/removing struct tags.
   (use-package markdown-mode :defer)
 #+end_src
 
+*** Python
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :hook (python-mode . eglot-ensure))
+#+end_src
+
+*** TODO Vue
+
+*** TODO JavaScript
 ** LSP
 
 *** Eglot
