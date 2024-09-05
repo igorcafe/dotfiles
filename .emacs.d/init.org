@@ -947,7 +947,7 @@ Change title and heading sizes.
 Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
 
 #+begin_src emacs-lisp
- (setq org-hide-emphasis-markers t)
+ (setq org-hide-emphasis-markers nil)
 #+end_src
 
 Replace ~-~ by ~•~ on unordered lists.

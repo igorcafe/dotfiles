@@ -387,7 +387,7 @@
   (dolist (face my/org-big-fonts)
     (set-face-attribute (car face) nil :height 1.0)))
 
-(setq org-hide-emphasis-markers t)
+(setq org-hide-emphasis-markers nil)
 
 (font-lock-add-keywords 'org-mode
     '(("^ *\\([-]\\) "
