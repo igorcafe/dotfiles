@@ -136,6 +136,14 @@
   :defer 1
   :config (doom-modeline-mode 1))
 
+(fringe-mode 8)
+
+(use-package sideline-flymake
+  :hook (flymake-mode . sideline-mode)
+  :init
+  (setq sideline-flymake-display-mode 'line)
+  (setq sideline-backends-right '(sideline-flymake)))
+
 (electric-pair-mode 1)
 
 (use-package go-mode
@@ -154,9 +162,16 @@
 (use-package emacs
   :hook (python-mode . eglot-ensure))
 
+(use-package emacs
+  :config
+  (setq nxml-child-indent 4)
+  (setq nxml-attribute-indent 4))
+
 (use-package eglot
   :hook
-  (before-save . eglot-format)
+  (before-save . (lambda ()
+                   (when (eglot-managed-p)
+                     (eglot-format))))
 
   :bind
   (:map evil-normal-state-map
@@ -240,6 +255,15 @@
 
 (use-package emacs
   :config
+  (setq tab-line-switch-cycling t)
+  :bind
+  (:map evil-normal-state-map
+        ("SPC SPC k" . kill-this-buffer)
+        ("SPC SPC l" . tab-line-switch-to-next-tab)
+        ("SPC SPC h" . tab-line-switch-to-prev-tab)))
+
+(use-package emacs
+  :config
   (setq tab-bar-tab-hints t)
   :bind
   (:map evil-normal-state-map
@@ -247,6 +271,12 @@
         ("gn" . tab-bar-new-tab)
         ("gh" . tab-bar-switch-to-prev-tab)
         ("gl" . tab-bar-switch-to-next-tab)))
+
+(use-package whitespace
+  :hook
+  ((prog-mode conf-mode) . whitespace-mode)
+  :config
+  (setq whitespace-style '(face tabs spaces trailing space-mark tab-mark)))
 
 (use-package simple-httpd)
 
@@ -264,17 +294,10 @@
   :defer 1
   :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
          (magit-post-refresh . diff-hl-magit-post-refresh))
-  :init (global-diff-hl-mode 1))
+  :init
+  (global-diff-hl-mode 1))
 
 (use-package blamer :defer)
-
-(use-package perspective
-  :bind
-  (:map evil-normal-state-map
-        ("SPC SPC p" . persp-mode)
-        ("SPC SPC s" . persp-switch)
-        ("SPC SPC l" . persp-next)
-        ("SPC SPC h" . persp-prev)))
 
 (use-package which-key
   :config

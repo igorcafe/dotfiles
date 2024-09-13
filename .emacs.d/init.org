@@ -1,7 +1,7 @@
 #+title: My emacs settings
 #+auto_tangle: t
 
-* Table of Contents :TOC:TOC:
+* Table of Contents :TOC:
 - [[#basic-setup][Basic setup]]
   - [[#early-init][Early Init]]
   - [[#font][Font]]
@@ -26,6 +26,8 @@
   - [[#theme][Theme]]
   - [[#icons][Icons]]
   - [[#modeline][Modeline]]
+  - [[#fringe][Fringe]]
+  - [[#flymake][Flymake]]
 - [[#ide][IDE]]
   - [[#auto-close-pairs][Auto close pairs]]
   - [[#languages][Languages]]
@@ -38,7 +40,9 @@
   - [[#save-emacs-state][Save emacs state]]
   - [[#cursor-position][Cursor position]]
   - [[#search-and-navigation][Search and Navigation]]
+  - [[#tab-line][Tab Line]]
   - [[#tab-bar][Tab Bar]]
+  - [[#whitespaces][Whitespaces]]
   - [[#http-server][HTTP Server]]
 - [[#window][Window]]
   - [[#winner-mode][Winner Mode]]
@@ -47,7 +51,6 @@
   - [[#diff-highlight][Diff Highlight]]
   - [[#blamer][Blamer]]
 - [[#workspaces][Workspaces]]
-  - [[#perspective][Perspective]]
 - [[#keybindings][Keybindings]]
   - [[#which-key][Which Key]]
 - [[#integrated-terminal][Integrated Terminal]]
@@ -447,6 +450,23 @@ Nicer modeline.
     :config (doom-modeline-mode 1))
 #+end_src
 
+** Fringe
+
+#+begin_src emacs-lisp
+  (fringe-mode 8)
+#+end_src
+
+
+** Flymake
+
+#+begin_src emacs-lisp
+  (use-package sideline-flymake
+    :hook (flymake-mode . sideline-mode)
+    :init
+    (setq sideline-flymake-display-mode 'line)
+    (setq sideline-backends-right '(sideline-flymake)))
+#+end_src
+
 * IDE
 
 ** Auto close pairs
@@ -495,6 +515,15 @@ Tool for adding/removing struct tags.
     :hook (python-mode . eglot-ensure))
 #+end_src
 
+*** XML
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :config
+    (setq nxml-child-indent 4)
+    (setq nxml-attribute-indent 4))
+#+end_src
+
 *** TODO Vue
 
 *** TODO JavaScript
@@ -507,7 +536,9 @@ Eglot is a builtin LSP client for emacs.
 #+begin_src emacs-lisp
   (use-package eglot
     :hook
-    (before-save . eglot-format)
+    (before-save . (lambda ()
+                     (when (eglot-managed-p)
+                       (eglot-format))))
 
     :bind
     (:map evil-normal-state-map
@@ -537,6 +568,7 @@ Show docs as a hover box instead of using echo area.
       (eldoc-box-hover-at-point-mode 1)
       (setq eldoc-echo-area-use-multiline-p 1)
       (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
+
 #+end_src
 
 ** Autosuggestion and Completion
@@ -644,6 +676,19 @@ Save cursor position per file.
           ("SPC g s" . consult-grep)))
 #+end_src
 
+** Tab Line
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :config
+    (setq tab-line-switch-cycling t)
+    :bind
+    (:map evil-normal-state-map
+          ("SPC SPC k" . kill-this-buffer)
+          ("SPC SPC l" . tab-line-switch-to-next-tab)
+          ("SPC SPC h" . tab-line-switch-to-prev-tab)))
+#+end_src
+
 ** Tab Bar
 
 #+begin_src emacs-lisp
@@ -656,6 +701,16 @@ Save cursor position per file.
           ("gn" . tab-bar-new-tab)
           ("gh" . tab-bar-switch-to-prev-tab)
           ("gl" . tab-bar-switch-to-next-tab)))
+#+end_src
+
+** Whitespaces
+
+#+begin_src emacs-lisp
+  (use-package whitespace
+    :hook
+    ((prog-mode conf-mode) . whitespace-mode)
+    :config
+    (setq whitespace-style '(face tabs spaces trailing space-mark tab-mark)))
 #+end_src
 
 ** HTTP Server
@@ -701,7 +756,8 @@ TODO: hook to magit
     :defer 1
     :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
            (magit-post-refresh . diff-hl-magit-post-refresh))
-    :init (global-diff-hl-mode 1))
+    :init
+    (global-diff-hl-mode 1))
 #+end_src
 
 ** Blamer
@@ -714,7 +770,7 @@ Blamer shows a git blame similar to GitLens in VSCode.
 
 * Workspaces
 
-** Perspective
+** COMMENT Perspective
 
 #+begin_src emacs-lisp
   (use-package perspective
