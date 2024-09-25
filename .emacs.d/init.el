@@ -55,7 +55,9 @@
   (evil-cross-lines t)
   :bind
   (:map evil-normal-state-map
-        ("SPC u" . universal-argument))
+        ("SPC u" . universal-argument)
+        ("H" . previous-buffer)
+        ("L" . next-buffer))
   :config
   (evil-set-leader 'normal (kbd "SPC"))
   (evil-mode 1))
@@ -167,6 +169,8 @@
   (setq nxml-child-indent 4)
   (setq nxml-attribute-indent 4))
 
+(use-package vue-mode)
+
 (use-package eglot
   :hook
   (before-save . (lambda ()
@@ -216,17 +220,6 @@
                      (add-to-list 'completion-at-point-functions #'cape-emoji)
                      (add-to-list 'completion-at-point-functions #'cape-file)))))
 
-(use-package dap-mode)
-
-
-
-(advice-add 'org-drill-time-to-inactive-org-timestamp :override
-            (lambda (time)
-              "Convert TIME into org-mode timestamp."
-              (format-time-string
-               (concat "[" (cdr org-time-stamp-formats) "]")
-               time)))
-
 (use-package direnv
   ;; :config
   ;; (direnv-mode)
@@ -258,7 +251,7 @@
   (setq tab-line-switch-cycling t)
   :bind
   (:map evil-normal-state-map
-        ("SPC SPC k" . kill-this-buffer)
+        ("SPC k" . kill-this-buffer)
         ("SPC SPC l" . tab-line-switch-to-next-tab)
         ("SPC SPC h" . tab-line-switch-to-prev-tab)))
 
@@ -304,11 +297,16 @@
   (setq which-key-idle-delay 0.5)
   (which-key-mode))
 
+(defun my/vterm (name)
+  (interactive "sname: ")
+  (vterm (concat "vterm - " name)))
+
 (use-package vterm
   :ensure nil
   :defer
-  :init
-  (define-key evil-normal-state-map (kbd "SPC t") 'vterm))
+  :bind
+  (:map evil-normal-state-map
+        (("SPC t" . my/vterm))))
 
 (setq global-auto-revert-non-file-buffers t)
 
@@ -322,7 +320,9 @@
 (use-package emacs
   :bind
   (:map evil-normal-state-map
-        (("gb" . evil-switch-to-windows-last-buffer)))
+        (("gb" . evil-switch-to-windows-last-buffer)
+         ("M-p" . evil-prev-buffer)
+         ("M-n" . evil-next-buffer)))
   :config
   (global-auto-revert-mode 1))
 
@@ -502,6 +502,13 @@
   :config
   (add-to-list 'org-modules 'org-drill))
 
+(advice-add 'org-drill-time-to-inactive-org-timestamp :override
+            (lambda (time)
+              "Convert TIME into org-mode timestamp."
+              (format-time-string
+               (concat "[" (cdr org-time-stamp-formats) "]")
+               time)))
+
 (use-package org-alert
   :config
   (setq alert-default-style 'notifications)
@@ -550,3 +557,94 @@
 
 (use-package emacs
   :hook (eww-mode . visual-line-mode))
+
+(use-package exwm
+  :hook
+  ((exwm-init . (lambda ()
+                  (exwm-workspace-switch-create 1)))
+   (exwm-update-class . (lambda ()
+                          (exwm-workspace-rename-buffer exwm-class-name)))
+   (exwm-manage-finish . (lambda ()
+                           (exwm-input-set-local-simulation-keys '([?\s-j] . [down])))))
+
+  :config
+  ;; Set the default number of workspaces
+  (setq exwm-workspace-number 10)
+  (setq exwm-systemtray-height 32)
+
+  ;; (setq exwm-input-simulation-keys
+  ;;     '(([?\C-b] . [left])
+  ;;       ([?\C-f] . [right])
+  ;;       ([?\C-p] . [up])
+  ;;       ([?\C-n] . [down])
+  ;;       ([?\C-a] . [home])
+  ;;       ([?\C-e] . [end])
+  ;;       ([?\M-v] . [prior])
+  ;;       ([?\C-v] . [next])
+  ;;       ([?\C-d] . [delete])
+  ;;       ([?\C-k] . [S-end delete])))
+
+  ;; When window "class" updates, use it to set the buffer name
+  ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
+
+
+  ;; These keys should always pass through to Emacs
+  (setq exwm-input-prefix-keys
+    '(?\C-x
+      ?\C-u
+      ?\C-w
+      ?\C-h
+      ?\M-x
+      ?\M-`
+      ?\M-&
+      ?\M-:
+      ?\C-\M-j  ;; Buffer list
+      ?\C-\ ))  ;; Ctrl+Space
+
+  ;; Ctrl+Q will enable the next key to be sent directly
+  (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
+  ;; Set up global key bindings.  These always work, no matter the input state!
+  ;; Keep in mind that changing this list after EXWM initializes has no effect.
+  (setq exwm-input-global-keys
+        `(
+          ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+          ([?\s-r] . exwm-reset)
+
+          ;; Move between windows
+          ([s-left] . windmove-left)
+          ([s-right] . windmove-right)
+          ([s-up] . windmove-up)
+          ([s-down] . windmove-down)
+
+          ;; Launch applications via shell command
+          ([?\s-d] . (lambda (command)
+                       (interactive (list (read-shell-command "$ ")))
+                       (start-process-shell-command command nil command)))
+
+          ;; Switch workspace
+          ([?\s-w] . exwm-workspace-switch)
+
+          ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+          ,@(mapcar (lambda (i)
+                      `(,(kbd (format "s-%d" i)) .
+                        (lambda ()
+                          (interactive)
+                          (exwm-workspace-switch-create ,i))))
+                    (number-sequence 0 9))))
+
+  (setq display-time-day-and-date t)
+  (display-time-mode 1)
+
+  (display-battery-mode 1)
+  (exwm-systemtray-mode 1)
+  (exwm-enable))
+
+(use-package desktop-environment
+  :after exwm
+  :config
+  ;; (desktop-environment-brightness-small-increment "2%+")
+  ;; (desktop-environment-brightness-small-decrement "2%-")
+  ;; (desktop-environment-brightness-normal-increment "5%+")
+  ;; (desktop-environment-brightness-normal-decrement "5%-")
+  (desktop-environment-mode))
