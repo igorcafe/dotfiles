@@ -79,6 +79,13 @@
   (setq key-chord-two-keys-delay 0.2)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
+(use-package emacs
+  :hook ((prog-mode
+          text-mode
+          conf-mode)
+         . (lambda ()
+             (modify-syntax-entry ?_ "w"))))
+
 (column-number-mode 1) ;; TODO
 
 (use-package emacs
@@ -136,7 +143,18 @@
 
 (use-package doom-modeline
   :defer 1
-  :config (doom-modeline-mode 1))
+  :config
+  (setq doom-modeline-buffer-name nil)
+  (setq doom-modeline-buffer-encoding nil)
+  (doom-modeline-mode 1))
+
+(use-package breadcrumb
+  :hook
+  ((prog-mode
+    conf-mode
+    text-mode
+    vterm-mode)
+   . breadcrumb-local-mode))
 
 (fringe-mode 8)
 
@@ -171,10 +189,16 @@
 
 (use-package vue-mode)
 
+(use-package emacs
+  :hook (c-mode . (lambda ()
+                    (setq c-basic-offset 2)
+                    (setq indent-tabs-mode nil))))
+
 (use-package eglot
   :hook
   (before-save . (lambda ()
-                   (when (eglot-managed-p)
+                   (call-interactively 'eglot-code-action-organize-imports)
+                   (when (and eglot-managed-p (not (eq major-mode 'c-mode)))
                      (eglot-format))))
 
   :bind
@@ -185,14 +209,7 @@
         ("SPC l a a" . eglot-code-actions)
         ("SPC l a e" . eglot-code-action-extract))
   :init
-  (setq eglot-sync-connect nil) ;; do not block when loading lsp
-
-
-  ;; TODO
-  (add-hook 'before-save-hook
-            (lambda ()
-              (call-interactively 'eglot-code-action-organize-imports))
-            t nil))
+  (setq eglot-sync-connect nil)) ;; do not block when loading lsp
 
 (use-package eldoc-box
     :config
@@ -201,14 +218,16 @@
     (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
 
 (use-package corfu
+  :hook ((text-mode prog-mode conf-mode) . corfu-mode)
   :config
   (setq corfu-auto nil)
   (setq corfu-preview-current nil)
   (setq corfu-auto-delay 0.2)
   (setq corfu-auto-prefix 1)
   (setq corfu-cycle t)
-  (global-set-key (kbd "C-SPC") #'completion-at-point)
-  (global-corfu-mode 1))
+  :bind
+  (:map global-map
+        ("C-SPC" . completion-at-point)))
 
 (use-package cape
   :init
@@ -231,10 +250,15 @@
 (global-set-key "\C-x\ \C-r" 'recentf-open)
 
 (use-package visual-fill-column
+  :hook ((prog-mode
+          eww-mode
+          text-mode
+          conf-mode
+          org-agenda-mode)
+         . visual-fill-column-mode)
   :init
   (setq visual-fill-column-center-text t)
-  (setq visual-fill-column-width 110)
-  :hook ((prog-mode eww-mode text-mode conf-mode) . visual-fill-column-mode))
+  (setq visual-fill-column-width 110))
 
 ;;(desktop-save-mode 1)
 
@@ -244,7 +268,8 @@
   :defer
   :bind
   (:map evil-normal-state-map
-        ("SPC g s" . consult-grep)))
+        ("SPC g s" . consult-git-grep)
+        ("SPC l e" . consult-flymake)))
 
 (use-package emacs
   :config
@@ -391,7 +416,8 @@
 
 (use-package org
   :config
-  ;;(setq org-log-done 'item)
+  (setq org-log-into-drawer t)
+  (setq org-log-done 'item)
   (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
   (setq org-todo-keywords
         '((sequence "TODO" "|" "DONE"))))
@@ -451,39 +477,6 @@
    ("C-c n d t" . org-roam-dailies-goto-tomorrow)))
 
 (use-package org-roam-ui :defer)
-
-(use-package org
-  :init
-  (setq org-scheduled-past-days 0)
-  (setq org-agenda-start-day "-5d")
-  (setq org-agenda-span 20)
-  (setq org-agenda-show-all-dates nil)
-  (setq org-agenda-skip-deadline-if-done t)
-  (setq org-agenda-skip-scheduled-if-done t)
-  (setq org-deadline-warning-days 0)
-  (setq org-agenda-files
-        '("tasks.org"))
-  (setq org-agenda-custom-commands
-        '(("d" "Today"
-           ((agenda "" ((org-agenda-span 'day)
-                        (org-agenda-start-day "0d")
-                        (org-deadline-warning-days 3)))))))
-
-  ;; default:
-  ;; (setq org-agenda-prefix-format
-  ;; 		'((agenda . " %i %-12:c%?-12t% s")
-  ;; 		 (todo . " %i %-12:c")
-  ;; 		 (tags . " %i %-12:c")
-  ;; 		 (search . " %i %-12:c")))
-  (setq org-agenda-prefix-format
-        '((agenda . " %?-12t% s")
-          (todo . " ")
-          (tags . " ")
-          (search . " ")))
-  :bind
-  (:map global-map
-        ("C-c a" . org-agenda)
-        ("C-'" . org-cycle-agenda-files)))
 
 (use-package org-present
   :defer
@@ -557,6 +550,14 @@
 
 (use-package emacs
   :hook (eww-mode . visual-line-mode))
+
+(use-package emacs
+  :config
+  (setq display-time-day-and-date t)
+  (setq display-time-format "%a %H:%M %d/%m")
+  (setq display-time-default-load-average nil)
+  (display-time-mode 1)
+  (display-battery-mode 1))
 
 (use-package exwm
       :hook
@@ -634,19 +635,15 @@
 						(lambda ()
 						      (interactive)
 						      (exwm-workspace-switch-create ,i))))
-					(number-sequence 0 9)))
+					(number-sequence 0 9))
 
-		,@(mapcar (lambda (i)
-					`(,(kbd (format "S-s-%d" i)) .
-					      (lambda ()
-						(interactive)
-						(exwm-workspace-move-window ,i))))
-				      (number-sequence 0 9)))
+		      ,@(mapcar (lambda (i)
+					      `(,(kbd (format "S-s-%d" i)) .
+						(lambda ()
+						      (interactive)
+						      (exwm-workspace-move-window ,i))))
+					(number-sequence 0 9))))
 
-
-      (setq display-time-day-and-date t)
-      (display-time-mode 1)
-      (display-battery-mode 1)
       (exwm-systemtray-mode 0)
       (exwm-enable))
 

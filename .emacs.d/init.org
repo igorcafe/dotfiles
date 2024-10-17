@@ -16,6 +16,7 @@
 - [[#editor][Editor]]
   - [[#undo-tree][Undo Tree]]
   - [[#vim-keybindings][Vim keybindings]]
+  - [[#treat-underline-as-part-of-word][Treat underline as part of word]]
 - [[#lines][Lines]]
   - [[#tabs][Tabs]]
   - [[#scroll][Scroll]]
@@ -26,6 +27,7 @@
   - [[#theme][Theme]]
   - [[#icons][Icons]]
   - [[#modeline][Modeline]]
+  - [[#breadcrumb][Breadcrumb]]
   - [[#fringe][Fringe]]
   - [[#flymake][Flymake]]
 - [[#ide][IDE]]
@@ -72,7 +74,6 @@
   - [[#org-capture][Org Capture]]
   - [[#org-roam][Org Roam]]
   - [[#org-roam-ui][Org Roam UI]]
-  - [[#org-agenda][Org Agenda]]
   - [[#org-present][Org Present]]
   - [[#org-drill][Org Drill]]
   - [[#org-alert][Org Alert]]
@@ -86,7 +87,9 @@
   - [[#pdf-tools][pdf-tools]]
 - [[#eww][EWW]]
   - [[#wrap-lines-instead-of-truncating][Wrap lines instead of truncating]]
-- [[#exwm][EXWM]]
+- [[#desktop][Desktop]]
+  - [[#time-date-battery][Time, date, battery]]
+  - [[#exwm][EXWM]]
   - [[#desktop-environment][Desktop Environment]]
 
 * Basic setup
@@ -315,6 +318,17 @@ I only use it to map ~jk~ to ~<Escape>~.
     (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 #+end_src
 
+** Treat underline as part of word
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :hook ((prog-mode
+            text-mode
+            conf-mode)
+           . (lambda ()
+               (modify-syntax-entry ?_ "w"))))
+#+end_src
+
 * Lines
 
 Show column number.
@@ -449,12 +463,28 @@ Makes only the current area highlighted.
 ** Modeline
 
 *** Doom Modeline
+
 Nicer modeline.
 
 #+begin_src emacs-lisp
   (use-package doom-modeline
     :defer 1
-    :config (doom-modeline-mode 1))
+    :config
+    (setq doom-modeline-buffer-name nil)
+    (setq doom-modeline-buffer-encoding nil)
+    (doom-modeline-mode 1))
+#+end_src
+
+** Breadcrumb
+
+#+begin_src emacs-lisp
+  (use-package breadcrumb
+    :hook
+    ((prog-mode
+      conf-mode
+      text-mode
+      vterm-mode)
+     . breadcrumb-local-mode))
 #+end_src
 
 ** Fringe
@@ -537,6 +567,15 @@ Tool for adding/removing struct tags.
   (use-package vue-mode)
 #+end_src
 
+*** C
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :hook (c-mode . (lambda ()
+                      (setq c-basic-offset 2)
+                      (setq indent-tabs-mode nil))))
+#+end_src
+
 *** TODO JavaScript
 ** LSP
 
@@ -548,7 +587,8 @@ Eglot is a builtin LSP client for emacs.
   (use-package eglot
     :hook
     (before-save . (lambda ()
-                     (when (eglot-managed-p)
+                     (call-interactively 'eglot-code-action-organize-imports)
+                     (when (and eglot-managed-p (not (eq major-mode 'c-mode)))
                        (eglot-format))))
 
     :bind
@@ -559,14 +599,7 @@ Eglot is a builtin LSP client for emacs.
           ("SPC l a a" . eglot-code-actions)
           ("SPC l a e" . eglot-code-action-extract))
     :init
-    (setq eglot-sync-connect nil) ;; do not block when loading lsp
-
-
-    ;; TODO
-    (add-hook 'before-save-hook
-              (lambda ()
-                (call-interactively 'eglot-code-action-organize-imports))
-              t nil))
+    (setq eglot-sync-connect nil)) ;; do not block when loading lsp
 #+end_src
 
 *** Eldoc and Eldoc box
@@ -591,14 +624,16 @@ You can still use ~C-M-i~ to launch corfu.
 
 #+begin_src emacs-lisp
   (use-package corfu
+    :hook ((text-mode prog-mode conf-mode) . corfu-mode)
     :config
     (setq corfu-auto nil)
     (setq corfu-preview-current nil)
     (setq corfu-auto-delay 0.2)
     (setq corfu-auto-prefix 1)
     (setq corfu-cycle t)
-    (global-set-key (kbd "C-SPC") #'completion-at-point)
-    (global-corfu-mode 1))
+    :bind
+    (:map global-map
+          ("C-SPC" . completion-at-point)))
 #+end_src
 
 *** Cape
@@ -631,6 +666,7 @@ Completion-at-point extensions.
     ;; (direnv-mode)
     )
 #+end_src
+
 ** Recent files
 
 Show recent files with ~C-x C-r~.
@@ -646,10 +682,15 @@ Show recent files with ~C-x C-r~.
 
 #+begin_src emacs-lisp
   (use-package visual-fill-column
+    :hook ((prog-mode
+            eww-mode
+            text-mode
+            conf-mode
+            org-agenda-mode)
+           . visual-fill-column-mode)
     :init
     (setq visual-fill-column-center-text t)
-    (setq visual-fill-column-width 110)
-    :hook ((prog-mode eww-mode text-mode conf-mode) . visual-fill-column-mode))
+    (setq visual-fill-column-width 110))
 #+end_src
 
 ** Save emacs state
@@ -675,7 +716,8 @@ Save cursor position per file.
     :defer
     :bind
     (:map evil-normal-state-map
-          ("SPC g s" . consult-grep)))
+          ("SPC g s" . consult-git-grep)
+          ("SPC l e" . consult-flymake)))
 #+end_src
 
 ** Tab Line
@@ -775,7 +817,7 @@ Blamer shows a git blame similar to GitLens in VSCode.
 ** COMMENT Perspective
 
 #+begin_src emacs-lisp
-  (use-package perspective
+  (use-package persp-mode
     :bind
     (:map evil-normal-state-map
           ("SPC SPC p" . persp-mode)
@@ -865,9 +907,9 @@ Use ibuffer instead of list-buffers.
 
 ** Minibuffer
 
-*** Persist minibuffers
+*** Persist minibuffer's history
 
-Persist minibuffers history, like in ~M-x~, ~C-x C-f~ and so on.
+In ~M-x~, ~C-x C-f~ and so on.
 
 #+begin_src emacs-lisp
   (savehist-mode 1)
@@ -987,7 +1029,8 @@ Provides fuzzy search for files, commands, variables, and so on.
 #+begin_src emacs-lisp
   (use-package org
     :config
-    ;;(setq org-log-done 'item)
+    (setq org-log-into-drawer t)
+    (setq org-log-done 'item)
     (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
     (setq org-todo-keywords
           '((sequence "TODO" "|" "DONE"))))
@@ -1086,41 +1129,55 @@ Visualize Roam graph in real time.
 #+end_src
 
 
-** Org Agenda
+** COMMENT Org Agenda
 
 #+begin_src emacs-lisp
   (use-package org
-    :init
-    (setq org-scheduled-past-days 0)
-    (setq org-agenda-start-day "-5d")
-    (setq org-agenda-span 20)
-    (setq org-agenda-show-all-dates nil)
-    (setq org-agenda-skip-deadline-if-done t)
-    (setq org-agenda-skip-scheduled-if-done t)
-    (setq org-deadline-warning-days 0)
-    (setq org-agenda-files
-          '("tasks.org"))
-    (setq org-agenda-custom-commands
-          '(("d" "Today"
-             ((agenda "" ((org-agenda-span 'day)
-                          (org-agenda-start-day "0d")
-                          (org-deadline-warning-days 3)))))))
+	:init
+	(setq org-scheduled-past-days 0
+		  org-agenda-start-with-log-mode t
+		  org-agenda-window-setup 'current-window
+		  org-agenda-start-day nil
+		  org-agenda-span 1
+		  org-agenda-show-all-dates t
+		  org-agenda-skip-deadline-if-done t
+		  org-agenda-clockreport-parameter-plist '(:link t :maxlevel 3)
+		  org-agenda-skip-scheduled-if-done nil
+		  org-deadline-warning-days 0
+		  org-agenda-start-with-follow-mode nil
+		  org-agenda-files
+		  '("tasks.org"))
 
-    ;; default:
-    ;; (setq org-agenda-prefix-format
-    ;; 		'((agenda . " %i %-12:c%?-12t% s")
-    ;; 		 (todo . " %i %-12:c")
-    ;; 		 (tags . " %i %-12:c")
-    ;; 		 (search . " %i %-12:c")))
-    (setq org-agenda-prefix-format
-          '((agenda . " %?-12t% s")
-            (todo . " ")
-            (tags . " ")
-            (search . " ")))
-    :bind
-    (:map global-map
-          ("C-c a" . org-agenda)
-          ("C-'" . org-cycle-agenda-files)))
+	(setq org-agenda-custom-commands
+		  '(("a" "Agenda"
+			 ((tags-todo "+PRIORITY=\"1\""
+						 ((org-agenda-overriding-header "High priority")
+						  (org-agenda-skip-function
+						   '(org-agenda-skip-entry-if 'timestamp))))
+			  (agenda "" ((org-agenda-span 'day)))))
+			))
+
+	;; (setq org-agenda-custom-commands
+	;;       '(("d" "Today"
+	;;          ((agenda "" ((org-agenda-span 'day)
+	;;                       (org-agenda-start-day "0d")
+	;;                       (org-deadline-warning-days 3)))))))
+
+	;; default:
+	;; (setq org-agenda-prefix-format
+	;; 		'((agenda . " %i %-12:c%?-12t% s")
+	;; 		 (todo . " %i %-12:c")
+	;; 		 (tags . " %i %-12:c")
+	;; 		 (search . " %i %-12:c")))
+	(setq org-agenda-prefix-format
+		  '((agenda . " %?-12t% s")
+			(todo . " ")
+			(tags . " ")
+			(search . " ")))
+	:bind
+	(:map global-map
+		  ("C-c a" . org-agenda)
+		  ("C-'" . org-cycle-agenda-files)))
 #+end_src
 
 ** Org Present
@@ -1248,7 +1305,22 @@ Installing pdf-tools and opening a PDF file just works here.
     :hook (eww-mode . visual-line-mode))
 #+end_src
 
-* EXWM
+* Desktop
+
+** Time, date, battery
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :config
+    (setq display-time-day-and-date t)
+    (setq display-time-format "%a %H:%M %d/%m")
+    (setq display-time-default-load-average nil)
+    (display-time-mode 1)
+    (display-battery-mode 1))
+#+end_src
+
+
+** EXWM
 
 #+begin_src emacs-lisp
   (use-package exwm
@@ -1327,19 +1399,15 @@ Installing pdf-tools and opening a PDF file just works here.
 						  (lambda ()
 							(interactive)
 							(exwm-workspace-switch-create ,i))))
-					  (number-sequence 0 9)))
+					  (number-sequence 0 9))
 
-		  ,@(mapcar (lambda (i)
-					  `(,(kbd (format "S-s-%d" i)) .
-						(lambda ()
-						  (interactive)
-						  (exwm-workspace-move-window ,i))))
-					(number-sequence 0 9)))
+			,@(mapcar (lambda (i)
+						`(,(kbd (format "S-s-%d" i)) .
+						  (lambda ()
+							(interactive)
+							(exwm-workspace-move-window ,i))))
+					  (number-sequence 0 9))))
 
-
-	(setq display-time-day-and-date t)
-	(display-time-mode 1)
-	(display-battery-mode 1)
 	(exwm-systemtray-mode 0)
 	(exwm-enable))
 #+end_src
