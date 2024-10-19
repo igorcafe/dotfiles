@@ -110,6 +110,7 @@
 (setq-default fill-column 80)
 
 (setq-default tab-width 4)
+(setq-default indent-tabs-mode nil)
 
 ;;(add-hook 'visual-line-mode 'adaptive-wrap-prefix-mode)
 
@@ -258,7 +259,7 @@
          . visual-fill-column-mode)
   :init
   (setq visual-fill-column-center-text t)
-  (setq visual-fill-column-width 110))
+  (setq visual-fill-column-width 100))
 
 ;;(desktop-save-mode 1)
 
@@ -420,7 +421,9 @@
   (setq org-log-done 'item)
   (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
   (setq org-todo-keywords
-        '((sequence "TODO" "|" "DONE"))))
+        '((sequence "TODO" "|" "DONE")))
+  :bind
+  (("C-c C-x C-o" . org-clock-out)))
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode))
@@ -454,11 +457,16 @@
         ("C-c c" . org-capture))
   :config
   (setq org-capture-templates
-        '(("t"
-           "todo item"
+        '(("i"
+           "Capture to inbox"
            entry
-           (file+headline org-default-notes-file "Tasks")
-           "* TODO %?\n"))))
+           (file+headline "tasks.org" "Inbox")
+           "* TODO %?\n")
+          ("n"
+           "Notes"
+           entry
+           (file+headline "tasks.org" "Notes")
+           "* %?\n%T"))))
 
 (use-package org-roam
   :defer
@@ -477,6 +485,69 @@
    ("C-c n d t" . org-roam-dailies-goto-tomorrow)))
 
 (use-package org-roam-ui :defer)
+
+(defun my/org-agenda-show-all-dates ()
+  (interactive)
+  (setq org-agenda-show-all-dates
+        (if org-agenda-show-all-dates nil t))
+  (org-agenda-redo))
+
+(use-package org
+  :init
+  (setq org-scheduled-past-days 0
+        org-agenda-start-with-log-mode nil
+        org-agenda-window-setup 'current-window
+        org-agenda-start-day nil
+        org-agenda-span 1
+        org-agenda-show-all-dates nil
+        org-agenda-skip-deadline-if-done t
+        org-agenda-clockreport-parameter-plist '(:link t :maxlevel 2 :properties ("Effort"))
+        org-agenda-skip-scheduled-if-done nil
+        org-deadline-warning-days 0
+        org-agenda-start-with-follow-mode nil
+        org-agenda-compact-blocks nil
+        org-agenda-current-time-string "←"
+        org-agenda-files '("tasks.org")
+
+        org-agenda-prefix-format '((agenda . "  %-12t %s ")
+                                        (todo . "  ")
+                                        (tags . "  ")
+                                        (search . "  "))
+
+        org-agenda-time-grid
+        '((daily today require-timed)
+          (800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200)
+          " ┄┄┄┄┄ " "")
+
+        org-agenda-custom-commands
+        '(("a" "Agenda"
+           ((agenda "" ((org-agenda-span 'day)))
+            (tags-todo "+PRIORITY=\"1\""
+                       ((org-agenda-overriding-header "High priority")
+                        (org-agenda-skip-function
+                         '(org-agenda-skip-entry-if 'scheduled))))))))
+
+  (custom-set-faces
+   '(org-agenda-current-time ((t (:foreground "green" :weight bold)))))
+
+  :bind
+  ((:map global-map
+         ("C-c a" . org-agenda)
+         ("C-'" . org-cycle-agenda-files))
+   (:map org-agenda-mode-map
+         ("C-a" . my/org-agenda-show-all-dates)
+         ("j" . org-agenda-next-line)
+         ("C-j" . org-agenda-goto-date)
+         ("h" . org-agenda-earlier)
+         ("l" . org-agenda-later)
+         ("C-d" . evil-scroll-down)
+         ("C-w C-w" . evil-window-next)
+         ("C-u" . evil-scroll-up)
+         ("M-g" . org-agenda-toggle-time-grid)
+         ("z" . evil-scroll-line-to-center)
+         ("g" . evil-goto-first-line)
+         ("G" . evil-goto-line)
+         ("k" . org-agenda-previous-line))))
 
 (use-package org-present
   :defer
