@@ -197,10 +197,10 @@
 
 (use-package eglot
   :hook
-  (before-save . (lambda ()
-                   (call-interactively 'eglot-code-action-organize-imports)
-                   (when (and eglot-managed-p (not (eq major-mode 'c-mode)))
-                     (eglot-format))))
+  (before-save
+   . (lambda ()
+       (call-interactively 'eglot-code-action-organize-imports)
+       (call-interactively 'eglot-format))))
 
   :bind
   (:map evil-normal-state-map
@@ -240,10 +240,9 @@
                      (add-to-list 'completion-at-point-functions #'cape-emoji)
                      (add-to-list 'completion-at-point-functions #'cape-file)))))
 
-(use-package direnv
-  ;; :config
-  ;; (direnv-mode)
-  )
+(use-package envrc
+  :config
+  (envrc-global-mode))
 
 (recentf-mode 1)
 (setq recentf-max-menu-items 100)
@@ -382,6 +381,10 @@
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
+(setq org-src-window-setup 'current-window)
+
+(setq org-indirect-buffer-display 'current-window)
+
 (use-package org
   :hook (org-mode . auto-fill-mode))
 
@@ -419,7 +422,7 @@
   :config
   (setq org-log-into-drawer t)
   (setq org-log-done 'item)
-  (setq org-hierarchical-todo-statistics nil) ;; TODO recursive by default
+  (setq org-hierarchical-todo-statistics t) ;; TODO cookie count not recursive
   (setq org-todo-keywords
         '((sequence "TODO" "|" "DONE")))
   :bind
@@ -457,16 +460,11 @@
         ("C-c c" . org-capture))
   :config
   (setq org-capture-templates
-        '(("i"
+        '(("c"
            "Capture to inbox"
            entry
-           (file+headline "tasks.org" "Inbox")
-           "* TODO %?\n")
-          ("n"
-           "Notes"
-           entry
-           (file+headline "tasks.org" "Notes")
-           "* %?\n%T"))))
+           (file+headline "tasks.org" "Personal")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"))))
 
 (use-package org-roam
   :defer
@@ -506,13 +504,16 @@
         org-deadline-warning-days 0
         org-agenda-start-with-follow-mode nil
         org-agenda-compact-blocks nil
+        org-agenda-use-time-grid t
+        org-agenda-skip-archived-trees nil
         org-agenda-current-time-string "←"
         org-agenda-files '("tasks.org")
+        org-agenda-log-mode-items '(closed)
 
         org-agenda-prefix-format '((agenda . "  %-12t %s ")
-                                        (todo . "  ")
-                                        (tags . "  ")
-                                        (search . "  "))
+                                   (todo . "  ")
+                                   (tags . "  ")
+                                   (search . "  "))
 
         org-agenda-time-grid
         '((daily today require-timed)
@@ -521,11 +522,32 @@
 
         org-agenda-custom-commands
         '(("a" "Agenda"
-           ((agenda "" ((org-agenda-span 'day)))
+           ((agenda ""
+                    ((org-agenda-span 'day)))
+            (agenda ""
+                    ((org-agenda-start-day "+1d")
+                     (org-agenda-overriding-header "Upcoming (1-3 days)")
+                     (org-agenda-span 3)
+                     (org-agenda-show-all-dates t)
+                     (org-agenda-use-time-grid nil)))))
+          ("d" "To-do"
+           ((agenda ""
+                    ((org-agenda-span 'day)
+                     (org-agenda-time-grid '((daily today require-timed)
+                        ()
+                        " ┄┄┄┄┄ " ""))))
             (tags-todo "+PRIORITY=\"1\""
-                       ((org-agenda-overriding-header "High priority")
+                       ((org-agenda-overriding-header "Urgent")
                         (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if 'scheduled))))))))
+                         '(org-agenda-skip-entry-if 'scheduled))))
+            (tags-todo ".*"
+                       ((org-agenda-overriding-header "In progress")
+                        (org-agenda-skip-function
+                         '(org-agenda-skip-entry-if 'notregexp "CLOCK: \\[" 'scheduled))))
+            (tags-todo "+next"
+                       ((org-agenda-overriding-header "Next")
+                        (org-agenda-skip-function
+                         '(org-agenda-skip-entry-if 'regexp "CLOCK: \\[" 'scheduled))))))))
 
   (custom-set-faces
    '(org-agenda-current-time ((t (:foreground "green" :weight bold)))))
