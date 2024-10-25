@@ -199,8 +199,9 @@
   :hook
   (before-save
    . (lambda ()
-       (call-interactively 'eglot-code-action-organize-imports)
-       (call-interactively 'eglot-format))))
+       (when eglot-managed-p
+         (call-interactively 'eglot-format)
+         (call-interactively 'eglot-code-action-organize-imports))))
 
   :bind
   (:map evil-normal-state-map
@@ -210,7 +211,9 @@
         ("SPC l a a" . eglot-code-actions)
         ("SPC l a e" . eglot-code-action-extract))
   :init
-  (setq eglot-sync-connect nil)) ;; do not block when loading lsp
+  ;; do not block when loading lsp
+  (setq eglot-sync-connect nil)
+  (setq eglot-managed-p nil))
 
 (use-package eldoc-box
     :config
@@ -296,7 +299,9 @@
   :config
   (setq whitespace-style '(face tabs spaces trailing space-mark tab-mark)))
 
-(use-package simple-httpd)
+(use-package restclient :defer t)
+
+(use-package simple-httpd :defer t)
 
 (use-package emacs
   :bind
@@ -333,14 +338,14 @@
   (:map evil-normal-state-map
         (("SPC t" . my/vterm))))
 
-(setq global-auto-revert-non-file-buffers t)
-
-(use-package treemacs
+(use-package emacs
+  :hook
+  (dired-mode . dired-hide-details-mode)
   :config
-  (setq treemacs-width 40)
+  (setq global-auto-revert-non-file-buffers t)
   :bind
-  (:map global-map
-	([f8] . treemacs)))
+  (:map dired-mode-map
+        ("<tab>" . dired-find-file-other-window)))
 
 (use-package emacs
   :bind
@@ -411,6 +416,17 @@
   (setq org-priority-default 5))
 
 (use-package org
+  :config
+  (setq org-tag-alist '(("emacs" . ?e)
+                        ("study" . ?s)
+                        ("cal" . ?c)
+                        ("later" . ?l)
+                        ("next" . ?n)
+                        ("work" . ?W)
+                        ("write" . ?w)
+                        ("health" . ?h))))
+
+(use-package org
   :bind
   (:map org-mode-map
         ("C-c h" . org-table-move-cell-left)
@@ -427,6 +443,17 @@
         '((sequence "TODO" "|" "DONE")))
   :bind
   (("C-c C-x C-o" . org-clock-out)))
+
+(defun my/clocktable-write (&rest args)
+  (apply #'org-clocktable-write-default args)
+  (save-excursion
+    (forward-char)
+    (org-table-move-column-right)
+    (org-table-move-column-right)))
+
+(setq org-time-clocksum-format '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
+
+(setq org-duration-format 'h:mm)
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode))
@@ -464,7 +491,13 @@
            "Capture to inbox"
            entry
            (file+headline "tasks.org" "Personal")
-           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"))))
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:")
+          ("w"
+           "Capture work task"
+           entry
+           (file+headline "tasks.org" "Work")
+           "* TODO (JIRA-123) %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n** TODO \n** TODO PR\n** TODO subir stg\n** TODO validar stg\n** TODO subir prd\n")
+          )))
 
 (use-package org-roam
   :defer
@@ -495,11 +528,12 @@
   (setq org-scheduled-past-days 0
         org-agenda-start-with-log-mode nil
         org-agenda-window-setup 'current-window
+        org-agenda-block-separator ?―
         org-agenda-start-day nil
         org-agenda-span 1
         org-agenda-show-all-dates nil
         org-agenda-skip-deadline-if-done t
-        org-agenda-clockreport-parameter-plist '(:link t :maxlevel 2 :properties ("Effort"))
+        org-agenda-clockreport-parameter-plist '(:link t :maxlevel 2)
         org-agenda-skip-scheduled-if-done nil
         org-deadline-warning-days 0
         org-agenda-start-with-follow-mode nil
@@ -540,14 +574,28 @@
                        ((org-agenda-overriding-header "Urgent")
                         (org-agenda-skip-function
                          '(org-agenda-skip-entry-if 'scheduled))))
-            (tags-todo ".*"
+            (tags-todo "-later"
                        ((org-agenda-overriding-header "In progress")
                         (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if 'notregexp "CLOCK: \\[" 'scheduled))))
+                         '(org-agenda-skip-entry-if 'notregexp "CLOCK: \\[." 'scheduled))))
             (tags-todo "+next"
                        ((org-agenda-overriding-header "Next")
                         (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if 'regexp "CLOCK: \\[" 'scheduled))))))))
+                         '(org-agenda-skip-entry-if 'regexp "CLOCK: \\[" 'scheduled))))))
+          ("e" "Tasks by effort"
+           ((tags-todo "+TODO=\"TODO\"+Effort>\"\""
+                       ((org-agenda-overriding-header "Tasks by effort")
+                        (org-agenda-sorting-strategy '(effort-up))
+                        (org-agenda-skip-function
+                         '(org-agenda-skip-entry-if 'scheduled))
+                        (org-agenda-prefix-format '((tags . "%-5e - ")))))))
+          ("E" "Tasks without effort"
+           ((tags-todo "+TODO=\"TODO\"+Effort=\"\"+LEVEL=2"
+                       ((org-agenda-overriding-header "Tasks without effort")
+                        (org-agenda-skip-function
+                         '(org-agenda-skip-entry-if 'scheduled))
+                        ))))
+          ))
 
   (custom-set-faces
    '(org-agenda-current-time ((t (:foreground "green" :weight bold)))))
@@ -595,16 +643,29 @@
                (concat "[" (cdr org-time-stamp-formats) "]")
                time)))
 
-(use-package org-alert
+(defun my/org-agenda-to-appt ()
+  (setq appt-time-msg-list nil)
+  (org-agenda-to-appt))
+
+(use-package emacs
+  :hook
+  ((org-agenda-after-show . my/org-agenda-to-appt)
+   (after-save . (lambda ()
+                   (when (eq major-mode 'org-mode)
+                     (my/org-agenda-to-appt)))))
   :config
-  (setq alert-default-style 'notifications)
-  (when (eq system-type 'darwin)
-    (setq alert-default-style 'osx-notifier))
-  (setq org-alert-interval (* 5 60))
-  (setq org-alert-notify-cutoff 60)
-  (setq org-alert-notify-after-event-cutoff 5)
-  (setq org-alert-notification-title "ORG AGENDA")
-  (org-alert-enable))
+  (setq appt-message-warning-time 60)
+  (setq appt-display-interval 5)
+  (setq appt-disp-window-function
+        (lambda (remaining new-time msg)
+          (notifications-notify
+           :title
+           (message "In %s minutes" remaining)
+           :body
+           msg
+           :urgency
+           'critical)))
+  (appt-activate t))
 
 (use-package toc-org
   :hook
@@ -642,7 +703,12 @@
   (pdf-tools-install))
 
 (use-package emacs
-  :hook (eww-mode . visual-line-mode))
+  :hook (eww-mode . visual-line-mode)
+  :config
+  (setq eww-retrieve-command
+        ;;'("google-chrome-stable" "--headless" "--dump-dom")
+        nil
+        ))
 
 (use-package emacs
   :config
