@@ -17,7 +17,7 @@
 
 (setq create-lockfiles nil)
 
-(setq user-emacs-directory "~/.cache/emacs/")
+(setq user-emacs-directory "~/.emacs.d/")
 (when (not (file-directory-p user-emacs-directory))
   (make-directory user-emacs-directory))
 
@@ -35,15 +35,6 @@
   :config
   (setq esup-depth 0))
 
-(use-package undo-tree
-  :demand t
-  :config
-  (when (not (file-directory-p "~/.emacs.d/undotree"))
-    (make-directory "~/.emacs.d/undotree"))
-  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undotree")))
-  (setq evil-undo-system 'undo-tree)
-  (global-undo-tree-mode 1))
-
 (use-package evil
   :demand t
   :custom
@@ -51,7 +42,7 @@
   (evil-want-C-u-scroll t)
   (evil-want-keybinding nil) ; what? idk
   ;;(evil-want-minibuffer t)
-  (evil-undo-system 'undo-tree)
+  (evil-undo-system 'undo-redo)
   (evil-cross-lines t)
   :bind
   (:map evil-normal-state-map
@@ -122,6 +113,10 @@
 (add-hook 'prog-mode '(setq show-trailing-whitespace t))
 
 (use-package focus :defer)
+
+(use-package emacs
+  :config
+  (global-hl-line-mode 1))
 
 (use-package evil-mc :defer)
 
@@ -199,7 +194,7 @@
   :hook
   (before-save
    . (lambda ()
-       (when eglot-managed-p
+       (when (bound-and-true-p eglot-managed-p)
          (call-interactively 'eglot-format)
          (call-interactively 'eglot-code-action-organize-imports))))
 
@@ -212,8 +207,7 @@
         ("SPC l a e" . eglot-code-action-extract))
   :init
   ;; do not block when loading lsp
-  (setq eglot-sync-connect nil)
-  (setq eglot-managed-p nil))
+  (setq eglot-sync-connect nil))
 
 (use-package eldoc-box
     :config
@@ -393,13 +387,13 @@
 (use-package org
   :hook (org-mode . auto-fill-mode))
 
-(defun my/org-fold-hide-drawer-all ()
-  (interactive)
-  (org-fold-hide-drawer-all))
+(use-package org
+  :config
+  (setq org-sparse-tree-default-date-type 'active))
 
 (use-package org
   :config
-  (setq org-directory "~/Git/Org"))
+  (setq org-directory "~/Sync/Org"))
 
 ;; (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
@@ -411,12 +405,20 @@
 
 (use-package org
   :config
-  (setq org-priority-highest 0)
-  (setq org-priority-lowest 5)
-  (setq org-priority-default 5))
+  (setq org-priority-highest ?A)
+  (setq org-priority-lowest ?D)
+  (setq org-priority-default ?D)
+  (setq org-priority-faces
+        ;; nil
+        '((?A . (:foreground "gray"))
+          (?B . (:foreground "gray"))
+          (?C . (:foreground "gray"))
+          (?D . (:foreground "gray")))
+        ))
 
 (use-package org
   :config
+  (setq org-tag-alist nil)
   (setq org-tag-alist '(("emacs" . ?e)
                         ("study" . ?s)
                         ("cal" . ?c)
@@ -490,14 +492,16 @@
         '(("c"
            "Capture to inbox"
            entry
-           (file+headline "tasks.org" "Personal")
-           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:")
-          ("w"
-           "Capture work task"
+           (file+headline "tasks.org" "Tasks")
+           "* TODO %?\n%U")
+          ;; ("w" "Capture work task"
+          ;;  entry
+          ;;  (file+headline "tasks.org" "Work")
+          ;;  "* TODO (JIRA-123) %?\n%U\n** TODO \n** TODO PR\n** TODO subir stg\n** TODO validar stg\n** TODO subir prd\n")
+          ("j" "Journal"
            entry
-           (file+headline "tasks.org" "Work")
-           "* TODO (JIRA-123) %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n** TODO \n** TODO PR\n** TODO subir stg\n** TODO validar stg\n** TODO subir prd\n")
-          )))
+           (file+headline "journal.org" "Journal")
+           "* %T - %?"))))
 
 (use-package org-roam
   :defer
@@ -517,11 +521,30 @@
 
 (use-package org-roam-ui :defer)
 
+(defun my/org-sort ()
+  (interactive)
+  (org-sort-entries nil ?T)
+  (org-sort-entries nil ?p)
+  (org-sort-entries nil ?o))
+
 (defun my/org-agenda-show-all-dates ()
   (interactive)
   (setq org-agenda-show-all-dates
         (if org-agenda-show-all-dates nil t))
   (org-agenda-redo))
+
+(defun my/org-agenda-breadcrumb ()
+  (let ((parent (cdr (org-get-outline-path))))
+        (if parent
+            (format "%s > " parent)
+          (""))))
+
+(defun my/org-agenda-breadcrumb ()
+  (let ((parent (cdr (org-get-outline-path))))
+    (if parent
+        (format "[%s] " (mapconcat 'identity parent " > "))
+      "")))
+
 
 (use-package org
   :init
@@ -530,6 +553,7 @@
         org-agenda-window-setup 'current-window
         org-agenda-block-separator ?―
         org-agenda-start-day nil
+        org-agenda-tags-column 'auto
         org-agenda-span 1
         org-agenda-show-all-dates nil
         org-agenda-skip-deadline-if-done t
@@ -542,12 +566,12 @@
         org-agenda-skip-archived-trees nil
         org-agenda-current-time-string "←"
         org-agenda-files '("tasks.org")
-        org-agenda-log-mode-items '(closed)
+        org-agenda-log-mode-items '(closed state)
 
-        org-agenda-prefix-format '((agenda . "  %-12t %s ")
-                                   (todo . "  ")
-                                   (tags . "  ")
-                                   (search . "  "))
+        org-agenda-prefix-format '((agenda . "  %-12t %s %(my/org-agenda-breadcrumb)")
+                                   (todo . "  %(my/org-agenda-breadcrumb)")
+                                   (tags . "  %(my/org-agenda-breadcrumb)")
+                                   (search . "  %(my/org-agenda-breadcrumb)"))
 
         org-agenda-time-grid
         '((daily today require-timed)
@@ -570,18 +594,30 @@
                      (org-agenda-time-grid '((daily today require-timed)
                         ()
                         " ┄┄┄┄┄ " ""))))
-            (tags-todo "+PRIORITY=\"1\""
-                       ((org-agenda-overriding-header "Urgent")
-                        (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if 'scheduled))))
-            (tags-todo "-later"
+            (tags-todo "+PRIORITY=\"A\""
+                       ((org-agenda-overriding-header "[#A] Urgent")))
+            (tags-todo "-PRIORITY=\"C\""
                        ((org-agenda-overriding-header "In progress")
                         (org-agenda-skip-function
                          '(org-agenda-skip-entry-if 'notregexp "CLOCK: \\[." 'scheduled))))
-            (tags-todo "+next"
-                       ((org-agenda-overriding-header "Next")
+            (tags-todo "+PRIORITY=\"B\"+TODO=\"TODO\""
+                       ((org-agenda-overriding-header "[#B] Next")
+                        (org-agenda-sorting-strategy '(alpha-up))
                         (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if 'regexp "CLOCK: \\[" 'scheduled))))))
+                         '(org-agenda-skip-entry-if 'regexp "CLOCK: \\[." 'scheduled))))
+            (tags-todo "+PRIORITY=\"C\"+TODO=\"TODO\""
+                       ((org-agenda-overriding-header "[#C] Later")
+                        (org-agenda-skip-function
+                         '(org-agenda-skip-entry-if 'scheduled))))
+            (tags-todo "+PRIORITY=\"D\"+TODO=\"TODO\""
+                       ((org-agenda-overriding-header "[#D] Stuff")
+                        (org-agenda-skip-function
+                         '(org-agenda-skip-entry-if 'scheduled))))
+            ;; (tags-todo "+PRIORITY=\"B\""
+            ;;            ((org-agenda-overriding-header "Next")
+            ;;             (org-agenda-skip-function
+            ;;              '(org-agenda-skip-entry-if 'regexp "CLOCK: \\[" 'scheduled))))
+            ))
           ("e" "Tasks by effort"
            ((tags-todo "+TODO=\"TODO\"+Effort>\"\""
                        ((org-agenda-overriding-header "Tasks by effort")
@@ -590,12 +626,10 @@
                          '(org-agenda-skip-entry-if 'scheduled))
                         (org-agenda-prefix-format '((tags . "%-5e - ")))))))
           ("E" "Tasks without effort"
-           ((tags-todo "+TODO=\"TODO\"+Effort=\"\"+LEVEL=2"
+           ((tags-todo "+TODO=\"TODO\"+Effort=\"\""
                        ((org-agenda-overriding-header "Tasks without effort")
                         (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if 'scheduled))
-                        ))))
-          ))
+                         '(org-agenda-skip-entry-if 'scheduled))))))))
 
   (custom-set-faces
    '(org-agenda-current-time ((t (:foreground "green" :weight bold)))))
@@ -614,6 +648,8 @@
          ("C-w C-w" . evil-window-next)
          ("C-u" . evil-scroll-up)
          ("M-g" . org-agenda-toggle-time-grid)
+         ("{" . org-agenda-backward-block)
+         ("}" . org-agenda-forward-block)
          ("z" . evil-scroll-line-to-center)
          ("g" . evil-goto-first-line)
          ("G" . evil-goto-line)
@@ -643,28 +679,23 @@
                (concat "[" (cdr org-time-stamp-formats) "]")
                time)))
 
-(defun my/org-agenda-to-appt ()
-  (setq appt-time-msg-list nil)
-  (org-agenda-to-appt))
-
 (use-package emacs
-  :hook
-  ((org-agenda-after-show . my/org-agenda-to-appt)
-   (after-save . (lambda ()
-                   (when (eq major-mode 'org-mode)
-                     (my/org-agenda-to-appt)))))
+  :after notifications
   :config
-  (setq appt-message-warning-time 60)
-  (setq appt-display-interval 5)
+  (setq appt-message-warning-time 60
+        appt-display-interval 5
+        appt-display-mode-line nil)
+
   (setq appt-disp-window-function
         (lambda (remaining new-time msg)
           (notifications-notify
-           :title
-           (message "In %s minutes" remaining)
-           :body
-           msg
-           :urgency
-           'critical)))
+           :title (format "In %s minutes" remaining)
+           :body msg
+           :urgency 'critical)))
+
+  (advice-add 'appt-check :before
+              (lambda (&rest args)
+                (org-agenda-to-appt t)))
   (appt-activate t))
 
 (use-package toc-org
@@ -679,6 +710,7 @@
 (use-package ement :defer)
 
 (use-package elfeed
+  :defer
   :config
   (setq elfeed-feeds
         '(
@@ -699,6 +731,7 @@
           )))
 
 (use-package pdf-tools
+  :defer
   :config
   (pdf-tools-install))
 
@@ -717,100 +750,3 @@
   (setq display-time-default-load-average nil)
   (display-time-mode 1)
   (display-battery-mode 1))
-
-(use-package exwm
-      :hook
-      ((exwm-init . (lambda ()
-				      (exwm-workspace-switch-create 1)))
-       (exwm-update-class . (lambda ()
-						      (exwm-workspace-rename-buffer exwm-class-name)))
-       ;; (exwm-manage-finish . (lambda ()
-       ;;                         (exwm-input-set-local-simulation-keys '([?\s-j] . [down]))))
-       )
-
-      :config
-      ;; Set the default number of workspaces
-      (setq exwm-workspace-number 10)
-      (setq exwm-systemtray-height 32)
-
-      (setq exwm-input-simulation-keys
-		'(
-		      ;; ([?\s-h] . [left])
-		      ;; ([?\s-l] . [right])
-		      ([?\s-k] . [up])
-		      ([?\s-j] . [down])
-		      ;; ([?0] . [home])
-		      ;; ([?$] . [end])
-		      ([?\C-\s-u] . [prior])
-		      ([?\C-\s-d] . [next])
-		      ;; ([?x] . [delete])
-		      ;; ([?D] . [S-end delete])
-		      ))
-
-      ;; When window "class" updates, use it to set the buffer name
-      ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
-
-
-      ;; These keys should always pass through to Emacs
-      (setq exwm-input-prefix-keys
-		'(?\C-x
-		      ?\C-u
-		      ?\C-w
-		      ?\C-h
-		      ?\M-x
-		      ?\M-`
-		      ?\M-&
-		      ?\M-:
-		      ?\C-\M-j  ;; Buffer list
-		      ?\C-\ ))  ;; Ctrl+Space
-
-      ;; Ctrl+Q will enable the next key to be sent directly
-      (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-      ;; Set up global key bindings.  These always work, no matter the input state!
-      ;; Keep in mind that changing this list after EXWM initializes has no effect.
-      (setq exwm-input-global-keys
-		`(
-		      ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-		      ([?\s-r] . exwm-reset)
-
-		      ;; Move between windows
-		      ([s-left] . windmove-left)
-		      ([s-right] . windmove-right)
-		      ([s-up] . windmove-up)
-		      ([s-down] . windmove-down)
-
-		      ;; Launch applications via shell command
-		      ([?\s-d] . (lambda (command)
-					       (interactive (list (read-shell-command "$ ")))
-					       (start-process-shell-command command nil command)))
-
-		      ;; Switch workspace
-		      ([?\s-w] . exwm-workspace-switch)
-
-		      ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-		      ,@(mapcar (lambda (i)
-					      `(,(kbd (format "s-%d" i)) .
-						(lambda ()
-						      (interactive)
-						      (exwm-workspace-switch-create ,i))))
-					(number-sequence 0 9))
-
-		      ,@(mapcar (lambda (i)
-					      `(,(kbd (format "S-s-%d" i)) .
-						(lambda ()
-						      (interactive)
-						      (exwm-workspace-move-window ,i))))
-					(number-sequence 0 9))))
-
-      (exwm-systemtray-mode 0)
-      (exwm-enable))
-
-(use-package desktop-environment
-  :after exwm
-  :config
-  ;; (desktop-environment-brightness-small-increment "2%+")
-  ;; (desktop-environment-brightness-small-decrement "2%-")
-  ;; (desktop-environment-brightness-normal-increment "5%+")
-  ;; (desktop-environment-brightness-normal-decrement "5%-")
-  (desktop-environment-mode))

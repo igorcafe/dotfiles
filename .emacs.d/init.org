@@ -14,7 +14,6 @@
   - [[#escape-to-quit-prompts][Escape to quit prompts]]
   - [[#benchmark-init][Benchmark init]]
 - [[#editor][Editor]]
-  - [[#undo-tree][Undo Tree]]
   - [[#vim-keybindings][Vim keybindings]]
   - [[#treat-underline-as-part-of-word][Treat underline as part of word]]
 - [[#lines][Lines]]
@@ -66,7 +65,7 @@
   - [[#source-blocks][Source blocks]]
   - [[#indirect-buffer][Indirect Buffer]]
   - [[#auto-fill][Auto fill]]
-  - [[#fold-drawer][Fold drawer]]
+  - [[#sparse-tree][Sparse Tree]]
   - [[#refile][Refile]]
   - [[#habit][Habit]]
   - [[#priority][Priority]]
@@ -77,6 +76,7 @@
   - [[#org-capture][Org Capture]]
   - [[#org-roam][Org Roam]]
   - [[#org-roam-ui][Org Roam UI]]
+  - [[#sort][Sort]]
   - [[#org-agenda][Org Agenda]]
   - [[#org-present][Org Present]]
   - [[#org-drill][Org Drill]]
@@ -93,8 +93,6 @@
   - [[#wrap-lines-instead-of-truncating][Wrap lines instead of truncating]]
 - [[#desktop][Desktop]]
   - [[#time-date-battery][Time, date, battery]]
-  - [[#exwm][EXWM]]
-  - [[#desktop-environment][Desktop Environment]]
 
 * Basic setup
 
@@ -208,7 +206,7 @@ Emacs creates a bunch of annoying files.
 *** Emacs directories
 
 #+begin_src emacs-lisp
-  (setq user-emacs-directory "~/.cache/emacs/")
+  (setq user-emacs-directory "~/.emacs.d/")
   (when (not (file-directory-p user-emacs-directory))
     (make-directory user-emacs-directory))
 
@@ -262,21 +260,6 @@ I was getting very bad startup times so I added this just to be sure.
 
 Basic editor settings. For more advanced tools see [[#ide][IDE]].
 
-** Undo Tree
-
-~C-x u~ launches the undo tree visualization.
-
-#+begin_src emacs-lisp
-  (use-package undo-tree
-    :demand t
-    :config
-    (when (not (file-directory-p "~/.emacs.d/undotree"))
-      (make-directory "~/.emacs.d/undotree"))
-    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undotree")))
-    (setq evil-undo-system 'undo-tree)
-    (global-undo-tree-mode 1))
-#+end_src
-
 ** Vim keybindings
 
 *** Evil Mode
@@ -291,7 +274,7 @@ evil mode and evil-collection provide vim-like bindings.
     (evil-want-C-u-scroll t)
     (evil-want-keybinding nil) ; what? idk
     ;;(evil-want-minibuffer t)
-    (evil-undo-system 'undo-tree)
+    (evil-undo-system 'undo-redo)
     (evil-cross-lines t)
     :bind
     (:map evil-normal-state-map
@@ -434,10 +417,20 @@ TODO: show a symbol like ~>~ for tab and ~•~, ideally in visual mode.
 
 ** Focus
 
+*** Focus Mode
+
 Makes only the current area highlighted.
 
 #+begin_src emacs-lisp
   (use-package focus :defer)
+#+end_src
+
+*** Highlight current line
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :config
+    (global-hl-line-mode 1))
 #+end_src
 
 ** TODO Multiple Cursors
@@ -602,7 +595,7 @@ Eglot is a builtin LSP client for emacs.
     :hook
     (before-save
      . (lambda ()
-         (when eglot-managed-p
+         (when (bound-and-true-p eglot-managed-p)
            (call-interactively 'eglot-format)
            (call-interactively 'eglot-code-action-organize-imports))))
 
@@ -615,8 +608,7 @@ Eglot is a builtin LSP client for emacs.
           ("SPC l a e" . eglot-code-action-extract))
     :init
     ;; do not block when loading lsp
-    (setq eglot-sync-connect nil)
-    (setq eglot-managed-p nil))
+    (setq eglot-sync-connect nil))
 #+end_src
 
 *** Eldoc and Eldoc box
@@ -1003,7 +995,16 @@ Open ~C-c '~ in the same window
     :hook (org-mode . auto-fill-mode))
 #+end_src
 
-** Fold drawer
+
+** Sparse Tree
+
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (setq org-sparse-tree-default-date-type 'active))
+#+end_src
+
+** COMMENT Fold drawer
 
 #+begin_src emacs-lisp
   (defun my/org-fold-hide-drawer-all ()
@@ -1016,7 +1017,7 @@ Open ~C-c '~ in the same window
 #+begin_src emacs-lisp
   (use-package org
     :config
-    (setq org-directory "~/Git/Org"))
+    (setq org-directory "~/Sync/Org"))
 
   ;; (advice-add 'org-refile :after 'org-save-all-org-buffers)
 #+end_src
@@ -1037,16 +1038,42 @@ Open ~C-c '~ in the same window
 #+begin_src emacs-lisp
   (use-package org
     :config
-    (setq org-priority-highest 0)
-    (setq org-priority-lowest 5)
-    (setq org-priority-default 5))
+    (setq org-priority-highest ?A)
+    (setq org-priority-lowest ?D)
+    (setq org-priority-default ?D)
+    (setq org-priority-faces
+          ;; nil
+          '((?A . (:foreground "gray"))
+            (?B . (:foreground "gray"))
+            (?C . (:foreground "gray"))
+            (?D . (:foreground "gray")))
+          ))
 #+end_src
+
+
+*** [#A] Urgent
+
+Stop whatever you are doing to do this.
+
+*** [#B] Next
+
+Tasks you should do when you finish what is in progress.
+
+*** [#C] Maybe
+
+Tasks to reconsider in the future if it should be done.
+
+*** [#D] "Stuff" (default)
+
+I use this only to differenciate delayed [#C] and default [#D]
+
 
 ** Tags
 
 #+begin_src emacs-lisp
   (use-package org
     :config
+    (setq org-tag-alist nil)
     (setq org-tag-alist '(("emacs" . ?e)
                           ("study" . ?s)
                           ("cal" . ?c)
@@ -1156,14 +1183,16 @@ Replace ~-~ by ~•~ on unordered lists.
           '(("c"
              "Capture to inbox"
              entry
-             (file+headline "tasks.org" "Personal")
-             "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:")
-            ("w"
-             "Capture work task"
+             (file+headline "tasks.org" "Tasks")
+             "* TODO %?\n%U")
+            ;; ("w" "Capture work task"
+            ;;  entry
+            ;;  (file+headline "tasks.org" "Work")
+            ;;  "* TODO (JIRA-123) %?\n%U\n** TODO \n** TODO PR\n** TODO subir stg\n** TODO validar stg\n** TODO subir prd\n")
+            ("j" "Journal"
              entry
-             (file+headline "tasks.org" "Work")
-             "* TODO (JIRA-123) %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n** TODO \n** TODO PR\n** TODO subir stg\n** TODO validar stg\n** TODO subir prd\n")
-            )))
+             (file+headline "journal.org" "Journal")
+             "* %T - %?"))))
 #+end_src
 
 ** TODO COMMENT color calendar
@@ -1206,6 +1235,15 @@ Visualize Roam graph in real time.
   (use-package org-roam-ui :defer)
 #+end_src
 
+** Sort
+
+#+begin_src emacs-lisp
+  (defun my/org-sort ()
+    (interactive)
+    (org-sort-entries nil ?T)
+    (org-sort-entries nil ?p)
+    (org-sort-entries nil ?o))
+#+end_src
 
 ** Org Agenda
 
@@ -1218,6 +1256,19 @@ Custom agenda views, agenda settings, and so on.
           (if org-agenda-show-all-dates nil t))
     (org-agenda-redo))
 
+  (defun my/org-agenda-breadcrumb ()
+    (let ((parent (cdr (org-get-outline-path))))
+          (if parent
+              (format "%s > " parent)
+            (""))))
+
+  (defun my/org-agenda-breadcrumb ()
+    (let ((parent (cdr (org-get-outline-path))))
+      (if parent
+          (format "[%s] " (mapconcat 'identity parent " > "))
+        "")))
+
+
   (use-package org
     :init
     (setq org-scheduled-past-days 0
@@ -1225,6 +1276,7 @@ Custom agenda views, agenda settings, and so on.
           org-agenda-window-setup 'current-window
           org-agenda-block-separator ?―
           org-agenda-start-day nil
+          org-agenda-tags-column 'auto
           org-agenda-span 1
           org-agenda-show-all-dates nil
           org-agenda-skip-deadline-if-done t
@@ -1237,12 +1289,12 @@ Custom agenda views, agenda settings, and so on.
           org-agenda-skip-archived-trees nil
           org-agenda-current-time-string "←"
           org-agenda-files '("tasks.org")
-          org-agenda-log-mode-items '(closed)
+          org-agenda-log-mode-items '(closed state)
 
-          org-agenda-prefix-format '((agenda . "  %-12t %s ")
-                                     (todo . "  ")
-                                     (tags . "  ")
-                                     (search . "  "))
+          org-agenda-prefix-format '((agenda . "  %-12t %s %(my/org-agenda-breadcrumb)")
+                                     (todo . "  %(my/org-agenda-breadcrumb)")
+                                     (tags . "  %(my/org-agenda-breadcrumb)")
+                                     (search . "  %(my/org-agenda-breadcrumb)"))
 
           org-agenda-time-grid
           '((daily today require-timed)
@@ -1265,18 +1317,30 @@ Custom agenda views, agenda settings, and so on.
                        (org-agenda-time-grid '((daily today require-timed)
                           ()
                           " ┄┄┄┄┄ " ""))))
-              (tags-todo "+PRIORITY=\"1\""
-                         ((org-agenda-overriding-header "Urgent")
-                          (org-agenda-skip-function
-                           '(org-agenda-skip-entry-if 'scheduled))))
-              (tags-todo "-later"
+              (tags-todo "+PRIORITY=\"A\""
+                         ((org-agenda-overriding-header "[#A] Urgent")))
+              (tags-todo "-PRIORITY=\"C\""
                          ((org-agenda-overriding-header "In progress")
                           (org-agenda-skip-function
                            '(org-agenda-skip-entry-if 'notregexp "CLOCK: \\[." 'scheduled))))
-              (tags-todo "+next"
-                         ((org-agenda-overriding-header "Next")
+              (tags-todo "+PRIORITY=\"B\"+TODO=\"TODO\""
+                         ((org-agenda-overriding-header "[#B] Next")
+                          (org-agenda-sorting-strategy '(alpha-up))
                           (org-agenda-skip-function
-                           '(org-agenda-skip-entry-if 'regexp "CLOCK: \\[" 'scheduled))))))
+                           '(org-agenda-skip-entry-if 'regexp "CLOCK: \\[." 'scheduled))))
+              (tags-todo "+PRIORITY=\"C\"+TODO=\"TODO\""
+                         ((org-agenda-overriding-header "[#C] Later")
+                          (org-agenda-skip-function
+                           '(org-agenda-skip-entry-if 'scheduled))))
+              (tags-todo "+PRIORITY=\"D\"+TODO=\"TODO\""
+                         ((org-agenda-overriding-header "[#D] Stuff")
+                          (org-agenda-skip-function
+                           '(org-agenda-skip-entry-if 'scheduled))))
+              ;; (tags-todo "+PRIORITY=\"B\""
+              ;;            ((org-agenda-overriding-header "Next")
+              ;;             (org-agenda-skip-function
+              ;;              '(org-agenda-skip-entry-if 'regexp "CLOCK: \\[" 'scheduled))))
+              ))
             ("e" "Tasks by effort"
              ((tags-todo "+TODO=\"TODO\"+Effort>\"\""
                          ((org-agenda-overriding-header "Tasks by effort")
@@ -1285,12 +1349,10 @@ Custom agenda views, agenda settings, and so on.
                            '(org-agenda-skip-entry-if 'scheduled))
                           (org-agenda-prefix-format '((tags . "%-5e - ")))))))
             ("E" "Tasks without effort"
-             ((tags-todo "+TODO=\"TODO\"+Effort=\"\"+LEVEL=2"
+             ((tags-todo "+TODO=\"TODO\"+Effort=\"\""
                          ((org-agenda-overriding-header "Tasks without effort")
                           (org-agenda-skip-function
-                           '(org-agenda-skip-entry-if 'scheduled))
-                          ))))
-            ))
+                           '(org-agenda-skip-entry-if 'scheduled))))))))
 
     (custom-set-faces
      '(org-agenda-current-time ((t (:foreground "green" :weight bold)))))
@@ -1309,6 +1371,8 @@ Custom agenda views, agenda settings, and so on.
            ("C-w C-w" . evil-window-next)
            ("C-u" . evil-scroll-up)
            ("M-g" . org-agenda-toggle-time-grid)
+           ("{" . org-agenda-backward-block)
+           ("}" . org-agenda-forward-block)
            ("z" . evil-scroll-line-to-center)
            ("g" . evil-goto-first-line)
            ("G" . evil-goto-line)
@@ -1359,28 +1423,23 @@ Custom agenda views, agenda settings, and so on.
 ** Notifications for events
 
 #+begin_src emacs-lisp
-  (defun my/org-agenda-to-appt ()
-    (setq appt-time-msg-list nil)
-    (org-agenda-to-appt))
-
   (use-package emacs
-    :hook
-    ((org-agenda-after-show . my/org-agenda-to-appt)
-     (after-save . (lambda ()
-                     (when (eq major-mode 'org-mode)
-                       (my/org-agenda-to-appt)))))
+    :after notifications
     :config
-    (setq appt-message-warning-time 60)
-    (setq appt-display-interval 5)
+    (setq appt-message-warning-time 60
+          appt-display-interval 5
+          appt-display-mode-line nil)
+
     (setq appt-disp-window-function
           (lambda (remaining new-time msg)
             (notifications-notify
-             :title
-             (message "In %s minutes" remaining)
-             :body
-             msg
-             :urgency
-             'critical)))
+             :title (format "In %s minutes" remaining)
+             :body msg
+             :urgency 'critical)))
+
+    (advice-add 'appt-check :before
+                (lambda (&rest args)
+                  (org-agenda-to-appt t)))
     (appt-activate t))
 #+end_src
 
@@ -1434,6 +1493,7 @@ Generate a table-of-contents automatically.
 
 #+begin_src emacs-lisp
   (use-package elfeed
+    :defer
     :config
     (setq elfeed-feeds
           '(
@@ -1466,6 +1526,7 @@ Installing pdf-tools and opening a PDF file just works here.
 
 #+begin_src emacs-lisp
   (use-package pdf-tools
+    :defer
     :config
     (pdf-tools-install))
 #+end_src
@@ -1499,7 +1560,7 @@ Installing pdf-tools and opening a PDF file just works here.
 #+end_src
 
 
-** EXWM
+** COMMENT EXWM
 
 #+begin_src emacs-lisp
   (use-package exwm
@@ -1591,7 +1652,7 @@ Installing pdf-tools and opening a PDF file just works here.
 	(exwm-enable))
 #+end_src
 
-** Desktop Environment
+** COMMENT Desktop Environment
 
 #+begin_src emacs-lisp
   (use-package desktop-environment
@@ -1603,3 +1664,4 @@ Installing pdf-tools and opening a PDF file just works here.
     ;; (desktop-environment-brightness-normal-decrement "5%-")
     (desktop-environment-mode))
 #+end_src
+
