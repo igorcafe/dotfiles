@@ -246,16 +246,15 @@
 (setq recentf-max-saved-items 100)
 (global-set-key "\C-x\ \C-r" 'recentf-open)
 
-(use-package visual-fill-column
+(use-package olivetti
   :hook ((prog-mode
           eww-mode
           text-mode
           conf-mode
           org-agenda-mode)
-         . visual-fill-column-mode)
+         . olivetti-mode)
   :init
-  (setq visual-fill-column-center-text t)
-  (setq visual-fill-column-width 100))
+  (setq-default olivetti-body-width 100))
 
 ;;(desktop-save-mode 1)
 
@@ -279,7 +278,8 @@
 
 (use-package emacs
   :config
-  (setq tab-bar-tab-hints t)
+  ;; (setq tab-bar-tab-hints t)
+  (setq tab-bar-show nil)
   :bind
   (:map evil-normal-state-map
         ("gc" . tab-bar-close-tab)
@@ -418,14 +418,21 @@
 
 (use-package org
   :config
-  (setq org-tag-alist nil)
+  (setq org-tags-column -90)
   (setq org-tag-alist '(("emacs" . ?e)
                         ("study" . ?s)
-                        ("cal" . ?c)
-                        ("later" . ?l)
-                        ("next" . ?n)
-                        ("work" . ?W)
-                        ("write" . ?w)
+                        ("work" . ?w)
+                        ("relative" . ?r)
+                        ("friend" . ?f)
+                        ("fun" . ?F)
+                        ("money" . ?m)
+                        ("blog" . ?b)
+                        ("buy" . ?B)
+                        ("wife" . ?W)
+                        ("@pc" . ?P)
+                        ("@cel" . ?C)
+                        ("@home" . ?H)
+                        ("productivity" . ?p)
                         ("health" . ?h))))
 
 (use-package org
@@ -439,10 +446,13 @@
 (use-package org
   :config
   (setq org-log-into-drawer t)
-  (setq org-log-done 'item)
+  (setq org-log-done nil)
+  (setq org-log-reschedule t)
+  (setq org-log-redeadline t)
   (setq org-hierarchical-todo-statistics t) ;; TODO cookie count not recursive
   (setq org-todo-keywords
-        '((sequence "TODO" "|" "DONE")))
+        '((sequence "TODO(t)" "NEXT(n!)" "WAIT(w@)" "|" "DONE(d!)" "CANC(c@)")
+          (sequence "PROJ(p)" "|" "FINI(f!)")))
   :bind
   (("C-c C-x C-o" . org-clock-out)))
 
@@ -452,8 +462,6 @@
     (forward-char)
     (org-table-move-column-right)
     (org-table-move-column-right)))
-
-(setq org-time-clocksum-format '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
 
 (setq org-duration-format 'h:mm)
 
@@ -477,11 +485,27 @@
   (dolist (face my/org-big-fonts)
     (set-face-attribute (car face) nil :height 1.0)))
 
-(setq org-hide-emphasis-markers nil)
+(setq org-hide-emphasis-markers t)
+
+(use-package org-appear
+    :hook
+    (org-mode . org-appear-mode))
 
 (font-lock-add-keywords 'org-mode
     '(("^ *\\([-]\\) "
     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+(use-package org-fragtog
+  :after org
+  :hook
+  (org-mode . org-fragtog-mode)
+  :custom
+  (org-startup-with-latex-preview t)
+  :custom
+  (org-format-latex-options
+   (plist-put org-format-latex-options :scale 2)
+   (plist-put org-format-latex-options :foreground 'auto)
+   (plist-put org-format-latex-options :background 'auto)))
 
 (use-package org
   :bind
@@ -494,10 +518,6 @@
            entry
            (file+headline "tasks.org" "Tasks")
            "* TODO %?\n%U")
-          ;; ("w" "Capture work task"
-          ;;  entry
-          ;;  (file+headline "tasks.org" "Work")
-          ;;  "* TODO (JIRA-123) %?\n%U\n** TODO \n** TODO PR\n** TODO subir stg\n** TODO validar stg\n** TODO subir prd\n")
           ("j" "Journal"
            entry
            (file+headline "journal.org" "Journal")
@@ -506,18 +526,15 @@
 (use-package org-roam
   :defer
   :config
-  (when (not (file-directory-p "~/Git/Org/Roam"))
-    (make-directory "~/Git/Org/Roam"))
-  (setq org-roam-directory "~/Git/Org/Roam")
+  (when (not (file-directory-p "~/Sync/Org/Roam"))
+    (make-directory "~/Sync/Org/Roam"))
+  (setq org-roam-directory "~/Sync/Org/Roam")
 
   (org-roam-db-autosync-enable)
 
   :bind
   (("C-c n f" . org-roam-node-find)
-   ("C-c n i" . org-roam-node-insert)
-   ("C-c n d d" . org-roam-dailies-goto-today)
-   ("C-c n d y" . org-roam-dailies-goto-yesterday)
-   ("C-c n d t" . org-roam-dailies-goto-tomorrow)))
+   ("C-c n i" . org-roam-node-insert)))
 
 (use-package org-roam-ui :defer)
 
@@ -532,12 +549,6 @@
   (setq org-agenda-show-all-dates
         (if org-agenda-show-all-dates nil t))
   (org-agenda-redo))
-
-(defun my/org-agenda-breadcrumb ()
-  (let ((parent (cdr (org-get-outline-path))))
-        (if parent
-            (format "%s > " parent)
-          (""))))
 
 (defun my/org-agenda-breadcrumb ()
   (let ((parent (cdr (org-get-outline-path))))
@@ -567,7 +578,9 @@
         org-agenda-current-time-string "←"
         org-agenda-files '("tasks.org")
         org-agenda-log-mode-items '(closed state)
+        org-stuck-projects '("TODO=\"PROJ\"" ("NEXT" "WAIT") nil "")
 
+        org-agenda-todo-keyword-format "%s"
         org-agenda-prefix-format '((agenda . "  %-12t %s %(my/org-agenda-breadcrumb)")
                                    (todo . "  %(my/org-agenda-breadcrumb)")
                                    (tags . "  %(my/org-agenda-breadcrumb)")
@@ -579,15 +592,15 @@
           " ┄┄┄┄┄ " "")
 
         org-agenda-custom-commands
-        '(("a" "Agenda"
+        '(("p" "Projects"
+           ((todo "PROJ"
+                      ((org-agenda-overriding-header "Projects")))
+           ))
+          ("a" "Agenda"
            ((agenda ""
-                    ((org-agenda-span 'day)))
-            (agenda ""
-                    ((org-agenda-start-day "+1d")
-                     (org-agenda-overriding-header "Upcoming (1-3 days)")
-                     (org-agenda-span 3)
-                     (org-agenda-show-all-dates t)
-                     (org-agenda-use-time-grid nil)))))
+                    ((org-agenda-span 10)
+                     (org-scheduled-past-days 10)
+                     (org-deadline-warning-days 10)))))
           ("d" "To-do"
            ((agenda ""
                     ((org-agenda-span 'day)
@@ -596,28 +609,30 @@
                         " ┄┄┄┄┄ " ""))))
             (tags-todo "+PRIORITY=\"A\""
                        ((org-agenda-overriding-header "[#A] Urgent")))
-            (tags-todo "-PRIORITY=\"C\""
+            (tags-todo "-TODO=\"WAIT\"-PRIORITY=\"C\""
                        ((org-agenda-overriding-header "In progress")
                         (org-agenda-skip-function
                          '(org-agenda-skip-entry-if 'notregexp "CLOCK: \\[." 'scheduled))))
-            (tags-todo "+PRIORITY=\"B\"+TODO=\"TODO\""
-                       ((org-agenda-overriding-header "[#B] Next")
+            (todo "WAIT"
+                  ((org-agenda-overriding-header "Waiting")
+                   (org-agenda-sorting-strategy '(alpha-up))))
+            (todo "NEXT"
+                       ((org-agenda-overriding-header "Next Actions")
                         (org-agenda-sorting-strategy '(alpha-up))
                         (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if 'regexp "CLOCK: \\[." 'scheduled))))
-            (tags-todo "+PRIORITY=\"C\"+TODO=\"TODO\""
-                       ((org-agenda-overriding-header "[#C] Later")
-                        (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if 'scheduled))))
-            (tags-todo "+PRIORITY=\"D\"+TODO=\"TODO\""
+                         '(org-agenda-skip-entry-if
+                           'regexp "CLOCK: \\[."
+                           'scheduled))))
+            (tags-todo "+TODO=\"TODO\"+PRIORITY=\"D\"+LEVEL=2"
                        ((org-agenda-overriding-header "[#D] Stuff")
                         (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if 'scheduled))))
-            ;; (tags-todo "+PRIORITY=\"B\""
-            ;;            ((org-agenda-overriding-header "Next")
-            ;;             (org-agenda-skip-function
-            ;;              '(org-agenda-skip-entry-if 'regexp "CLOCK: \\[" 'scheduled))))
-            ))
+                         '(org-agenda-skip-entry-if
+                           'regexp "CLOCK: \\[."
+                           'scheduled 'done))))
+            (tags-todo "+PRIORITY=\"C\"+LEVEL=2"
+                       ((org-agenda-overriding-header "[#C] Later")
+                        (org-agenda-skip-function
+                         '(org-agenda-skip-entry-if 'scheduled 'done))))))
           ("e" "Tasks by effort"
            ((tags-todo "+TODO=\"TODO\"+Effort>\"\""
                        ((org-agenda-overriding-header "Tasks by effort")
@@ -683,7 +698,7 @@
   :after notifications
   :config
   (setq appt-message-warning-time 60
-        appt-display-interval 5
+        appt-display-interval 10
         appt-display-mode-line nil)
 
   (setq appt-disp-window-function
@@ -706,8 +721,6 @@
   :ensure nil ;; installed and built through nix
   :init
   (setq telega-emoji-use-images nil))
-
-(use-package ement :defer)
 
 (use-package elfeed
   :defer
@@ -750,3 +763,10 @@
   (setq display-time-default-load-average nil)
   (display-time-mode 1)
   (display-battery-mode 1))
+
+(defun advice-remove-all (sym)
+  "Remove all advices from symbol SYM."
+  (interactive "aFunction symbol:")
+  (advice-mapc `(lambda (fun props)
+                  (advice-remove ,(quote sym) fun))
+               sym))
