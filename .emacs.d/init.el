@@ -162,6 +162,28 @@
 
 (electric-pair-mode 1)
 
+(defun project-vterm ()
+  (interactive)
+  (let* ((proj-dir (car (last (project-current))))
+         (proj-name (file-name-nondirectory
+                     (directory-file-name "~/Git/backend/")))
+         (chosen-name (read-string "buffer name: " proj-name))
+         (default-directory proj-dir))
+    (vterm (format "vterm - %s" chosen-name))))
+
+(use-package project
+  :preface
+  :config
+  (setq project-switch-commands
+        '((project-find-file "Find file" ?f)
+          (project-find-regexp "Find regexp" ?g)
+          (project-find-dir "Find directory" ?d)
+          (project-vterm "vterm" ?t)
+          ;;(project-vc-dir "VC-Dir")
+          ;;(project-eshell "Eshell")
+          ;;(project-any-command "Other")
+          (magit-project-status "Magit" ?m))))
+
 (use-package go-mode
   :defer
   :hook
@@ -297,6 +319,25 @@
 
 (use-package simple-httpd :defer t)
 
+(use-package yasnippet
+  :config
+  (yas-define-snippets
+   'go-mode
+   '(("iferr" "if err != nil {\n\treturn err${1:}\n}")
+     ("iferr2" "if err != nil {\n\treturn nil${1:}, err${2:}\n}")
+     ("lv" "log.Printf(\"%#v\", ${1:})")))
+
+  (yas-define-snippets
+   'org-mode
+   '(("#el" "#+begin_src emacs-lisp\n${1:}\n#+end_src\n")
+     ("#mus" "** ${1:}\n:PROPERTIES:\n:TYPE: song\n:END:\n")))
+
+  (yas-global-mode 1)
+  :bind
+  (:map yas-minor-mode-map
+        ("<tab>" . yas-expand)
+        ("C-SPC" . yas-next-field-or-maybe-expand)))
+
 (use-package emacs
   :bind
   (:map evil-normal-state-map
@@ -393,9 +434,10 @@
 
 (use-package org
   :config
-  (setq org-directory "~/Sync/Org"))
-
-;; (advice-add 'org-refile :after 'org-save-all-org-buffers)
+  (setq org-directory "~/Sync/Org")
+  (setq org-outline-path-complete-in-steps t)
+  (setq org-refile-targets nil)
+  (advice-add 'org-refile :after 'org-save-all-org-buffers))
 
 (use-package org
   :config
@@ -419,21 +461,7 @@
 (use-package org
   :config
   (setq org-tags-column -90)
-  (setq org-tag-alist '(("emacs" . ?e)
-                        ("study" . ?s)
-                        ("work" . ?w)
-                        ("relative" . ?r)
-                        ("friend" . ?f)
-                        ("fun" . ?F)
-                        ("money" . ?m)
-                        ("blog" . ?b)
-                        ("buy" . ?B)
-                        ("wife" . ?W)
-                        ("@pc" . ?P)
-                        ("@cel" . ?C)
-                        ("@home" . ?H)
-                        ("productivity" . ?p)
-                        ("health" . ?h))))
+  (setq org-tag-alist nil))
 
 (use-package org
   :bind
@@ -454,7 +482,8 @@
         '((sequence "TODO(t)" "NEXT(n!)" "WAIT(w@)" "|" "DONE(d!)" "CANC(c@)")
           (sequence "PROJ(p)" "|" "FINI(f!)")))
   :bind
-  (("C-c C-x C-o" . org-clock-out)))
+  (("C-c C-x C-o" . org-clock-out)
+   ("C-c C-x C-j" . org-clock-goto)))
 
 (defun my/clocktable-write (&rest args)
   (apply #'org-clocktable-write-default args)
@@ -559,7 +588,7 @@
 
 (use-package org
   :init
-  (setq org-scheduled-past-days 0
+  (setq org-scheduled-past-days 100
         org-agenda-start-with-log-mode nil
         org-agenda-window-setup 'current-window
         org-agenda-block-separator ?―
@@ -570,7 +599,7 @@
         org-agenda-skip-deadline-if-done t
         org-agenda-clockreport-parameter-plist '(:link t :maxlevel 2)
         org-agenda-skip-scheduled-if-done nil
-        org-deadline-warning-days 0
+        org-deadline-warning-days 3
         org-agenda-start-with-follow-mode nil
         org-agenda-compact-blocks nil
         org-agenda-use-time-grid t
@@ -599,7 +628,7 @@
           ("a" "Agenda"
            ((agenda ""
                     ((org-agenda-span 10)
-                     (org-scheduled-past-days 10)
+                     (org-scheduled-past-days 100)
                      (org-deadline-warning-days 10)))))
           ("d" "To-do"
            ((agenda ""
@@ -608,7 +637,7 @@
                         ()
                         " ┄┄┄┄┄ " ""))))
             (tags-todo "+PRIORITY=\"A\""
-                       ((org-agenda-overriding-header "[#A] Urgent")))
+                       ((org-agenda-overriding-header "Urgent")))
             (tags-todo "-TODO=\"WAIT\"-PRIORITY=\"C\""
                        ((org-agenda-overriding-header "In progress")
                         (org-agenda-skip-function
@@ -624,17 +653,23 @@
                            'regexp "CLOCK: \\[."
                            'scheduled))))
             (tags-todo "+TODO=\"TODO\"+PRIORITY=\"D\"+LEVEL=2"
-                       ((org-agenda-overriding-header "[#D] Stuff")
+                       ((org-agenda-overriding-header "Stuff")
                         (org-agenda-skip-function
                          '(org-agenda-skip-entry-if
                            'regexp "CLOCK: \\[."
                            'scheduled 'done))))
             (tags-todo "+PRIORITY=\"C\"+LEVEL=2"
-                       ((org-agenda-overriding-header "[#C] Later")
+                       ((org-agenda-overriding-header "Later")
                         (org-agenda-skip-function
                          '(org-agenda-skip-entry-if 'scheduled 'done))))))
+          ("w" "Agenda"
+           ((agenda ""
+                    ((org-agenda-files '("work.org"))
+                     (org-agenda-span 100)
+                     (org-scheduled-past-days 0)
+                     (org-deadline-warning-days 0)))))
           ("e" "Tasks by effort"
-           ((tags-todo "+TODO=\"TODO\"+Effort>\"\""
+           ((tags-todo "-TODO=\"DONE\"-TODO=\"FINI\"+Effort>\"\""
                        ((org-agenda-overriding-header "Tasks by effort")
                         (org-agenda-sorting-strategy '(effort-up))
                         (org-agenda-skip-function
@@ -770,3 +805,42 @@
   (advice-mapc `(lambda (fun props)
                   (advice-remove ,(quote sym) fun))
                sym))
+
+(use-package emms
+  :config
+  (emms-all)
+  (emms-default-players)
+  :bind
+  (:map evil-normal-state-map
+        ("SPC m j" . emms-next)
+        ("SPC m k" . emms-previous)
+        ("SPC m h" . emms-seek-backward)
+        ("SPC m l" . emms-seek-forward)
+        ("SPC m SPC" . emms-pause)
+        ("SPC m s" . emms-stop)
+        ("SPC m e" . emms)))
+
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
+(defun my/org-music-play-song-at-point ()
+  (interactive)
+  (org-music-play-song-at-point))
+
+
+(require 'org-music) ;; idk why it only works that way
+
+(use-package org-music
+  :load-path "lisp/org-music.el"
+  :after emms
+  :init
+  (setq
+   org-music-file nil
+   org-music-youtube-downloader "yt-dlp"
+   org-music-media-directory "~/.cache/org-music"
+   org-music-operating-system "linux"
+   org-music-cache-size (* 10 1024)) ;; 10 GB?
+
+  :bind
+  (:map evil-normal-state-map
+        ("SPC m p l" . org-music-play-list)
+        ("SPC m p p" . my/org-music-play-song-at-point)))
