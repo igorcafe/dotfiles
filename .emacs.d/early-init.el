@@ -6,10 +6,8 @@
 (menu-bar-mode -1)
 
 (blink-cursor-mode 0)
-(setq ring-bell-function 'ignore) ; this is actually sound, but...
+(setq ring-bell-function 'ignore)
 
 ;;(load-theme 'modus-vivendi)
 
 (set-face-attribute 'default nil :height 140)
-(when (eq system-type 'darwin)
-  (set-face-attribute 'default nil :height 160))

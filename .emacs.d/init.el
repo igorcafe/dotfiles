@@ -1,7 +1,8 @@
-(toggle-frame-fullscreen)
-
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(setq package-archives
+      '(("gnu" . "https://elpa.gnu.org/packages/")
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+        ("melpa" . "https://melpa.org/packages/")))
 (package-initialize)
 
 (eval-when-compile (require 'use-package))
@@ -13,13 +14,11 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;;(setq warning-minimum-level :emergency)
+(setq warning-minimum-level :error)
 
 (setq create-lockfiles nil)
 
 (setq user-emacs-directory "~/.emacs.d/")
-(when (not (file-directory-p user-emacs-directory))
-  (make-directory user-emacs-directory))
 
 (setq make-backup-files nil)
 
@@ -28,12 +27,58 @@
 
 (setq custom-file "~/.emacs.d/custom.el")
 
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
 (use-package esup
   :defer
   :config
   (setq esup-depth 0))
+
+(use-package emacs
+  :hook ((prog-mode
+          text-mode
+          conf-mode)
+         . (lambda ()
+             (modify-syntax-entry ?_ "w"))))
+
+(column-number-mode 1)
+
+(use-package emacs
+  :hook ((text-mode
+          prog-mode
+          conf-mode) . display-line-numbers-mode))
+
+(use-package emacs
+  :after evil
+  :hook ((evil-insert-state-entry
+          . (lambda ()
+              (setq display-line-numbers-type t)
+              (display-line-numbers-mode 1)))
+         (evil-insert-state-exit
+          . (lambda ()
+              (setq display-line-numbers-type 'relative)
+              (display-line-numbers-mode 1)))))
+
+(set-default 'truncate-lines t)
+
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode nil)
+
+(use-package emacs
+  :config
+  (global-auto-revert-mode 1))
+
+(use-package emacs
+  :bind ("C-x C-b" . ibuffer))
+
+(savehist-mode 1)
+(setq history-length 100)
+
+(use-package emacs
+  :config
+  (setq display-time-day-and-date t)
+  (setq display-time-format "%a %H:%M %d/%m")
+  (setq display-time-default-load-average nil)
+  (display-time-mode 1)
+  (display-battery-mode 1))
 
 (use-package evil
   :demand t
@@ -71,61 +116,8 @@
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
 (use-package emacs
-  :hook ((prog-mode
-          text-mode
-          conf-mode)
-         . (lambda ()
-             (modify-syntax-entry ?_ "w"))))
-
-(column-number-mode 1) ;; TODO
-
-(use-package emacs
-      :hook ((evil-insert-state-entry
-		      . (lambda ()
-			      (setq display-line-numbers-type t)
-			      (display-line-numbers-mode 1)))
-		 (evil-insert-state-exit
-		      . (lambda ()
-			      (setq display-line-numbers-type 'relative)
-			      (display-line-numbers-mode 1)))))
-
-(use-package emacs
-  :hook ((text-mode
-          prog-mode
-          conf-mode) . display-line-numbers-mode))
-
-;;(global-visual-line-mode 1)
-
-(set-default 'truncate-lines t)
-
-(setq-default fill-column 80)
-
-(setq-default tab-width 4)
-(setq-default indent-tabs-mode nil)
-
-;;(add-hook 'visual-line-mode 'adaptive-wrap-prefix-mode)
-
-;; (setq scroll-step 1)
-;; (setq scroll-margin 1)
-;; (setq scroll-conservatively 1000)
-;; (setq scroll-preserve-screen-position 1)
-
-(add-hook 'prog-mode '(setq show-trailing-whitespace t))
-
-(use-package focus :defer)
-
-(use-package emacs
   :config
   (global-hl-line-mode 1))
-
-(use-package evil-mc :defer)
-
-(use-package doom-themes
-  :defer 0.3
-  :config
-  (setq doom-themes-enable-bold t)
-  (setq doom-themes-enable-italic t)
-  (load-theme 'doom-one t))
 
 (use-package all-the-icons
   :if (display-graphic-p))
@@ -136,6 +128,13 @@
 ;; run once
 ;;(all-the-icons-install-fonts t)
 ;;(nerd-icons-install-fonts t)
+
+(use-package doom-themes
+  :defer 0.3
+  :config
+  (setq doom-themes-enable-bold t)
+  (setq doom-themes-enable-italic t)
+  (load-theme 'doom-one t))
 
 (use-package doom-modeline
   :defer 1
@@ -151,8 +150,6 @@
     text-mode
     vterm-mode)
    . breadcrumb-local-mode))
-
-(fringe-mode 8)
 
 (use-package sideline-flymake
   :hook (flymake-mode . sideline-mode)
@@ -214,6 +211,7 @@
 
 (use-package eglot
   :hook
+  ;; before saving, if eglot is enabled, try to format and organize imports
   (before-save
    . (lambda ()
        (when (bound-and-true-p eglot-managed-p)
@@ -231,10 +229,13 @@
   ;; do not block when loading lsp
   (setq eglot-sync-connect nil))
 
+(use-package emacs
+  :config
+  (setq eldoc-echo-area-use-multiline-p 1))
+
 (use-package eldoc-box
     :config
     (eldoc-box-hover-at-point-mode 1)
-    (setq eldoc-echo-area-use-multiline-p 1)
     (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
 
 (use-package corfu
@@ -245,19 +246,10 @@
   (setq corfu-auto-delay 0.2)
   (setq corfu-auto-prefix 1)
   (setq corfu-cycle t)
+  (corfu-popupinfo-mode 1)
   :bind
   (:map global-map
         ("C-SPC" . completion-at-point)))
-
-(use-package cape
-  :init
-  (dolist (mode '(text-mode-hook
-                  prog-mode-hook
-                  conf-mode-hook))
-    (add-hook mode (lambda ()
-                     (add-to-list 'completion-at-point-functions #'cape-tex)
-                     (add-to-list 'completion-at-point-functions #'cape-emoji)
-                     (add-to-list 'completion-at-point-functions #'cape-file)))))
 
 (use-package envrc
   :config
@@ -278,36 +270,31 @@
   :init
   (setq-default olivetti-body-width 100))
 
-;;(desktop-save-mode 1)
-
 (save-place-mode 1)
 
 (use-package consult
   :defer
   :bind
   (:map evil-normal-state-map
-        ("SPC g s" . consult-git-grep)
-        ("SPC l e" . consult-flymake)))
+        ;; analogous to project-find-regexp
+        ("SPC p g" . consult-git-grep)
+
+        ;; analogous to project-find-file
+        ("SPC p f" . consult-project-buffer)
+
+        ;; buffer errors
+        ("SPC b e" . consult-flymake)
+
+        ;; buffer definitions
+        ("SPC b d" . consult-imenu)))
 
 (use-package emacs
   :config
-  (setq tab-line-switch-cycling t)
-  :bind
-  (:map evil-normal-state-map
-        ("SPC k" . kill-this-buffer)
-        ("SPC SPC l" . tab-line-switch-to-next-tab)
-        ("SPC SPC h" . tab-line-switch-to-prev-tab)))
+  (setq tab-line-switch-cycling t))
 
 (use-package emacs
   :config
-  ;; (setq tab-bar-tab-hints t)
-  (setq tab-bar-show nil)
-  :bind
-  (:map evil-normal-state-map
-        ("gc" . tab-bar-close-tab)
-        ("gn" . tab-bar-new-tab)
-        ("gh" . tab-bar-switch-to-prev-tab)
-        ("gl" . tab-bar-switch-to-next-tab)))
+  (setq tab-bar-show nil))
 
 (use-package whitespace
   :hook
@@ -319,25 +306,6 @@
 
 (use-package simple-httpd :defer t)
 
-(use-package yasnippet
-  :config
-  (yas-define-snippets
-   'go-mode
-   '(("iferr" "if err != nil {\n\treturn err${1:}\n}")
-     ("iferr2" "if err != nil {\n\treturn nil${1:}, err${2:}\n}")
-     ("lv" "log.Printf(\"%#v\", ${1:})")))
-
-  (yas-define-snippets
-   'org-mode
-   '(("#el" "#+begin_src emacs-lisp\n${1:}\n#+end_src\n")
-     ("#mus" "** ${1:}\n:PROPERTIES:\n:TYPE: song\n:END:\n")))
-
-  (yas-global-mode 1)
-  :bind
-  (:map yas-minor-mode-map
-        ("<tab>" . yas-expand)
-        ("C-SPC" . yas-next-field-or-maybe-expand)))
-
 (use-package emacs
   :bind
   (:map evil-normal-state-map
@@ -346,12 +314,28 @@
   :config
   (winner-mode 1))
 
+(use-package emacs
+  :hook
+  (dired-mode . dired-hide-details-mode)
+  :config
+  (setq global-auto-revert-non-file-buffers t)
+  :bind
+  (:map dired-mode-map
+        ("S-TAB" . dired-find-file-other-window)))
+
+(use-package dired-subtree
+    :config
+    :bind
+    (:map dired-mode-map
+          ("TAB" . dired-subtree-toggle)))
+
 (use-package magit :defer)
 
 (use-package diff-hl
   :defer 1
   :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
-         (magit-post-refresh . diff-hl-magit-post-refresh))
+         (magit-post-refresh . diff-hl-magit-post-refresh)
+         (after-save . diff-hl-update))
   :init
   (global-diff-hl-mode 1))
 
@@ -373,36 +357,13 @@
   (:map evil-normal-state-map
         (("SPC t" . my/vterm))))
 
-(use-package emacs
-  :hook
-  (dired-mode . dired-hide-details-mode)
-  :config
-  (setq global-auto-revert-non-file-buffers t)
-  :bind
-  (:map dired-mode-map
-        ("<tab>" . dired-find-file-other-window)))
-
-(use-package emacs
-  :bind
-  (:map evil-normal-state-map
-        (("gb" . evil-switch-to-windows-last-buffer)
-         ("M-p" . evil-prev-buffer)
-         ("M-n" . evil-next-buffer)))
-  :config
-  (global-auto-revert-mode 1))
-
-(use-package emacs
-  :bind ("C-x C-b" . ibuffer))
-
-(savehist-mode 1)
-(setq history-length 100)
-
 (use-package vertico
   :config
   (vertico-mode)
   (vertico-mouse-mode)
   (setq vertico-count 20)
   (setq vertico-cycle t)
+  (setq vertico-sort-function #'vertico-sort-history-alpha)
 
   :bind
   (:map vertico-map
@@ -421,29 +382,72 @@
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
+(use-package org
+  :hook (org-mode . auto-fill-mode))
+
+(use-package emms
+  :config
+  (emms-all)
+  (emms-default-players)
+  :bind
+  (:map evil-normal-state-map
+        ("SPC m j" . emms-next)
+        ("SPC m k" . emms-previous)
+        ("SPC m h" . emms-seek-backward)
+        ("SPC m l" . emms-seek-forward)
+        ("SPC m SPC" . emms-pause)
+        ("SPC m s" . emms-stop)
+        ("SPC m e" . emms)))
+
+(use-package telega
+  :ensure nil ;; installed and built through nix
+  :init
+  (setq telega-emoji-use-images nil))
+
+(use-package elfeed
+  :defer
+  :config
+  (setq elfeed-feeds
+        '(
+          ;; DHH
+          "https://world.hey.com/dhh/feed.atom" 
+          ;; Martin Fowler
+          "https://martinfowler.com/feed.atom" 
+          ;; Go Blog
+          "https://go.dev/blog/feed.atom" 
+          ;; ThePrimeTime
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" 
+          ;; Mental Outlaw
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" 
+          ;; Fireship
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA" 
+          ;; Lakka News
+          "https://www.lakka.tv/articles/feed.xml" 
+          )))
+
+(use-package pdf-tools
+  :defer
+  :config
+  (pdf-tools-install))
+
+(use-package emacs
+  :hook (eww-mode . visual-line-mode))
+
+(use-package activity-watch-mode
+  :config
+  (global-activity-watch-mode 1))
+
+(setq org-directory "~/Sync/Org")
+
 (setq org-src-window-setup 'current-window)
 
 (setq org-indirect-buffer-display 'current-window)
 
 (use-package org
-  :hook (org-mode . auto-fill-mode))
-
-(use-package org
   :config
-  (setq org-sparse-tree-default-date-type 'active))
-
-(use-package org
-  :config
-  (setq org-directory "~/Sync/Org")
   (setq org-outline-path-complete-in-steps t)
   (setq org-refile-targets nil)
   (advice-add 'org-refile :after 'org-save-all-org-buffers))
-
-(use-package org
-  :config
-  (require 'org-habit)
-  (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 60))
 
 (use-package org
   :config
@@ -461,15 +465,6 @@
 (use-package org
   :config
   (setq org-tags-column -90)
-  (setq org-tag-alist nil))
-
-(use-package org
-  :bind
-  (:map org-mode-map
-        ("C-c h" . org-table-move-cell-left)
-        ("C-c l" . org-table-move-cell-right)
-        ("C-c k" . org-table-move-cell-up)
-        ("C-c j" . org-table-move-cell-down)))
 
 (use-package org
   :config
@@ -482,59 +477,14 @@
         '((sequence "TODO(t)" "NEXT(n!)" "WAIT(w@)" "|" "DONE(d!)" "CANC(c@)")
           (sequence "PROJ(p)" "|" "FINI(f!)")))
   :bind
+  ;; the keybindings are the same, just made them global
   (("C-c C-x C-o" . org-clock-out)
    ("C-c C-x C-j" . org-clock-goto)))
 
-(defun my/clocktable-write (&rest args)
-  (apply #'org-clocktable-write-default args)
-  (save-excursion
-    (forward-char)
-    (org-table-move-column-right)
-    (org-table-move-column-right)))
-
-(setq org-duration-format 'h:mm)
-
-(use-package org-bullets
-  :hook (org-mode . org-bullets-mode))
-
 (use-package org
-  :hook (org-mode . org-indent-mode))
-
-(defvar my/org-big-fonts '((org-document-title . 1.8)
-                           (org-level-1 . 1.6)
-                           (org-level-2 . 1.4)
-                           (org-level-3 . 1.2)))
-(defun my/org-big ()
-  (interactive)
-  (dolist (face my/org-big-fonts)
-    (set-face-attribute (car face) nil :height (cdr face))))
-
-(defun my/org-smol ()
-  (interactive)
-  (dolist (face my/org-big-fonts)
-    (set-face-attribute (car face) nil :height 1.0)))
-
-(setq org-hide-emphasis-markers t)
-
-(use-package org-appear
-    :hook
-    (org-mode . org-appear-mode))
-
-(font-lock-add-keywords 'org-mode
-    '(("^ *\\([-]\\) "
-    (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
-(use-package org-fragtog
-  :after org
-  :hook
-  (org-mode . org-fragtog-mode)
-  :custom
-  (org-startup-with-latex-preview t)
-  :custom
-  (org-format-latex-options
-   (plist-put org-format-latex-options :scale 2)
-   (plist-put org-format-latex-options :foreground 'auto)
-   (plist-put org-format-latex-options :background 'auto)))
+  :bind
+  (("C-c C-x C-o" . org-clock-out)
+   ("C-c C-x C-j" . org-clock-goto)))
 
 (use-package org
   :bind
@@ -552,26 +502,9 @@
            (file+headline "journal.org" "Journal")
            "* %T - %?"))))
 
-(use-package org-roam
-  :defer
-  :config
-  (when (not (file-directory-p "~/Sync/Org/Roam"))
-    (make-directory "~/Sync/Org/Roam"))
-  (setq org-roam-directory "~/Sync/Org/Roam")
-
-  (org-roam-db-autosync-enable)
-
-  :bind
-  (("C-c n f" . org-roam-node-find)
-   ("C-c n i" . org-roam-node-insert)))
-
-(use-package org-roam-ui :defer)
-
-(defun my/org-sort ()
-  (interactive)
-  (org-sort-entries nil ?T)
-  (org-sort-entries nil ?p)
-  (org-sort-entries nil ?o))
+(font-lock-add-keywords 'org-mode
+    '(("^ *\\([-]\\) "
+    (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 (defun my/org-agenda-show-all-dates ()
   (interactive)
@@ -608,6 +541,8 @@
         org-agenda-files '("tasks.org")
         org-agenda-log-mode-items '(closed state)
         org-stuck-projects '("TODO=\"PROJ\"" ("NEXT" "WAIT") nil "")
+        org-agenda-scheduled-leaders '("" "")
+        org-agenda-deadline-leaders '("" "")
 
         org-agenda-todo-keyword-format "%s"
         org-agenda-prefix-format '((agenda . "  %-12t %s %(my/org-agenda-breadcrumb)")
@@ -705,6 +640,25 @@
          ("G" . evil-goto-line)
          ("k" . org-agenda-previous-line))))
 
+(use-package emacs
+  :after notifications
+  :config
+  (setq appt-message-warning-time 60
+        appt-display-interval 10
+        appt-display-mode-line nil)
+
+  (setq appt-disp-window-function
+        (lambda (remaining new-time msg)
+          (notifications-notify
+           :title (format "In %s minutes" remaining)
+           :body msg
+           :urgency 'critical)))
+
+  (advice-add 'appt-check :before
+              (lambda (&rest args)
+                (org-agenda-to-appt t)))
+  (appt-activate t))
+
 (use-package org-present
   :defer
   :hook ((org-present-mode
@@ -729,96 +683,9 @@
                (concat "[" (cdr org-time-stamp-formats) "]")
                time)))
 
-(use-package emacs
-  :after notifications
-  :config
-  (setq appt-message-warning-time 60
-        appt-display-interval 10
-        appt-display-mode-line nil)
-
-  (setq appt-disp-window-function
-        (lambda (remaining new-time msg)
-          (notifications-notify
-           :title (format "In %s minutes" remaining)
-           :body msg
-           :urgency 'critical)))
-
-  (advice-add 'appt-check :before
-              (lambda (&rest args)
-                (org-agenda-to-appt t)))
-  (appt-activate t))
-
 (use-package toc-org
   :hook
   (org-mode . toc-org-mode))
-
-(use-package telega
-  :ensure nil ;; installed and built through nix
-  :init
-  (setq telega-emoji-use-images nil))
-
-(use-package elfeed
-  :defer
-  :config
-  (setq elfeed-feeds
-        '(
-          ;; DHH
-          "https://world.hey.com/dhh/feed.atom" 
-          ;; Martin Fowler
-          "https://martinfowler.com/feed.atom" 
-          ;; Go Blog
-          "https://go.dev/blog/feed.atom" 
-          ;; ThePrimeTime
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" 
-          ;; Mental Outlaw
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" 
-          ;; Fireship
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA" 
-          ;; Lakka News
-          "https://www.lakka.tv/articles/feed.xml" 
-          )))
-
-(use-package pdf-tools
-  :defer
-  :config
-  (pdf-tools-install))
-
-(use-package emacs
-  :hook (eww-mode . visual-line-mode)
-  :config
-  (setq eww-retrieve-command
-        ;;'("google-chrome-stable" "--headless" "--dump-dom")
-        nil
-        ))
-
-(use-package emacs
-  :config
-  (setq display-time-day-and-date t)
-  (setq display-time-format "%a %H:%M %d/%m")
-  (setq display-time-default-load-average nil)
-  (display-time-mode 1)
-  (display-battery-mode 1))
-
-(defun advice-remove-all (sym)
-  "Remove all advices from symbol SYM."
-  (interactive "aFunction symbol:")
-  (advice-mapc `(lambda (fun props)
-                  (advice-remove ,(quote sym) fun))
-               sym))
-
-(use-package emms
-  :config
-  (emms-all)
-  (emms-default-players)
-  :bind
-  (:map evil-normal-state-map
-        ("SPC m j" . emms-next)
-        ("SPC m k" . emms-previous)
-        ("SPC m h" . emms-seek-backward)
-        ("SPC m l" . emms-seek-forward)
-        ("SPC m SPC" . emms-pause)
-        ("SPC m s" . emms-stop)
-        ("SPC m e" . emms)))
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
@@ -844,3 +711,37 @@
   (:map evil-normal-state-map
         ("SPC m p l" . org-music-play-list)
         ("SPC m p p" . my/org-music-play-song-at-point)))
+
+(use-package org
+  :hook (org-mode . org-indent-mode))
+
+(use-package org-appear
+    :hook
+    (org-mode . org-appear-mode))
+
+(use-package org-fragtog
+  :after org
+  :hook
+  (org-mode . org-fragtog-mode)
+  :custom
+  (org-startup-with-latex-preview t)
+  :custom
+  (org-format-latex-options
+   (plist-put org-format-latex-options :scale 2)
+   (plist-put org-format-latex-options :foreground 'auto)
+   (plist-put org-format-latex-options :background 'auto)))
+
+(use-package org-roam
+  :defer
+  :config
+  (when (not (file-directory-p "~/Sync/Org/Roam"))
+    (make-directory "~/Sync/Org/Roam"))
+  (setq org-roam-directory "~/Sync/Org/Roam")
+
+  (org-roam-db-autosync-enable)
+
+  :bind
+  (("C-c n f" . org-roam-node-find)
+   ("C-c n i" . org-roam-node-insert)))
+
+(use-package org-roam-ui :defer)

@@ -2,104 +2,106 @@
 #+auto_tangle: t
 
 * Table of Contents :TOC:
-- [[#basic-setup][Basic setup]]
+- [[#config][Config]]
   - [[#early-init][Early Init]]
-  - [[#frame][Frame]]
-  - [[#setup-package-manager][Setup package manager]]
+  - [[#setup-melpa][Setup MELPA]]
+  - [[#setup-use-package][Setup use-package]]
   - [[#auto-tangle-config][Auto-tangle config]]
-  - [[#prompts][Prompts]]
-  - [[#warnings][Warnings]]
-  - [[#emacs-files][Emacs files]]
-  - [[#escape-to-quit-prompts][Escape to quit prompts]]
+  - [[#y-or-n-instead-of-yes-or-no-prompts][Y or N instead of Yes or No prompts]]
+  - [[#dont-show-warnings-only-errors][Don't show warnings, only errors]]
+  - [[#disable-lock-files][Disable lock files]]
+  - [[#emacs-directories][Emacs directories]]
+  - [[#disable-backup-files][Disable backup files]]
+  - [[#auto-save-files][Auto-save files]]
+  - [[#customization-information-file][Customization information file]]
   - [[#benchmark-init][Benchmark init]]
-- [[#editor][Editor]]
-  - [[#vim-keybindings][Vim keybindings]]
-  - [[#treat-underline-as-part-of-word][Treat underline as part of word]]
-- [[#lines][Lines]]
-  - [[#tabs][Tabs]]
-  - [[#scroll][Scroll]]
-  - [[#whitspaces][Whitspaces]]
-  - [[#focus][Focus]]
-  - [[#multiple-cursors][Multiple Cursors]]
-- [[#visuals][Visuals]]
-  - [[#theme][Theme]]
-  - [[#icons][Icons]]
-  - [[#modeline][Modeline]]
-  - [[#breadcrumb][Breadcrumb]]
-  - [[#fringe][Fringe]]
-  - [[#flymake][Flymake]]
-- [[#ide][IDE]]
-  - [[#auto-close-pairs][Auto close pairs]]
-  - [[#projects][Projects]]
-  - [[#languages][Languages]]
-  - [[#lsp][LSP]]
-  - [[#autosuggestion-and-completion][Autosuggestion and Completion]]
-  - [[#direnv][Direnv]]
-  - [[#recent-files][Recent files]]
-  - [[#zen-mode]["Zen Mode"]]
-  - [[#save-emacs-state][Save emacs state]]
-  - [[#cursor-position][Cursor position]]
-  - [[#search-and-navigation][Search and Navigation]]
-  - [[#tab-line][Tab Line]]
-  - [[#tab-bar][Tab Bar]]
-  - [[#whitespaces][Whitespaces]]
-  - [[#http-client][HTTP Client]]
-  - [[#http-server][HTTP Server]]
-  - [[#snippets][Snippets]]
-- [[#window][Window]]
-  - [[#winner-mode][Winner Mode]]
-- [[#git][Git]]
-  - [[#magit][Magit]]
-  - [[#diff-highlight][Diff Highlight]]
-  - [[#blamer][Blamer]]
-- [[#workspaces][Workspaces]]
-- [[#keybindings][Keybindings]]
-  - [[#which-key][Which Key]]
-- [[#integrated-terminal][Integrated Terminal]]
-  - [[#vterm][Vterm]]
-- [[#file-manager][File Manager]]
-  - [[#dired][Dired]]
-- [[#buffers][Buffers]]
-  - [[#file-buffers][File buffers]]
-  - [[#minibuffer][Minibuffer]]
-- [[#org-mode][Org Mode]]
-  - [[#source-blocks][Source blocks]]
-  - [[#indirect-buffer][Indirect Buffer]]
-  - [[#auto-fill][Auto fill]]
-  - [[#sparse-tree][Sparse Tree]]
-  - [[#refile][Refile]]
-  - [[#habit][Habit]]
-  - [[#priority][Priority]]
-  - [[#tags][Tags]]
-  - [[#tables][Tables]]
-  - [[#todos][TODOs]]
-  - [[#visuals-1][Visuals]]
-  - [[#org-capture][Org Capture]]
-  - [[#org-roam][Org Roam]]
-  - [[#org-roam-ui][Org Roam UI]]
-  - [[#sort][Sort]]
-  - [[#org-agenda][Org Agenda]]
-  - [[#org-present][Org Present]]
-  - [[#org-drill][Org Drill]]
-  - [[#notifications-for-events][Notifications for events]]
-  - [[#toc-org][TOC ORG]]
-- [[#social][Social]]
-  - [[#telegram][Telegram]]
-- [[#news][News]]
-  - [[#rss][RSS]]
-- [[#pdf][PDF]]
-  - [[#pdf-tools][pdf-tools]]
-- [[#eww][EWW]]
-  - [[#wrap-lines-instead-of-truncating][Wrap lines instead of truncating]]
-- [[#desktop][Desktop]]
-  - [[#time-date-battery][Time, date, battery]]
-- [[#emacs-lisp][Emacs Lisp]]
-- [[#music][Music]]
-  - [[#emms][EMMS]]
-  - [[#org-music][Org Music]]
+  - [[#treat-underline-as-part-of-the-word][Treat underline as part of the word]]
+  - [[#show-column-number-in-modeline][Show column number in modeline]]
+  - [[#show-line-numbers][Show line numbers]]
+  - [[#absolute-and-relative-line-numbers][Absolute and relative line numbers]]
+  - [[#truncate-long-lines][Truncate long lines]]
+  - [[#indent-using-4-spaces][Indent using 4 spaces]]
+  - [[#refresh-buffers-on-change][Refresh buffers on change]]
+  - [[#use-ibuffer-builtin-instead-of-list-buffers][Use =ibuffer= (builtin) instead of list-buffers.]]
+  - [[#persist-minibuffers-history][Persist minibuffer's history]]
+  - [[#display-date-time-and-battery-in-modeline][Display date, time and battery in modeline]]
+  - [[#evil-mode---vim-mode-emulation][=evil-mode= - vim mode emulation]]
+  - [[#evil-surround---surround-text-with-parenthesis-quotes-and-so-on][=evil-surround= - surround text with parenthesis, quotes, and so on]]
+  - [[#key-chord---time-based-keymaps-for-evil][=key-chord= - time-based keymaps for evil]]
+  - [[#hl-line-mode---highlight-current-line][=hl-line-mode= - highlight current line]]
+  - [[#all-the-icons--all-the-icons-dired---icon-packages][=all-the-icons= + =all-the-icons-dired= - icon packages]]
+  - [[#doom-themes---nice-themes][=doom-themes= - nice themes]]
+  - [[#doom-modeline---nice-modeline][=doom-modeline= - nice modeline]]
+  - [[#breadcrumb---summary-of-your-cursor-position][=breadcrumb= - summary of your cursor position]]
+  - [[#flymake-builtin---syntax-checking][=flymake= (builtin) - syntax checking]]
+  - [[#eletrict-pair-mode-builtin---auto-close-pairs-based-on-mode][=eletrict-pair-mode= (builtin) - auto close pairs based on mode]]
+  - [[#projectel-builtin---managing-projects][=project.el= (builtin) - managing projects]]
+  - [[#go-mode---go-support][=go-mode= - Go support]]
+  - [[#go-tag---automatically-addingremoving-struct-tags][=go-tag= - automatically adding/removing struct tags]]
+  - [[#nix-mode---nix-support][=nix-mode= - Nix support]]
+  - [[#yaml-mode---yaml-support][=yaml-mode= - YAML support]]
+  - [[#markdown-mode---markdown-support][=markdown-mode= - Markdown support]]
+  - [[#python-mode-builtin---python-support][=python-mode= (builtin) - Python support]]
+  - [[#nxml-mode-builtin---xml-support][=nxml-mode= (builtin) - XML support]]
+  - [[#vue-mode---vue-support][=vue-mode= - Vue support]]
+  - [[#c-mode-builtin---cc-support][=c-mode= (builtin) - C/C++ support]]
+  - [[#eglot-builtin---lsp-client][=eglot= (builtin) - LSP client]]
+  - [[#eldoc-builtin---showing-documentation-of-symbols][=eldoc= (builtin) - showing documentation of symbols]]
+  - [[#eldoc-box---eldoc-in-a-box-below-cursor][=eldoc-box= - eldoc in a box below cursor]]
+  - [[#corfu---completion-popup-like-vs-codes][=corfu= - completion popup like VS Code's]]
+  - [[#envrc---direnv-integration][=envrc= - direnv integration]]
+  - [[#recentf-mode---persistent-history-of-recent-files][=recentf-mode= - persistent history of recent files]]
+  - [[#olivetti---horizontal-paddings-for-windows][=olivetti= - horizontal paddings for windows]]
+  - [[#save-place-mode---save-cursor-position-per-file][=save-place-mode= - save cursor position per file]]
+  - [[#consult---multiple-search-utilities][=consult= - multiple search utilities]]
+  - [[#tab-line-builtin---show-buffers-as-tabs][=tab-line= (builtin) - show buffers as tabs]]
+  - [[#tab-bar-builtin---tabs-like-vim][=tab-bar= (builtin) - tabs like vim]]
+  - [[#whitespace-builtin---show-whitespaces-as-symbols][=whitespace= (builtin) - show whitespaces as symbols]]
+  - [[#restclient---http-client][=restclient= - http client]]
+  - [[#simple-httpd---static-http-server][=simple-httpd= - static http server]]
+  - [[#winner-mode-builtin---undoredo-window-changes][=winner-mode= (builtin) - undo/redo window changes]]
+  - [[#dired-builtin---file-manager][=dired= (builtin) - file manager]]
+  - [[#dired-subtree---add-subt-tree-view-to-dired][=dired-subtree= - add subt tree view to dired]]
+  - [[#magit---git-interface][=magit= - git interface]]
+  - [[#diff-hl---highlight-uncommited-changes][=diff-hl= - highlight uncommited changes]]
+  - [[#blamer-mode---git-blame-like-gitlens][=blamer-mode= - git blame like gitlens]]
+  - [[#whick-key---suggests-key-combinations-as-you-press-them][=whick-key= - suggests key combinations as you press them.]]
+  - [[#vterm---integrated-terminal][=vterm= - integrated terminal]]
+  - [[#vertico---vertical-completion][=vertico= - vertical completion]]
+  - [[#vertico-posframe---make-vertico-appear-as-a-floating-window][=vertico-posframe= - make vertico appear as a floating window]]
+  - [[#marginalia---show-more-data-for-help-functions][=marginalia= - show more data for help functions]]
+  - [[#orderless---fuzzy-completion][=orderless= - fuzzy completion]]
+  - [[#auto-fill-mode-builtin---automatically-break-long-lines][=auto-fill-mode= (builtin) - automatically break long lines]]
+  - [[#emms---music-player][=emms= - music player]]
+  - [[#telega---telegram-client][=telega= - telegram client]]
+  - [[#elfeed---client-for-atom-and-rss-feeds][=elfeed= - client for Atom and RSS feeds]]
+  - [[#pdf-tools---read-pdfs-in-emacs][=pdf-tools= - read PDFs in emacs]]
+  - [[#eww-builtin---simple-browser][=eww= (builtin) - simple browser]]
+  - [[#activity-watch-mode---track-emacs-usage-using-activitywatch][=activity-watch-mode= - track emacs usage using ActivityWatch]]
+- [[#org-config][Org Config]]
+  - [[#org-directory][Org directory]]
+  - [[#org-source-block---open-in-the-same-window][Org source block - open in the same window]]
+  - [[#org-indirect-buffer---open-in-the-same-window][Org indirect buffer - open in the same window]]
+  - [[#org-refile---save-all-buffers][Org refile - save all buffers]]
+  - [[#org-priority---face-and-default-value][Org priority - face and default value]]
+  - [[#org-tags---column][Org tags - column]]
+  - [[#org-todos---keywords-and-state-logging][Org TODOs - keywords and state logging]]
+  - [[#org-clock---keybindings][Org Clock - keybindings]]
+  - [[#org-capture---templates][Org Capture - templates]]
+  - [[#org-lists---replace---by--on-unordered-lists][Org lists - Replace ~-~ by ~•~ on unordered lists.]]
+  - [[#org-agenda---setup-and-custom-views][Org Agenda - setup and custom views]]
+  - [[#org-agenda---notifications-for-events][Org Agenda - notifications for events]]
+  - [[#org-present---make-presentations-using-org-mode][=org-present= - make presentations using org mode]]
+  - [[#org-drill---same-idea-as-anki][=org-drill= - same idea as Anki]]
+  - [[#toc-org---generate-table-of-contents][=toc-org= - generate table of contents]]
+  - [[#org-music---manage-songs-and-playlists-using-org][=org-music= - manage songs and playlists using org]]
+  - [[#org-indent-mode-builtin---visually-indent-text-inside-headings][=org-indent-mode= (builtin) - visually indent text inside headings]]
+  - [[#org-appear---show-emphasis-markers-when-cursor-is-over-the-word][=org-appear= - show emphasis markers when cursor is over the word.]]
+  - [[#org-fragtog---display-latex-automatically-inside-org-buffers][=org-fragtog= - display LaTeX automatically inside org buffers]]
+  - [[#org-roam---org-knowledge-management-system][=org-roam= - org knowledge management system]]
+  - [[#org-roam-ui---visualize-org-roam-graph-in-real-time][=org-roam-ui= - visualize Org Roam graph in real time.]]
 
-* Basic setup
-
+* Config
 ** Early Init
 
 #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
@@ -119,7 +121,7 @@ No annoying bell sound nor flashing lights when something goes wrong.
 
 #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
   (blink-cursor-mode 0)
-  (setq ring-bell-function 'ignore) ; this is actually sound, but...
+  (setq ring-bell-function 'ignore)
 #+end_src
 
 Set default theme before loading doom themes.
@@ -132,13 +134,11 @@ Increase default font size.
 
 #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
   (set-face-attribute 'default nil :height 140)
-  (when (eq system-type 'darwin)
-    (set-face-attribute 'default nil :height 160))
 #+end_src
 
 #+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
 
-** Frame
+** COMMENT Frame
 
 Launch in fullscreen.
 
@@ -146,21 +146,18 @@ Launch in fullscreen.
   (toggle-frame-fullscreen)
 #+end_src
 
-** Setup package manager
-
-For many of the following settings I'll need to install some packages, so its best to have it configured upfront.
-
-Note: if you get 404 when trying to install packages, run ~M-x package-refresh-contents~.
-
-*** Setup MELPA
+** Setup MELPA
 
 #+begin_src emacs-lisp
   (require 'package)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (setq package-archives
+        '(("gnu" . "https://elpa.gnu.org/packages/")
+          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+          ("melpa" . "https://melpa.org/packages/")))
   (package-initialize)
 #+end_src
 
-*** Setup use-package
+** Setup use-package
 
 #+begin_src emacs-lisp
   (eval-when-compile (require 'use-package))
@@ -169,65 +166,57 @@ Note: if you get 404 when trying to install packages, run ~M-x package-refresh-c
 
 ** Auto-tangle config
 
+Automatically generate =init.el= and =early-init.el= when I save this file.
+
 #+begin_src emacs-lisp
   (use-package org-auto-tangle
     :defer
     :hook (org-mode . org-auto-tangle-mode))
 #+end_src
 
-** Prompts
-
-*** Y or N instead of Yes or No
+** Y or N instead of Yes or No prompts
 
 #+begin_src emacs-lisp
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
-** TODO Warnings
-
-Disable annoying warnings at startup.
-
-TODO: check all available levels
+** Don't show warnings, only errors
 
 #+begin_src emacs-lisp
-  ;;(setq warning-minimum-level :emergency)
+  (setq warning-minimum-level :error)
 #+end_src
 
-** Emacs files
-
-Emacs creates a bunch of annoying files.
-
-*** Disable lock files
+** Disable lock files
 
 #+begin_src emacs-lisp
   (setq create-lockfiles nil)
 #+end_src
 
-*** Emacs directories
+** Emacs directories
 
 #+begin_src emacs-lisp
   (setq user-emacs-directory "~/.emacs.d/")
-  (when (not (file-directory-p user-emacs-directory))
-    (make-directory user-emacs-directory))
+#+end_src
 
+** Disable backup files
+
+#+begin_src emacs-lisp
   (setq make-backup-files nil)
 #+end_src
 
-*** Auto-save files
+** TODO Auto-save files
 
 #+begin_src emacs-lisp
   (setq auto-save-file-name-transforms
     `((".*" "~/.cache/emacs/" t)))
 #+end_src
-*** Custom variables file
-
-This way I can build init.el from init.org without loosing custom variables.
+** Customization information file
 
 #+begin_src emacs-lisp
   (setq custom-file "~/.emacs.d/custom.el")
 #+end_src
 
-** Escape to quit prompts
+** COMMENT Escape to quit prompts
 
 Press escape to quit most prompts.
 
@@ -256,13 +245,104 @@ I was getting very bad startup times so I added this just to be sure.
       :keymaps 'override
       :prefix "SPC"))
 #+end_src
-* Editor
 
-Basic editor settings. For more advanced tools see [[#ide][IDE]].
+** Treat underline as part of the word
 
-** Vim keybindings
+#+begin_src emacs-lisp
+  (use-package emacs
+    :hook ((prog-mode
+            text-mode
+            conf-mode)
+           . (lambda ()
+               (modify-syntax-entry ?_ "w"))))
+#+end_src
 
-*** Evil Mode
+** Show column number in modeline
+
+#+begin_src emacs-lisp
+  (column-number-mode 1)
+#+end_src
+
+** Show line numbers
+
+Enable line numbers for some modes.
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :hook ((text-mode
+            prog-mode
+            conf-mode) . display-line-numbers-mode))
+#+end_src
+
+** Absolute and relative line numbers
+
+Show absolute line numbers for insert state and relative for others.
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :after evil
+    :hook ((evil-insert-state-entry
+            . (lambda ()
+                (setq display-line-numbers-type t)
+                (display-line-numbers-mode 1)))
+           (evil-insert-state-exit
+            . (lambda ()
+                (setq display-line-numbers-type 'relative)
+                (display-line-numbers-mode 1)))))
+#+end_src
+
+** Truncate long lines
+
+#+begin_src emacs-lisp
+  (set-default 'truncate-lines t)
+#+end_src
+
+** Indent using 4 spaces
+
+#+begin_src emacs-lisp
+  (setq-default tab-width 4)
+  (setq-default indent-tabs-mode nil)
+#+end_src
+
+** Refresh buffers on change
+
+Refreshs file automatically when its changed by other program.
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :config
+    (global-auto-revert-mode 1))
+#+end_src
+
+** Use =ibuffer= (builtin) instead of list-buffers.
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :bind ("C-x C-b" . ibuffer))
+#+end_src
+
+** Persist minibuffer's history
+
+In ~M-x~, ~C-x C-f~ and so on.
+
+#+begin_src emacs-lisp
+  (savehist-mode 1)
+  (setq history-length 100)
+#+end_src
+
+** Display date, time and battery in modeline
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :config
+    (setq display-time-day-and-date t)
+    (setq display-time-format "%a %H:%M %d/%m")
+    (setq display-time-default-load-average nil)
+    (display-time-mode 1)
+    (display-battery-mode 1))
+#+end_src
+
+** =evil-mode= - vim mode emulation
 
 evil mode and evil-collection provide vim-like bindings.
 
@@ -291,9 +371,9 @@ evil mode and evil-collection provide vim-like bindings.
     (evil-collection-init))
 #+end_src
 
-*** Evil Surround
+** =evil-surround= - surround text with parenthesis, quotes, and so on
 
-Like you surround.
+Works exactly like you-surround.
 
 #+begin_src emacs-lisp
   (use-package evil-surround
@@ -302,9 +382,9 @@ Like you surround.
     (global-evil-surround-mode 1))
 #+end_src
 
-*** Keychord
+** =key-chord= - time-based keymaps for evil
 
-I only use it to map ~jk~ to ~<Escape>~.
+I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
 
 #+begin_src emacs-lisp
   (use-package key-chord
@@ -315,117 +395,13 @@ I only use it to map ~jk~ to ~<Escape>~.
     (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 #+end_src
 
-** Treat underline as part of word
-
-#+begin_src emacs-lisp
-  (use-package emacs
-    :hook ((prog-mode
-            text-mode
-            conf-mode)
-           . (lambda ()
-               (modify-syntax-entry ?_ "w"))))
-#+end_src
-
-* Lines
-
-Show column number.
-
-#+begin_src emacs-lisp
-  (column-number-mode 1) ;; TODO
-#+end_src
-
-Absolute line numbers for insert state and relative for others.
-
-#+begin_src emacs-lisp
-  (use-package emacs
-	:hook ((evil-insert-state-entry
-			. (lambda ()
-				(setq display-line-numbers-type t)
-				(display-line-numbers-mode 1)))
-		   (evil-insert-state-exit
-			. (lambda ()
-				(setq display-line-numbers-type 'relative)
-				(display-line-numbers-mode 1)))))
-#+end_src
-
-Enable line numbers for some modes.
-
-#+begin_src emacs-lisp
-  (use-package emacs
-    :hook ((text-mode
-            prog-mode
-            conf-mode) . display-line-numbers-mode))
-#+end_src
-
-Wrap long lines.
-
-#+begin_src emacs-lisp
-  ;;(global-visual-line-mode 1)
-#+end_src
-
-Truncate long lines.
-
-#+begin_src emacs-lisp
-  (set-default 'truncate-lines t)
-#+end_src
-
-Automatically break line wider than 80 cols.
-
-#+begin_src emacs-lisp
-  (setq-default fill-column 80)
-#+end_src
-
-** Tabs
-
-#+begin_src emacs-lisp
-  (setq-default tab-width 4)
-  (setq-default indent-tabs-mode nil)
-#+end_src
-
-Indent wrapped lines.
-
-#+begin_src emacs-lisp
-  ;;(add-hook 'visual-line-mode 'adaptive-wrap-prefix-mode)
-#+end_src
-
-** Scroll
-
-I don't know how to explain this shit.
-But it improves scrolling for sure.
-
-TODO: check what each settings do.
-
-#+begin_src emacs-lisp
-  ;; (setq scroll-step 1)
-  ;; (setq scroll-margin 1)
-  ;; (setq scroll-conservatively 1000)
-  ;; (setq scroll-preserve-screen-position 1)
-#+end_src
-
-** TODO Whitspaces
-
-*** TODO Highlight trailing whitespaces
-
-TODO: add other modes
-
-#+begin_src emacs-lisp
-  (add-hook 'prog-mode '(setq show-trailing-whitespace t))
-#+end_src
-
-*** TODO Show symbols for spaces and tabs
-TODO: show a symbol like ~>~ for tab and ~•~, ideally in visual mode.
-
-** Focus
-
-*** Focus Mode
-
-Makes only the current area highlighted.
+** COMMENT =focus-mode= - highlight only the current area
 
 #+begin_src emacs-lisp
   (use-package focus :defer)
 #+end_src
 
-*** Highlight current line
+** =hl-line-mode= - highlight current line
 
 #+begin_src emacs-lisp
   (use-package emacs
@@ -433,28 +409,13 @@ Makes only the current area highlighted.
     (global-hl-line-mode 1))
 #+end_src
 
-** TODO Multiple Cursors
+** COMMENT =evil-mc= - multiple cursors like VSCode
 
 #+begin_src emacs-lisp
   (use-package evil-mc :defer)
 #+end_src
 
-* Visuals
-
-** Theme
-
-*** Doom Themes
-
-#+begin_src emacs-lisp
-  (use-package doom-themes
-    :defer 0.3
-    :config
-    (setq doom-themes-enable-bold t)
-    (setq doom-themes-enable-italic t)
-    (load-theme 'doom-one t))
-#+end_src
-
-** Icons
+** =all-the-icons= + =all-the-icons-dired= - icon packages
 
 #+begin_src emacs-lisp
   (use-package all-the-icons
@@ -468,11 +429,18 @@ Makes only the current area highlighted.
   ;;(nerd-icons-install-fonts t)
 #+end_src
 
-** Modeline
+** =doom-themes= - nice themes
 
-*** Doom Modeline
+#+begin_src emacs-lisp
+  (use-package doom-themes
+    :defer 0.3
+    :config
+    (setq doom-themes-enable-bold t)
+    (setq doom-themes-enable-italic t)
+    (load-theme 'doom-one t))
+#+end_src
 
-Nicer modeline.
+** =doom-modeline= - nice modeline
 
 #+begin_src emacs-lisp
   (use-package doom-modeline
@@ -483,7 +451,10 @@ Nicer modeline.
     (doom-modeline-mode 1))
 #+end_src
 
-** Breadcrumb
+** =breadcrumb= - summary of your cursor position
+
+Tells you in what "component" and which file you are.
+Like =init.org : Config > breacrumb=.
 
 #+begin_src emacs-lisp
   (use-package breadcrumb
@@ -495,13 +466,13 @@ Nicer modeline.
      . breadcrumb-local-mode))
 #+end_src
 
-** Fringe
+** COMMENT =fringe-mode= (builtin)
 
 #+begin_src emacs-lisp
   (fringe-mode 8)
 #+end_src
 
-** Flymake
+** =flymake= (builtin) - syntax checking
 
 #+begin_src emacs-lisp
   (use-package sideline-flymake
@@ -511,17 +482,16 @@ Nicer modeline.
     (setq sideline-backends-right '(sideline-flymake)))
 #+end_src
 
-* IDE
-
-** Auto close pairs
-
-Auto close pairs like '',"", [ ], { }, depending on the file type.
+** =eletrict-pair-mode= (builtin) - auto close pairs based on mode
 
 #+begin_src emacs-lisp
   (electric-pair-mode 1)
 #+end_src
 
-** Projects
+** =project.el= (builtin) - managing projects
+
+Helps you manage projects based on version control systems, like
+git repos. Check =C-x p p=.
 
 Launch vterm in the project's root directory.
 
@@ -554,8 +524,7 @@ Customize project.el commands.
             (magit-project-status "Magit" ?m))))
 #+end_src
 
-** Languages
-*** Go
+** =go-mode= - Go support
 
 #+begin_src emacs-lisp
   (use-package go-mode
@@ -564,35 +533,35 @@ Customize project.el commands.
     (go-mode . eglot-ensure))
 #+end_src
 
-Tool for adding/removing struct tags.
+** =go-tag= - automatically adding/removing struct tags
 
 #+begin_src emacs-lisp
   (use-package go-tag :defer)
 #+end_src
 
-*** Nix
+** =nix-mode= - Nix support
 #+begin_src emacs-lisp
   (use-package nix-mode :defer)
 #+end_src
 
-*** YAML
+** =yaml-mode= - YAML support
 #+begin_src emacs-lisp
   (use-package yaml-mode :defer)
 #+end_src
 
-*** Markdown
+** =markdown-mode= - Markdown support
 #+begin_src emacs-lisp
   (use-package markdown-mode :defer)
 #+end_src
 
-*** Python
+** =python-mode= (builtin) - Python support
 
 #+begin_src emacs-lisp
   (use-package emacs
     :hook (python-mode . eglot-ensure))
 #+end_src
 
-*** XML
+** =nxml-mode= (builtin) - XML support
 
 #+begin_src emacs-lisp
   (use-package emacs
@@ -601,13 +570,13 @@ Tool for adding/removing struct tags.
     (setq nxml-attribute-indent 4))
 #+end_src
 
-*** Vue
+** =vue-mode= - Vue support
 
 #+begin_src emacs-lisp
   (use-package vue-mode)
 #+end_src
 
-*** C
+** =c-mode= (builtin) - C/C++ support
 
 #+begin_src emacs-lisp
   (use-package emacs
@@ -616,16 +585,15 @@ Tool for adding/removing struct tags.
                       (setq indent-tabs-mode nil))))
 #+end_src
 
-*** TODO JavaScript
-** LSP
+** COMMENT =javascript-mode=
+** =eglot= (builtin) - LSP client
 
-*** Eglot
-
-Eglot is a builtin LSP client for emacs.
+Eglot is a builtin LSP (Language Server Protocol) client for emacs.
 
 #+begin_src emacs-lisp
   (use-package eglot
     :hook
+    ;; before saving, if eglot is enabled, try to format and organize imports
     (before-save
      . (lambda ()
          (when (bound-and-true-p eglot-managed-p)
@@ -644,25 +612,28 @@ Eglot is a builtin LSP client for emacs.
     (setq eglot-sync-connect nil))
 #+end_src
 
-*** Eldoc and Eldoc box
+** =eldoc= (builtin) - showing documentation of symbols
 
-Show docs as a hover box instead of using echo area.
+It also retrieves data from =eglot=.
+
+#+begin_src emacs-lisp
+    (use-package emacs
+      :config
+      (setq eldoc-echo-area-use-multiline-p 1))
+#+end_src
+
+** =eldoc-box= - eldoc in a box below cursor
+
+I use eldoc-box to show docs as a hover box instead of using echo area.
 
 #+begin_src emacs-lisp
   (use-package eldoc-box
       :config
       (eldoc-box-hover-at-point-mode 1)
-      (setq eldoc-echo-area-use-multiline-p 1)
       (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
-
 #+end_src
 
-** Autosuggestion and Completion
-
-*** Corfu
-
-Emacs supports completion builtin with ~C-M-i~, but for a VSCode-like completion I use corfu.
-You can still use ~C-M-i~ to launch corfu.
+** =corfu= - completion popup like VS Code's
 
 #+begin_src emacs-lisp
   (use-package corfu
@@ -673,12 +644,13 @@ You can still use ~C-M-i~ to launch corfu.
     (setq corfu-auto-delay 0.2)
     (setq corfu-auto-prefix 1)
     (setq corfu-cycle t)
+    (corfu-popupinfo-mode 1)
     :bind
     (:map global-map
           ("C-SPC" . completion-at-point)))
 #+end_src
 
-*** Cape
+** COMMENT =cape=
 
 Completion-at-point extensions.
 
@@ -694,13 +666,15 @@ Completion-at-point extensions.
                        (add-to-list 'completion-at-point-functions #'cape-file)))))
 #+end_src
 
-** COMMENT DAP
+** COMMENT =dap-mode=
 
 #+begin_src emacs-lisp
   (use-package dap-mode)
 #+end_src
 
-** Direnv
+** =envrc= - direnv integration
+
+Works better than =direnv-mode= for me.
 
 #+begin_src emacs-lisp
   (use-package envrc
@@ -708,7 +682,7 @@ Completion-at-point extensions.
     (envrc-global-mode))
 #+end_src
 
-** Recent files
+** =recentf-mode= - persistent history of recent files
 
 Show recent files with ~C-x C-r~.
 
@@ -719,7 +693,7 @@ Show recent files with ~C-x C-r~.
   (global-set-key "\C-x\ \C-r" 'recentf-open)
 #+end_src
 
-** "Zen Mode"
+** =olivetti= - horizontal paddings for windows
 
 #+begin_src emacs-lisp
   (use-package olivetti
@@ -755,62 +729,60 @@ Show recent files with ~C-x C-r~.
     :bind
     (("<f9>" . ews-distraction-free)))
 
-** Save emacs state
-
-Save session when emacs is closed and restore when reopened.
+** COMMENT =desktop-save-mode= - restore last session when opening emacs
 
 #+begin_src emacs-lisp
-  ;;(desktop-save-mode 1)
+  (desktop-save-mode 1)
 #+end_src
 
-** Cursor position
-
-Save cursor position per file.
+** =save-place-mode= - save cursor position per file
 
 #+begin_src emacs-lisp
   (save-place-mode 1)
 #+end_src
 
-** Search and Navigation
+** =consult= - multiple search utilities
 
 #+begin_src emacs-lisp
   (use-package consult
     :defer
     :bind
     (:map evil-normal-state-map
-          ("SPC g s" . consult-git-grep)
-          ("SPC l e" . consult-flymake)))
+          ;; analogous to project-find-regexp
+          ("SPC p g" . consult-git-grep)
+
+          ;; analogous to project-find-file
+          ("SPC p f" . consult-project-buffer)
+
+          ;; buffer errors
+          ("SPC b e" . consult-flymake)
+
+          ;; buffer definitions
+          ("SPC b d" . consult-imenu)))
 #+end_src
 
-** Tab Line
+** =tab-line= (builtin) - show buffers as tabs
+
+It works per window, showing the recent buffers you opened in that window.
 
 #+begin_src emacs-lisp
   (use-package emacs
     :config
-    (setq tab-line-switch-cycling t)
-    :bind
-    (:map evil-normal-state-map
-          ("SPC k" . kill-this-buffer)
-          ("SPC SPC l" . tab-line-switch-to-next-tab)
-          ("SPC SPC h" . tab-line-switch-to-prev-tab)))
+    (setq tab-line-switch-cycling t))
 #+end_src
 
-** Tab Bar
+** =tab-bar= (builtin) - tabs like vim
+
+I use it just to make 2 or 3 different "window layouts" and switch
+between them
 
 #+begin_src emacs-lisp
   (use-package emacs
     :config
-    ;; (setq tab-bar-tab-hints t)
-    (setq tab-bar-show nil)
-    :bind
-    (:map evil-normal-state-map
-          ("gc" . tab-bar-close-tab)
-          ("gn" . tab-bar-new-tab)
-          ("gh" . tab-bar-switch-to-prev-tab)
-          ("gl" . tab-bar-switch-to-next-tab)))
+    (setq tab-bar-show nil))
 #+end_src
 
-** Whitespaces
+** =whitespace= (builtin) - show whitespaces as symbols
 
 #+begin_src emacs-lisp
   (use-package whitespace
@@ -820,21 +792,21 @@ Save cursor position per file.
     (setq whitespace-style '(face tabs spaces trailing space-mark tab-mark)))
 #+end_src
 
-** HTTP Client
+** =restclient= - http client
 
 #+begin_src emacs-lisp
   (use-package restclient :defer t)
 #+end_src
 
-** HTTP Server
+** =simple-httpd= - static http server
 
 #+begin_src emacs-lisp
   (use-package simple-httpd :defer t)
 #+end_src
 
-** Snippets 
+** COMMENT =yasnippet= - templates/snippets
 
-Yasnippet.
+Package for creating snippets.
 
 #+begin_src emacs-lisp
   (use-package yasnippet
@@ -857,11 +829,7 @@ Yasnippet.
           ("C-SPC" . yas-next-field-or-maybe-expand)))
 #+end_src
 
-* Window
-
-** Winner Mode
-
-Winner Mode can undo and redo window changes, like opening and closing.
+** =winner-mode= (builtin) - undo/redo window changes
 
 #+begin_src emacs-lisp
   (use-package emacs
@@ -873,48 +841,56 @@ Winner Mode can undo and redo window changes, like opening and closing.
     (winner-mode 1))
 #+end_src
 
-** COMMENT Don't move my windows!
+** =dired= (builtin) - file manager
+
+Automatically update dired when a file is changed.
 
 #+begin_src emacs-lisp
   (use-package emacs
+    :hook
+    (dired-mode . dired-hide-details-mode)
     :config
-    (setq ))
+    (setq global-auto-revert-non-file-buffers t)
+    :bind
+    (:map dired-mode-map
+          ("S-TAB" . dired-find-file-other-window)))
 #+end_src
 
-* Git
+** =dired-subtree= - add subt tree view to dired
 
-** Magit
+#+begin_src emacs-lisp
+  (use-package dired-subtree
+      :config
+      :bind
+      (:map dired-mode-map
+            ("TAB" . dired-subtree-toggle)))
+#+end_src
+
+** =magit= - git interface
 
 I use the default ~C-x g~ binding.
-
-TODO: hook to file save
 
 #+begin_src emacs-lisp
   (use-package magit :defer)
 #+end_src
 
-** Diff Highlight
-
-TODO: hook to magit
+** =diff-hl= - highlight uncommited changes
 
 #+begin_src emacs-lisp
   (use-package diff-hl
     :defer 1
     :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
-           (magit-post-refresh . diff-hl-magit-post-refresh))
+           (magit-post-refresh . diff-hl-magit-post-refresh)
+           (after-save . diff-hl-update))
     :init
     (global-diff-hl-mode 1))
 #+end_src
 
-** Blamer
-
-Blamer shows a git blame similar to GitLens in VSCode.
+** =blamer-mode= - git blame like gitlens
 
 #+begin_src emacs-lisp
   (use-package blamer :defer)
 #+end_src
-
-* Workspaces
 
 ** COMMENT Perspective
 
@@ -928,11 +904,7 @@ Blamer shows a git blame similar to GitLens in VSCode.
           ("SPC SPC h" . persp-prev)))
 #+end_src
 
-* Keybindings
-
-** Which Key
-
-~whick-key~ suggests key combinations as you press them.
+** =whick-key= - suggests key combinations as you press them.
 
 #+begin_src emacs-lisp
   (use-package which-key
@@ -941,9 +913,9 @@ Blamer shows a git blame similar to GitLens in VSCode.
     (which-key-mode))
 #+end_src
 
-* Integrated Terminal
+** =vterm= - integrated terminal
 
-** Vterm
+Launch vterm with a custom buffer name.
 
 #+begin_src emacs-lisp
   (defun my/vterm (name)
@@ -960,60 +932,7 @@ Blamer shows a git blame similar to GitLens in VSCode.
           (("SPC t" . my/vterm))))
 #+end_src
 
-* File Manager
-
-** Dired
-
-Automatically update dired when a file is changed.
-
-#+begin_src emacs-lisp
-  (use-package emacs
-    :hook
-    (dired-mode . dired-hide-details-mode)
-    :config
-    (setq global-auto-revert-non-file-buffers t)
-    :bind
-    (:map dired-mode-map
-          ("<tab>" . dired-find-file-other-window)))
-#+end_src
-
-* Buffers
-
-** File buffers
-
-Refreshs file automatically when its changed by other program. Also refreshes dired.
-
-#+begin_src emacs-lisp
-  (use-package emacs
-    :bind
-    (:map evil-normal-state-map
-          (("gb" . evil-switch-to-windows-last-buffer)
-           ("M-p" . evil-prev-buffer)
-           ("M-n" . evil-next-buffer)))
-    :config
-    (global-auto-revert-mode 1))
-
-#+end_src
-
-Use ibuffer instead of list-buffers.
-
-#+begin_src emacs-lisp
-  (use-package emacs
-    :bind ("C-x C-b" . ibuffer))
-#+end_src
-
-** Minibuffer
-
-*** Persist minibuffer's history
-
-In ~M-x~, ~C-x C-f~ and so on.
-
-#+begin_src emacs-lisp
-  (savehist-mode 1)
-  (setq history-length 100)
-#+end_src
-
-*** Vertico
+** =vertico= - vertical completion
 
 Improves minibuffer by showing multiple options in a vertical list.
 
@@ -1024,6 +943,7 @@ Improves minibuffer by showing multiple options in a vertical list.
     (vertico-mouse-mode)
     (setq vertico-count 20)
     (setq vertico-cycle t)
+    (setq vertico-sort-function #'vertico-sort-history-alpha)
 
     :bind
     (:map vertico-map
@@ -1031,14 +951,14 @@ Improves minibuffer by showing multiple options in a vertical list.
           ("C-k" . vertico-previous)))
 #+end_src
 
-Make vertico appear at the center of the screen.
+** =vertico-posframe= - make vertico appear as a floating window
 
 #+begin_src emacs-lisp
   (use-package vertico-posframe
     :config (vertico-posframe-mode))
 #+end_src
 
-*** Marginalia
+** =marginalia= - show more data for help functions
 
 - Adds description for commands in ~M-x~
 - Adds extra info to find file
@@ -1050,9 +970,7 @@ Make vertico appear at the center of the screen.
     (marginalia-mode))
 #+end_src
 
-*** Orderless
-
-Provides fuzzy search for files, commands, variables, and so on.
+** =orderless= - fuzzy completion
 
 #+begin_src emacs-lisp
   (use-package orderless
@@ -1061,545 +979,32 @@ Provides fuzzy search for files, commands, variables, and so on.
     (completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
 
-* Org Mode
-
-** Source blocks
-
-Open ~C-c '~ in the same window
-
-#+begin_src emacs-lisp
-  (setq org-src-window-setup 'current-window)
-#+end_src
-
-** Indirect Buffer
-
-#+begin_src emacs-lisp
-  (setq org-indirect-buffer-display 'current-window)
-#+end_src
-
-** Auto fill
+** =auto-fill-mode= (builtin) - automatically break long lines
 
 #+begin_src emacs-lisp
   (use-package org
     :hook (org-mode . auto-fill-mode))
 #+end_src
 
-
-** Sparse Tree
+** =emms= - music player
 
 #+begin_src emacs-lisp
-  (use-package org
+  (use-package emms
     :config
-    (setq org-sparse-tree-default-date-type 'active))
-#+end_src
-
-** COMMENT Fold drawer
-
-#+begin_src emacs-lisp
-  (defun my/org-fold-hide-drawer-all ()
-    (interactive)
-    (org-fold-hide-drawer-all))
-#+end_src
-
-** Refile
-
-#+begin_src emacs-lisp
-  (use-package org
-    :config
-    (setq org-directory "~/Sync/Org")
-    (setq org-outline-path-complete-in-steps t)
-    (setq org-refile-targets nil)
-    (advice-add 'org-refile :after 'org-save-all-org-buffers))
-#+end_src
-
-** Habit
-
-#+begin_src emacs-lisp
-  (use-package org
-    :config
-    (require 'org-habit)
-    (add-to-list 'org-modules 'org-habit)
-    (setq org-habit-graph-column 60))
-#+end_src
-
-
-** Priority
-
-#+begin_src emacs-lisp
-  (use-package org
-    :config
-    (setq org-priority-highest ?A)
-    (setq org-priority-lowest ?D)
-    (setq org-priority-default ?D)
-    (setq org-priority-faces
-          ;; nil
-          '((?A . (:foreground "gray"))
-            (?B . (:foreground "gray"))
-            (?C . (:foreground "gray"))
-            (?D . (:foreground "gray")))
-          ))
-#+end_src
-
-
-*** [#A] Urgent
-
-Stop whatever you are doing to do this.
-
-*** [#B] Next
-
-Tasks you should do when you finish what is in progress.
-
-*** [#C] Maybe
-
-Tasks to reconsider in the future if it should be done.
-
-*** [#D] "Stuff" (default)
-
-I use this only to differenciate delayed [#C] and default [#D]
-
-
-** Tags
-
-#+begin_src emacs-lisp
-  (use-package org
-    :config
-    (setq org-tags-column -90)
-    (setq org-tag-alist nil))
-#+end_src
-
-** Tables
-
-#+begin_src emacs-lisp
-  (use-package org
+    (emms-all)
+    (emms-default-players)
     :bind
-    (:map org-mode-map
-          ("C-c h" . org-table-move-cell-left)
-          ("C-c l" . org-table-move-cell-right)
-          ("C-c k" . org-table-move-cell-up)
-          ("C-c j" . org-table-move-cell-down)))
+    (:map evil-normal-state-map
+          ("SPC m j" . emms-next)
+          ("SPC m k" . emms-previous)
+          ("SPC m h" . emms-seek-backward)
+          ("SPC m l" . emms-seek-forward)
+          ("SPC m SPC" . emms-pause)
+          ("SPC m s" . emms-stop)
+          ("SPC m e" . emms)))
 #+end_src
 
-** TODOs
-
-#+begin_src emacs-lisp
-  (use-package org
-    :config
-    (setq org-log-into-drawer t)
-    (setq org-log-done nil)
-    (setq org-log-reschedule t)
-    (setq org-log-redeadline t)
-    (setq org-hierarchical-todo-statistics t) ;; TODO cookie count not recursive
-    (setq org-todo-keywords
-          '((sequence "TODO(t)" "NEXT(n!)" "WAIT(w@)" "|" "DONE(d!)" "CANC(c@)")
-            (sequence "PROJ(p)" "|" "FINI(f!)")))
-    :bind
-    (("C-c C-x C-o" . org-clock-out)
-     ("C-c C-x C-j" . org-clock-goto)))
-#+end_src
-
-#+begin_src emacs-lisp
-  (defun my/clocktable-write (&rest args)
-    (apply #'org-clocktable-write-default args)
-    (save-excursion
-      (forward-char)
-      (org-table-move-column-right)
-      (org-table-move-column-right)))
-
-  (setq org-duration-format 'h:mm)
-#+end_src
-
-
-*** COMMENT C-c C-c
-
-C-c C-c over a TODO item calls =org-todo= instead of =org-set-tags-command=.
-
-#+begin_src emacs-lisp
-  (advice-add 'org-ctrl-c-ctrl-c
-              :around
-              (lambda (orig-fun &rest args)
-                (if (and
-                     (org-get-heading t t t t)
-                     (org-get-todo-state))
-                    ;; its a to-do item
-                    (org-todo)
-                  ;; its not a to-do item
-                  (apply orig-fun args))))
-#+end_src
-
-** Visuals
-
-Show headings with special bullets instead o asterisks.
-
-#+begin_src emacs-lisp
-  (use-package org-bullets
-    :hook (org-mode . org-bullets-mode))
-#+end_src
-
-Visually indent text inside headings.
-
-#+begin_src emacs-lisp
-  (use-package org
-    :hook (org-mode . org-indent-mode))
-#+end_src
-
-Change title and heading sizes.
-
-#+begin_src emacs-lisp
-  (defvar my/org-big-fonts '((org-document-title . 1.8)
-                             (org-level-1 . 1.6)
-                             (org-level-2 . 1.4)
-                             (org-level-3 . 1.2)))
-  (defun my/org-big ()
-    (interactive)
-    (dolist (face my/org-big-fonts)
-      (set-face-attribute (car face) nil :height (cdr face))))
-
-  (defun my/org-smol ()
-    (interactive)
-    (dolist (face my/org-big-fonts)
-      (set-face-attribute (car face) nil :height 1.0)))
-#+end_src
-
-Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
-
-#+begin_src emacs-lisp
- (setq org-hide-emphasis-markers t)
-#+end_src
-
-Show emphasis markers when cursor is over the word.
-
-#+begin_src emacs-lisp
-  (use-package org-appear
-      :hook
-      (org-mode . org-appear-mode))
-#+end_src
-
-Replace ~-~ by ~•~ on unordered lists.
-
-#+begin_src emacs-lisp
-  (font-lock-add-keywords 'org-mode
-      '(("^ *\\([-]\\) "
-      (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-#+end_src
-
-Display LaTeX automatically inside org buffers.
-
-#+begin_src emacs-lisp
-  (use-package org-fragtog
-    :after org
-    :hook
-    (org-mode . org-fragtog-mode)
-    :custom
-    (org-startup-with-latex-preview t)
-    :custom
-    (org-format-latex-options
-     (plist-put org-format-latex-options :scale 2)
-     (plist-put org-format-latex-options :foreground 'auto)
-     (plist-put org-format-latex-options :background 'auto)))
-#+end_src
-
-** Org Capture
-
-#+begin_src emacs-lisp
-  (use-package org
-    :bind
-    (:map global-map
-          ("C-c c" . org-capture))
-    :config
-    (setq org-capture-templates
-          '(("c"
-             "Capture to inbox"
-             entry
-             (file+headline "tasks.org" "Tasks")
-             "* TODO %?\n%U")
-            ("j" "Journal"
-             entry
-             (file+headline "journal.org" "Journal")
-             "* %T - %?"))))
-#+end_src
-
-** TODO COMMENT color calendar
-
-#+begin_src emacs-lisp
-  (defadvice calendar-generate-month
-      (after highlight-weekend-days (month year indent) activate)
-    "Highlight weekend days"
-    (dotimes (i 31)
-      (let ((date (list month (1+ i) year))
-            (count (length (org-agenda-get-day-entries
-                            "~/Git/Org/tasks.org" (list month (1+ i) year)))))
-        (unless (= count 0)
-          (calendar-mark-visible-date date)))))
-#+end_src
-
-
-** Org Roam
-
-#+begin_src emacs-lisp
-  (use-package org-roam
-    :defer
-    :config
-    (when (not (file-directory-p "~/Sync/Org/Roam"))
-      (make-directory "~/Sync/Org/Roam"))
-    (setq org-roam-directory "~/Sync/Org/Roam")
-
-    (org-roam-db-autosync-enable)
-
-    :bind
-    (("C-c n f" . org-roam-node-find)
-     ("C-c n i" . org-roam-node-insert)))
-#+end_src
-
-** Org Roam UI
-
-Visualize Roam graph in real time.
-
-#+begin_src emacs-lisp
-  (use-package org-roam-ui :defer)
-#+end_src
-
-** Sort
-
-#+begin_src emacs-lisp
-  (defun my/org-sort ()
-    (interactive)
-    (org-sort-entries nil ?T)
-    (org-sort-entries nil ?p)
-    (org-sort-entries nil ?o))
-#+end_src
-
-** Org Agenda
-
-Custom agenda views, agenda settings, and so on.
-
-#+begin_src emacs-lisp
-  (defun my/org-agenda-show-all-dates ()
-    (interactive)
-    (setq org-agenda-show-all-dates
-          (if org-agenda-show-all-dates nil t))
-    (org-agenda-redo))
-
-  (defun my/org-agenda-breadcrumb ()
-    (let ((parent (cdr (org-get-outline-path))))
-      (if parent
-          (format "[%s] " (mapconcat 'identity parent " > "))
-        "")))
-
-
-  (use-package org
-    :init
-    (setq org-scheduled-past-days 100
-          org-agenda-start-with-log-mode nil
-          org-agenda-window-setup 'current-window
-          org-agenda-block-separator ?―
-          org-agenda-start-day nil
-          org-agenda-tags-column 'auto
-          org-agenda-span 1
-          org-agenda-show-all-dates nil
-          org-agenda-skip-deadline-if-done t
-          org-agenda-clockreport-parameter-plist '(:link t :maxlevel 2)
-          org-agenda-skip-scheduled-if-done nil
-          org-deadline-warning-days 3
-          org-agenda-start-with-follow-mode nil
-          org-agenda-compact-blocks nil
-          org-agenda-use-time-grid t
-          org-agenda-skip-archived-trees nil
-          org-agenda-current-time-string "←"
-          org-agenda-files '("tasks.org")
-          org-agenda-log-mode-items '(closed state)
-          org-stuck-projects '("TODO=\"PROJ\"" ("NEXT" "WAIT") nil "")
-
-          org-agenda-todo-keyword-format "%s"
-          org-agenda-prefix-format '((agenda . "  %-12t %s %(my/org-agenda-breadcrumb)")
-                                     (todo . "  %(my/org-agenda-breadcrumb)")
-                                     (tags . "  %(my/org-agenda-breadcrumb)")
-                                     (search . "  %(my/org-agenda-breadcrumb)"))
-
-          org-agenda-time-grid
-          '((daily today require-timed)
-            (800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200)
-            " ┄┄┄┄┄ " "")
-
-          org-agenda-custom-commands
-          '(("p" "Projects"
-             ((todo "PROJ"
-                        ((org-agenda-overriding-header "Projects")))
-             ))
-            ("a" "Agenda"
-             ((agenda ""
-                      ((org-agenda-span 10)
-                       (org-scheduled-past-days 100)
-                       (org-deadline-warning-days 10)))))
-            ("d" "To-do"
-             ((agenda ""
-                      ((org-agenda-span 'day)
-                       (org-agenda-time-grid '((daily today require-timed)
-                          ()
-                          " ┄┄┄┄┄ " ""))))
-              (tags-todo "+PRIORITY=\"A\""
-                         ((org-agenda-overriding-header "Urgent")))
-              (tags-todo "-TODO=\"WAIT\"-PRIORITY=\"C\""
-                         ((org-agenda-overriding-header "In progress")
-                          (org-agenda-skip-function
-                           '(org-agenda-skip-entry-if 'notregexp "CLOCK: \\[." 'scheduled))))
-              (todo "WAIT"
-                    ((org-agenda-overriding-header "Waiting")
-                     (org-agenda-sorting-strategy '(alpha-up))))
-              (todo "NEXT"
-                         ((org-agenda-overriding-header "Next Actions")
-                          (org-agenda-sorting-strategy '(alpha-up))
-                          (org-agenda-skip-function
-                           '(org-agenda-skip-entry-if
-                             'regexp "CLOCK: \\[."
-                             'scheduled))))
-              (tags-todo "+TODO=\"TODO\"+PRIORITY=\"D\"+LEVEL=2"
-                         ((org-agenda-overriding-header "Stuff")
-                          (org-agenda-skip-function
-                           '(org-agenda-skip-entry-if
-                             'regexp "CLOCK: \\[."
-                             'scheduled 'done))))
-              (tags-todo "+PRIORITY=\"C\"+LEVEL=2"
-                         ((org-agenda-overriding-header "Later")
-                          (org-agenda-skip-function
-                           '(org-agenda-skip-entry-if 'scheduled 'done))))))
-            ("w" "Agenda"
-             ((agenda ""
-                      ((org-agenda-files '("work.org"))
-                       (org-agenda-span 100)
-                       (org-scheduled-past-days 0)
-                       (org-deadline-warning-days 0)))))
-            ("e" "Tasks by effort"
-             ((tags-todo "-TODO=\"DONE\"-TODO=\"FINI\"+Effort>\"\""
-                         ((org-agenda-overriding-header "Tasks by effort")
-                          (org-agenda-sorting-strategy '(effort-up))
-                          (org-agenda-skip-function
-                           '(org-agenda-skip-entry-if 'scheduled))
-                          (org-agenda-prefix-format '((tags . "%-5e - ")))))))
-            ("E" "Tasks without effort"
-             ((tags-todo "+TODO=\"TODO\"+Effort=\"\""
-                         ((org-agenda-overriding-header "Tasks without effort")
-                          (org-agenda-skip-function
-                           '(org-agenda-skip-entry-if 'scheduled))))))))
-
-    (custom-set-faces
-     '(org-agenda-current-time ((t (:foreground "green" :weight bold)))))
-
-    :bind
-    ((:map global-map
-           ("C-c a" . org-agenda)
-           ("C-'" . org-cycle-agenda-files))
-     (:map org-agenda-mode-map
-           ("C-a" . my/org-agenda-show-all-dates)
-           ("j" . org-agenda-next-line)
-           ("C-j" . org-agenda-goto-date)
-           ("h" . org-agenda-earlier)
-           ("l" . org-agenda-later)
-           ("C-d" . evil-scroll-down)
-           ("C-w C-w" . evil-window-next)
-           ("C-u" . evil-scroll-up)
-           ("M-g" . org-agenda-toggle-time-grid)
-           ("{" . org-agenda-backward-block)
-           ("}" . org-agenda-forward-block)
-           ("z" . evil-scroll-line-to-center)
-           ("g" . evil-goto-first-line)
-           ("G" . evil-goto-line)
-           ("k" . org-agenda-previous-line))))
-#+end_src
-
-*** COMMENT Example agenda
-
-#+begin_src emacs-lisp
-  (use-package org
-    :config
-    (setq org-agenda-files '("exemplo.org")))
-#+end_src
-
-
-** Org Present
-
-#+begin_src emacs-lisp
-  (use-package org-present
-    :defer
-    :hook ((org-present-mode
-            . (lambda ()
-                (org-present-hide-cursor)
-				(setq display-line-numbers-type nil)
-                (display-line-numbers-mode 1)))
-           (org-present-mode-quit
-            . (lambda ()
-                (org-present-show-cursor)
-				(setq display-line-numbers-type 'relative)
-                (display-line-numbers-mode 1)))))
-#+end_src
-
-** Org Drill
-
-#+begin_src emacs-lisp
-  (use-package org-drill
-    :config
-    (add-to-list 'org-modules 'org-drill))
-
-  (advice-add 'org-drill-time-to-inactive-org-timestamp :override
-              (lambda (time)
-                "Convert TIME into org-mode timestamp."
-                (format-time-string
-                 (concat "[" (cdr org-time-stamp-formats) "]")
-                 time)))
-#+end_src
-
-** Notifications for events
-
-#+begin_src emacs-lisp
-  (use-package emacs
-    :after notifications
-    :config
-    (setq appt-message-warning-time 60
-          appt-display-interval 10
-          appt-display-mode-line nil)
-
-    (setq appt-disp-window-function
-          (lambda (remaining new-time msg)
-            (notifications-notify
-             :title (format "In %s minutes" remaining)
-             :body msg
-             :urgency 'critical)))
-
-    (advice-add 'appt-check :before
-                (lambda (&rest args)
-                  (org-agenda-to-appt t)))
-    (appt-activate t))
-#+end_src
-
-** COMMENT Org Alert
-
-Probably won't need this no more.
-
-#+begin_src emacs-lisp
-  (use-package org-alert
-    :config
-    (setq alert-default-style 'notifications)
-    (when (eq system-type 'darwin)
-      (setq alert-default-style 'osx-notifier))
-    (setq org-alert-interval (* 5 60))
-    (setq org-alert-notify-cutoff 60)
-    (setq org-alert-notify-after-event-cutoff 5)
-    (setq org-alert-notification-title "ORG AGENDA")
-    (org-alert-enable))
-#+end_src
-
-** TOC ORG
-
-Generate a table-of-contents automatically.
-
-#+begin_src emacs-lisp
-  (use-package toc-org
-    :hook
-    (org-mode . toc-org-mode))
-#+end_src
-
-* Social
-
-** Telegram
+** =telega= - telegram client
 
 #+begin_src emacs-lisp
   (use-package telega
@@ -1608,15 +1013,7 @@ Generate a table-of-contents automatically.
     (setq telega-emoji-use-images nil))
 #+end_src
 
-** COMMENT Matrix
-
-#+begin_src emacs-lisp
-  (use-package ement :defer)
-#+end_src
-
-* News
-
-** RSS
+** =elfeed= - client for Atom and RSS feeds
 
 #+begin_src emacs-lisp
   (use-package elfeed
@@ -1643,13 +1040,9 @@ Generate a table-of-contents automatically.
 
 *** TODO org-elfeed
 
-* PDF
-
-** pdf-tools
+** =pdf-tools= - read PDFs in emacs
 
 I tried default emacs doc-view-mode but it didn't work with the PDFs I tested.
-
-Installing pdf-tools and opening a PDF file just works here.
 
 #+begin_src emacs-lisp
   (use-package pdf-tools
@@ -1658,32 +1051,27 @@ Installing pdf-tools and opening a PDF file just works here.
     (pdf-tools-install))
 #+end_src
 
-* EWW
+** =eww= (builtin) - simple browser
 
-** Wrap lines instead of truncating 
+Wrap lines instead of truncating
 
 #+begin_src emacs-lisp
   (use-package emacs
-    :hook (eww-mode . visual-line-mode)
-    :config
-    (setq eww-retrieve-command
-          ;;'("google-chrome-stable" "--headless" "--dump-dom")
-          nil
-          ))
+    :hook (eww-mode . visual-line-mode))
 #+end_src
 
-* Desktop
-
-** Time, date, battery
+** =activity-watch-mode= - track emacs usage using [[https://activitywatch.net][ActivityWatch]]
 
 #+begin_src emacs-lisp
-  (use-package emacs
+  (use-package activity-watch-mode
     :config
-    (setq display-time-day-and-date t)
-    (setq display-time-format "%a %H:%M %d/%m")
-    (setq display-time-default-load-average nil)
-    (display-time-mode 1)
-    (display-battery-mode 1))
+    (global-activity-watch-mode 1))
+#+end_src
+
+** COMMENT Matrix
+
+#+begin_src emacs-lisp
+  (use-package ement :defer)
 #+end_src
 
 
@@ -1792,8 +1180,7 @@ Installing pdf-tools and opening a PDF file just works here.
     (desktop-environment-mode))
 #+end_src
 
-
-* Emacs Lisp
+** COMMENT Remove all advices
 
 #+begin_src emacs-lisp
   (defun advice-remove-all (sym)
@@ -1804,27 +1191,466 @@ Installing pdf-tools and opening a PDF file just works here.
                  sym))
 #+end_src
 
-* Music
-
-** EMMS
+* Org Config
+** Org directory
 
 #+begin_src emacs-lisp
-  (use-package emms
-    :config
-    (emms-all)
-    (emms-default-players)
-    :bind
-    (:map evil-normal-state-map
-          ("SPC m j" . emms-next)
-          ("SPC m k" . emms-previous)
-          ("SPC m h" . emms-seek-backward)
-          ("SPC m l" . emms-seek-forward)
-          ("SPC m SPC" . emms-pause)
-          ("SPC m s" . emms-stop)
-          ("SPC m e" . emms)))
+  (setq org-directory "~/Sync/Org")
+#+end_src
+    
+** Org source block - open in the same window
+
+Open ~C-c '~ in the same window
+
+#+begin_src emacs-lisp
+  (setq org-src-window-setup 'current-window)
 #+end_src
 
-** Org Music
+** Org indirect buffer - open in the same window
+
+#+begin_src emacs-lisp
+  (setq org-indirect-buffer-display 'current-window)
+#+end_src
+
+** Org refile - save all buffers
+
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (setq org-outline-path-complete-in-steps t)
+    (setq org-refile-targets nil)
+    (advice-add 'org-refile :after 'org-save-all-org-buffers))
+#+end_src
+
+** Org priority - face and default value
+
+
+- [#A] Urgent
+
+Stop whatever you are doing to do this.
+
+- [#B] Next
+
+Tasks you should do when you finish what is in progress.
+
+- [#C] Maybe
+
+Tasks to reconsider in the future if it should be done.
+
+- [#D] "Stuff" (default)
+
+I use this only to differenciate delayed [#C] and default [#D]
+
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (setq org-priority-highest ?A)
+    (setq org-priority-lowest ?D)
+    (setq org-priority-default ?D)
+    (setq org-priority-faces
+          ;; nil
+          '((?A . (:foreground "gray"))
+            (?B . (:foreground "gray"))
+            (?C . (:foreground "gray"))
+            (?D . (:foreground "gray")))
+          ))
+#+end_src
+
+** Org tags - column
+
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (setq org-tags-column -90)
+#+end_src
+
+** Org TODOs - keywords and state logging
+
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (setq org-log-into-drawer t)
+    (setq org-log-done nil)
+    (setq org-log-reschedule t)
+    (setq org-log-redeadline t)
+    (setq org-hierarchical-todo-statistics t) ;; TODO cookie count not recursive
+    (setq org-todo-keywords
+          '((sequence "TODO(t)" "NEXT(n!)" "WAIT(w@)" "|" "DONE(d!)" "CANC(c@)")
+            (sequence "PROJ(p)" "|" "FINI(f!)")))
+    :bind
+    ;; the keybindings are the same, just made them global
+    (("C-c C-x C-o" . org-clock-out)
+     ("C-c C-x C-j" . org-clock-goto)))
+#+end_src
+
+*** COMMENT whut
+#+begin_src emacs-lisp
+  (defun my/clocktable-write (&rest args)
+    (apply #'org-clocktable-write-default args)
+    (save-excursion
+      (forward-char)
+      (org-table-move-column-right)
+      (org-table-move-column-right)))
+
+  (setq org-duration-format 'h:mm)
+#+end_src
+
+
+*** COMMENT C-c C-c
+
+C-c C-c over a TODO item calls =org-todo= instead of =org-set-tags-command=.
+
+#+begin_src emacs-lisp
+  (advice-add 'org-ctrl-c-ctrl-c
+              :around
+              (lambda (orig-fun &rest args)
+                (if (and
+                     (org-get-heading t t t t)
+                     (org-get-todo-state))
+                    ;; its a to-do item
+                    (org-todo)
+                  ;; its not a to-do item
+                  (apply orig-fun args))))
+#+end_src
+
+** Org Clock - keybindings
+
+#+begin_src emacs-lisp
+  (use-package org
+    :bind
+    (("C-c C-x C-o" . org-clock-out)
+     ("C-c C-x C-j" . org-clock-goto)))
+#+end_src
+
+** Org Capture - templates
+
+#+begin_src emacs-lisp
+  (use-package org
+    :bind
+    (:map global-map
+          ("C-c c" . org-capture))
+    :config
+    (setq org-capture-templates
+          '(("c"
+             "Capture to inbox"
+             entry
+             (file+headline "tasks.org" "Tasks")
+             "* TODO %?\n%U")
+            ("j" "Journal"
+             entry
+             (file+headline "journal.org" "Journal")
+             "* %T - %?"))))
+#+end_src
+
+** Org lists - Replace ~-~ by ~•~ on unordered lists.
+
+#+begin_src emacs-lisp
+  (font-lock-add-keywords 'org-mode
+      '(("^ *\\([-]\\) "
+      (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+#+end_src
+
+** Org Agenda - setup and custom views
+
+Custom agenda views, agenda settings, and so on.
+
+#+begin_src emacs-lisp
+  (defun my/org-agenda-show-all-dates ()
+    (interactive)
+    (setq org-agenda-show-all-dates
+          (if org-agenda-show-all-dates nil t))
+    (org-agenda-redo))
+
+  (defun my/org-agenda-breadcrumb ()
+    (let ((parent (cdr (org-get-outline-path))))
+      (if parent
+          (format "[%s] " (mapconcat 'identity parent " > "))
+        "")))
+
+
+  (use-package org
+    :init
+    (setq org-scheduled-past-days 100
+          org-agenda-start-with-log-mode nil
+          org-agenda-window-setup 'current-window
+          org-agenda-block-separator ?―
+          org-agenda-start-day nil
+          org-agenda-tags-column 'auto
+          org-agenda-span 1
+          org-agenda-show-all-dates nil
+          org-agenda-skip-deadline-if-done t
+          org-agenda-clockreport-parameter-plist '(:link t :maxlevel 2)
+          org-agenda-skip-scheduled-if-done nil
+          org-deadline-warning-days 3
+          org-agenda-start-with-follow-mode nil
+          org-agenda-compact-blocks nil
+          org-agenda-use-time-grid t
+          org-agenda-skip-archived-trees nil
+          org-agenda-current-time-string "←"
+          org-agenda-files '("tasks.org")
+          org-agenda-log-mode-items '(closed state)
+          org-stuck-projects '("TODO=\"PROJ\"" ("NEXT" "WAIT") nil "")
+          org-agenda-scheduled-leaders '("" "")
+          org-agenda-deadline-leaders '("" "")
+
+          org-agenda-todo-keyword-format "%s"
+          org-agenda-prefix-format '((agenda . "  %-12t %s %(my/org-agenda-breadcrumb)")
+                                     (todo . "  %(my/org-agenda-breadcrumb)")
+                                     (tags . "  %(my/org-agenda-breadcrumb)")
+                                     (search . "  %(my/org-agenda-breadcrumb)"))
+
+          org-agenda-time-grid
+          '((daily today require-timed)
+            (800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200)
+            " ┄┄┄┄┄ " "")
+
+          org-agenda-custom-commands
+          '(("p" "Projects"
+             ((todo "PROJ"
+                        ((org-agenda-overriding-header "Projects")))
+             ))
+            ("a" "Agenda"
+             ((agenda ""
+                      ((org-agenda-span 10)
+                       (org-scheduled-past-days 100)
+                       (org-deadline-warning-days 10)))))
+            ("d" "To-do"
+             ((agenda ""
+                      ((org-agenda-span 'day)
+                       (org-agenda-time-grid '((daily today require-timed)
+                          ()
+                          " ┄┄┄┄┄ " ""))))
+              (tags-todo "+PRIORITY=\"A\""
+                         ((org-agenda-overriding-header "Urgent")))
+              (tags-todo "-TODO=\"WAIT\"-PRIORITY=\"C\""
+                         ((org-agenda-overriding-header "In progress")
+                          (org-agenda-skip-function
+                           '(org-agenda-skip-entry-if 'notregexp "CLOCK: \\[." 'scheduled))))
+              (todo "WAIT"
+                    ((org-agenda-overriding-header "Waiting")
+                     (org-agenda-sorting-strategy '(alpha-up))))
+              (todo "NEXT"
+                         ((org-agenda-overriding-header "Next Actions")
+                          (org-agenda-sorting-strategy '(alpha-up))
+                          (org-agenda-skip-function
+                           '(org-agenda-skip-entry-if
+                             'regexp "CLOCK: \\[."
+                             'scheduled))))
+              (tags-todo "+TODO=\"TODO\"+PRIORITY=\"D\"+LEVEL=2"
+                         ((org-agenda-overriding-header "Stuff")
+                          (org-agenda-skip-function
+                           '(org-agenda-skip-entry-if
+                             'regexp "CLOCK: \\[."
+                             'scheduled 'done))))
+              (tags-todo "+PRIORITY=\"C\"+LEVEL=2"
+                         ((org-agenda-overriding-header "Later")
+                          (org-agenda-skip-function
+                           '(org-agenda-skip-entry-if 'scheduled 'done))))))
+            ("w" "Agenda"
+             ((agenda ""
+                      ((org-agenda-files '("work.org"))
+                       (org-agenda-span 100)
+                       (org-scheduled-past-days 0)
+                       (org-deadline-warning-days 0)))))
+            ("e" "Tasks by effort"
+             ((tags-todo "-TODO=\"DONE\"-TODO=\"FINI\"+Effort>\"\""
+                         ((org-agenda-overriding-header "Tasks by effort")
+                          (org-agenda-sorting-strategy '(effort-up))
+                          (org-agenda-skip-function
+                           '(org-agenda-skip-entry-if 'scheduled))
+                          (org-agenda-prefix-format '((tags . "%-5e - ")))))))
+            ("E" "Tasks without effort"
+             ((tags-todo "+TODO=\"TODO\"+Effort=\"\""
+                         ((org-agenda-overriding-header "Tasks without effort")
+                          (org-agenda-skip-function
+                           '(org-agenda-skip-entry-if 'scheduled))))))))
+
+    (custom-set-faces
+     '(org-agenda-current-time ((t (:foreground "green" :weight bold)))))
+
+    :bind
+    ((:map global-map
+           ("C-c a" . org-agenda)
+           ("C-'" . org-cycle-agenda-files))
+     (:map org-agenda-mode-map
+           ("C-a" . my/org-agenda-show-all-dates)
+           ("j" . org-agenda-next-line)
+           ("C-j" . org-agenda-goto-date)
+           ("h" . org-agenda-earlier)
+           ("l" . org-agenda-later)
+           ("C-d" . evil-scroll-down)
+           ("C-w C-w" . evil-window-next)
+           ("C-u" . evil-scroll-up)
+           ("M-g" . org-agenda-toggle-time-grid)
+           ("{" . org-agenda-backward-block)
+           ("}" . org-agenda-forward-block)
+           ("z" . evil-scroll-line-to-center)
+           ("g" . evil-goto-first-line)
+           ("G" . evil-goto-line)
+           ("k" . org-agenda-previous-line))))
+#+end_src
+
+*** COMMENT Example agenda
+
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (setq org-agenda-files '("exemplo.org")))
+#+end_src
+
+** Org Agenda - notifications for events
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :after notifications
+    :config
+    (setq appt-message-warning-time 60
+          appt-display-interval 10
+          appt-display-mode-line nil)
+
+    (setq appt-disp-window-function
+          (lambda (remaining new-time msg)
+            (notifications-notify
+             :title (format "In %s minutes" remaining)
+             :body msg
+             :urgency 'critical)))
+
+    (advice-add 'appt-check :before
+                (lambda (&rest args)
+                  (org-agenda-to-appt t)))
+    (appt-activate t))
+#+end_src
+
+** COMMENT Change title and heading sizes.
+
+#+begin_src emacs-lisp
+  (defvar my/org-big-fonts '((org-document-title . 1.8)
+                             (org-level-1 . 1.6)
+                             (org-level-2 . 1.4)
+                             (org-level-3 . 1.2)))
+  (defun my/org-big ()
+    (interactive)
+    (dolist (face my/org-big-fonts)
+      (set-face-attribute (car face) nil :height (cdr face))))
+
+  (defun my/org-smol ()
+    (interactive)
+    (dolist (face my/org-big-fonts)
+      (set-face-attribute (car face) nil :height 1.0)))
+#+end_src
+
+** COMMENT Whether to hide or not symbols for emphasis like ~a~, *b*, /c/...
+
+#+begin_src emacs-lisp
+ (setq org-hide-emphasis-markers nil)
+#+end_src
+
+** COMMENT Org Sort
+
+#+begin_src emacs-lisp
+  (defun my/org-sort ()
+    (interactive)
+    (org-sort-entries nil ?T)
+    (org-sort-entries nil ?p)
+    (org-sort-entries nil ?o))
+#+end_src
+
+** COMMENT Sparse Tree
+
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (setq org-sparse-tree-default-date-type 'active))
+#+end_src
+
+** COMMENT Fold drawer
+
+#+begin_src emacs-lisp
+  (defun my/org-fold-hide-drawer-all ()
+    (interactive)
+    (org-fold-hide-drawer-all))
+#+end_src
+
+** COMMENT Org - Habit
+
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (require 'org-habit)
+    (add-to-list 'org-modules 'org-habit)
+    (setq org-habit-graph-column 60))
+#+end_src
+
+** COMMENT Tables
+
+#+begin_src emacs-lisp
+  (use-package org
+    :bind
+    (:map org-mode-map
+          ("C-c h" . org-table-move-cell-left)
+          ("C-c l" . org-table-move-cell-right)
+          ("C-c k" . org-table-move-cell-up)
+          ("C-c j" . org-table-move-cell-down)))
+#+end_src
+
+** TODO COMMENT color calendar
+
+#+begin_src emacs-lisp
+  (defadvice calendar-generate-month
+      (after highlight-weekend-days (month year indent) activate)
+    "Highlight weekend days"
+    (dotimes (i 31)
+      (let ((date (list month (1+ i) year))
+            (count (length (org-agenda-get-day-entries
+                            "~/Git/Org/tasks.org" (list month (1+ i) year)))))
+        (unless (= count 0)
+          (calendar-mark-visible-date date)))))
+#+end_src
+
+
+** =org-present= - make presentations using org mode
+
+#+begin_src emacs-lisp
+  (use-package org-present
+    :defer
+    :hook ((org-present-mode
+            . (lambda ()
+                (org-present-hide-cursor)
+				(setq display-line-numbers-type nil)
+                (display-line-numbers-mode 1)))
+           (org-present-mode-quit
+            . (lambda ()
+                (org-present-show-cursor)
+				(setq display-line-numbers-type 'relative)
+                (display-line-numbers-mode 1)))))
+#+end_src
+
+** =org-drill= - same idea as Anki
+
+#+begin_src emacs-lisp
+  (use-package org-drill
+    :config
+    (add-to-list 'org-modules 'org-drill))
+
+  (advice-add 'org-drill-time-to-inactive-org-timestamp :override
+              (lambda (time)
+                "Convert TIME into org-mode timestamp."
+                (format-time-string
+                 (concat "[" (cdr org-time-stamp-formats) "]")
+                 time)))
+#+end_src
+
+** =toc-org= - generate table of contents
+
+Useful for github that doesn't create a TOC automatically
+
+#+begin_src emacs-lisp
+  (use-package toc-org
+    :hook
+    (org-mode . toc-org-mode))
+#+end_src
+
+** =org-music= - manage songs and playlists using org
 
 #+begin_src emacs-lisp
   (add-to-list 'load-path "~/.emacs.d/lisp/")
@@ -1852,3 +1678,66 @@ Installing pdf-tools and opening a PDF file just works here.
           ("SPC m p l" . org-music-play-list)
           ("SPC m p p" . my/org-music-play-song-at-point)))
 #+end_src
+** =org-indent-mode= (builtin) - visually indent text inside headings
+
+#+begin_src emacs-lisp
+  (use-package org
+    :hook (org-mode . org-indent-mode))
+#+end_src
+
+** =org-appear= - show emphasis markers when cursor is over the word.
+
+#+begin_src emacs-lisp
+  (use-package org-appear
+      :hook
+      (org-mode . org-appear-mode))
+#+end_src
+
+** =org-fragtog= - display LaTeX automatically inside org buffers
+
+#+begin_src emacs-lisp
+  (use-package org-fragtog
+    :after org
+    :hook
+    (org-mode . org-fragtog-mode)
+    :custom
+    (org-startup-with-latex-preview t)
+    :custom
+    (org-format-latex-options
+     (plist-put org-format-latex-options :scale 2)
+     (plist-put org-format-latex-options :foreground 'auto)
+     (plist-put org-format-latex-options :background 'auto)))
+#+end_src
+
+** =org-roam= - org knowledge management system
+
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :defer
+    :config
+    (when (not (file-directory-p "~/Sync/Org/Roam"))
+      (make-directory "~/Sync/Org/Roam"))
+    (setq org-roam-directory "~/Sync/Org/Roam")
+
+    (org-roam-db-autosync-enable)
+
+    :bind
+    (("C-c n f" . org-roam-node-find)
+     ("C-c n i" . org-roam-node-insert)))
+#+end_src
+
+** =org-roam-ui= - visualize Org Roam graph in real time.
+
+#+begin_src emacs-lisp
+  (use-package org-roam-ui :defer)
+#+end_src
+
+** COMMENT =org-bullets= - show headings with special bullets instead of asterisks
+
+#+begin_src emacs-lisp
+  (use-package org-bullets
+    :hook (org-mode . org-bullets-mode))
+#+end_src
+
+Visually indent text inside headings.
+
