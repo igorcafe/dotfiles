@@ -860,7 +860,6 @@ Automatically update dired when a file is changed.
 
 #+begin_src emacs-lisp
   (use-package dired-subtree
-      :config
       :bind
       (:map dired-mode-map
             ("TAB" . dired-subtree-toggle)))
@@ -1261,7 +1260,7 @@ I use this only to differenciate delayed [#C] and default [#D]
 #+begin_src emacs-lisp
   (use-package org
     :config
-    (setq org-tags-column -90)
+    (setq org-tags-column -90))
 #+end_src
 
 ** Org TODOs - keywords and state logging
@@ -1678,6 +1677,7 @@ Useful for github that doesn't create a TOC automatically
           ("SPC m p l" . org-music-play-list)
           ("SPC m p p" . my/org-music-play-song-at-point)))
 #+end_src
+
 ** =org-indent-mode= (builtin) - visually indent text inside headings
 
 #+begin_src emacs-lisp

@@ -324,7 +324,6 @@
         ("S-TAB" . dired-find-file-other-window)))
 
 (use-package dired-subtree
-    :config
     :bind
     (:map dired-mode-map
           ("TAB" . dired-subtree-toggle)))
@@ -464,7 +463,7 @@
 
 (use-package org
   :config
-  (setq org-tags-column -90)
+  (setq org-tags-column -90))
 
 (use-package org
   :config
