@@ -25,6 +25,7 @@
   - [[#use-ibuffer-builtin-instead-of-list-buffers][Use =ibuffer= (builtin) instead of list-buffers.]]
   - [[#persist-minibuffers-history][Persist minibuffer's history]]
   - [[#display-date-time-and-battery-in-modeline][Display date, time and battery in modeline]]
+  - [[#name-minibuffer-as-parent-buffer---minibuffer][Name minibuffer as "[parent buffer] - minibuffer"]]
   - [[#evil-mode---vim-mode-emulation][=evil-mode= - vim mode emulation]]
   - [[#evil-surround---surround-text-with-parenthesis-quotes-and-so-on][=evil-surround= - surround text with parenthesis, quotes, and so on]]
   - [[#key-chord---time-based-keymaps-for-evil][=key-chord= - time-based keymaps for evil]]
@@ -76,8 +77,10 @@
   - [[#telega---telegram-client][=telega= - telegram client]]
   - [[#elfeed---client-for-atom-and-rss-feeds][=elfeed= - client for Atom and RSS feeds]]
   - [[#pdf-tools---read-pdfs-in-emacs][=pdf-tools= - read PDFs in emacs]]
+  - [[#nov-mode---read-epubs-in-emacs][=nov-mode= - read EPUBs in emacs]]
   - [[#eww-builtin---simple-browser][=eww= (builtin) - simple browser]]
   - [[#activity-watch-mode---track-emacs-usage-using-activitywatch][=activity-watch-mode= - track emacs usage using ActivityWatch]]
+  - [[#gptel---gpt-inside-emacs][=gptel= - GPT inside emacs]]
 - [[#org-config][Org Config]]
   - [[#org-directory][Org directory]]
   - [[#org-source-block---open-in-the-same-window][Org source block - open in the same window]]
@@ -103,10 +106,6 @@
 
 * Config
 ** Early Init
-
-#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
-#+end_src
 
 Hides startup message, scroll bar and tool bar.
 
@@ -283,12 +282,14 @@ Show absolute line numbers for insert state and relative for others.
     :after evil
     :hook ((evil-insert-state-entry
             . (lambda ()
-                (setq display-line-numbers-type t)
-                (display-line-numbers-mode 1)))
+                (when display-line-numbers
+                  (setq display-line-numbers-type t)
+                  (display-line-numbers-mode 1))))
            (evil-insert-state-exit
             . (lambda ()
-                (setq display-line-numbers-type 'relative)
-                (display-line-numbers-mode 1)))))
+                (when display-line-numbers
+                  (setq display-line-numbers-type 'relative)
+                  (display-line-numbers-mode 1))))))
 #+end_src
 
 ** Truncate long lines
@@ -336,10 +337,33 @@ In ~M-x~, ~C-x C-f~ and so on.
   (use-package emacs
     :config
     (setq display-time-day-and-date t)
-    (setq display-time-format "%a %H:%M %d/%m")
+    (setq display-time-format "%a %H:%M ")
     (setq display-time-default-load-average nil)
     (display-time-mode 1)
     (display-battery-mode 1))
+#+end_src
+
+** Name minibuffer as "[parent buffer] - minibuffer" 
+
+This is useful for easily matching the category in ActivityWatch.
+See [[id:1f7ea984-360c-4b70-814b-8fab7ed00965][activity-watch-mode below]].
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :preface
+    (defun my/rename-minibuffer()
+      (let* ((orig-buffer
+              (window-buffer (minibuffer-selected-window)))
+             (new-minibuf-name
+              (format "*Minibuf-1* - %s" (buffer-name orig-buffer))))
+        (rename-buffer new-minibuf-name)))
+    :hook (minibuffer-setup . my/rename-minibuffer))
+#+end_src
+
+*** COMMENT Disable
+
+#+begin_src emacs-lisp
+  (remove-hook 'minibuffer-setup-hook 'my/rename-minibuffer)
 #+end_src
 
 ** =evil-mode= - vim mode emulation
@@ -448,6 +472,10 @@ I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
     :config
     (setq doom-modeline-buffer-name nil)
     (setq doom-modeline-buffer-encoding nil)
+    (setq doom-modeline-env-version nil)
+    (setq doom-modeline-lsp nil)
+    (setq doom-modeline-lsp-icon nil)
+    (setq doom-modeline-env-enable-python nil)
     (doom-modeline-mode 1))
 #+end_src
 
@@ -500,7 +528,7 @@ Launch vterm in the project's root directory.
     (interactive)
     (let* ((proj-dir (car (last (project-current))))
            (proj-name (file-name-nondirectory
-                       (directory-file-name "~/Git/backend/")))
+                       (directory-file-name proj-dir)))
            (chosen-name (read-string "buffer name: " proj-name))
            (default-directory proj-dir))
       (vterm (format "vterm - %s" chosen-name))))
@@ -511,7 +539,6 @@ Customize project.el commands.
 #+begin_src emacs-lisp
 
   (use-package project
-    :preface
     :config
     (setq project-switch-commands
           '((project-find-file "Find file" ?f)
@@ -846,14 +873,16 @@ Package for creating snippets.
 Automatically update dired when a file is changed.
 
 #+begin_src emacs-lisp
-  (use-package emacs
+  (use-package dired
+    :ensure nil
     :hook
     (dired-mode . dired-hide-details-mode)
     :config
     (setq global-auto-revert-non-file-buffers t)
-    :bind
-    (:map dired-mode-map
-          ("S-TAB" . dired-find-file-other-window)))
+    ;; :bind
+    ;; (:map dired-mode-map
+    ;;       ("S-TAB" . dired-find-file-other-window))
+    )
 #+end_src
 
 ** =dired-subtree= - add subt tree view to dired
@@ -992,12 +1021,26 @@ Improves minibuffer by showing multiple options in a vertical list.
     :config
     (emms-all)
     (emms-default-players)
+
+    ;; all my songs are downloaded from youtube with org-music and don't
+    ;; have metadata.
+    ;; so emms always show the full file path in the modeline, which is always
+    ;; "path/to/songs/Author - Song Name.m4a"
+    ;; this function replaces it by only "🎵 Song Name"
+    (setq emms-mode-line-mode-line-function
+          (lambda ()
+            (let* ((path (emms-track-description
+                          (emms-playlist-current-selected-track)))
+                   (song (car (string-split
+                               (car (last (split-string path "- ")))
+                               "\\."))))
+              (format "🎵 %s  " song))))
     :bind
     (:map evil-normal-state-map
           ("SPC m j" . emms-next)
           ("SPC m k" . emms-previous)
-          ("SPC m h" . emms-seek-backward)
-          ("SPC m l" . emms-seek-forward)
+          ("SPC m ," . emms-seek-backward)
+          ("SPC m ." . emms-seek-forward)
           ("SPC m SPC" . emms-pause)
           ("SPC m s" . emms-stop)
           ("SPC m e" . emms)))
@@ -1009,7 +1052,9 @@ Improves minibuffer by showing multiple options in a vertical list.
   (use-package telega
     :ensure nil ;; installed and built through nix
     :init
-    (setq telega-emoji-use-images nil))
+    (setq telega-use-images t)
+    (setq telega-emoji-use-images nil)
+    (setq telega-emoji-font-family "Noto Color Emoji"))
 #+end_src
 
 ** =elfeed= - client for Atom and RSS feeds
@@ -1045,9 +1090,15 @@ I tried default emacs doc-view-mode but it didn't work with the PDFs I tested.
 
 #+begin_src emacs-lisp
   (use-package pdf-tools
-    :defer
+    :hook (pdf-view-mode . pdf-view-themed-minor-mode)
     :config
     (pdf-tools-install))
+#+end_src
+
+** =nov-mode= - read EPUBs in emacs
+
+#+begin_src emacs-lisp
+  (use-package nov)
 #+end_src
 
 ** =eww= (builtin) - simple browser
@@ -1056,15 +1107,36 @@ Wrap lines instead of truncating
 
 #+begin_src emacs-lisp
   (use-package emacs
-    :hook (eww-mode . visual-line-mode))
+    :hook (eww-mode . visual-line-mode)
+    :config
+    (setq eww-auto-rename-buffer
+          (lambda ()
+            (let ((domain
+                   (url-host
+                           (url-generic-parse-url (plist-get eww-data :url))))
+                  (title (plist-get eww-data :title)))
+              (format "%s - %s # eww"
+                      (truncate-string-to-width domain 20 nil nil "...")
+                      (truncate-string-to-width title 30 nil nil "..."))))))
 #+end_src
 
 ** =activity-watch-mode= - track emacs usage using [[https://activitywatch.net][ActivityWatch]]
+:PROPERTIES:
+:ID:       1f7ea984-360c-4b70-814b-8fab7ed00965
+:END:
 
 #+begin_src emacs-lisp
   (use-package activity-watch-mode
     :config
     (global-activity-watch-mode 1))
+#+end_src
+
+** =gptel= - GPT inside emacs
+
+#+begin_src emacs-lisp
+  (use-package gptel
+    :config
+    (setq gptel-api-key nil))
 #+end_src
 
 ** COMMENT Matrix
@@ -1260,7 +1332,7 @@ I use this only to differenciate delayed [#C] and default [#D]
 #+begin_src emacs-lisp
   (use-package org
     :config
-    (setq org-tags-column -90))
+    (setq org-tags-column -89))
 #+end_src
 
 ** Org TODOs - keywords and state logging
@@ -1274,8 +1346,7 @@ I use this only to differenciate delayed [#C] and default [#D]
     (setq org-log-redeadline t)
     (setq org-hierarchical-todo-statistics t) ;; TODO cookie count not recursive
     (setq org-todo-keywords
-          '((sequence "TODO(t)" "NEXT(n!)" "WAIT(w@)" "|" "DONE(d!)" "CANC(c@)")
-            (sequence "PROJ(p)" "|" "FINI(f!)")))
+          '((sequence "TODO" "|" "DONE")))
     :bind
     ;; the keybindings are the same, just made them global
     (("C-c C-x C-o" . org-clock-out)
@@ -1334,7 +1405,7 @@ C-c C-c over a TODO item calls =org-todo= instead of =org-set-tags-command=.
              "Capture to inbox"
              entry
              (file+headline "tasks.org" "Tasks")
-             "* TODO %?\n%U")
+             "* INBX %?\n%U")
             ("j" "Journal"
              entry
              (file+headline "journal.org" "Journal")
@@ -1367,7 +1438,8 @@ Custom agenda views, agenda settings, and so on.
         "")))
 
 
-  (use-package org
+  (use-package org-agenda
+    :ensure nil
     :init
     (setq org-scheduled-past-days 100
           org-agenda-start-with-log-mode nil
@@ -1389,8 +1461,8 @@ Custom agenda views, agenda settings, and so on.
           org-agenda-files '("tasks.org")
           org-agenda-log-mode-items '(closed state)
           org-stuck-projects '("TODO=\"PROJ\"" ("NEXT" "WAIT") nil "")
-          org-agenda-scheduled-leaders '("" "")
-          org-agenda-deadline-leaders '("" "")
+          org-agenda-scheduled-leaders '(" " "!")
+          org-agenda-deadline-leaders '(" " "!")
 
           org-agenda-todo-keyword-format "%s"
           org-agenda-prefix-format '((agenda . "  %-12t %s %(my/org-agenda-breadcrumb)")
@@ -1421,7 +1493,7 @@ Custom agenda views, agenda settings, and so on.
                           " ┄┄┄┄┄ " ""))))
               (tags-todo "+PRIORITY=\"A\""
                          ((org-agenda-overriding-header "Urgent")))
-              (tags-todo "-TODO=\"WAIT\"-PRIORITY=\"C\""
+              (todo "NEXT"
                          ((org-agenda-overriding-header "In progress")
                           (org-agenda-skip-function
                            '(org-agenda-skip-entry-if 'notregexp "CLOCK: \\[." 'scheduled))))
@@ -1435,14 +1507,16 @@ Custom agenda views, agenda settings, and so on.
                            '(org-agenda-skip-entry-if
                              'regexp "CLOCK: \\[."
                              'scheduled))))
-              (tags-todo "+TODO=\"TODO\"+PRIORITY=\"D\"+LEVEL=2"
-                         ((org-agenda-overriding-header "Stuff")
+              (todo "PROJ"
+                    ((org-agenda-overriding-header "Projects")))
+              (todo "INBX"
+                         ((org-agenda-overriding-header "Inbox")
                           (org-agenda-skip-function
                            '(org-agenda-skip-entry-if
                              'regexp "CLOCK: \\[."
                              'scheduled 'done))))
-              (tags-todo "+PRIORITY=\"C\"+LEVEL=2"
-                         ((org-agenda-overriding-header "Later")
+              (todo "SMDY"
+                         ((org-agenda-overriding-header "Someday")
                           (org-agenda-skip-function
                            '(org-agenda-skip-entry-if 'scheduled 'done))))))
             ("w" "Agenda"
@@ -1459,7 +1533,7 @@ Custom agenda views, agenda settings, and so on.
                            '(org-agenda-skip-entry-if 'scheduled))
                           (org-agenda-prefix-format '((tags . "%-5e - ")))))))
             ("E" "Tasks without effort"
-             ((tags-todo "+TODO=\"TODO\"+Effort=\"\""
+             ((tags-todo "+Effort=\"\""
                          ((org-agenda-overriding-header "Tasks without effort")
                           (org-agenda-skip-function
                            '(org-agenda-skip-entry-if 'scheduled))))))))
@@ -1652,14 +1726,22 @@ Useful for github that doesn't create a TOC automatically
 ** =org-music= - manage songs and playlists using org
 
 #+begin_src emacs-lisp
-  (add-to-list 'load-path "~/.emacs.d/lisp/")
-
-  (defun my/org-music-play-song-at-point ()
+  (defun my/org-music-jump-to-current-song ()
     (interactive)
-    (org-music-play-song-at-point))
+    (find-file "~/Sync/Org/music.org")
+    (let* ((song-path (emms-track-name
+                       (emms-playlist-current-selected-track)))
+           (outline-name (when (string-match ".*/\\(.*\\)\\.m4a" song-path)
+                           (match-string 1 song-path)))
 
+           (outline-marker (org-find-exact-headline-in-buffer outline-name)))
 
-  (require 'org-music) ;; idk why it only works that way
+      (when outline-marker
+        (goto-char outline-marker))))
+#+end_src
+
+#+begin_src emacs-lisp
+  (add-to-list 'load-path "~/.emacs.d/lisp/")
 
   (use-package org-music
     :load-path "lisp/org-music.el"
@@ -1671,11 +1753,13 @@ Useful for github that doesn't create a TOC automatically
      org-music-media-directory "~/.cache/org-music"
      org-music-operating-system "linux"
      org-music-cache-size (* 10 1024)) ;; 10 GB?
-
     :bind
     (:map evil-normal-state-map
-          ("SPC m p l" . org-music-play-list)
-          ("SPC m p p" . my/org-music-play-song-at-point)))
+          ("SPC m c" . my/org-music-jump-to-current-song)
+          ("SPC m l p" . org-music-play-list)
+          ("SPC m l e" . org-music-enqueue-list)
+          ("SPC m p p" . org-music-play-song-at-point)
+          ("SPC m p e" . org-music-enqueue-song-at-point)))
 #+end_src
 
 ** =org-indent-mode= (builtin) - visually indent text inside headings

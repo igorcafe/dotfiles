@@ -50,12 +50,14 @@
   :after evil
   :hook ((evil-insert-state-entry
           . (lambda ()
-              (setq display-line-numbers-type t)
-              (display-line-numbers-mode 1)))
+              (when display-line-numbers
+                (setq display-line-numbers-type t)
+                (display-line-numbers-mode 1))))
          (evil-insert-state-exit
           . (lambda ()
-              (setq display-line-numbers-type 'relative)
-              (display-line-numbers-mode 1)))))
+              (when display-line-numbers
+                (setq display-line-numbers-type 'relative)
+                (display-line-numbers-mode 1))))))
 
 (set-default 'truncate-lines t)
 
@@ -75,10 +77,20 @@
 (use-package emacs
   :config
   (setq display-time-day-and-date t)
-  (setq display-time-format "%a %H:%M %d/%m")
+  (setq display-time-format "%a %H:%M ")
   (setq display-time-default-load-average nil)
   (display-time-mode 1)
   (display-battery-mode 1))
+
+(use-package emacs
+  :preface
+  (defun my/rename-minibuffer()
+    (let* ((orig-buffer
+            (window-buffer (minibuffer-selected-window)))
+           (new-minibuf-name
+            (format "*Minibuf-1* - %s" (buffer-name orig-buffer))))
+      (rename-buffer new-minibuf-name)))
+  :hook (minibuffer-setup . my/rename-minibuffer))
 
 (use-package evil
   :demand t
@@ -141,6 +153,10 @@
   :config
   (setq doom-modeline-buffer-name nil)
   (setq doom-modeline-buffer-encoding nil)
+  (setq doom-modeline-env-version nil)
+  (setq doom-modeline-lsp nil)
+  (setq doom-modeline-lsp-icon nil)
+  (setq doom-modeline-env-enable-python nil)
   (doom-modeline-mode 1))
 
 (use-package breadcrumb
@@ -163,13 +179,12 @@
   (interactive)
   (let* ((proj-dir (car (last (project-current))))
          (proj-name (file-name-nondirectory
-                     (directory-file-name "~/Git/backend/")))
+                     (directory-file-name proj-dir)))
          (chosen-name (read-string "buffer name: " proj-name))
          (default-directory proj-dir))
     (vterm (format "vterm - %s" chosen-name))))
 
 (use-package project
-  :preface
   :config
   (setq project-switch-commands
         '((project-find-file "Find file" ?f)
@@ -314,14 +329,16 @@
   :config
   (winner-mode 1))
 
-(use-package emacs
+(use-package dired
+  :ensure nil
   :hook
   (dired-mode . dired-hide-details-mode)
   :config
   (setq global-auto-revert-non-file-buffers t)
-  :bind
-  (:map dired-mode-map
-        ("S-TAB" . dired-find-file-other-window)))
+  ;; :bind
+  ;; (:map dired-mode-map
+  ;;       ("S-TAB" . dired-find-file-other-window))
+  )
 
 (use-package dired-subtree
     :bind
@@ -388,12 +405,26 @@
   :config
   (emms-all)
   (emms-default-players)
+
+  ;; all my songs are downloaded from youtube with org-music and don't
+  ;; have metadata.
+  ;; so emms always show the full file path in the modeline, which is always
+  ;; "path/to/songs/Author - Song Name.m4a"
+  ;; this function replaces it by only "🎵 Song Name"
+  (setq emms-mode-line-mode-line-function
+        (lambda ()
+          (let* ((path (emms-track-description
+                        (emms-playlist-current-selected-track)))
+                 (song (car (string-split
+                             (car (last (split-string path "- ")))
+                             "\\."))))
+            (format "🎵 %s  " song))))
   :bind
   (:map evil-normal-state-map
         ("SPC m j" . emms-next)
         ("SPC m k" . emms-previous)
-        ("SPC m h" . emms-seek-backward)
-        ("SPC m l" . emms-seek-forward)
+        ("SPC m ," . emms-seek-backward)
+        ("SPC m ." . emms-seek-forward)
         ("SPC m SPC" . emms-pause)
         ("SPC m s" . emms-stop)
         ("SPC m e" . emms)))
@@ -401,7 +432,9 @@
 (use-package telega
   :ensure nil ;; installed and built through nix
   :init
-  (setq telega-emoji-use-images nil))
+  (setq telega-use-images t)
+  (setq telega-emoji-use-images nil)
+  (setq telega-emoji-font-family "Noto Color Emoji"))
 
 (use-package elfeed
   :defer
@@ -425,16 +458,32 @@
           )))
 
 (use-package pdf-tools
-  :defer
+  :hook (pdf-view-mode . pdf-view-themed-minor-mode)
   :config
   (pdf-tools-install))
 
+(use-package nov)
+
 (use-package emacs
-  :hook (eww-mode . visual-line-mode))
+  :hook (eww-mode . visual-line-mode)
+  :config
+  (setq eww-auto-rename-buffer
+        (lambda ()
+          (let ((domain
+                 (url-host
+                         (url-generic-parse-url (plist-get eww-data :url))))
+                (title (plist-get eww-data :title)))
+            (format "%s - %s # eww"
+                    (truncate-string-to-width domain 20 nil nil "...")
+                    (truncate-string-to-width title 30 nil nil "..."))))))
 
 (use-package activity-watch-mode
   :config
   (global-activity-watch-mode 1))
+
+(use-package gptel
+  :config
+  (setq gptel-api-key nil))
 
 (setq org-directory "~/Sync/Org")
 
@@ -463,7 +512,7 @@
 
 (use-package org
   :config
-  (setq org-tags-column -90))
+  (setq org-tags-column -89))
 
 (use-package org
   :config
@@ -473,8 +522,7 @@
   (setq org-log-redeadline t)
   (setq org-hierarchical-todo-statistics t) ;; TODO cookie count not recursive
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n!)" "WAIT(w@)" "|" "DONE(d!)" "CANC(c@)")
-          (sequence "PROJ(p)" "|" "FINI(f!)")))
+        '((sequence "TODO" "|" "DONE")))
   :bind
   ;; the keybindings are the same, just made them global
   (("C-c C-x C-o" . org-clock-out)
@@ -495,7 +543,7 @@
            "Capture to inbox"
            entry
            (file+headline "tasks.org" "Tasks")
-           "* TODO %?\n%U")
+           "* INBX %?\n%U")
           ("j" "Journal"
            entry
            (file+headline "journal.org" "Journal")
@@ -518,7 +566,8 @@
       "")))
 
 
-(use-package org
+(use-package org-agenda
+  :ensure nil
   :init
   (setq org-scheduled-past-days 100
         org-agenda-start-with-log-mode nil
@@ -540,8 +589,8 @@
         org-agenda-files '("tasks.org")
         org-agenda-log-mode-items '(closed state)
         org-stuck-projects '("TODO=\"PROJ\"" ("NEXT" "WAIT") nil "")
-        org-agenda-scheduled-leaders '("" "")
-        org-agenda-deadline-leaders '("" "")
+        org-agenda-scheduled-leaders '(" " "!")
+        org-agenda-deadline-leaders '(" " "!")
 
         org-agenda-todo-keyword-format "%s"
         org-agenda-prefix-format '((agenda . "  %-12t %s %(my/org-agenda-breadcrumb)")
@@ -572,7 +621,7 @@
                         " ┄┄┄┄┄ " ""))))
             (tags-todo "+PRIORITY=\"A\""
                        ((org-agenda-overriding-header "Urgent")))
-            (tags-todo "-TODO=\"WAIT\"-PRIORITY=\"C\""
+            (todo "NEXT"
                        ((org-agenda-overriding-header "In progress")
                         (org-agenda-skip-function
                          '(org-agenda-skip-entry-if 'notregexp "CLOCK: \\[." 'scheduled))))
@@ -586,14 +635,16 @@
                          '(org-agenda-skip-entry-if
                            'regexp "CLOCK: \\[."
                            'scheduled))))
-            (tags-todo "+TODO=\"TODO\"+PRIORITY=\"D\"+LEVEL=2"
-                       ((org-agenda-overriding-header "Stuff")
+            (todo "PROJ"
+                  ((org-agenda-overriding-header "Projects")))
+            (todo "INBX"
+                       ((org-agenda-overriding-header "Inbox")
                         (org-agenda-skip-function
                          '(org-agenda-skip-entry-if
                            'regexp "CLOCK: \\[."
                            'scheduled 'done))))
-            (tags-todo "+PRIORITY=\"C\"+LEVEL=2"
-                       ((org-agenda-overriding-header "Later")
+            (todo "SMDY"
+                       ((org-agenda-overriding-header "Someday")
                         (org-agenda-skip-function
                          '(org-agenda-skip-entry-if 'scheduled 'done))))))
           ("w" "Agenda"
@@ -610,7 +661,7 @@
                          '(org-agenda-skip-entry-if 'scheduled))
                         (org-agenda-prefix-format '((tags . "%-5e - ")))))))
           ("E" "Tasks without effort"
-           ((tags-todo "+TODO=\"TODO\"+Effort=\"\""
+           ((tags-todo "+Effort=\"\""
                        ((org-agenda-overriding-header "Tasks without effort")
                         (org-agenda-skip-function
                          '(org-agenda-skip-entry-if 'scheduled))))))))
@@ -686,14 +737,20 @@
   :hook
   (org-mode . toc-org-mode))
 
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-
-(defun my/org-music-play-song-at-point ()
+(defun my/org-music-jump-to-current-song ()
   (interactive)
-  (org-music-play-song-at-point))
+  (find-file "~/Sync/Org/music.org")
+  (let* ((song-path (emms-track-name
+                     (emms-playlist-current-selected-track)))
+         (outline-name (when (string-match ".*/\\(.*\\)\\.m4a" song-path)
+                         (match-string 1 song-path)))
 
+         (outline-marker (org-find-exact-headline-in-buffer outline-name)))
 
-(require 'org-music) ;; idk why it only works that way
+    (when outline-marker
+      (goto-char outline-marker))))
+
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 
 (use-package org-music
   :load-path "lisp/org-music.el"
@@ -705,11 +762,13 @@
    org-music-media-directory "~/.cache/org-music"
    org-music-operating-system "linux"
    org-music-cache-size (* 10 1024)) ;; 10 GB?
-
   :bind
   (:map evil-normal-state-map
-        ("SPC m p l" . org-music-play-list)
-        ("SPC m p p" . my/org-music-play-song-at-point)))
+        ("SPC m c" . my/org-music-jump-to-current-song)
+        ("SPC m l p" . org-music-play-list)
+        ("SPC m l e" . org-music-enqueue-list)
+        ("SPC m p p" . org-music-play-song-at-point)
+        ("SPC m p e" . org-music-enqueue-song-at-point)))
 
 (use-package org
   :hook (org-mode . org-indent-mode))
