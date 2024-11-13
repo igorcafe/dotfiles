@@ -1,15 +1,26 @@
-(require 'package)
-(setq package-archives
-      '(("gnu" . "https://elpa.gnu.org/packages/")
-        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-        ("melpa" . "https://melpa.org/packages/")))
-(package-initialize)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(eval-when-compile (require 'use-package))
-(setq use-package-always-ensure t)
+(straight-use-package 'use-package)
+
+(setq straight-use-package-by-default t)
+
+(setq straight-check-for-modification '(find-when-checking))
 
 (use-package org-auto-tangle
-  :defer
   :hook (org-mode . org-auto-tangle-mode))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -28,7 +39,6 @@
 (setq custom-file "~/.emacs.d/custom.el")
 
 (use-package esup
-  :defer
   :config
   (setq esup-depth 0))
 
@@ -94,6 +104,7 @@
 
 (use-package evil
   :demand t
+  :straight t
   :custom
   (evil-want-integration t)
   (evil-want-C-u-scroll t)
@@ -112,11 +123,11 @@
 
 (use-package evil-collection
   :after evil
+  :straight t
   :config
   (evil-collection-init))
 
 (use-package evil-surround
-  :ensure t
   :config
   (global-evil-surround-mode 1))
 
@@ -142,14 +153,12 @@
 ;;(nerd-icons-install-fonts t)
 
 (use-package doom-themes
-  :defer 0.3
   :config
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic t)
   (load-theme 'doom-one t))
 
 (use-package doom-modeline
-  :defer 1
   :config
   (setq doom-modeline-buffer-name nil)
   (setq doom-modeline-buffer-encoding nil)
@@ -197,17 +206,16 @@
           (magit-project-status "Magit" ?m))))
 
 (use-package go-mode
-  :defer
   :hook
   (go-mode . eglot-ensure))
 
-(use-package go-tag :defer)
+(use-package go-tag)
 
-(use-package nix-mode :defer)
+(use-package nix-mode)
 
-(use-package yaml-mode :defer)
+(use-package yaml-mode)
 
-(use-package markdown-mode :defer)
+(use-package markdown-mode)
 
 (use-package emacs
   :hook (python-mode . eglot-ensure))
@@ -288,7 +296,6 @@
 (save-place-mode 1)
 
 (use-package consult
-  :defer
   :bind
   (:map evil-normal-state-map
         ;; analogous to project-find-regexp
@@ -317,9 +324,9 @@
   :config
   (setq whitespace-style '(face tabs spaces trailing space-mark tab-mark)))
 
-(use-package restclient :defer t)
+(use-package restclient)
 
-(use-package simple-httpd :defer t)
+(use-package simple-httpd)
 
 (use-package emacs
   :bind
@@ -330,7 +337,7 @@
   (winner-mode 1))
 
 (use-package dired
-  :ensure nil
+  :straight nil
   :hook
   (dired-mode . dired-hide-details-mode)
   :config
@@ -345,17 +352,18 @@
     (:map dired-mode-map
           ("TAB" . dired-subtree-toggle)))
 
-(use-package magit :defer)
+(use-package magit
+  :bind
+  ("C-x g" . magit))
 
 (use-package diff-hl
-  :defer 1
   :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
          (magit-post-refresh . diff-hl-magit-post-refresh)
          (after-save . diff-hl-update))
-  :init
+  :config
   (global-diff-hl-mode 1))
 
-(use-package blamer :defer)
+(use-package blamer)
 
 (use-package which-key
   :config
@@ -367,27 +375,23 @@
   (vterm (concat "vterm - " name)))
 
 (use-package vterm
-  :ensure nil
-  :defer
+  :straight nil
   :bind
   (:map evil-normal-state-map
         (("SPC t" . my/vterm))))
 
 (use-package vertico
-  :config
-  (vertico-mode)
-  (vertico-mouse-mode)
+  :init
+  (vertico-mode 1)
+  (vertico-mouse-mode 1)
   (setq vertico-count 20)
   (setq vertico-cycle t)
-  (setq vertico-sort-function #'vertico-sort-history-alpha)
+  (setq vertico-sort-function 'vertico-sort-history-alpha)
 
   :bind
   (:map vertico-map
         ("C-j" . vertico-next)
         ("C-k" . vertico-previous)))
-
-(use-package vertico-posframe
-  :config (vertico-posframe-mode))
 
 (use-package marginalia
   :init
@@ -415,9 +419,8 @@
         (lambda ()
           (let* ((path (emms-track-description
                         (emms-playlist-current-selected-track)))
-                 (song (car (string-split
-                             (car (last (split-string path "- ")))
-                             "\\."))))
+                 (song (when (string-match ".* - \\(.*\\)\\.m4a$" path)
+                         (match-string 1 path))))
             (format "🎵 %s  " song))))
   :bind
   (:map evil-normal-state-map
@@ -430,14 +433,15 @@
         ("SPC m e" . emms)))
 
 (use-package telega
-  :ensure nil ;; installed and built through nix
+  :straight nil ;; installed and built through nix
   :init
   (setq telega-use-images t)
   (setq telega-emoji-use-images nil)
+  (setq telega-sticker-size '(8 . 48))
+  (setq telega-chat-group-messages-for nil) ;; (not (or saved-messages (type channel bot)))
   (setq telega-emoji-font-family "Noto Color Emoji"))
 
 (use-package elfeed
-  :defer
   :config
   (setq elfeed-feeds
         '(
@@ -459,6 +463,7 @@
 
 (use-package pdf-tools
   :hook (pdf-view-mode . pdf-view-themed-minor-mode)
+  :mode ("\\.pdf\\'" . pdf-view-mode)
   :config
   (pdf-tools-install))
 
@@ -467,6 +472,7 @@
 (use-package emacs
   :hook (eww-mode . visual-line-mode)
   :config
+  ;; name buffers as [ domain ] - [ title ]
   (setq eww-auto-rename-buffer
         (lambda ()
           (let ((domain
@@ -484,6 +490,20 @@
 (use-package gptel
   :config
   (setq gptel-api-key nil))
+
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook)
+  (setq
+   initial-buffer-choice (lambda ()
+                           (get-buffer-create dashboard-buffer-name))
+   dashboard-startup-banner 'logo
+   dashboard-center-content t
+   dashboard-vertically-center-content t
+   dashboard-banner-logo-title nil
+   dashboard-items '((recents   . 5)
+                     (projects  . 3)
+                     (agenda    . 5))))
 
 (setq org-directory "~/Sync/Org")
 
@@ -567,7 +587,7 @@
 
 
 (use-package org-agenda
-  :ensure nil
+  :straight nil
   :init
   (setq org-scheduled-past-days 100
         org-agenda-start-with-log-mode nil
@@ -628,8 +648,8 @@
             (todo "WAIT"
                   ((org-agenda-overriding-header "Waiting")
                    (org-agenda-sorting-strategy '(alpha-up))))
-            (todo "NEXT"
-                       ((org-agenda-overriding-header "Next Actions")
+            (tags-todo "+TODO=\"NEXT\"+LEVEL=2"
+                       ((org-agenda-overriding-header "Single step tasks")
                         (org-agenda-sorting-strategy '(alpha-up))
                         (org-agenda-skip-function
                          '(org-agenda-skip-entry-if
@@ -710,7 +730,6 @@
   (appt-activate t))
 
 (use-package org-present
-  :defer
   :hook ((org-present-mode
           . (lambda ()
               (org-present-hide-cursor)
@@ -737,9 +756,9 @@
   :hook
   (org-mode . toc-org-mode))
 
-(defun my/org-music-jump-to-current-song ()
+(defun org-music-jump-to-current-song ()
   (interactive)
-  (find-file "~/Sync/Org/music.org")
+  (find-file org-music-file)
   (let* ((song-path (emms-track-name
                      (emms-playlist-current-selected-track)))
          (outline-name (when (string-match ".*/\\(.*\\)\\.m4a" song-path)
@@ -750,21 +769,20 @@
     (when outline-marker
       (goto-char outline-marker))))
 
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-
 (use-package org-music
-  :load-path "lisp/org-music.el"
+  :straight
+  (:host github :repo "debanjum/org-music" :branch "master")
   :after emms
   :init
   (setq
-   org-music-file nil
+   org-music-file "~/Sync/Org/music.org"
    org-music-youtube-downloader "yt-dlp"
    org-music-media-directory "~/.cache/org-music"
    org-music-operating-system "linux"
    org-music-cache-size (* 10 1024)) ;; 10 GB?
   :bind
   (:map evil-normal-state-map
-        ("SPC m c" . my/org-music-jump-to-current-song)
+        ("SPC m c" . org-music-jump-to-current-song)
         ("SPC m l p" . org-music-play-list)
         ("SPC m l e" . org-music-enqueue-list)
         ("SPC m p p" . org-music-play-song-at-point)
@@ -790,7 +808,6 @@
    (plist-put org-format-latex-options :background 'auto)))
 
 (use-package org-roam
-  :defer
   :config
   (when (not (file-directory-p "~/Sync/Org/Roam"))
     (make-directory "~/Sync/Org/Roam"))
@@ -802,4 +819,4 @@
   (("C-c n f" . org-roam-node-find)
    ("C-c n i" . org-roam-node-insert)))
 
-(use-package org-roam-ui :defer)
+(use-package org-roam-ui)

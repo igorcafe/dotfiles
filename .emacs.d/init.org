@@ -4,8 +4,7 @@
 * Table of Contents :TOC:
 - [[#config][Config]]
   - [[#early-init][Early Init]]
-  - [[#setup-melpa][Setup MELPA]]
-  - [[#setup-use-package][Setup use-package]]
+  - [[#straightel---purely-functional-package-manager][=straight.el= - purely functional package manager]]
   - [[#auto-tangle-config][Auto-tangle config]]
   - [[#y-or-n-instead-of-yes-or-no-prompts][Y or N instead of Yes or No prompts]]
   - [[#dont-show-warnings-only-errors][Don't show warnings, only errors]]
@@ -69,7 +68,6 @@
   - [[#whick-key---suggests-key-combinations-as-you-press-them][=whick-key= - suggests key combinations as you press them.]]
   - [[#vterm---integrated-terminal][=vterm= - integrated terminal]]
   - [[#vertico---vertical-completion][=vertico= - vertical completion]]
-  - [[#vertico-posframe---make-vertico-appear-as-a-floating-window][=vertico-posframe= - make vertico appear as a floating window]]
   - [[#marginalia---show-more-data-for-help-functions][=marginalia= - show more data for help functions]]
   - [[#orderless---fuzzy-completion][=orderless= - fuzzy completion]]
   - [[#auto-fill-mode-builtin---automatically-break-long-lines][=auto-fill-mode= (builtin) - automatically break long lines]]
@@ -81,6 +79,7 @@
   - [[#eww-builtin---simple-browser][=eww= (builtin) - simple browser]]
   - [[#activity-watch-mode---track-emacs-usage-using-activitywatch][=activity-watch-mode= - track emacs usage using ActivityWatch]]
   - [[#gptel---gpt-inside-emacs][=gptel= - GPT inside emacs]]
+  - [[#dashboard---initial-buffer-dashboard][=dashboard= - initial buffer dashboard]]
 - [[#org-config][Org Config]]
   - [[#org-directory][Org directory]]
   - [[#org-source-block---open-in-the-same-window][Org source block - open in the same window]]
@@ -145,7 +144,7 @@ Launch in fullscreen.
   (toggle-frame-fullscreen)
 #+end_src
 
-** Setup MELPA
+** COMMENT Setup MELPA
 
 #+begin_src emacs-lisp
   (require 'package)
@@ -156,11 +155,52 @@ Launch in fullscreen.
   (package-initialize)
 #+end_src
 
-** Setup use-package
+
+** =straight.el= - purely functional package manager
+
+Bootstrap straight.el
+
+#+begin_src emacs-lisp
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name
+          "straight/repos/straight.el/bootstrap.el"
+          (or (bound-and-true-p straight-base-dir)
+              user-emacs-directory)))
+        (bootstrap-version 7))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+#+end_src
+
+use-package integration
+
+#+begin_src emacs-lisp
+  (straight-use-package 'use-package)
+#+end_src
+
+Always use straight unless specificied not to
+
+#+begin_src emacs-lisp
+  (setq straight-use-package-by-default t)
+#+end_src
+
+Don't check for modifications on startup
+
+#+begin_src emacs-lisp
+  (setq straight-check-for-modification '(find-when-checking))
+#+end_src
+
+** COMMENT Setup use-package
 
 #+begin_src emacs-lisp
   (eval-when-compile (require 'use-package))
-  (setq use-package-always-ensure t)
+  ;;(setq use-package-always-ensure t)
 #+end_src
 
 ** Auto-tangle config
@@ -169,7 +209,6 @@ Automatically generate =init.el= and =early-init.el= when I save this file.
 
 #+begin_src emacs-lisp
   (use-package org-auto-tangle
-    :defer
     :hook (org-mode . org-auto-tangle-mode))
 #+end_src
 
@@ -229,7 +268,6 @@ I was getting very bad startup times so I added this just to be sure.
 
 #+begin_src emacs-lisp
   (use-package esup
-    :defer
     :config
     (setq esup-depth 0))
 #+end_src
@@ -373,6 +411,7 @@ evil mode and evil-collection provide vim-like bindings.
 #+begin_src emacs-lisp
   (use-package evil
     :demand t
+    :straight t
     :custom
     (evil-want-integration t)
     (evil-want-C-u-scroll t)
@@ -391,6 +430,7 @@ evil mode and evil-collection provide vim-like bindings.
 
   (use-package evil-collection
     :after evil
+    :straight t
     :config
     (evil-collection-init))
 #+end_src
@@ -401,7 +441,6 @@ Works exactly like you-surround.
 
 #+begin_src emacs-lisp
   (use-package evil-surround
-    :ensure t
     :config
     (global-evil-surround-mode 1))
 #+end_src
@@ -422,7 +461,7 @@ I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
 ** COMMENT =focus-mode= - highlight only the current area
 
 #+begin_src emacs-lisp
-  (use-package focus :defer)
+  (use-package focus)
 #+end_src
 
 ** =hl-line-mode= - highlight current line
@@ -436,7 +475,7 @@ I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
 ** COMMENT =evil-mc= - multiple cursors like VSCode
 
 #+begin_src emacs-lisp
-  (use-package evil-mc :defer)
+  (use-package evil-mc)
 #+end_src
 
 ** =all-the-icons= + =all-the-icons-dired= - icon packages
@@ -457,7 +496,6 @@ I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
 
 #+begin_src emacs-lisp
   (use-package doom-themes
-    :defer 0.3
     :config
     (setq doom-themes-enable-bold t)
     (setq doom-themes-enable-italic t)
@@ -468,7 +506,6 @@ I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
 
 #+begin_src emacs-lisp
   (use-package doom-modeline
-    :defer 1
     :config
     (setq doom-modeline-buffer-name nil)
     (setq doom-modeline-buffer-encoding nil)
@@ -555,7 +592,6 @@ Customize project.el commands.
 
 #+begin_src emacs-lisp
   (use-package go-mode
-    :defer
     :hook
     (go-mode . eglot-ensure))
 #+end_src
@@ -563,22 +599,22 @@ Customize project.el commands.
 ** =go-tag= - automatically adding/removing struct tags
 
 #+begin_src emacs-lisp
-  (use-package go-tag :defer)
+  (use-package go-tag)
 #+end_src
 
 ** =nix-mode= - Nix support
 #+begin_src emacs-lisp
-  (use-package nix-mode :defer)
+  (use-package nix-mode)
 #+end_src
 
 ** =yaml-mode= - YAML support
 #+begin_src emacs-lisp
-  (use-package yaml-mode :defer)
+  (use-package yaml-mode)
 #+end_src
 
 ** =markdown-mode= - Markdown support
 #+begin_src emacs-lisp
-  (use-package markdown-mode :defer)
+  (use-package markdown-mode)
 #+end_src
 
 ** =python-mode= (builtin) - Python support
@@ -772,7 +808,6 @@ Show recent files with ~C-x C-r~.
 
 #+begin_src emacs-lisp
   (use-package consult
-    :defer
     :bind
     (:map evil-normal-state-map
           ;; analogous to project-find-regexp
@@ -822,13 +857,13 @@ between them
 ** =restclient= - http client
 
 #+begin_src emacs-lisp
-  (use-package restclient :defer t)
+  (use-package restclient)
 #+end_src
 
 ** =simple-httpd= - static http server
 
 #+begin_src emacs-lisp
-  (use-package simple-httpd :defer t)
+  (use-package simple-httpd)
 #+end_src
 
 ** COMMENT =yasnippet= - templates/snippets
@@ -874,7 +909,7 @@ Automatically update dired when a file is changed.
 
 #+begin_src emacs-lisp
   (use-package dired
-    :ensure nil
+    :straight nil
     :hook
     (dired-mode . dired-hide-details-mode)
     :config
@@ -899,25 +934,26 @@ Automatically update dired when a file is changed.
 I use the default ~C-x g~ binding.
 
 #+begin_src emacs-lisp
-  (use-package magit :defer)
+  (use-package magit
+    :bind
+    ("C-x g" . magit))
 #+end_src
 
 ** =diff-hl= - highlight uncommited changes
 
 #+begin_src emacs-lisp
   (use-package diff-hl
-    :defer 1
     :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
            (magit-post-refresh . diff-hl-magit-post-refresh)
            (after-save . diff-hl-update))
-    :init
+    :config
     (global-diff-hl-mode 1))
 #+end_src
 
 ** =blamer-mode= - git blame like gitlens
 
 #+begin_src emacs-lisp
-  (use-package blamer :defer)
+  (use-package blamer)
 #+end_src
 
 ** COMMENT Perspective
@@ -953,8 +989,7 @@ Launch vterm with a custom buffer name.
 
 #+begin_src emacs-lisp
   (use-package vterm
-    :ensure nil
-    :defer
+    :straight nil
     :bind
     (:map evil-normal-state-map
           (("SPC t" . my/vterm))))
@@ -966,12 +1001,12 @@ Improves minibuffer by showing multiple options in a vertical list.
 
 #+begin_src emacs-lisp
   (use-package vertico
-    :config
-    (vertico-mode)
-    (vertico-mouse-mode)
+    :init
+    (vertico-mode 1)
+    (vertico-mouse-mode 1)
     (setq vertico-count 20)
     (setq vertico-cycle t)
-    (setq vertico-sort-function #'vertico-sort-history-alpha)
+    (setq vertico-sort-function 'vertico-sort-history-alpha)
 
     :bind
     (:map vertico-map
@@ -979,7 +1014,7 @@ Improves minibuffer by showing multiple options in a vertical list.
           ("C-k" . vertico-previous)))
 #+end_src
 
-** =vertico-posframe= - make vertico appear as a floating window
+** COMMENT =vertico-posframe= - make vertico appear as a floating window
 
 #+begin_src emacs-lisp
   (use-package vertico-posframe
@@ -1031,9 +1066,8 @@ Improves minibuffer by showing multiple options in a vertical list.
           (lambda ()
             (let* ((path (emms-track-description
                           (emms-playlist-current-selected-track)))
-                   (song (car (string-split
-                               (car (last (split-string path "- ")))
-                               "\\."))))
+                   (song (when (string-match ".* - \\(.*\\)\\.m4a$" path)
+                           (match-string 1 path))))
               (format "🎵 %s  " song))))
     :bind
     (:map evil-normal-state-map
@@ -1050,10 +1084,12 @@ Improves minibuffer by showing multiple options in a vertical list.
 
 #+begin_src emacs-lisp
   (use-package telega
-    :ensure nil ;; installed and built through nix
+    :straight nil ;; installed and built through nix
     :init
     (setq telega-use-images t)
     (setq telega-emoji-use-images nil)
+    (setq telega-sticker-size '(8 . 48))
+    (setq telega-chat-group-messages-for nil) ;; (not (or saved-messages (type channel bot)))
     (setq telega-emoji-font-family "Noto Color Emoji"))
 #+end_src
 
@@ -1061,7 +1097,6 @@ Improves minibuffer by showing multiple options in a vertical list.
 
 #+begin_src emacs-lisp
   (use-package elfeed
-    :defer
     :config
     (setq elfeed-feeds
           '(
@@ -1091,6 +1126,7 @@ I tried default emacs doc-view-mode but it didn't work with the PDFs I tested.
 #+begin_src emacs-lisp
   (use-package pdf-tools
     :hook (pdf-view-mode . pdf-view-themed-minor-mode)
+    :mode ("\\.pdf\\'" . pdf-view-mode)
     :config
     (pdf-tools-install))
 #+end_src
@@ -1109,6 +1145,7 @@ Wrap lines instead of truncating
   (use-package emacs
     :hook (eww-mode . visual-line-mode)
     :config
+    ;; name buffers as [ domain ] - [ title ]
     (setq eww-auto-rename-buffer
           (lambda ()
             (let ((domain
@@ -1139,10 +1176,28 @@ Wrap lines instead of truncating
     (setq gptel-api-key nil))
 #+end_src
 
+** =dashboard= - initial buffer dashboard
+
+#+begin_src emacs-lisp
+  (use-package dashboard
+    :config
+    (dashboard-setup-startup-hook)
+    (setq
+     initial-buffer-choice (lambda ()
+                             (get-buffer-create dashboard-buffer-name))
+     dashboard-startup-banner 'logo
+     dashboard-center-content t
+     dashboard-vertically-center-content t
+     dashboard-banner-logo-title nil
+     dashboard-items '((recents   . 5)
+                       (projects  . 3)
+                       (agenda    . 5))))
+#+end_src
+
 ** COMMENT Matrix
 
 #+begin_src emacs-lisp
-  (use-package ement :defer)
+  (use-package ement)
 #+end_src
 
 
@@ -1439,7 +1494,7 @@ Custom agenda views, agenda settings, and so on.
 
 
   (use-package org-agenda
-    :ensure nil
+    :straight nil
     :init
     (setq org-scheduled-past-days 100
           org-agenda-start-with-log-mode nil
@@ -1500,8 +1555,8 @@ Custom agenda views, agenda settings, and so on.
               (todo "WAIT"
                     ((org-agenda-overriding-header "Waiting")
                      (org-agenda-sorting-strategy '(alpha-up))))
-              (todo "NEXT"
-                         ((org-agenda-overriding-header "Next Actions")
+              (tags-todo "+TODO=\"NEXT\"+LEVEL=2"
+                         ((org-agenda-overriding-header "Single step tasks")
                           (org-agenda-sorting-strategy '(alpha-up))
                           (org-agenda-skip-function
                            '(org-agenda-skip-entry-if
@@ -1685,7 +1740,6 @@ Custom agenda views, agenda settings, and so on.
 
 #+begin_src emacs-lisp
   (use-package org-present
-    :defer
     :hook ((org-present-mode
             . (lambda ()
                 (org-present-hide-cursor)
@@ -1726,9 +1780,9 @@ Useful for github that doesn't create a TOC automatically
 ** =org-music= - manage songs and playlists using org
 
 #+begin_src emacs-lisp
-  (defun my/org-music-jump-to-current-song ()
+  (defun org-music-jump-to-current-song ()
     (interactive)
-    (find-file "~/Sync/Org/music.org")
+    (find-file org-music-file)
     (let* ((song-path (emms-track-name
                        (emms-playlist-current-selected-track)))
            (outline-name (when (string-match ".*/\\(.*\\)\\.m4a" song-path)
@@ -1741,21 +1795,20 @@ Useful for github that doesn't create a TOC automatically
 #+end_src
 
 #+begin_src emacs-lisp
-  (add-to-list 'load-path "~/.emacs.d/lisp/")
-
   (use-package org-music
-    :load-path "lisp/org-music.el"
+    :straight
+    (:host github :repo "debanjum/org-music" :branch "master")
     :after emms
     :init
     (setq
-     org-music-file nil
+     org-music-file "~/Sync/Org/music.org"
      org-music-youtube-downloader "yt-dlp"
      org-music-media-directory "~/.cache/org-music"
      org-music-operating-system "linux"
      org-music-cache-size (* 10 1024)) ;; 10 GB?
     :bind
     (:map evil-normal-state-map
-          ("SPC m c" . my/org-music-jump-to-current-song)
+          ("SPC m c" . org-music-jump-to-current-song)
           ("SPC m l p" . org-music-play-list)
           ("SPC m l e" . org-music-enqueue-list)
           ("SPC m p p" . org-music-play-song-at-point)
@@ -1797,7 +1850,6 @@ Useful for github that doesn't create a TOC automatically
 
 #+begin_src emacs-lisp
   (use-package org-roam
-    :defer
     :config
     (when (not (file-directory-p "~/Sync/Org/Roam"))
       (make-directory "~/Sync/Org/Roam"))
@@ -1813,7 +1865,7 @@ Useful for github that doesn't create a TOC automatically
 ** =org-roam-ui= - visualize Org Roam graph in real time.
 
 #+begin_src emacs-lisp
-  (use-package org-roam-ui :defer)
+  (use-package org-roam-ui)
 #+end_src
 
 ** COMMENT =org-bullets= - show headings with special bullets instead of asterisks
