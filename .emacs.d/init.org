@@ -4,6 +4,8 @@
 * Table of Contents :TOC:
 - [[#config][Config]]
   - [[#early-init][Early Init]]
+  - [[#reduce-gc-impact][reduce GC impact]]
+  - [[#show-gc-messages][show GC messages]]
   - [[#straightel---purely-functional-package-manager][=straight.el= - purely functional package manager]]
   - [[#auto-tangle-config][Auto-tangle config]]
   - [[#y-or-n-instead-of-yes-or-no-prompts][Y or N instead of Yes or No prompts]]
@@ -50,7 +52,7 @@
   - [[#eldoc-box---eldoc-in-a-box-below-cursor][=eldoc-box= - eldoc in a box below cursor]]
   - [[#corfu---completion-popup-like-vs-codes][=corfu= - completion popup like VS Code's]]
   - [[#envrc---direnv-integration][=envrc= - direnv integration]]
-  - [[#recentf-mode---persistent-history-of-recent-files][=recentf-mode= - persistent history of recent files]]
+  - [[#recentf-mode-builtin---persistent-history-of-recent-files][=recentf-mode= (builtin) - persistent history of recent files]]
   - [[#olivetti---horizontal-paddings-for-windows][=olivetti= - horizontal paddings for windows]]
   - [[#save-place-mode---save-cursor-position-per-file][=save-place-mode= - save cursor position per file]]
   - [[#consult---multiple-search-utilities][=consult= - multiple search utilities]]
@@ -61,7 +63,8 @@
   - [[#simple-httpd---static-http-server][=simple-httpd= - static http server]]
   - [[#winner-mode-builtin---undoredo-window-changes][=winner-mode= (builtin) - undo/redo window changes]]
   - [[#dired-builtin---file-manager][=dired= (builtin) - file manager]]
-  - [[#dired-subtree---add-subt-tree-view-to-dired][=dired-subtree= - add subt tree view to dired]]
+  - [[#dired-subtree---add-subtree-view-to-dired][=dired-subtree= - add subtree view to dired]]
+  - [[#dired-preview---preview-file-contents-including-images][=dired-preview= - preview file contents (including images)]]
   - [[#magit---git-interface][=magit= - git interface]]
   - [[#diff-hl---highlight-uncommited-changes][=diff-hl= - highlight uncommited changes]]
   - [[#blamer-mode---git-blame-like-gitlens][=blamer-mode= - git blame like gitlens]]
@@ -80,7 +83,9 @@
   - [[#activity-watch-mode---track-emacs-usage-using-activitywatch][=activity-watch-mode= - track emacs usage using ActivityWatch]]
   - [[#gptel---gpt-inside-emacs][=gptel= - GPT inside emacs]]
   - [[#dashboard---initial-buffer-dashboard][=dashboard= - initial buffer dashboard]]
-- [[#org-config][Org Config]]
+  - [[#yeetube---youtube-frontend][=yeetube= - youtube frontend]]
+  - [[#erc-builtin---emacs-irc-client][=erc= (builtin) - emacs IRC client]]
+  - [[#erc-hl-nicks---highlight-user-nicks-with-unique-color][=erc-hl-nicks= - highlight user nicks with unique color]]
   - [[#org-directory][Org directory]]
   - [[#org-source-block---open-in-the-same-window][Org source block - open in the same window]]
   - [[#org-indirect-buffer---open-in-the-same-window][Org indirect buffer - open in the same window]]
@@ -156,9 +161,24 @@ Launch in fullscreen.
 #+end_src
 
 
+** reduce GC impact
+
+#+begin_src emacs-lisp
+  ;; Set garbage collection threshold to 1GB.
+  (setq gc-cons-threshold #x40000000)
+#+end_src
+
+** show GC messages
+
+#+begin_src emacs-lisp
+  (setq garbage-collection-messages t)
+#+end_src
+
 ** =straight.el= - purely functional package manager
 
 Bootstrap straight.el
+
+TODO: optimize bootstrap: it is taking about 1.3 s (90%) of my startup time
 
 #+begin_src emacs-lisp
   (defvar bootstrap-version)
@@ -193,7 +213,8 @@ Always use straight unless specificied not to
 Don't check for modifications on startup
 
 #+begin_src emacs-lisp
-  (setq straight-check-for-modification '(find-when-checking))
+   ;; use M-x straight-rebuild-package instead
+  (setq straight-check-for-modification 'never)
 #+end_src
 
 ** COMMENT Setup use-package
@@ -373,6 +394,7 @@ In ~M-x~, ~C-x C-f~ and so on.
 
 #+begin_src emacs-lisp
   (use-package emacs
+    :after doom-modeline
     :config
     (setq display-time-day-and-date t)
     (setq display-time-format "%a %H:%M ")
@@ -410,7 +432,7 @@ evil mode and evil-collection provide vim-like bindings.
 
 #+begin_src emacs-lisp
   (use-package evil
-    :demand t
+    :defer 1
     :straight t
     :custom
     (evil-want-integration t)
@@ -441,6 +463,7 @@ Works exactly like you-surround.
 
 #+begin_src emacs-lisp
   (use-package evil-surround
+    :after evil
     :config
     (global-evil-surround-mode 1))
 #+end_src
@@ -482,7 +505,7 @@ I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
 
 #+begin_src emacs-lisp
   (use-package all-the-icons
-    :if (display-graphic-p))
+    :after doom-modeline)
 
   (use-package all-the-icons-dired
     :hook (dired-mode . all-the-icons-dired-mode))
@@ -496,6 +519,7 @@ I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
 
 #+begin_src emacs-lisp
   (use-package doom-themes
+    :defer 0.3
     :config
     (setq doom-themes-enable-bold t)
     (setq doom-themes-enable-italic t)
@@ -506,11 +530,13 @@ I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
 
 #+begin_src emacs-lisp
   (use-package doom-modeline
+    :defer 1.2
     :config
     (setq doom-modeline-buffer-name nil)
     (setq doom-modeline-buffer-encoding nil)
     (setq doom-modeline-env-version nil)
     (setq doom-modeline-lsp nil)
+    (setq doom-modeline-irc nil)
     (setq doom-modeline-lsp-icon nil)
     (setq doom-modeline-env-enable-python nil)
     (doom-modeline-mode 1))
@@ -599,22 +625,22 @@ Customize project.el commands.
 ** =go-tag= - automatically adding/removing struct tags
 
 #+begin_src emacs-lisp
-  (use-package go-tag)
+  (use-package go-tag :defer t)
 #+end_src
 
 ** =nix-mode= - Nix support
 #+begin_src emacs-lisp
-  (use-package nix-mode)
+  (use-package nix-mode :defer t)
 #+end_src
 
 ** =yaml-mode= - YAML support
 #+begin_src emacs-lisp
-  (use-package yaml-mode)
+  (use-package yaml-mode :defer t)
 #+end_src
 
 ** =markdown-mode= - Markdown support
 #+begin_src emacs-lisp
-  (use-package markdown-mode)
+  (use-package markdown-mode :defer t)
 #+end_src
 
 ** =python-mode= (builtin) - Python support
@@ -636,7 +662,7 @@ Customize project.el commands.
 ** =vue-mode= - Vue support
 
 #+begin_src emacs-lisp
-  (use-package vue-mode)
+  (use-package vue-mode :defer t)
 #+end_src
 
 ** =c-mode= (builtin) - C/C++ support
@@ -655,6 +681,7 @@ Eglot is a builtin LSP (Language Server Protocol) client for emacs.
 
 #+begin_src emacs-lisp
   (use-package eglot
+    :after evil
     :hook
     ;; before saving, if eglot is enabled, try to format and organize imports
     (before-save
@@ -741,19 +768,23 @@ Works better than =direnv-mode= for me.
 
 #+begin_src emacs-lisp
   (use-package envrc
+    :defer 0.5
     :config
     (envrc-global-mode))
 #+end_src
 
-** =recentf-mode= - persistent history of recent files
+** =recentf-mode= (builtin) - persistent history of recent files
 
 Show recent files with ~C-x C-r~.
 
 #+begin_src emacs-lisp
-  (recentf-mode 1)
-  (setq recentf-max-menu-items 100)
-  (setq recentf-max-saved-items 100)
-  (global-set-key "\C-x\ \C-r" 'recentf-open)
+  (use-package recentf
+    :straight nil
+    :config
+    (setq recentf-max-menu-items 100)
+    (setq recentf-max-saved-items 100)
+    (recentf-mode 1)
+    :bind ("C-x C-r" . recentf-open))
 #+end_src
 
 ** =olivetti= - horizontal paddings for windows
@@ -808,6 +839,7 @@ Show recent files with ~C-x C-r~.
 
 #+begin_src emacs-lisp
   (use-package consult
+    :after evil
     :bind
     (:map evil-normal-state-map
           ;; analogous to project-find-regexp
@@ -857,13 +889,13 @@ between them
 ** =restclient= - http client
 
 #+begin_src emacs-lisp
-  (use-package restclient)
+  (use-package restclient :defer t)
 #+end_src
 
 ** =simple-httpd= - static http server
 
 #+begin_src emacs-lisp
-  (use-package simple-httpd)
+  (use-package simple-httpd :defer t)
 #+end_src
 
 ** COMMENT =yasnippet= - templates/snippets
@@ -895,6 +927,7 @@ Package for creating snippets.
 
 #+begin_src emacs-lisp
   (use-package emacs
+    :after evil
     :bind
     (:map evil-normal-state-map
           ("C-w u" . winner-undo)
@@ -905,28 +938,57 @@ Package for creating snippets.
 
 ** =dired= (builtin) - file manager
 
-Automatically update dired when a file is changed.
+- Hide details by default (show only filename + icon with =all-the-icons-dired=)
+- Rename buffer to "dired - <path>"
 
 #+begin_src emacs-lisp
   (use-package dired
     :straight nil
+    :preface
+    (defun my/dired-rename ()
+      (rename-buffer (format "dired - %s" dired-directory)))
+    (defun my/dired-xdg-open ()
+      (interactive)
+      (browse-url-xdg-open (dired-get-filename)))
     :hook
-    (dired-mode . dired-hide-details-mode)
+    ((dired-mode . dired-hide-details-mode)
+     (dired-mode . my/dired-rename))
     :config
     (setq global-auto-revert-non-file-buffers t)
+    (setq dired-omit-files "^\\.")
     ;; :bind
     ;; (:map dired-mode-map
     ;;       ("S-TAB" . dired-find-file-other-window))
-    )
+    :bind
+    (:map dired-mode-map
+          ("<normal-state> g x" . my/dired-xdg-open)
+          ("M-o" . dired-omit-mode)))
 #+end_src
 
-** =dired-subtree= - add subt tree view to dired
+** =dired-subtree= - add subtree view to dired
 
 #+begin_src emacs-lisp
   (use-package dired-subtree
-      :bind
-      (:map dired-mode-map
-            ("TAB" . dired-subtree-toggle)))
+    :after dired
+    :bind
+    (:map dired-mode-map
+          ("TAB" . dired-subtree-toggle)))
+#+end_src
+
+** =dired-preview= - preview file contents (including images)
+
+#+begin_src emacs-lisp
+  (use-package dired-preview
+    :after dired
+    :defer t
+    :preface
+    (defun my/dired-preview-at-right ()
+      '((display-buffer-in-side-window)
+        (side . right)
+        (window-width . 0.5)))
+    :config
+    (setq dired-preview-delay 0.3)
+    (setq dired-preview-display-action-alist #'my/dired-preview-at-right))
 #+end_src
 
 ** =magit= - git interface
@@ -953,7 +1015,7 @@ I use the default ~C-x g~ binding.
 ** =blamer-mode= - git blame like gitlens
 
 #+begin_src emacs-lisp
-  (use-package blamer)
+  (use-package blamer :defer t)
 #+end_src
 
 ** COMMENT Perspective
@@ -990,6 +1052,7 @@ Launch vterm with a custom buffer name.
 #+begin_src emacs-lisp
   (use-package vterm
     :straight nil
+    :after evil
     :bind
     (:map evil-normal-state-map
           (("SPC t" . my/vterm))))
@@ -1001,7 +1064,8 @@ Improves minibuffer by showing multiple options in a vertical list.
 
 #+begin_src emacs-lisp
   (use-package vertico
-    :init
+    :defer 0.4
+    :config
     (vertico-mode 1)
     (vertico-mouse-mode 1)
     (setq vertico-count 20)
@@ -1029,6 +1093,7 @@ Improves minibuffer by showing multiple options in a vertical list.
 
 #+begin_src emacs-lisp
   (use-package marginalia
+    :defer 2.5
     :init
     (marginalia-mode))
 #+end_src
@@ -1053,6 +1118,7 @@ Improves minibuffer by showing multiple options in a vertical list.
 
 #+begin_src emacs-lisp
   (use-package emms
+    :after evil
     :config
     (emms-all)
     (emms-default-players)
@@ -1097,27 +1163,42 @@ Improves minibuffer by showing multiple options in a vertical list.
 
 #+begin_src emacs-lisp
   (use-package elfeed
+    :commands elfeed
     :config
     (setq elfeed-feeds
           '(
             ;; DHH
-            "https://world.hey.com/dhh/feed.atom" 
+            ("https://world.hey.com/dhh/feed.atom")
+
             ;; Martin Fowler
-            "https://martinfowler.com/feed.atom" 
+            ("https://martinfowler.com/feed.atom")
+
             ;; Go Blog
-            "https://go.dev/blog/feed.atom" 
-            ;; ThePrimeTime
-            "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" 
-            ;; Mental Outlaw
-            "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" 
-            ;; Fireship
-            "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA" 
+            ("https://go.dev/blog/feed.atom" golang)
+
             ;; Lakka News
-            "https://www.lakka.tv/articles/feed.xml" 
+            ("https://www.lakka.tv/articles/feed.xml")
+
+            ;; Igor Melo (dev.to)
+            ("https://dev.to/feed/igormelo")
+
+            ;; Things of Interest - Blog
+            ("https://qntm.org/rss.php?blog")
+
+            ;; Jesse Li
+            ("https://blog.jse.li/index.xml")
+
+            ;; Planet Emacslife
+            ("https://planet.emacslife.com/atom.xml" emacs)
+
+            ;; ThePrimeTime
+            ;;"https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ"
+            ;; Mental Outlaw
+            ;;"https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA"
+            ;; Fireship
+            ;;"https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA"
             )))
 #+end_src
-
-*** TODO org-elfeed
 
 ** =pdf-tools= - read PDFs in emacs
 
@@ -1134,7 +1215,7 @@ I tried default emacs doc-view-mode but it didn't work with the PDFs I tested.
 ** =nov-mode= - read EPUBs in emacs
 
 #+begin_src emacs-lisp
-  (use-package nov)
+  (use-package nov :defer t)
 #+end_src
 
 ** =eww= (builtin) - simple browser
@@ -1164,6 +1245,7 @@ Wrap lines instead of truncating
 
 #+begin_src emacs-lisp
   (use-package activity-watch-mode
+    :defer 5
     :config
     (global-activity-watch-mode 1))
 #+end_src
@@ -1172,6 +1254,7 @@ Wrap lines instead of truncating
 
 #+begin_src emacs-lisp
   (use-package gptel
+    :defer t
     :config
     (setq gptel-api-key nil))
 #+end_src
@@ -1180,8 +1263,10 @@ Wrap lines instead of truncating
 
 #+begin_src emacs-lisp
   (use-package dashboard
-    :config
+    :after all-the-icons
+    :init
     (dashboard-setup-startup-hook)
+    :config
     (setq
      initial-buffer-choice (lambda ()
                              (get-buffer-create dashboard-buffer-name))
@@ -1189,15 +1274,98 @@ Wrap lines instead of truncating
      dashboard-center-content t
      dashboard-vertically-center-content t
      dashboard-banner-logo-title nil
-     dashboard-items '((recents   . 5)
-                       (projects  . 3)
-                       (agenda    . 5))))
+     dashboard-icon-type 'all-the-icons
+     dashboard-set-heading-icons t
+
+     ;; for some reason its being set to nil
+     dashboard-heading-icons '((recents . "history")
+                               (bookmarks . "bookmark")
+                               (agenda . "calendar")
+                               (projects . "rocket")
+                               (registers . "database"))
+     dashboard-set-file-icons t
+     dashboard-items '((recents . 10)
+                       (agenda . 5))))
+#+end_src
+
+** =yeetube= - youtube frontend
+
+#+begin_src emacs-lisp
+  (use-package yeetube
+    :after evil
+    :hook (yeetube-mode . turn-off-evil-mode)
+    :straight
+    (:type git :host nil :repo "https://git.thanosapollo.org/yeetube")
+    :init
+    (evil-set-initial-state 'yeetube-mode 'emacs)
+    :bind
+    ((:map evil-normal-state-map
+           ("SPC y s" . yeetube-search))
+     (:map yeetube-mode-map
+           ("SPC y s" . yeetube-search)
+           ("k" . previous-line)
+           ("j" . next-line))))
+#+end_src
+
+** =erc= (builtin) - emacs IRC client
+
+#+begin_src emacs-lisp
+  (use-package erc
+    :straight nil
+    :defer t
+    :preface
+    ;; (defun my/erc-buffer-rename ()
+    ;;   (rename-buffer
+    ;;    (format "ERC - %s" (buffer-name))))
+    ;; :hook
+    ;; (erc-mode . my/erc-buffer-rename)
+    :config
+    (setq erc-server "irc.libera.chat"
+          erc-nick "igorcafe"
+          erc-autojoin-channels-alist '(("irc.libera.chat"
+                                         "#systemcrafters"
+                                         "#emacs"
+                                         "#erc"
+                                         "#newpipe"
+                                         "#nixos"
+                                         "#org-mode"
+                                         ))
+          erc-kill-buffer-on-part t
+          erc-auto-query 'bury
+          erc-log-channels-directory "~/.emacs.d/erc")
+
+    (setq erc-fill-column 120
+          erc-fill-function 'erc-fill-static
+          erc-fill-static-center 20)
+
+
+    (setq erc-save-buffer-on-part t
+          erc-save-queries-on-quit t
+          erc-log-write-after-send t
+          erc-log-write-after-insert t
+          erc-log-insert-log-on-open t)
+
+    (setq erc-track-exclude '()
+          erc-track-exclude-types '("JOIN" "NICK" "QUIT" "MODE" "AWAY")
+          erc-hide-list '("JOIN" "NICK" "QUIT" "MODE" "AWAY")
+          erc-track-exclude-server-buffer t)
+
+    (erc-log-enable))
+#+end_src
+
+** =erc-hl-nicks= - highlight user nicks with unique color
+
+#+begin_src emacs-lisp
+  (use-package erc-hl-nicks
+    :after erc
+    :init
+    (add-to-list 'erc-modules 'hl-nicks))
 #+end_src
 
 ** COMMENT Matrix
 
 #+begin_src emacs-lisp
-  (use-package ement)
+  (use-package ement :defer t)
 #+end_src
 
 
@@ -1205,92 +1373,92 @@ Wrap lines instead of truncating
 
 #+begin_src emacs-lisp
   (use-package exwm
-	:hook
-	((exwm-init . (lambda ()
-					(exwm-workspace-switch-create 1)))
-	 (exwm-update-class . (lambda ()
-							(exwm-workspace-rename-buffer exwm-class-name)))
-	 ;; (exwm-manage-finish . (lambda ()
-	 ;;                         (exwm-input-set-local-simulation-keys '([?\s-j] . [down]))))
-	 )
+    :hook
+    ((exwm-init . (lambda ()
+                    (exwm-workspace-switch-create 1)))
+     (exwm-update-class . (lambda ()
+                            (exwm-workspace-rename-buffer exwm-class-name)))
+     ;; (exwm-manage-finish . (lambda ()
+     ;;                         (exwm-input-set-local-simulation-keys '([?\s-j] . [down]))))
+     )
 
-	:config
-	;; Set the default number of workspaces
-	(setq exwm-workspace-number 10)
-	(setq exwm-systemtray-height 32)
+    :config
+    ;; Set the default number of workspaces
+    (setq exwm-workspace-number 10)
+    (setq exwm-systemtray-height 32)
 
-	(setq exwm-input-simulation-keys
-		  '(
-			;; ([?\s-h] . [left])
-			;; ([?\s-l] . [right])
-			([?\s-k] . [up])
-			([?\s-j] . [down])
-			;; ([?0] . [home])
-			;; ([?$] . [end])
-			([?\C-\s-u] . [prior])
-			([?\C-\s-d] . [next])
-			;; ([?x] . [delete])
-			;; ([?D] . [S-end delete])
-			))
+    (setq exwm-input-simulation-keys
+          '(
+            ;; ([?\s-h] . [left])
+            ;; ([?\s-l] . [right])
+            ([?\s-k] . [up])
+            ([?\s-j] . [down])
+            ;; ([?0] . [home])
+            ;; ([?$] . [end])
+            ([?\C-\s-u] . [prior])
+            ([?\C-\s-d] . [next])
+            ;; ([?x] . [delete])
+            ;; ([?D] . [S-end delete])
+            ))
 
-	;; When window "class" updates, use it to set the buffer name
-	;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
+    ;; When window "class" updates, use it to set the buffer name
+    ;; (add-hook 'exwm-update-class-hook #'efs/exwm-update-class)
 
 
-	;; These keys should always pass through to Emacs
-	(setq exwm-input-prefix-keys
-		  '(?\C-x
-			?\C-u
-			?\C-w
-			?\C-h
-			?\M-x
-			?\M-`
-			?\M-&
-			?\M-:
-			?\C-\M-j  ;; Buffer list
-			?\C-\ ))  ;; Ctrl+Space
+    ;; These keys should always pass through to Emacs
+    (setq exwm-input-prefix-keys
+          '(?\C-x
+            ?\C-u
+            ?\C-w
+            ?\C-h
+            ?\M-x
+            ?\M-`
+            ?\M-&
+            ?\M-:
+            ?\C-\M-j  ;; Buffer list
+            ?\C-\ ))  ;; Ctrl+Space
 
-	;; Ctrl+Q will enable the next key to be sent directly
-	(define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+    ;; Ctrl+Q will enable the next key to be sent directly
+    (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
 
-	;; Set up global key bindings.  These always work, no matter the input state!
-	;; Keep in mind that changing this list after EXWM initializes has no effect.
-	(setq exwm-input-global-keys
-		  `(
-			;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-			([?\s-r] . exwm-reset)
+    ;; Set up global key bindings.  These always work, no matter the input state!
+    ;; Keep in mind that changing this list after EXWM initializes has no effect.
+    (setq exwm-input-global-keys
+          `(
+            ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+            ([?\s-r] . exwm-reset)
 
-			;; Move between windows
-			([s-left] . windmove-left)
-			([s-right] . windmove-right)
-			([s-up] . windmove-up)
-			([s-down] . windmove-down)
+            ;; Move between windows
+            ([s-left] . windmove-left)
+            ([s-right] . windmove-right)
+            ([s-up] . windmove-up)
+            ([s-down] . windmove-down)
 
-			;; Launch applications via shell command
-			([?\s-d] . (lambda (command)
-						 (interactive (list (read-shell-command "$ ")))
-						 (start-process-shell-command command nil command)))
+            ;; Launch applications via shell command
+            ([?\s-d] . (lambda (command)
+                         (interactive (list (read-shell-command "$ ")))
+                         (start-process-shell-command command nil command)))
 
-			;; Switch workspace
-			([?\s-w] . exwm-workspace-switch)
+            ;; Switch workspace
+            ([?\s-w] . exwm-workspace-switch)
 
-			;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-			,@(mapcar (lambda (i)
-						`(,(kbd (format "s-%d" i)) .
-						  (lambda ()
-							(interactive)
-							(exwm-workspace-switch-create ,i))))
-					  (number-sequence 0 9))
+            ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+            ,@(mapcar (lambda (i)
+                        `(,(kbd (format "s-%d" i)) .
+                          (lambda ()
+                            (interactive)
+                            (exwm-workspace-switch-create ,i))))
+                      (number-sequence 0 9))
 
-			,@(mapcar (lambda (i)
-						`(,(kbd (format "S-s-%d" i)) .
-						  (lambda ()
-							(interactive)
-							(exwm-workspace-move-window ,i))))
-					  (number-sequence 0 9))))
+            ,@(mapcar (lambda (i)
+                        `(,(kbd (format "S-s-%d" i)) .
+                          (lambda ()
+                            (interactive)
+                            (exwm-workspace-move-window ,i))))
+                      (number-sequence 0 9))))
 
-	(exwm-systemtray-mode 0)
-	(exwm-enable))
+    (exwm-systemtray-mode 0)
+    (exwm-enable))
 #+end_src
 
 ** COMMENT Desktop Environment
@@ -1317,7 +1485,6 @@ Wrap lines instead of truncating
                  sym))
 #+end_src
 
-* Org Config
 ** Org directory
 
 #+begin_src emacs-lisp
@@ -1341,53 +1508,28 @@ Open ~C-c '~ in the same window
 ** Org refile - save all buffers
 
 #+begin_src emacs-lisp
-  (use-package org
-    :config
-    (setq org-outline-path-complete-in-steps t)
-    (setq org-refile-targets nil)
-    (advice-add 'org-refile :after 'org-save-all-org-buffers))
+  (setq org-outline-path-complete-in-steps t)
+  (setq org-refile-targets nil)
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
 #+end_src
 
 ** Org priority - face and default value
 
-
-- [#A] Urgent
-
-Stop whatever you are doing to do this.
-
-- [#B] Next
-
-Tasks you should do when you finish what is in progress.
-
-- [#C] Maybe
-
-Tasks to reconsider in the future if it should be done.
-
-- [#D] "Stuff" (default)
-
-I use this only to differenciate delayed [#C] and default [#D]
-
 #+begin_src emacs-lisp
-  (use-package org
-    :config
-    (setq org-priority-highest ?A)
-    (setq org-priority-lowest ?D)
-    (setq org-priority-default ?D)
-    (setq org-priority-faces
-          ;; nil
-          '((?A . (:foreground "gray"))
-            (?B . (:foreground "gray"))
-            (?C . (:foreground "gray"))
-            (?D . (:foreground "gray")))
-          ))
+  (setq org-priority-highest ?A)
+  (setq org-priority-lowest ?D)
+  (setq org-priority-default ?D)
+  (setq org-priority-faces
+        '((?A . (:foreground "gray"))
+          (?B . (:foreground "gray"))
+          (?C . (:foreground "gray"))
+          (?D . (:foreground "gray"))))
 #+end_src
 
 ** Org tags - column
 
 #+begin_src emacs-lisp
-  (use-package org
-    :config
-    (setq org-tags-column -89))
+  (setq org-tags-column -89)
 #+end_src
 
 ** Org TODOs - keywords and state logging
@@ -1555,15 +1697,22 @@ Custom agenda views, agenda settings, and so on.
               (todo "WAIT"
                     ((org-agenda-overriding-header "Waiting")
                      (org-agenda-sorting-strategy '(alpha-up))))
-              (tags-todo "+TODO=\"NEXT\"+LEVEL=2"
-                         ((org-agenda-overriding-header "Single step tasks")
+              (tags-todo "+TODO=\"NEXT\""
+                         ((org-agenda-overriding-header "Next actions")
                           (org-agenda-sorting-strategy '(alpha-up))
                           (org-agenda-skip-function
                            '(org-agenda-skip-entry-if
                              'regexp "CLOCK: \\[."
                              'scheduled))))
-              (todo "PROJ"
-                    ((org-agenda-overriding-header "Projects")))
+              ;; (tags-todo "+TODO=\"NEXT\"+LEVEL=3"
+              ;;            ((org-agenda-overriding-header "Project next tasks")
+              ;;             (org-agenda-sorting-strategy '(alpha-up))
+              ;;             (org-agenda-skip-function
+              ;;              '(org-agenda-skip-entry-if
+              ;;                'regexp "CLOCK: \\[."
+              ;;                'scheduled))))
+              ;; (todo "PROJ"
+              ;;       ((org-agenda-overriding-header "Projects")))
               (todo "INBX"
                          ((org-agenda-overriding-header "Inbox")
                           (org-agenda-skip-function
@@ -1627,6 +1776,12 @@ Custom agenda views, agenda settings, and so on.
 #+end_src
 
 ** Org Agenda - notifications for events
+
+#+begin_src emacs-lisp
+  (use-package notifications
+    :straight nil
+    :defer 10)
+#+end_src
 
 #+begin_src emacs-lisp
   (use-package emacs
@@ -1743,12 +1898,12 @@ Custom agenda views, agenda settings, and so on.
     :hook ((org-present-mode
             . (lambda ()
                 (org-present-hide-cursor)
-				(setq display-line-numbers-type nil)
+                (setq display-line-numbers-type nil)
                 (display-line-numbers-mode 1)))
            (org-present-mode-quit
             . (lambda ()
                 (org-present-show-cursor)
-				(setq display-line-numbers-type 'relative)
+                (setq display-line-numbers-type 'relative)
                 (display-line-numbers-mode 1)))))
 #+end_src
 
@@ -1756,15 +1911,16 @@ Custom agenda views, agenda settings, and so on.
 
 #+begin_src emacs-lisp
   (use-package org-drill
+    :defer t
+    :init
+    (advice-add 'org-drill-time-to-inactive-org-timestamp :override
+                (lambda (time)
+                  "Convert TIME into org-mode timestamp."
+                  (format-time-string
+                   (concat "[" (cdr org-time-stamp-formats) "]")
+                   time)))
     :config
     (add-to-list 'org-modules 'org-drill))
-
-  (advice-add 'org-drill-time-to-inactive-org-timestamp :override
-              (lambda (time)
-                "Convert TIME into org-mode timestamp."
-                (format-time-string
-                 (concat "[" (cdr org-time-stamp-formats) "]")
-                 time)))
 #+end_src
 
 ** =toc-org= - generate table of contents
@@ -1780,25 +1936,26 @@ Useful for github that doesn't create a TOC automatically
 ** =org-music= - manage songs and playlists using org
 
 #+begin_src emacs-lisp
-  (defun org-music-jump-to-current-song ()
-    (interactive)
-    (find-file org-music-file)
-    (let* ((song-path (emms-track-name
-                       (emms-playlist-current-selected-track)))
-           (outline-name (when (string-match ".*/\\(.*\\)\\.m4a" song-path)
-                           (match-string 1 song-path)))
-
-           (outline-marker (org-find-exact-headline-in-buffer outline-name)))
-
-      (when outline-marker
-        (goto-char outline-marker))))
-#+end_src
-
-#+begin_src emacs-lisp
   (use-package org-music
+    :after (evil emms)
+
     :straight
     (:host github :repo "debanjum/org-music" :branch "master")
-    :after emms
+
+    :preface
+    (defun org-music-jump-to-current-song ()
+      (interactive)
+      (find-file org-music-file)
+      (let* ((song-path (emms-track-name
+                         (emms-playlist-current-selected-track)))
+             (outline-name (when (string-match ".*/\\(.*\\)\\.m4a" song-path)
+                             (match-string 1 song-path)))
+
+             (outline-marker (org-find-exact-headline-in-buffer outline-name)))
+
+        (when outline-marker
+          (goto-char outline-marker))))
+
     :init
     (setq
      org-music-file "~/Sync/Org/music.org"
@@ -1806,6 +1963,7 @@ Useful for github that doesn't create a TOC automatically
      org-music-media-directory "~/.cache/org-music"
      org-music-operating-system "linux"
      org-music-cache-size (* 10 1024)) ;; 10 GB?
+
     :bind
     (:map evil-normal-state-map
           ("SPC m c" . org-music-jump-to-current-song)
@@ -1827,7 +1985,9 @@ Useful for github that doesn't create a TOC automatically
 #+begin_src emacs-lisp
   (use-package org-appear
       :hook
-      (org-mode . org-appear-mode))
+      (org-mode . org-appear-mode)
+      :config
+      (setq org-hide-emphasis-markers t))
 #+end_src
 
 ** =org-fragtog= - display LaTeX automatically inside org buffers
@@ -1865,7 +2025,7 @@ Useful for github that doesn't create a TOC automatically
 ** =org-roam-ui= - visualize Org Roam graph in real time.
 
 #+begin_src emacs-lisp
-  (use-package org-roam-ui)
+  (use-package org-roam-ui :defer t)
 #+end_src
 
 ** COMMENT =org-bullets= - show headings with special bullets instead of asterisks

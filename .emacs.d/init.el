@@ -1,3 +1,8 @@
+;; Set garbage collection threshold to 1GB.
+(setq gc-cons-threshold #x40000000)
+
+(setq garbage-collection-messages t)
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
@@ -18,7 +23,8 @@
 
 (setq straight-use-package-by-default t)
 
-(setq straight-check-for-modification '(find-when-checking))
+;; use M-x straight-rebuild-package instead
+(setq straight-check-for-modification 'never)
 
 (use-package org-auto-tangle
   :hook (org-mode . org-auto-tangle-mode))
@@ -85,6 +91,7 @@
 (setq history-length 100)
 
 (use-package emacs
+  :after doom-modeline
   :config
   (setq display-time-day-and-date t)
   (setq display-time-format "%a %H:%M ")
@@ -103,7 +110,7 @@
   :hook (minibuffer-setup . my/rename-minibuffer))
 
 (use-package evil
-  :demand t
+  :defer 1
   :straight t
   :custom
   (evil-want-integration t)
@@ -128,6 +135,7 @@
   (evil-collection-init))
 
 (use-package evil-surround
+  :after evil
   :config
   (global-evil-surround-mode 1))
 
@@ -143,7 +151,7 @@
   (global-hl-line-mode 1))
 
 (use-package all-the-icons
-  :if (display-graphic-p))
+  :after doom-modeline)
 
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
@@ -153,17 +161,20 @@
 ;;(nerd-icons-install-fonts t)
 
 (use-package doom-themes
+  :defer 0.3
   :config
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic t)
   (load-theme 'doom-one t))
 
 (use-package doom-modeline
+  :defer 1.2
   :config
   (setq doom-modeline-buffer-name nil)
   (setq doom-modeline-buffer-encoding nil)
   (setq doom-modeline-env-version nil)
   (setq doom-modeline-lsp nil)
+  (setq doom-modeline-irc nil)
   (setq doom-modeline-lsp-icon nil)
   (setq doom-modeline-env-enable-python nil)
   (doom-modeline-mode 1))
@@ -209,13 +220,13 @@
   :hook
   (go-mode . eglot-ensure))
 
-(use-package go-tag)
+(use-package go-tag :defer t)
 
-(use-package nix-mode)
+(use-package nix-mode :defer t)
 
-(use-package yaml-mode)
+(use-package yaml-mode :defer t)
 
-(use-package markdown-mode)
+(use-package markdown-mode :defer t)
 
 (use-package emacs
   :hook (python-mode . eglot-ensure))
@@ -225,7 +236,7 @@
   (setq nxml-child-indent 4)
   (setq nxml-attribute-indent 4))
 
-(use-package vue-mode)
+(use-package vue-mode :defer t)
 
 (use-package emacs
   :hook (c-mode . (lambda ()
@@ -233,6 +244,7 @@
                     (setq indent-tabs-mode nil))))
 
 (use-package eglot
+  :after evil
   :hook
   ;; before saving, if eglot is enabled, try to format and organize imports
   (before-save
@@ -275,13 +287,17 @@
         ("C-SPC" . completion-at-point)))
 
 (use-package envrc
+  :defer 0.5
   :config
   (envrc-global-mode))
 
-(recentf-mode 1)
-(setq recentf-max-menu-items 100)
-(setq recentf-max-saved-items 100)
-(global-set-key "\C-x\ \C-r" 'recentf-open)
+(use-package recentf
+  :straight nil
+  :config
+  (setq recentf-max-menu-items 100)
+  (setq recentf-max-saved-items 100)
+  (recentf-mode 1)
+  :bind ("C-x C-r" . recentf-open))
 
 (use-package olivetti
   :hook ((prog-mode
@@ -296,6 +312,7 @@
 (save-place-mode 1)
 
 (use-package consult
+  :after evil
   :bind
   (:map evil-normal-state-map
         ;; analogous to project-find-regexp
@@ -324,11 +341,12 @@
   :config
   (setq whitespace-style '(face tabs spaces trailing space-mark tab-mark)))
 
-(use-package restclient)
+(use-package restclient :defer t)
 
-(use-package simple-httpd)
+(use-package simple-httpd :defer t)
 
 (use-package emacs
+  :after evil
   :bind
   (:map evil-normal-state-map
         ("C-w u" . winner-undo)
@@ -338,19 +356,43 @@
 
 (use-package dired
   :straight nil
+  :preface
+  (defun my/dired-rename ()
+    (rename-buffer (format "dired - %s" dired-directory)))
+  (defun my/dired-xdg-open ()
+    (interactive)
+    (browse-url-xdg-open (dired-get-filename)))
   :hook
-  (dired-mode . dired-hide-details-mode)
+  ((dired-mode . dired-hide-details-mode)
+   (dired-mode . my/dired-rename))
   :config
   (setq global-auto-revert-non-file-buffers t)
+  (setq dired-omit-files "^\\.")
   ;; :bind
   ;; (:map dired-mode-map
   ;;       ("S-TAB" . dired-find-file-other-window))
-  )
+  :bind
+  (:map dired-mode-map
+        ("<normal-state> g x" . my/dired-xdg-open)
+        ("M-o" . dired-omit-mode)))
 
 (use-package dired-subtree
-    :bind
-    (:map dired-mode-map
-          ("TAB" . dired-subtree-toggle)))
+  :after dired
+  :bind
+  (:map dired-mode-map
+        ("TAB" . dired-subtree-toggle)))
+
+(use-package dired-preview
+  :after dired
+  :defer t
+  :preface
+  (defun my/dired-preview-at-right ()
+    '((display-buffer-in-side-window)
+      (side . right)
+      (window-width . 0.5)))
+  :config
+  (setq dired-preview-delay 0.3)
+  (setq dired-preview-display-action-alist #'my/dired-preview-at-right))
 
 (use-package magit
   :bind
@@ -363,7 +405,7 @@
   :config
   (global-diff-hl-mode 1))
 
-(use-package blamer)
+(use-package blamer :defer t)
 
 (use-package which-key
   :config
@@ -376,12 +418,14 @@
 
 (use-package vterm
   :straight nil
+  :after evil
   :bind
   (:map evil-normal-state-map
         (("SPC t" . my/vterm))))
 
 (use-package vertico
-  :init
+  :defer 0.4
+  :config
   (vertico-mode 1)
   (vertico-mouse-mode 1)
   (setq vertico-count 20)
@@ -394,6 +438,7 @@
         ("C-k" . vertico-previous)))
 
 (use-package marginalia
+  :defer 2.5
   :init
   (marginalia-mode))
 
@@ -406,6 +451,7 @@
   :hook (org-mode . auto-fill-mode))
 
 (use-package emms
+  :after evil
   :config
   (emms-all)
   (emms-default-players)
@@ -442,23 +488,40 @@
   (setq telega-emoji-font-family "Noto Color Emoji"))
 
 (use-package elfeed
+  :commands elfeed
   :config
   (setq elfeed-feeds
         '(
           ;; DHH
-          "https://world.hey.com/dhh/feed.atom" 
+          ("https://world.hey.com/dhh/feed.atom")
+
           ;; Martin Fowler
-          "https://martinfowler.com/feed.atom" 
+          ("https://martinfowler.com/feed.atom")
+
           ;; Go Blog
-          "https://go.dev/blog/feed.atom" 
-          ;; ThePrimeTime
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" 
-          ;; Mental Outlaw
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" 
-          ;; Fireship
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA" 
+          ("https://go.dev/blog/feed.atom" golang)
+
           ;; Lakka News
-          "https://www.lakka.tv/articles/feed.xml" 
+          ("https://www.lakka.tv/articles/feed.xml")
+
+          ;; Igor Melo (dev.to)
+          ("https://dev.to/feed/igormelo")
+
+          ;; Things of Interest - Blog
+          ("https://qntm.org/rss.php?blog")
+
+          ;; Jesse Li
+          ("https://blog.jse.li/index.xml")
+
+          ;; Planet Emacslife
+          ("https://planet.emacslife.com/atom.xml" emacs)
+
+          ;; ThePrimeTime
+          ;;"https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ"
+          ;; Mental Outlaw
+          ;;"https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA"
+          ;; Fireship
+          ;;"https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA"
           )))
 
 (use-package pdf-tools
@@ -467,7 +530,7 @@
   :config
   (pdf-tools-install))
 
-(use-package nov)
+(use-package nov :defer t)
 
 (use-package emacs
   :hook (eww-mode . visual-line-mode)
@@ -484,16 +547,20 @@
                     (truncate-string-to-width title 30 nil nil "..."))))))
 
 (use-package activity-watch-mode
+  :defer 5
   :config
   (global-activity-watch-mode 1))
 
 (use-package gptel
+  :defer t
   :config
   (setq gptel-api-key nil))
 
 (use-package dashboard
-  :config
+  :after all-the-icons
+  :init
   (dashboard-setup-startup-hook)
+  :config
   (setq
    initial-buffer-choice (lambda ()
                            (get-buffer-create dashboard-buffer-name))
@@ -501,9 +568,80 @@
    dashboard-center-content t
    dashboard-vertically-center-content t
    dashboard-banner-logo-title nil
-   dashboard-items '((recents   . 5)
-                     (projects  . 3)
-                     (agenda    . 5))))
+   dashboard-icon-type 'all-the-icons
+   dashboard-set-heading-icons t
+
+   ;; for some reason its being set to nil
+   dashboard-heading-icons '((recents . "history")
+                             (bookmarks . "bookmark")
+                             (agenda . "calendar")
+                             (projects . "rocket")
+                             (registers . "database"))
+   dashboard-set-file-icons t
+   dashboard-items '((recents . 10)
+                     (agenda . 5))))
+
+(use-package yeetube
+  :after evil
+  :hook (yeetube-mode . turn-off-evil-mode)
+  :straight
+  (:type git :host nil :repo "https://git.thanosapollo.org/yeetube")
+  :init
+  (evil-set-initial-state 'yeetube-mode 'emacs)
+  :bind
+  ((:map evil-normal-state-map
+         ("SPC y s" . yeetube-search))
+   (:map yeetube-mode-map
+         ("SPC y s" . yeetube-search)
+         ("k" . previous-line)
+         ("j" . next-line))))
+
+(use-package erc
+  :straight nil
+  :defer t
+  :preface
+  ;; (defun my/erc-buffer-rename ()
+  ;;   (rename-buffer
+  ;;    (format "ERC - %s" (buffer-name))))
+  ;; :hook
+  ;; (erc-mode . my/erc-buffer-rename)
+  :config
+  (setq erc-server "irc.libera.chat"
+        erc-nick "igorcafe"
+        erc-autojoin-channels-alist '(("irc.libera.chat"
+                                       "#systemcrafters"
+                                       "#emacs"
+                                       "#erc"
+                                       "#newpipe"
+                                       "#nixos"
+                                       "#org-mode"
+                                       ))
+        erc-kill-buffer-on-part t
+        erc-auto-query 'bury
+        erc-log-channels-directory "~/.emacs.d/erc")
+
+  (setq erc-fill-column 120
+        erc-fill-function 'erc-fill-static
+        erc-fill-static-center 20)
+
+
+  (setq erc-save-buffer-on-part t
+        erc-save-queries-on-quit t
+        erc-log-write-after-send t
+        erc-log-write-after-insert t
+        erc-log-insert-log-on-open t)
+
+  (setq erc-track-exclude '()
+        erc-track-exclude-types '("JOIN" "NICK" "QUIT" "MODE" "AWAY")
+        erc-hide-list '("JOIN" "NICK" "QUIT" "MODE" "AWAY")
+        erc-track-exclude-server-buffer t)
+
+  (erc-log-enable))
+
+(use-package erc-hl-nicks
+  :after erc
+  :init
+  (add-to-list 'erc-modules 'hl-nicks))
 
 (setq org-directory "~/Sync/Org")
 
@@ -511,28 +649,20 @@
 
 (setq org-indirect-buffer-display 'current-window)
 
-(use-package org
-  :config
-  (setq org-outline-path-complete-in-steps t)
-  (setq org-refile-targets nil)
-  (advice-add 'org-refile :after 'org-save-all-org-buffers))
+(setq org-outline-path-complete-in-steps t)
+(setq org-refile-targets nil)
+(advice-add 'org-refile :after 'org-save-all-org-buffers)
 
-(use-package org
-  :config
-  (setq org-priority-highest ?A)
-  (setq org-priority-lowest ?D)
-  (setq org-priority-default ?D)
-  (setq org-priority-faces
-        ;; nil
-        '((?A . (:foreground "gray"))
-          (?B . (:foreground "gray"))
-          (?C . (:foreground "gray"))
-          (?D . (:foreground "gray")))
-        ))
+(setq org-priority-highest ?A)
+(setq org-priority-lowest ?D)
+(setq org-priority-default ?D)
+(setq org-priority-faces
+      '((?A . (:foreground "gray"))
+        (?B . (:foreground "gray"))
+        (?C . (:foreground "gray"))
+        (?D . (:foreground "gray"))))
 
-(use-package org
-  :config
-  (setq org-tags-column -89))
+(setq org-tags-column -89)
 
 (use-package org
   :config
@@ -648,15 +778,22 @@
             (todo "WAIT"
                   ((org-agenda-overriding-header "Waiting")
                    (org-agenda-sorting-strategy '(alpha-up))))
-            (tags-todo "+TODO=\"NEXT\"+LEVEL=2"
-                       ((org-agenda-overriding-header "Single step tasks")
+            (tags-todo "+TODO=\"NEXT\""
+                       ((org-agenda-overriding-header "Next actions")
                         (org-agenda-sorting-strategy '(alpha-up))
                         (org-agenda-skip-function
                          '(org-agenda-skip-entry-if
                            'regexp "CLOCK: \\[."
                            'scheduled))))
-            (todo "PROJ"
-                  ((org-agenda-overriding-header "Projects")))
+            ;; (tags-todo "+TODO=\"NEXT\"+LEVEL=3"
+            ;;            ((org-agenda-overriding-header "Project next tasks")
+            ;;             (org-agenda-sorting-strategy '(alpha-up))
+            ;;             (org-agenda-skip-function
+            ;;              '(org-agenda-skip-entry-if
+            ;;                'regexp "CLOCK: \\[."
+            ;;                'scheduled))))
+            ;; (todo "PROJ"
+            ;;       ((org-agenda-overriding-header "Projects")))
             (todo "INBX"
                        ((org-agenda-overriding-header "Inbox")
                         (org-agenda-skip-function
@@ -710,6 +847,10 @@
          ("G" . evil-goto-line)
          ("k" . org-agenda-previous-line))))
 
+(use-package notifications
+  :straight nil
+  :defer 10)
+
 (use-package emacs
   :after notifications
   :config
@@ -733,46 +874,50 @@
   :hook ((org-present-mode
           . (lambda ()
               (org-present-hide-cursor)
-			      (setq display-line-numbers-type nil)
+              (setq display-line-numbers-type nil)
               (display-line-numbers-mode 1)))
          (org-present-mode-quit
           . (lambda ()
               (org-present-show-cursor)
-			      (setq display-line-numbers-type 'relative)
+              (setq display-line-numbers-type 'relative)
               (display-line-numbers-mode 1)))))
 
 (use-package org-drill
+  :defer t
+  :init
+  (advice-add 'org-drill-time-to-inactive-org-timestamp :override
+              (lambda (time)
+                "Convert TIME into org-mode timestamp."
+                (format-time-string
+                 (concat "[" (cdr org-time-stamp-formats) "]")
+                 time)))
   :config
   (add-to-list 'org-modules 'org-drill))
-
-(advice-add 'org-drill-time-to-inactive-org-timestamp :override
-            (lambda (time)
-              "Convert TIME into org-mode timestamp."
-              (format-time-string
-               (concat "[" (cdr org-time-stamp-formats) "]")
-               time)))
 
 (use-package toc-org
   :hook
   (org-mode . toc-org-mode))
 
-(defun org-music-jump-to-current-song ()
-  (interactive)
-  (find-file org-music-file)
-  (let* ((song-path (emms-track-name
-                     (emms-playlist-current-selected-track)))
-         (outline-name (when (string-match ".*/\\(.*\\)\\.m4a" song-path)
-                         (match-string 1 song-path)))
-
-         (outline-marker (org-find-exact-headline-in-buffer outline-name)))
-
-    (when outline-marker
-      (goto-char outline-marker))))
-
 (use-package org-music
+  :after (evil emms)
+
   :straight
   (:host github :repo "debanjum/org-music" :branch "master")
-  :after emms
+
+  :preface
+  (defun org-music-jump-to-current-song ()
+    (interactive)
+    (find-file org-music-file)
+    (let* ((song-path (emms-track-name
+                       (emms-playlist-current-selected-track)))
+           (outline-name (when (string-match ".*/\\(.*\\)\\.m4a" song-path)
+                           (match-string 1 song-path)))
+
+           (outline-marker (org-find-exact-headline-in-buffer outline-name)))
+
+      (when outline-marker
+        (goto-char outline-marker))))
+
   :init
   (setq
    org-music-file "~/Sync/Org/music.org"
@@ -780,6 +925,7 @@
    org-music-media-directory "~/.cache/org-music"
    org-music-operating-system "linux"
    org-music-cache-size (* 10 1024)) ;; 10 GB?
+
   :bind
   (:map evil-normal-state-map
         ("SPC m c" . org-music-jump-to-current-song)
@@ -793,7 +939,9 @@
 
 (use-package org-appear
     :hook
-    (org-mode . org-appear-mode))
+    (org-mode . org-appear-mode)
+    :config
+    (setq org-hide-emphasis-markers t))
 
 (use-package org-fragtog
   :after org
@@ -819,4 +967,4 @@
   (("C-c n f" . org-roam-node-find)
    ("C-c n i" . org-roam-node-insert)))
 
-(use-package org-roam-ui)
+(use-package org-roam-ui :defer t)
