@@ -1,6 +1,13 @@
 #+title: My emacs settings
 #+auto_tangle: t
 
+#+begin_src emacs-lisp
+  (setq org-roam-capture-templates
+        '(("d" "default" plain "%?" :target
+          (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "* ${title}")
+          :unnarrowed t)))
+#+end_src
+
 * Table of Contents :TOC:
 - [[#config][Config]]
   - [[#early-init][Early Init]]
@@ -21,7 +28,7 @@
   - [[#show-line-numbers][Show line numbers]]
   - [[#absolute-and-relative-line-numbers][Absolute and relative line numbers]]
   - [[#truncate-long-lines][Truncate long lines]]
-  - [[#indent-using-4-spaces][Indent using 4 spaces]]
+  - [[#indent-using-2-spaces][Indent using 2 spaces]]
   - [[#refresh-buffers-on-change][Refresh buffers on change]]
   - [[#use-ibuffer-builtin-instead-of-list-buffers][Use =ibuffer= (builtin) instead of list-buffers.]]
   - [[#persist-minibuffers-history][Persist minibuffer's history]]
@@ -33,6 +40,7 @@
   - [[#hl-line-mode---highlight-current-line][=hl-line-mode= - highlight current line]]
   - [[#all-the-icons--all-the-icons-dired---icon-packages][=all-the-icons= + =all-the-icons-dired= - icon packages]]
   - [[#doom-themes---nice-themes][=doom-themes= - nice themes]]
+  - [[#cycle-between-favorite-theme][cycle between favorite theme]]
   - [[#doom-modeline---nice-modeline][=doom-modeline= - nice modeline]]
   - [[#breadcrumb---summary-of-your-cursor-position][=breadcrumb= - summary of your cursor position]]
   - [[#flymake-builtin---syntax-checking][=flymake= (builtin) - syntax checking]]
@@ -41,6 +49,7 @@
   - [[#go-mode---go-support][=go-mode= - Go support]]
   - [[#go-tag---automatically-addingremoving-struct-tags][=go-tag= - automatically adding/removing struct tags]]
   - [[#nix-mode---nix-support][=nix-mode= - Nix support]]
+  - [[#typescript-mode---typescript-support][=typescript-mode= - TypeScript support]]
   - [[#yaml-mode---yaml-support][=yaml-mode= - YAML support]]
   - [[#markdown-mode---markdown-support][=markdown-mode= - Markdown support]]
   - [[#python-mode-builtin---python-support][=python-mode= (builtin) - Python support]]
@@ -50,7 +59,7 @@
   - [[#eglot-builtin---lsp-client][=eglot= (builtin) - LSP client]]
   - [[#eldoc-builtin---showing-documentation-of-symbols][=eldoc= (builtin) - showing documentation of symbols]]
   - [[#eldoc-box---eldoc-in-a-box-below-cursor][=eldoc-box= - eldoc in a box below cursor]]
-  - [[#corfu---completion-popup-like-vs-codes][=corfu= - completion popup like VS Code's]]
+  - [[#company---completion-popup-like-vs-codes][=company= - completion popup like VS Code's]]
   - [[#envrc---direnv-integration][=envrc= - direnv integration]]
   - [[#recentf-mode-builtin---persistent-history-of-recent-files][=recentf-mode= (builtin) - persistent history of recent files]]
   - [[#olivetti---horizontal-paddings-for-windows][=olivetti= - horizontal paddings for windows]]
@@ -73,16 +82,21 @@
   - [[#vertico---vertical-completion][=vertico= - vertical completion]]
   - [[#marginalia---show-more-data-for-help-functions][=marginalia= - show more data for help functions]]
   - [[#orderless---fuzzy-completion][=orderless= - fuzzy completion]]
-  - [[#auto-fill-mode-builtin---automatically-break-long-lines][=auto-fill-mode= (builtin) - automatically break long lines]]
   - [[#emms---music-player][=emms= - music player]]
   - [[#telega---telegram-client][=telega= - telegram client]]
   - [[#elfeed---client-for-atom-and-rss-feeds][=elfeed= - client for Atom and RSS feeds]]
   - [[#pdf-tools---read-pdfs-in-emacs][=pdf-tools= - read PDFs in emacs]]
   - [[#nov-mode---read-epubs-in-emacs][=nov-mode= - read EPUBs in emacs]]
+  - [[#auth-sources---password-manager][=auth-sources= - "password manager"]]
+  - [[#comment][COMMENT]]
+  - [[#pinentry---for-entrying-pin-for-gpg][=pinentry= - for entrying pin for gpg]]
+  - [[#gnus---email-client-news-reader-maybe][=gnus= - email client, news reader, maybe]]
   - [[#eww-builtin---simple-browser][=eww= (builtin) - simple browser]]
   - [[#activity-watch-mode---track-emacs-usage-using-activitywatch][=activity-watch-mode= - track emacs usage using ActivityWatch]]
   - [[#gptel---gpt-inside-emacs][=gptel= - GPT inside emacs]]
   - [[#dashboard---initial-buffer-dashboard][=dashboard= - initial buffer dashboard]]
+  - [[#mpvel---control-mpv-from-emacs][=mpv.el= - control mpv from emacs]]
+  - [[#org-mpv-notes---control-mpv-from-emacs][=org-mpv-notes= - control mpv from emacs]]
   - [[#yeetube---youtube-frontend][=yeetube= - youtube frontend]]
   - [[#erc-builtin---emacs-irc-client][=erc= (builtin) - emacs IRC client]]
   - [[#erc-hl-nicks---highlight-user-nicks-with-unique-color][=erc-hl-nicks= - highlight user nicks with unique color]]
@@ -94,7 +108,7 @@
   - [[#org-tags---column][Org tags - column]]
   - [[#org-todos---keywords-and-state-logging][Org TODOs - keywords and state logging]]
   - [[#org-clock---keybindings][Org Clock - keybindings]]
-  - [[#org-capture---templates][Org Capture - templates]]
+  - [[#org-capture---keybindings-and-templates][Org Capture - keybindings and templates]]
   - [[#org-lists---replace---by--on-unordered-lists][Org lists - Replace ~-~ by ~•~ on unordered lists.]]
   - [[#org-agenda---setup-and-custom-views][Org Agenda - setup and custom views]]
   - [[#org-agenda---notifications-for-events][Org Agenda - notifications for events]]
@@ -107,6 +121,8 @@
   - [[#org-fragtog---display-latex-automatically-inside-org-buffers][=org-fragtog= - display LaTeX automatically inside org buffers]]
   - [[#org-roam---org-knowledge-management-system][=org-roam= - org knowledge management system]]
   - [[#org-roam-ui---visualize-org-roam-graph-in-real-time][=org-roam-ui= - visualize Org Roam graph in real time.]]
+  - [[#org-cliplink---paste-link-with-automatic-title][=org-cliplink= - paste link with automatic title]]
+  - [[#org-download---getting-images-into-org][=org-download= - getting images into org]]
 
 * Config
 ** Early Init
@@ -164,8 +180,7 @@ Launch in fullscreen.
 ** reduce GC impact
 
 #+begin_src emacs-lisp
-  ;; Set garbage collection threshold to 1GB.
-  (setq gc-cons-threshold #x40000000)
+  (setq gc-cons-threshold (* 800000 10))
 #+end_src
 
 ** show GC messages
@@ -329,7 +344,8 @@ Enable line numbers for some modes.
   (use-package emacs
     :hook ((text-mode
             prog-mode
-            conf-mode) . display-line-numbers-mode))
+            conf-mode
+            restclient-mode) . display-line-numbers-mode))
 #+end_src
 
 ** Absolute and relative line numbers
@@ -357,10 +373,10 @@ Show absolute line numbers for insert state and relative for others.
   (set-default 'truncate-lines t)
 #+end_src
 
-** Indent using 4 spaces
+** Indent using 2 spaces
 
 #+begin_src emacs-lisp
-  (setq-default tab-width 4)
+  (setq-default tab-width 2)
   (setq-default indent-tabs-mode nil)
 #+end_src
 
@@ -442,10 +458,9 @@ evil mode and evil-collection provide vim-like bindings.
     (evil-undo-system 'undo-redo)
     (evil-cross-lines t)
     :bind
-    (:map evil-normal-state-map
-          ("SPC u" . universal-argument)
-          ("H" . previous-buffer)
-          ("L" . next-buffer))
+    (("C-x C-h" . previous-buffer)
+     ("C-x C-l" . next-buffer)
+     ("C-x C-u" . universal-argument))
     :config
     (evil-set-leader 'normal (kbd "SPC"))
     (evil-mode 1))
@@ -526,6 +541,22 @@ I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
     (load-theme 'doom-one t))
 #+end_src
 
+** cycle between favorite theme
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :config
+    (defvar favorite-themes '(doom-one-light doom-one))
+
+    (defun cycle-favorite-themes ()
+      (interactive)
+      (let* ((current (car custom-enabled-themes))
+             (i-current (cl-position current favorite-themes))
+             (i-next (% (+ i-current 1) (length favorite-themes)))
+             (theme (nth i-next favorite-themes)))
+        (load-theme theme t))))
+#+end_src
+
 ** =doom-modeline= - nice modeline
 
 #+begin_src emacs-lisp
@@ -600,7 +631,6 @@ Launch vterm in the project's root directory.
 Customize project.el commands.
 
 #+begin_src emacs-lisp
-
   (use-package project
     :config
     (setq project-switch-commands
@@ -611,7 +641,11 @@ Customize project.el commands.
             ;;(project-vc-dir "VC-Dir")
             ;;(project-eshell "Eshell")
             ;;(project-any-command "Other")
-            (magit-project-status "Magit" ?m))))
+            (magit-project-status "Magit" ?m)))
+    :bind
+    (:map project-prefix-map
+          ("t" . project-vterm)
+          ("m" . magit-project-status)))
 #+end_src
 
 ** =go-mode= - Go support
@@ -631,6 +665,15 @@ Customize project.el commands.
 ** =nix-mode= - Nix support
 #+begin_src emacs-lisp
   (use-package nix-mode :defer t)
+#+end_src
+
+
+** =typescript-mode= - TypeScript support
+#+begin_src emacs-lisp
+  (use-package typescript-mode
+    :defer t
+    :config
+    (setq typescript-indent-level 2))
 #+end_src
 
 ** =yaml-mode= - YAML support
@@ -723,7 +766,7 @@ I use eldoc-box to show docs as a hover box instead of using echo area.
       (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
 #+end_src
 
-** =corfu= - completion popup like VS Code's
+** COMMENT =corfu= - completion popup like VS Code's
 
 #+begin_src emacs-lisp
   (use-package corfu
@@ -738,6 +781,24 @@ I use eldoc-box to show docs as a hover box instead of using echo area.
     :bind
     (:map global-map
           ("C-SPC" . completion-at-point)))
+#+end_src
+
+** =company= - completion popup like VS Code's
+
+#+begin_src emacs-lisp
+  (use-package company
+    :hook (after-init . global-company-mode)
+    :custom
+    (company-tooltip-limit 10)
+    (company-idle-delay 0.15)
+    (company-minimum-prefix-length 3)
+    (company-selection-wrap-around t)
+    (company-require-match 'never)
+    :bind
+    ((:map global-map
+           ("C-SPC" . company-complete))
+     (:map company-active-map
+           ("TAB" . company-complete))))
 #+end_src
 
 ** COMMENT =cape=
@@ -795,7 +856,8 @@ Show recent files with ~C-x C-r~.
             eww-mode
             text-mode
             conf-mode
-            org-agenda-mode)
+            org-agenda-mode
+            restclient-mode)
            . olivetti-mode)
     :init
     (setq-default olivetti-body-width 100))
@@ -873,7 +935,9 @@ between them
 #+begin_src emacs-lisp
   (use-package emacs
     :config
-    (setq tab-bar-show nil))
+    (setq tab-bar-show nil)
+    :bind (("M-1" . tab-select)
+           ("M-2" . tab-select)))
 #+end_src
 
 ** =whitespace= (builtin) - show whitespaces as symbols
@@ -889,7 +953,9 @@ between them
 ** =restclient= - http client
 
 #+begin_src emacs-lisp
-  (use-package restclient :defer t)
+  (use-package restclient
+    :defer t
+    :mode ("\\.http\\'" . restclient-mode))
 #+end_src
 
 ** =simple-httpd= - static http server
@@ -1054,8 +1120,11 @@ Launch vterm with a custom buffer name.
     :straight nil
     :after evil
     :bind
-    (:map evil-normal-state-map
-          (("SPC t" . my/vterm))))
+    ((:map evil-normal-state-map
+           (("SPC t" . my/vterm)))
+     (:map vterm-mode-map
+           (("M-1" . nil)
+            ("M-2" . nil)))))
 #+end_src
 
 ** =vertico= - vertical completion
@@ -1107,7 +1176,7 @@ Improves minibuffer by showing multiple options in a vertical list.
     (completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
 
-** =auto-fill-mode= (builtin) - automatically break long lines
+** COMMENT =auto-fill-mode= (builtin) - automatically break long lines
 
 #+begin_src emacs-lisp
   (use-package org
@@ -1132,18 +1201,19 @@ Improves minibuffer by showing multiple options in a vertical list.
           (lambda ()
             (let* ((path (emms-track-description
                           (emms-playlist-current-selected-track)))
-                   (song (when (string-match ".* - \\(.*\\)\\.m4a$" path)
+                   (song (when (string-match ".*? - \\(.*\\)\\.m4a$" path)
                            (match-string 1 path))))
               (format "🎵 %s  " song))))
     :bind
-    (:map evil-normal-state-map
-          ("SPC m j" . emms-next)
-          ("SPC m k" . emms-previous)
-          ("SPC m ," . emms-seek-backward)
-          ("SPC m ." . emms-seek-forward)
-          ("SPC m SPC" . emms-pause)
-          ("SPC m s" . emms-stop)
-          ("SPC m e" . emms)))
+    (:map global-map
+          ("C-c m j" . emms-next)
+          ("C-c m k" . emms-previous)
+          ("C-c m ," . emms-seek-backward)
+          ("C-c m ." . emms-seek-forward)
+          ("C-c m SPC" . emms-pause)
+          ("C-c m s" . emms-stop)
+          ("C-c m e" . emms)
+          ("C-c m R" . emms-playlist-sort-by-random)))
 #+end_src
 
 ** =telega= - telegram client
@@ -1151,12 +1221,21 @@ Improves minibuffer by showing multiple options in a vertical list.
 #+begin_src emacs-lisp
   (use-package telega
     :straight nil ;; installed and built through nix
-    :init
+    :hook (telega-mode . telega-mode-line-mode)
+    :config
     (setq telega-use-images t)
     (setq telega-emoji-use-images nil)
     (setq telega-sticker-size '(8 . 48))
     (setq telega-chat-group-messages-for nil) ;; (not (or saved-messages (type channel bot)))
-    (setq telega-emoji-font-family "Noto Color Emoji"))
+    (setq telega-emoji-font-family "Noto Color Emoji")
+    (setq telega-video-player-command '(format "mpv"))
+    (setq telega-chat-input-markups '("markdown2" "org"))
+    :bind
+    ((:map global-map
+          ("C-c g g" . telega)
+          ("C-c g b" . telega-switch-buffer))
+     (:map telega-msg-button-map
+          ("SPC" . nil))))
 #+end_src
 
 ** =elfeed= - client for Atom and RSS feeds
@@ -1215,7 +1294,71 @@ I tried default emacs doc-view-mode but it didn't work with the PDFs I tested.
 ** =nov-mode= - read EPUBs in emacs
 
 #+begin_src emacs-lisp
-  (use-package nov :defer t)
+  (use-package nov :defer t
+    :mode ("\\.epub\\'" . nov-mode))
+#+end_src
+
+** =auth-sources= - "password manager" 
+
+#+begin_src emacs-lisp
+  (use-package auth-sources
+    :straight nil
+    :defer t
+    :config
+    (setq auth-sources '("~/.authinfo.gpg")))
+#+end_src
+
+
+** TODO COMMENT
+
+;;(gnus-demon-add-handler 'gnus-demon-scan-news 2 t)
+
+(use-package pinentry
+  :defer 2
+  :custom
+  (epg-pinentry-mode 'loopback)
+  :config
+  (pinentry-start))
+
+(setq gnus-use-cache t)
+
+** =pinentry= - for entrying pin for gpg
+
+#+begin_src emacs-lisp
+  (use-package pinentry
+    :defer 2
+    :custom
+    (epg-pinentry-mode 'loopback)
+    :config
+    (pinentry-start))
+#+end_src
+
+** =gnus= - email client, news reader, maybe
+
+#+begin_src emacs-lisp
+  (use-package gnus
+    :straight nil
+    :hook (gnus-after-getting-new-news . gnus-notifications)
+    :custom
+    (send-mail-function 'smtpmail-send-it)
+    (smtpmail-smtp-server "smtp.gmail.com")
+    (smtpmail-smtp-service 587)
+    (user-full-name "Igor Melo")
+    (user-mail-address "imelodev@gmail.com")
+    (message-directory "~/public/mail")
+    (mail-source-directory message-directory)
+    (gnus-home-directory (expand-file-name "gnus" user-emacs-directory))
+    (gnus-directory (expand-file-name "news" gnus-home-directory))
+    (gnus-article-save-directory gnus-directory)
+    (gnus-cache-directory (expand-file-name "cache" gnus-directory))
+    (gnus-select-method '(nnnil))
+    (gnus-secondary-select-methods
+     '(
+       (nnimap "gmail"
+               (nnimap-address "imap.gmail.com")
+               (nnimap-server-port 993)
+               (nnimap-stream ssl)
+               (nnimap-authinfo-file "~/.authinfo.gpg")))))
 #+end_src
 
 ** =eww= (builtin) - simple browser
@@ -1288,23 +1431,86 @@ Wrap lines instead of truncating
                        (agenda . 5))))
 #+end_src
 
+** =mpv.el= - control mpv from emacs
+
+#+begin_src emacs-lisp
+  (use-package mpv :defer t)
+#+end_src
+
+** =org-mpv-notes= - control mpv from emacs
+
+#+begin_src emacs-lisp
+  (use-package org-mpv-notes :defer t)
+#+end_src
+
 ** =yeetube= - youtube frontend
 
 #+begin_src emacs-lisp
   (use-package yeetube
     :after evil
-    :hook (yeetube-mode . turn-off-evil-mode)
+
+    :preface
+    (defvar yeetube-org-file)
+
+    (defun org-insert-yeetube-link ()
+      (interactive)
+      (let* ((last (car yeetube-history))
+             (title (plist-get last :title))
+             (url (plist-get last :url)))
+        (if (and title url)
+            (insert (message "[[%s][%s]]" url title))
+          (error "no recent video found"))))
+
+    (defun yeetube-org-find-file ()
+      (require 'yeetube)
+      (interactive)
+      (find-file (expand-file-name yeetube-org-file org-directory)))
+
+    (defun yeetube-org-channel-videos ()
+      (require 'yeetube)
+      (interactive)
+      (let ((channel-id (or (org-entry-get (point) "CHANNEL")
+                            (org-entry-get (point) "ITEM"))))
+        (setf yeetube--channel-id channel-id)
+        (yeetube-display-content-from-url
+         (format "https://youtube.com/@%s/videos" channel-id))))
+
     :straight
     (:type git :host nil :repo "https://git.thanosapollo.org/yeetube")
+
     :init
-    (evil-set-initial-state 'yeetube-mode 'emacs)
+    (setq yeetube-org-file "youtube.org")
+
+    :config
+    (evil-define-key 'normal yeetube-mode-map
+      "RET" 'yeetube-play
+      "M-RET" 'yeetube-search
+      "C-<return>" 'yeetube-video-or-playlist-page
+      "b" 'yeetube-browse-url
+      "c" 'yeetube-channel-videos
+      "d" 'yeetube-download-video
+      "D" 'yeetube-download-change-directory
+      "a" 'yeetube-download-change-audio-format
+      "p" 'yeetube-mpv-toggle-pause
+      "v" 'yeetube-mpv-toggle-video
+      "V" 'yeetube-mpv-toggle-no-video-flag
+      "s" 'yeetube-save-video
+      "P" 'yeetube-play-saved-video
+      "r" 'yeetube-replay
+      "t" 'yeetube-view-thumbnail
+      "T" 'yeetube-mpv-toggle-torsocks
+      "C-q" 'yeetube-mpv-change-video-quality
+      "q" 'quit-window)
+    (setq yeetube-play-function #'mpv-play-url)
+
     :bind
-    ((:map evil-normal-state-map
-           ("SPC y s" . yeetube-search))
-     (:map yeetube-mode-map
-           ("SPC y s" . yeetube-search)
-           ("k" . previous-line)
-           ("j" . next-line))))
+    ((:map global-map
+           ("C-c y s" . yeetube-search)
+           ("C-c y o p" . org-insert-yeetube-link)
+           ("C-c y o c" . yeetube-org-channel-videos)
+           ("C-c y o F" . yeetube-org-find-file))
+     (:map evil-motion-state-map
+           ("RET" . nil))))
 #+end_src
 
 ** =erc= (builtin) - emacs IRC client
@@ -1322,13 +1528,15 @@ Wrap lines instead of truncating
     :config
     (setq erc-server "irc.libera.chat"
           erc-nick "igorcafe"
-          erc-autojoin-channels-alist '(("irc.libera.chat"
-                                         "#systemcrafters"
+          erc-autojoin-channels-alist '((Libera.Chat
                                          "#emacs"
                                          "#erc"
+                                         "#go-nuts"
                                          "#newpipe"
                                          "#nixos"
                                          "#org-mode"
+                                         "#systemcrafters"
+                                         "#vim"
                                          ))
           erc-kill-buffer-on-part t
           erc-auto-query 'bury
@@ -1337,7 +1545,6 @@ Wrap lines instead of truncating
     (setq erc-fill-column 120
           erc-fill-function 'erc-fill-static
           erc-fill-static-center 20)
-
 
     (setq erc-save-buffer-on-part t
           erc-save-queries-on-quit t
@@ -1589,13 +1796,14 @@ C-c C-c over a TODO item calls =org-todo= instead of =org-set-tags-command=.
      ("C-c C-x C-j" . org-clock-goto)))
 #+end_src
 
-** Org Capture - templates
+** Org Capture - keybindings and templates
 
 #+begin_src emacs-lisp
   (use-package org
     :bind
     (:map global-map
-          ("C-c c" . org-capture))
+          ("C-c c" . org-capture)
+          ("C-c C" . org-capture-goto-last-stored))
     :config
     (setq org-capture-templates
           '(("c"
@@ -1937,7 +2145,7 @@ Useful for github that doesn't create a TOC automatically
 
 #+begin_src emacs-lisp
   (use-package org-music
-    :after (evil emms)
+    :after evil
 
     :straight
     (:host github :repo "debanjum/org-music" :branch "master")
@@ -1956,6 +2164,18 @@ Useful for github that doesn't create a TOC automatically
         (when outline-marker
           (goto-char outline-marker))))
 
+    (defun org-music-count-songs ()
+      (interactive)
+      (let ((count (apply '+ (org-map-entries (lambda ()
+                         (if (string= "song" (org-entry-get (point) "TYPE"))
+                             1
+                           0))))))
+        (message "You have %d songs in this buffer" count)))
+
+    (defun org-music-goto-file ()
+      (interactive)
+      (find-file org-music-file))
+
     :init
     (setq
      org-music-file "~/Sync/Org/music.org"
@@ -1965,12 +2185,13 @@ Useful for github that doesn't create a TOC automatically
      org-music-cache-size (* 10 1024)) ;; 10 GB?
 
     :bind
-    (:map evil-normal-state-map
-          ("SPC m c" . org-music-jump-to-current-song)
-          ("SPC m l p" . org-music-play-list)
-          ("SPC m l e" . org-music-enqueue-list)
-          ("SPC m p p" . org-music-play-song-at-point)
-          ("SPC m p e" . org-music-enqueue-song-at-point)))
+    (:map global-map
+          ("C-c m c" . org-music-jump-to-current-song)
+          ("C-c m F" . org-music-goto-file)
+          ("C-c m l p" . org-music-play-list)
+          ("C-c m l e" . org-music-enqueue-list)
+          ("C-c m p p" . org-music-play-song-at-point)
+          ("C-c m p e" . org-music-enqueue-song-at-point)))
 #+end_src
 
 ** =org-indent-mode= (builtin) - visually indent text inside headings
@@ -1987,7 +2208,16 @@ Useful for github that doesn't create a TOC automatically
       :hook
       (org-mode . org-appear-mode)
       :config
-      (setq org-hide-emphasis-markers t))
+      (setq org-hide-emphasis-markers t)
+      (setq org-link-descriptive t)
+      (setq org-pretty-entities t)
+      (setq org-hidden-keywords nil)
+      (setq org-appear-autoemphasis t)
+      (setq org-appear-autolinks t)
+      (setq org-appear-autosubmarkers t)
+      (setq org-appear-autoentities t)
+      (setq org-appear-autokeywords t)
+      (setq org-appear-inside-latex t))
 #+end_src
 
 ** =org-fragtog= - display LaTeX automatically inside org buffers
@@ -2019,13 +2249,36 @@ Useful for github that doesn't create a TOC automatically
 
     :bind
     (("C-c n f" . org-roam-node-find)
-     ("C-c n i" . org-roam-node-insert)))
+     ("C-c n i" . org-roam-node-insert)
+     ("C-c n l" . org-roam-buffer-toggle)))
 #+end_src
 
 ** =org-roam-ui= - visualize Org Roam graph in real time.
 
 #+begin_src emacs-lisp
   (use-package org-roam-ui :defer t)
+#+end_src
+
+** =org-cliplink= - paste link with automatic title
+
+#+begin_src emacs-lisp
+  (use-package org-cliplink :defer t)
+#+end_src
+
+
+** =org-download= - getting images into org 
+
+#+begin_src emacs-lisp
+  (use-package org-download
+    :defer t
+    :config
+    (org-download-enable)
+    (setq org-download-screenshot-method "sleep 1; spectacle --region -o %s")
+    :bind
+    ("C-c o i s" . org-download-screenshot)
+    ("C-c o i D" . org-download-delete)
+    ("C-c o i R" . org-download-rename-at-point)
+    ("C-c o i p" . org-download-clipboard))
 #+end_src
 
 ** COMMENT =org-bullets= - show headings with special bullets instead of asterisks
@@ -2037,3 +2290,107 @@ Useful for github that doesn't create a TOC automatically
 
 Visually indent text inside headings.
 
+** COMMENT =pin= - pin buffers
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :config
+    (defvar pin-buffer-list nil)
+
+    (defun pin-current-buffer ()
+      (interactive)
+      (let ((name (buffer-name)))
+        (add-to-list 'pin-buffer-list name)
+        (message "pinned current buffer: %s" name)))
+
+    (defun pin-switch-to-buffer ()
+      (interactive)
+      (if (> (length pin-buffer-list) 0)
+          (let ((buffer (completing-read "switch to pinned buffer: " pin-buffer-list)))
+            (switch-to-buffer buffer))
+        (message "no pinned buffer")))
+
+    (defun pin-unpin-buffer ()
+      (interactive)
+      (let ((name (completing-read "select buffer to unpin: " pin-buffer-list)))
+        (setq pin-buffer-list (delete name pin-buffer-list))))
+
+    (defun pin-unpin-current-buffer ()
+      (interactive)
+      (let ((name (buffer-name)))
+        (setq pin-buffer-list (delete name pin-buffer-list))
+        (message "unpinned buffer %s" name)))
+
+    :bind (("C-c p p" . pin-current-buffer)
+           ("C-c p P" . pin-buffer)
+           ("C-c p x" . pin-unpin-current-buffer)
+           ("C-c p X" . pin-unpin-buffer)
+           ("C-c p s" . pin-switch-to-buffer)))
+#+end_src
+
+** COMMENT test
+
+#+begin_src emacs-lisp
+  (setq ibuffer-show-empty-filter-groups nil)
+  (setq ibuffer-saved-filter-groups
+        (quote (("default"
+                 ("Archive" (name . "^.*org_archive$"))
+                 ("Agenda" (or (mode . org-agenda-mode)
+                               (mode . diary-mode)
+                               (predicate . (my-org-agenda-filter))))
+                 ("Dired" (mode . dired-mode))
+                 ("Org" (name . "^.*\\.org$"))
+                 ("Images" (or (name . "^.*png$")  (name . "^.*jpg$") ))
+                 ("Web" (or (name . "^.*css$") (name . "^.*html$") (mode . web-mode) (mode . js2-mode)))
+                 ("Shell" (or (name . "^.*sh$") (mode . eshell-mode) (mode . shell-mode)))
+                 ("Journal" (or (name . "^2020.*$") ))
+                 ("Programming" (or
+                                 (mode . python-mode)))
+                 ("Elisp" (or
+                           (name . "^.*el$")
+                           ))
+                 ("LaTeX" (or (name . "^.*tex$") ))
+                 ("TXT" (or (name . "^.*txt$") ))
+                 ("Trello" (or (name . "^.*trello$") ))
+                 ("tramp" (name . "^\\*tramp.*"))
+                 ("Emacs" (or
+                           (name . "^\\*scratch\\*$")
+                           (name . "^\\*ESS\\*$")
+                           (name . "^\\*Compile-Log\\*$")
+                           (name . "^\\*Backtrace\\*$")
+                           (name . "^\\*Completions\\*$")
+                           (name . "^\\*Org PDF LaTeX Output\\*$")
+                           (name . "^\\*Calculator\\*$")
+                           (name . "^\\*Calc Trail\\*$")
+                           (name . "^\\*Calendar\\*$")
+                           (name . "^\\*Messages\\*$")
+                           (name . "^\\*log\\*$")
+                           (name . "^\\*vc\\*$")
+                           (name . "^\\*Fancy Diary Entries\\*$")
+                           (name . "^\\*git-gutter:diff\\*$")
+                           (name . "^\\*Warnings\\*$")
+                           )
+                  )
+                 ("Magit" (or (name . "^magit.*$") (mode . "Magit Process") (mode . "Magit")))
+                 ))))
+
+   ;; Use human readable Size column instead of original one
+    (define-ibuffer-column size-h
+      (:name "Size" :inline t)
+      (cond
+       ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
+       ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
+       ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
+       (t (format "%8d" (buffer-size)))))
+
+  (setq ibuffer-formats
+  	    '((mark modified read-only " "
+  		          (name 18 18 :left :elide)
+  		          " "
+  		          (size-h 9 -1 :right)
+  		          " "
+  		          (mode 16 16 :left :elide)
+  		          " "
+  		          filename-and-process)))
+
+#+end_src

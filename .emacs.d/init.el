@@ -1,5 +1,9 @@
-;; Set garbage collection threshold to 1GB.
-(setq gc-cons-threshold #x40000000)
+(setq org-roam-capture-templates
+      '(("d" "default" plain "%?" :target
+        (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "* ${title}")
+        :unnarrowed t)))
+
+(setq gc-cons-threshold (* 800000 10))
 
 (setq garbage-collection-messages t)
 
@@ -60,7 +64,8 @@
 (use-package emacs
   :hook ((text-mode
           prog-mode
-          conf-mode) . display-line-numbers-mode))
+          conf-mode
+          restclient-mode) . display-line-numbers-mode))
 
 (use-package emacs
   :after evil
@@ -77,7 +82,7 @@
 
 (set-default 'truncate-lines t)
 
-(setq-default tab-width 4)
+(setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 
 (use-package emacs
@@ -120,10 +125,9 @@
   (evil-undo-system 'undo-redo)
   (evil-cross-lines t)
   :bind
-  (:map evil-normal-state-map
-        ("SPC u" . universal-argument)
-        ("H" . previous-buffer)
-        ("L" . next-buffer))
+  (("C-x C-h" . previous-buffer)
+   ("C-x C-l" . next-buffer)
+   ("C-x C-u" . universal-argument))
   :config
   (evil-set-leader 'normal (kbd "SPC"))
   (evil-mode 1))
@@ -166,6 +170,18 @@
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic t)
   (load-theme 'doom-one t))
+
+(use-package emacs
+  :config
+  (defvar favorite-themes '(doom-one-light doom-one))
+
+  (defun cycle-favorite-themes ()
+    (interactive)
+    (let* ((current (car custom-enabled-themes))
+           (i-current (cl-position current favorite-themes))
+           (i-next (% (+ i-current 1) (length favorite-themes)))
+           (theme (nth i-next favorite-themes)))
+      (load-theme theme t))))
 
 (use-package doom-modeline
   :defer 1.2
@@ -214,7 +230,11 @@
           ;;(project-vc-dir "VC-Dir")
           ;;(project-eshell "Eshell")
           ;;(project-any-command "Other")
-          (magit-project-status "Magit" ?m))))
+          (magit-project-status "Magit" ?m)))
+  :bind
+  (:map project-prefix-map
+        ("t" . project-vterm)
+        ("m" . magit-project-status)))
 
 (use-package go-mode
   :hook
@@ -223,6 +243,11 @@
 (use-package go-tag :defer t)
 
 (use-package nix-mode :defer t)
+
+(use-package typescript-mode
+  :defer t
+  :config
+  (setq typescript-indent-level 2))
 
 (use-package yaml-mode :defer t)
 
@@ -273,18 +298,19 @@
     (eldoc-box-hover-at-point-mode 1)
     (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
 
-(use-package corfu
-  :hook ((text-mode prog-mode conf-mode) . corfu-mode)
-  :config
-  (setq corfu-auto nil)
-  (setq corfu-preview-current nil)
-  (setq corfu-auto-delay 0.2)
-  (setq corfu-auto-prefix 1)
-  (setq corfu-cycle t)
-  (corfu-popupinfo-mode 1)
+(use-package company
+  :hook (after-init . global-company-mode)
+  :custom
+  (company-tooltip-limit 10)
+  (company-idle-delay 0.15)
+  (company-minimum-prefix-length 3)
+  (company-selection-wrap-around t)
+  (company-require-match 'never)
   :bind
-  (:map global-map
-        ("C-SPC" . completion-at-point)))
+  ((:map global-map
+         ("C-SPC" . company-complete))
+   (:map company-active-map
+         ("TAB" . company-complete))))
 
 (use-package envrc
   :defer 0.5
@@ -304,7 +330,8 @@
           eww-mode
           text-mode
           conf-mode
-          org-agenda-mode)
+          org-agenda-mode
+          restclient-mode)
          . olivetti-mode)
   :init
   (setq-default olivetti-body-width 100))
@@ -333,7 +360,9 @@
 
 (use-package emacs
   :config
-  (setq tab-bar-show nil))
+  (setq tab-bar-show nil)
+  :bind (("M-1" . tab-select)
+         ("M-2" . tab-select)))
 
 (use-package whitespace
   :hook
@@ -341,7 +370,9 @@
   :config
   (setq whitespace-style '(face tabs spaces trailing space-mark tab-mark)))
 
-(use-package restclient :defer t)
+(use-package restclient
+  :defer t
+  :mode ("\\.http\\'" . restclient-mode))
 
 (use-package simple-httpd :defer t)
 
@@ -420,8 +451,11 @@
   :straight nil
   :after evil
   :bind
-  (:map evil-normal-state-map
-        (("SPC t" . my/vterm))))
+  ((:map evil-normal-state-map
+         (("SPC t" . my/vterm)))
+   (:map vterm-mode-map
+         (("M-1" . nil)
+          ("M-2" . nil)))))
 
 (use-package vertico
   :defer 0.4
@@ -447,9 +481,6 @@
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
-(use-package org
-  :hook (org-mode . auto-fill-mode))
-
 (use-package emms
   :after evil
   :config
@@ -465,27 +496,37 @@
         (lambda ()
           (let* ((path (emms-track-description
                         (emms-playlist-current-selected-track)))
-                 (song (when (string-match ".* - \\(.*\\)\\.m4a$" path)
+                 (song (when (string-match ".*? - \\(.*\\)\\.m4a$" path)
                          (match-string 1 path))))
             (format "🎵 %s  " song))))
   :bind
-  (:map evil-normal-state-map
-        ("SPC m j" . emms-next)
-        ("SPC m k" . emms-previous)
-        ("SPC m ," . emms-seek-backward)
-        ("SPC m ." . emms-seek-forward)
-        ("SPC m SPC" . emms-pause)
-        ("SPC m s" . emms-stop)
-        ("SPC m e" . emms)))
+  (:map global-map
+        ("C-c m j" . emms-next)
+        ("C-c m k" . emms-previous)
+        ("C-c m ," . emms-seek-backward)
+        ("C-c m ." . emms-seek-forward)
+        ("C-c m SPC" . emms-pause)
+        ("C-c m s" . emms-stop)
+        ("C-c m e" . emms)
+        ("C-c m R" . emms-playlist-sort-by-random)))
 
 (use-package telega
   :straight nil ;; installed and built through nix
-  :init
+  :hook (telega-mode . telega-mode-line-mode)
+  :config
   (setq telega-use-images t)
   (setq telega-emoji-use-images nil)
   (setq telega-sticker-size '(8 . 48))
   (setq telega-chat-group-messages-for nil) ;; (not (or saved-messages (type channel bot)))
-  (setq telega-emoji-font-family "Noto Color Emoji"))
+  (setq telega-emoji-font-family "Noto Color Emoji")
+  (setq telega-video-player-command '(format "mpv"))
+  (setq telega-chat-input-markups '("markdown2" "org"))
+  :bind
+  ((:map global-map
+        ("C-c g g" . telega)
+        ("C-c g b" . telega-switch-buffer))
+   (:map telega-msg-button-map
+        ("SPC" . nil))))
 
 (use-package elfeed
   :commands elfeed
@@ -530,7 +571,45 @@
   :config
   (pdf-tools-install))
 
-(use-package nov :defer t)
+(use-package nov :defer t
+  :mode ("\\.epub\\'" . nov-mode))
+
+(use-package auth-sources
+  :straight nil
+  :defer t
+  :config
+  (setq auth-sources '("~/.authinfo.gpg")))
+
+(use-package pinentry
+  :defer 2
+  :custom
+  (epg-pinentry-mode 'loopback)
+  :config
+  (pinentry-start))
+
+(use-package gnus
+  :straight nil
+  :hook (gnus-after-getting-new-news . gnus-notifications)
+  :custom
+  (send-mail-function 'smtpmail-send-it)
+  (smtpmail-smtp-server "smtp.gmail.com")
+  (smtpmail-smtp-service 587)
+  (user-full-name "Igor Melo")
+  (user-mail-address "imelodev@gmail.com")
+  (message-directory "~/public/mail")
+  (mail-source-directory message-directory)
+  (gnus-home-directory (expand-file-name "gnus" user-emacs-directory))
+  (gnus-directory (expand-file-name "news" gnus-home-directory))
+  (gnus-article-save-directory gnus-directory)
+  (gnus-cache-directory (expand-file-name "cache" gnus-directory))
+  (gnus-select-method '(nnnil))
+  (gnus-secondary-select-methods
+   '(
+     (nnimap "gmail"
+             (nnimap-address "imap.gmail.com")
+             (nnimap-server-port 993)
+             (nnimap-stream ssl)
+             (nnimap-authinfo-file "~/.authinfo.gpg")))))
 
 (use-package emacs
   :hook (eww-mode . visual-line-mode)
@@ -581,20 +660,75 @@
    dashboard-items '((recents . 10)
                      (agenda . 5))))
 
+(use-package mpv :defer t)
+
+(use-package org-mpv-notes :defer t)
+
 (use-package yeetube
   :after evil
-  :hook (yeetube-mode . turn-off-evil-mode)
+
+  :preface
+  (defvar yeetube-org-file)
+
+  (defun org-insert-yeetube-link ()
+    (interactive)
+    (let* ((last (car yeetube-history))
+           (title (plist-get last :title))
+           (url (plist-get last :url)))
+      (if (and title url)
+          (insert (message "[[%s][%s]]" url title))
+        (error "no recent video found"))))
+
+  (defun yeetube-org-find-file ()
+    (require 'yeetube)
+    (interactive)
+    (find-file (expand-file-name yeetube-org-file org-directory)))
+
+  (defun yeetube-org-channel-videos ()
+    (require 'yeetube)
+    (interactive)
+    (let ((channel-id (or (org-entry-get (point) "CHANNEL")
+                          (org-entry-get (point) "ITEM"))))
+      (setf yeetube--channel-id channel-id)
+      (yeetube-display-content-from-url
+       (format "https://youtube.com/@%s/videos" channel-id))))
+
   :straight
   (:type git :host nil :repo "https://git.thanosapollo.org/yeetube")
+
   :init
-  (evil-set-initial-state 'yeetube-mode 'emacs)
+  (setq yeetube-org-file "youtube.org")
+
+  :config
+  (evil-define-key 'normal yeetube-mode-map
+    "RET" 'yeetube-play
+    "M-RET" 'yeetube-search
+    "C-<return>" 'yeetube-video-or-playlist-page
+    "b" 'yeetube-browse-url
+    "c" 'yeetube-channel-videos
+    "d" 'yeetube-download-video
+    "D" 'yeetube-download-change-directory
+    "a" 'yeetube-download-change-audio-format
+    "p" 'yeetube-mpv-toggle-pause
+    "v" 'yeetube-mpv-toggle-video
+    "V" 'yeetube-mpv-toggle-no-video-flag
+    "s" 'yeetube-save-video
+    "P" 'yeetube-play-saved-video
+    "r" 'yeetube-replay
+    "t" 'yeetube-view-thumbnail
+    "T" 'yeetube-mpv-toggle-torsocks
+    "C-q" 'yeetube-mpv-change-video-quality
+    "q" 'quit-window)
+  (setq yeetube-play-function #'mpv-play-url)
+
   :bind
-  ((:map evil-normal-state-map
-         ("SPC y s" . yeetube-search))
-   (:map yeetube-mode-map
-         ("SPC y s" . yeetube-search)
-         ("k" . previous-line)
-         ("j" . next-line))))
+  ((:map global-map
+         ("C-c y s" . yeetube-search)
+         ("C-c y o p" . org-insert-yeetube-link)
+         ("C-c y o c" . yeetube-org-channel-videos)
+         ("C-c y o F" . yeetube-org-find-file))
+   (:map evil-motion-state-map
+         ("RET" . nil))))
 
 (use-package erc
   :straight nil
@@ -608,13 +742,15 @@
   :config
   (setq erc-server "irc.libera.chat"
         erc-nick "igorcafe"
-        erc-autojoin-channels-alist '(("irc.libera.chat"
-                                       "#systemcrafters"
+        erc-autojoin-channels-alist '((Libera.Chat
                                        "#emacs"
                                        "#erc"
+                                       "#go-nuts"
                                        "#newpipe"
                                        "#nixos"
                                        "#org-mode"
+                                       "#systemcrafters"
+                                       "#vim"
                                        ))
         erc-kill-buffer-on-part t
         erc-auto-query 'bury
@@ -623,7 +759,6 @@
   (setq erc-fill-column 120
         erc-fill-function 'erc-fill-static
         erc-fill-static-center 20)
-
 
   (setq erc-save-buffer-on-part t
         erc-save-queries-on-quit t
@@ -686,7 +821,8 @@
 (use-package org
   :bind
   (:map global-map
-        ("C-c c" . org-capture))
+        ("C-c c" . org-capture)
+        ("C-c C" . org-capture-goto-last-stored))
   :config
   (setq org-capture-templates
         '(("c"
@@ -899,7 +1035,7 @@
   (org-mode . toc-org-mode))
 
 (use-package org-music
-  :after (evil emms)
+  :after evil
 
   :straight
   (:host github :repo "debanjum/org-music" :branch "master")
@@ -918,6 +1054,18 @@
       (when outline-marker
         (goto-char outline-marker))))
 
+  (defun org-music-count-songs ()
+    (interactive)
+    (let ((count (apply '+ (org-map-entries (lambda ()
+                       (if (string= "song" (org-entry-get (point) "TYPE"))
+                           1
+                         0))))))
+      (message "You have %d songs in this buffer" count)))
+
+  (defun org-music-goto-file ()
+    (interactive)
+    (find-file org-music-file))
+
   :init
   (setq
    org-music-file "~/Sync/Org/music.org"
@@ -927,12 +1075,13 @@
    org-music-cache-size (* 10 1024)) ;; 10 GB?
 
   :bind
-  (:map evil-normal-state-map
-        ("SPC m c" . org-music-jump-to-current-song)
-        ("SPC m l p" . org-music-play-list)
-        ("SPC m l e" . org-music-enqueue-list)
-        ("SPC m p p" . org-music-play-song-at-point)
-        ("SPC m p e" . org-music-enqueue-song-at-point)))
+  (:map global-map
+        ("C-c m c" . org-music-jump-to-current-song)
+        ("C-c m F" . org-music-goto-file)
+        ("C-c m l p" . org-music-play-list)
+        ("C-c m l e" . org-music-enqueue-list)
+        ("C-c m p p" . org-music-play-song-at-point)
+        ("C-c m p e" . org-music-enqueue-song-at-point)))
 
 (use-package org
   :hook (org-mode . org-indent-mode))
@@ -941,7 +1090,16 @@
     :hook
     (org-mode . org-appear-mode)
     :config
-    (setq org-hide-emphasis-markers t))
+    (setq org-hide-emphasis-markers t)
+    (setq org-link-descriptive t)
+    (setq org-pretty-entities t)
+    (setq org-hidden-keywords nil)
+    (setq org-appear-autoemphasis t)
+    (setq org-appear-autolinks t)
+    (setq org-appear-autosubmarkers t)
+    (setq org-appear-autoentities t)
+    (setq org-appear-autokeywords t)
+    (setq org-appear-inside-latex t))
 
 (use-package org-fragtog
   :after org
@@ -965,6 +1123,20 @@
 
   :bind
   (("C-c n f" . org-roam-node-find)
-   ("C-c n i" . org-roam-node-insert)))
+   ("C-c n i" . org-roam-node-insert)
+   ("C-c n l" . org-roam-buffer-toggle)))
 
 (use-package org-roam-ui :defer t)
+
+(use-package org-cliplink :defer t)
+
+(use-package org-download
+  :defer t
+  :config
+  (org-download-enable)
+  (setq org-download-screenshot-method "sleep 1; spectacle --region -o %s")
+  :bind
+  ("C-c o i s" . org-download-screenshot)
+  ("C-c o i D" . org-download-delete)
+  ("C-c o i R" . org-download-rename-at-point)
+  ("C-c o i p" . org-download-clipboard))
