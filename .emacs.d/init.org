@@ -1,12 +1,6 @@
 #+title: My emacs settings
 #+auto_tangle: t
-
-#+begin_src emacs-lisp
-  (setq org-roam-capture-templates
-        '(("d" "default" plain "%?" :target
-          (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "* ${title}")
-          :unnarrowed t)))
-#+end_src
+;;; -*- mode: org; eval: (org-auto-tangle-mode 1); -*-
 
 * Table of Contents :TOC:
 - [[#config][Config]]
@@ -42,7 +36,6 @@
   - [[#doom-themes---nice-themes][=doom-themes= - nice themes]]
   - [[#cycle-between-favorite-theme][cycle between favorite theme]]
   - [[#doom-modeline---nice-modeline][=doom-modeline= - nice modeline]]
-  - [[#breadcrumb---summary-of-your-cursor-position][=breadcrumb= - summary of your cursor position]]
   - [[#flymake-builtin---syntax-checking][=flymake= (builtin) - syntax checking]]
   - [[#eletrict-pair-mode-builtin---auto-close-pairs-based-on-mode][=eletrict-pair-mode= (builtin) - auto close pairs based on mode]]
   - [[#projectel-builtin---managing-projects][=project.el= (builtin) - managing projects]]
@@ -52,7 +45,6 @@
   - [[#typescript-mode---typescript-support][=typescript-mode= - TypeScript support]]
   - [[#yaml-mode---yaml-support][=yaml-mode= - YAML support]]
   - [[#markdown-mode---markdown-support][=markdown-mode= - Markdown support]]
-  - [[#python-mode-builtin---python-support][=python-mode= (builtin) - Python support]]
   - [[#nxml-mode-builtin---xml-support][=nxml-mode= (builtin) - XML support]]
   - [[#vue-mode---vue-support][=vue-mode= - Vue support]]
   - [[#c-mode-builtin---cc-support][=c-mode= (builtin) - C/C++ support]]
@@ -62,6 +54,7 @@
   - [[#company---completion-popup-like-vs-codes][=company= - completion popup like VS Code's]]
   - [[#envrc---direnv-integration][=envrc= - direnv integration]]
   - [[#recentf-mode-builtin---persistent-history-of-recent-files][=recentf-mode= (builtin) - persistent history of recent files]]
+  - [[#use-package-org-to-avoid-any-bugs][use-package org to avoid any bugs]]
   - [[#olivetti---horizontal-paddings-for-windows][=olivetti= - horizontal paddings for windows]]
   - [[#save-place-mode---save-cursor-position-per-file][=save-place-mode= - save cursor position per file]]
   - [[#consult---multiple-search-utilities][=consult= - multiple search utilities]]
@@ -102,16 +95,18 @@
   - [[#erc-hl-nicks---highlight-user-nicks-with-unique-color][=erc-hl-nicks= - highlight user nicks with unique color]]
   - [[#org-directory][Org directory]]
   - [[#org-source-block---open-in-the-same-window][Org source block - open in the same window]]
+  - [[#org-babel-languages][Org babel languages]]
   - [[#org-indirect-buffer---open-in-the-same-window][Org indirect buffer - open in the same window]]
   - [[#org-refile---save-all-buffers][Org refile - save all buffers]]
   - [[#org-priority---face-and-default-value][Org priority - face and default value]]
   - [[#org-tags---column][Org tags - column]]
   - [[#org-todos---keywords-and-state-logging][Org TODOs - keywords and state logging]]
   - [[#org-clock---keybindings][Org Clock - keybindings]]
+  - [[#org-noter---annotate-pdfs-epubs-and-so-on][=org-noter= - annotate PDFs, EPUBs, and so on]]
   - [[#org-capture---keybindings-and-templates][Org Capture - keybindings and templates]]
   - [[#org-lists---replace---by--on-unordered-lists][Org lists - Replace ~-~ by ~•~ on unordered lists.]]
   - [[#org-agenda---setup-and-custom-views][Org Agenda - setup and custom views]]
-  - [[#org-agenda---notifications-for-events][Org Agenda - notifications for events]]
+  - [[#show-drawers-folded-by-default][Show drawers folded by default]]
   - [[#org-present---make-presentations-using-org-mode][=org-present= - make presentations using org mode]]
   - [[#org-drill---same-idea-as-anki][=org-drill= - same idea as Anki]]
   - [[#toc-org---generate-table-of-contents][=toc-org= - generate table of contents]]
@@ -123,6 +118,8 @@
   - [[#org-roam-ui---visualize-org-roam-graph-in-real-time][=org-roam-ui= - visualize Org Roam graph in real time.]]
   - [[#org-cliplink---paste-link-with-automatic-title][=org-cliplink= - paste link with automatic title]]
   - [[#org-download---getting-images-into-org][=org-download= - getting images into org]]
+  - [[#eshell-builtin][=eshell= (builtin)]]
+  - [[#deno][=deno=]]
 
 * Config
 ** Early Init
@@ -244,8 +241,7 @@ Don't check for modifications on startup
 Automatically generate =init.el= and =early-init.el= when I save this file.
 
 #+begin_src emacs-lisp
-  (use-package org-auto-tangle
-    :hook (org-mode . org-auto-tangle-mode))
+  (use-package org-auto-tangle :defer t)
 #+end_src
 
 ** Y or N instead of Yes or No prompts
@@ -563,7 +559,7 @@ I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
   (use-package doom-modeline
     :defer 1.2
     :config
-    (setq doom-modeline-buffer-name nil)
+    ;; (setq doom-modeline-buffer-name nil)
     (setq doom-modeline-buffer-encoding nil)
     (setq doom-modeline-env-version nil)
     (setq doom-modeline-lsp nil)
@@ -573,7 +569,7 @@ I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
     (doom-modeline-mode 1))
 #+end_src
 
-** =breadcrumb= - summary of your cursor position
+** COMMENT =breadcrumb= - summary of your cursor position
 
 Tells you in what "component" and which file you are.
 Like =init.org : Config > breacrumb=.
@@ -584,7 +580,8 @@ Like =init.org : Config > breacrumb=.
     ((prog-mode
       conf-mode
       text-mode
-      vterm-mode)
+      vterm-mode
+      restclient-mode)
      . breadcrumb-local-mode))
 #+end_src
 
@@ -651,9 +648,7 @@ Customize project.el commands.
 ** =go-mode= - Go support
 
 #+begin_src emacs-lisp
-  (use-package go-mode
-    :hook
-    (go-mode . eglot-ensure))
+  (use-package go-mode :defer t)
 #+end_src
 
 ** =go-tag= - automatically adding/removing struct tags
@@ -686,7 +681,7 @@ Customize project.el commands.
   (use-package markdown-mode :defer t)
 #+end_src
 
-** =python-mode= (builtin) - Python support
+** COMMENT =python-mode= (builtin) - Python support
 
 #+begin_src emacs-lisp
   (use-package emacs
@@ -727,15 +722,21 @@ Eglot is a builtin LSP (Language Server Protocol) client for emacs.
     :after evil
     :hook
     ;; before saving, if eglot is enabled, try to format and organize imports
-    (before-save
-     . (lambda ()
-         (when (bound-and-true-p eglot-managed-p)
-           (call-interactively 'eglot-format)
-           (call-interactively 'eglot-code-action-organize-imports))))
+    ((before-save
+      . (lambda ()
+          (when (and (fboundp 'eglot-managed-p) (eglot-managed-p))
+            (call-interactively 'eglot-format)
+            (call-interactively 'eglot-code-action-organize-imports))))
+
+     ;; start eglot only if file is not in nix store
+     (prog-mode . (lambda ()
+                    (when (string-prefix-p (getenv "HOME") (buffer-file-name))
+                        (eglot-ensure)))))
 
     :bind
     (:map evil-normal-state-map
           ("gi" . eglot-find-implementation)
+          ("gy" . eglot-find-typeDefinition)
           ("SPC l r" . eglot-rename)
           ("SPC l R" . eglot-reconnect)
           ("SPC l a a" . eglot-code-actions)
@@ -791,7 +792,7 @@ I use eldoc-box to show docs as a hover box instead of using echo area.
     :custom
     (company-tooltip-limit 10)
     (company-idle-delay 0.15)
-    (company-minimum-prefix-length 3)
+    (company-minimum-prefix-length 2)
     (company-selection-wrap-around t)
     (company-require-match 'never)
     :bind
@@ -846,6 +847,12 @@ Show recent files with ~C-x C-r~.
     (setq recentf-max-saved-items 100)
     (recentf-mode 1)
     :bind ("C-x C-r" . recentf-open))
+#+end_src
+
+** use-package org to avoid any bugs
+
+#+begin_src emacs-lisp
+  (use-package org :defer t)
 #+end_src
 
 ** =olivetti= - horizontal paddings for windows
@@ -1206,14 +1213,13 @@ Improves minibuffer by showing multiple options in a vertical list.
               (format "🎵 %s  " song))))
     :bind
     (:map global-map
-          ("C-c m j" . emms-next)
-          ("C-c m k" . emms-previous)
-          ("C-c m ," . emms-seek-backward)
-          ("C-c m ." . emms-seek-forward)
-          ("C-c m SPC" . emms-pause)
-          ("C-c m s" . emms-stop)
-          ("C-c m e" . emms)
-          ("C-c m R" . emms-playlist-sort-by-random)))
+          ("C-c m j" . mpv-playlist-next)
+          ("C-c m k" . mpv-playlist-prev)
+          ("C-c m ," . mpv-seek-backward)
+          ("C-c m ." . mpv-seek-forward)
+          ("C-c m SPC" . mpv-pause)
+          ("C-c m s" . mpv-kill)
+          ("C-c m e" . mpv-jump-to-playlist-entry)))
 #+end_src
 
 ** =telega= - telegram client
@@ -1269,6 +1275,8 @@ Improves minibuffer by showing multiple options in a vertical list.
 
             ;; Planet Emacslife
             ("https://planet.emacslife.com/atom.xml" emacs)
+
+            ("https://g1.globo.com/dynamo/economia/rss2.xml")
 
             ;; ThePrimeTime
             ;;"https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ"
@@ -1434,7 +1442,13 @@ Wrap lines instead of truncating
 ** =mpv.el= - control mpv from emacs
 
 #+begin_src emacs-lisp
-  (use-package mpv :defer t)
+  (use-package mpv :defer t
+    :preface
+    (defun mpv-playlist-shuffle ()
+      (interactive)
+      (mpv-run-command "playlist-shuffle"))
+    :custom
+    (mpv-default-options '("--keep-open=no")))
 #+end_src
 
 ** =org-mpv-notes= - control mpv from emacs
@@ -1706,6 +1720,15 @@ Open ~C-c '~ in the same window
   (setq org-src-window-setup 'current-window)
 #+end_src
 
+
+** Org babel languages
+
+#+begin_src emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((shell . t)))
+#+end_src
+
 ** Org indirect buffer - open in the same window
 
 #+begin_src emacs-lisp
@@ -1751,6 +1774,8 @@ Open ~C-c '~ in the same window
     (setq org-hierarchical-todo-statistics t) ;; TODO cookie count not recursive
     (setq org-todo-keywords
           '((sequence "TODO" "|" "DONE")))
+    (set-face-attribute 'org-done nil)
+    (set-face-attribute 'org-headline-done nil :strike-through t :foreground "gray")
     :bind
     ;; the keybindings are the same, just made them global
     (("C-c C-x C-o" . org-clock-out)
@@ -1794,6 +1819,15 @@ C-c C-c over a TODO item calls =org-todo= instead of =org-set-tags-command=.
     :bind
     (("C-c C-x C-o" . org-clock-out)
      ("C-c C-x C-j" . org-clock-goto)))
+#+end_src
+
+** =org-noter= - annotate PDFs, EPUBs, and so on
+
+#+begin_src emacs-lisp
+  (use-package org-noter
+    :defer t
+    :config
+    (setq org-noter-highlight-selected-text t))
 #+end_src
 
 ** Org Capture - keybindings and templates
@@ -1983,7 +2017,7 @@ Custom agenda views, agenda settings, and so on.
     (setq org-agenda-files '("exemplo.org")))
 #+end_src
 
-** Org Agenda - notifications for events
+** COMMENT Org Agenda - notifications for events
 
 #+begin_src emacs-lisp
   (use-package notifications
@@ -2054,12 +2088,11 @@ Custom agenda views, agenda settings, and so on.
     (setq org-sparse-tree-default-date-type 'active))
 #+end_src
 
-** COMMENT Fold drawer
+** Show drawers folded by default
 
 #+begin_src emacs-lisp
-  (defun my/org-fold-hide-drawer-all ()
-    (interactive)
-    (org-fold-hide-drawer-all))
+  (use-package org
+    :hook (org-mode . org-fold-hide-drawer-all))
 #+end_src
 
 ** COMMENT Org - Habit
@@ -2154,8 +2187,7 @@ Useful for github that doesn't create a TOC automatically
     (defun org-music-jump-to-current-song ()
       (interactive)
       (find-file org-music-file)
-      (let* ((song-path (emms-track-name
-                         (emms-playlist-current-selected-track)))
+      (let* ((song-path (mpv-get-property "path"))
              (outline-name (when (string-match ".*/\\(.*\\)\\.m4a" song-path)
                              (match-string 1 song-path)))
 
@@ -2191,6 +2223,7 @@ Useful for github that doesn't create a TOC automatically
           ("C-c m l p" . org-music-play-list)
           ("C-c m l e" . org-music-enqueue-list)
           ("C-c m p p" . org-music-play-song-at-point)
+          ("C-c m R" . mpv-playlist-shuffle)
           ("C-c m p e" . org-music-enqueue-song-at-point)))
 #+end_src
 
@@ -2245,6 +2278,11 @@ Useful for github that doesn't create a TOC automatically
       (make-directory "~/Sync/Org/Roam"))
     (setq org-roam-directory "~/Sync/Org/Roam")
 
+    (setq org-roam-capture-templates
+          '(("d" "default" plain "%?" :target
+             (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "* ${title}")
+             :unnarrowed t)))
+
     (org-roam-db-autosync-enable)
 
     :bind
@@ -2279,6 +2317,29 @@ Useful for github that doesn't create a TOC automatically
     ("C-c o i D" . org-download-delete)
     ("C-c o i R" . org-download-rename-at-point)
     ("C-c o i p" . org-download-clipboard))
+#+end_src
+
+** =eshell= (builtin)
+
+#+begin_src emacs-lisp
+  (use-package eshell-prompt-extras
+    :config
+    (setq eshell-highlight-prompt nil)
+    (setq eshell-prompt-function 'epe-theme-lambda))
+#+end_src
+
+** =deno=
+
+#+begin_src emacs-lisp
+  (add-to-list 'eglot-server-programs '((js-mode typescript-mode (typescript-ts-base-mode :language-id "typescript")) . (eglot-deno "deno" "lsp")))
+
+    (defclass eglot-deno (eglot-lsp-server) ()
+      :documentation "A custom class for deno lsp.")
+
+    (cl-defmethod eglot-initialization-options ((server eglot-deno))
+      "Passes through required deno initialization options"
+      (list :enable t
+      :lint t))
 #+end_src
 
 ** COMMENT =org-bullets= - show headings with special bullets instead of asterisks
