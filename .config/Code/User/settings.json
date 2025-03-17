@@ -47,4 +47,8 @@
         "GOPATH": "/Users/igor.melo/go",
     },
     "terminal.integrated.sendKeybindingsToShell": true,
+    "vim.foldfix": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "denoland.vscode-deno"
+    },
 }
