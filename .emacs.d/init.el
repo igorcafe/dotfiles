@@ -1,20 +1,10 @@
 ;; reduce GC impact
-
-
 (setq gc-cons-threshold (* 800000 10))
 
 ;; show GC messages
-
-
 (setq garbage-collection-messages t)
 
-;; =straight.el= - purely functional package manager
-
-;; Bootstrap straight.el
-
-;; TODO: optimize bootstrap: it is taking about 1.3 s (90%) of my startup time
-
-
+;; setup straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
@@ -31,100 +21,59 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-
-
-;; use-package integration
-
-
 (straight-use-package 'use-package)
 
-
-
 ;; Always use straight unless specificied not to
-
-
 (setq straight-use-package-by-default t)
 
-
-
 ;; Don't check for modifications on startup
-
-
 ;; use M-x straight-rebuild-package instead
 (setq straight-check-for-modification 'never)
 
 ;; Auto-tangle config
-
 ;; Automatically generate =init.el= and =early-init.el= when I save this file.
-
-
-(use-package org-auto-tangle :defer t)
+;; (use-package org-auto-tangle :defer t)
 
 ;; Y or N instead of Yes or No prompts
-
-
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; Don't show warnings, only errors
-
-
 (setq warning-minimum-level :error)
 
 ;; Disable lock files
-
-
 (setq create-lockfiles nil)
 
 ;; Emacs directories
-
-
 (setq user-emacs-directory "~/.emacs.d/")
 
 ;; Disable backup files
-
-
 (setq make-backup-files nil)
 
 ;; TODO Auto-save files
-
-
 (setq auto-save-file-name-transforms
   `((".*" "~/.cache/emacs/" t)))
 
 ;; Customization information file
-
-
 (setq custom-file "~/.emacs.d/custom.el")
 
 ;; Benchmark init
-
 ;; I was getting very bad startup times so I added this just to be sure.
-
-
 (use-package esup
   :config
   (setq esup-depth 0))
 
 ;; Treat underline as part of the word
-
-
 (use-package emacs
-  :hook ((prog-mode
-          text-mode
-          conf-mode)
-         . (lambda ()
-             (modify-syntax-entry ?_ "w"))))
+  :hook ((fundamental-mode . (lambda ()
+                               (modify-syntax-entry ?_ "w")))
+         (emacs-lisp-mode . (lambda ()
+                               (modify-syntax-entry ?- "w")))))
 
 ;; Show column number in modeline
-
-
 (column-number-mode 1)
 
 ;; Show line numbers
-
 ;; Enable line numbers for some modes.
-
-
 (use-package emacs
   :hook ((text-mode
           prog-mode
@@ -132,60 +81,43 @@
           restclient-mode) . display-line-numbers-mode))
 
 ;; Absolute and relative line numbers
-
 ;; Show absolute line numbers for insert state and relative for others.
-
+(defun my/evil-display-line-numbers ()
+  (when display-line-numbers
+               (if (eq evil-state 'insert)
+                   (setq display-line-numbers-type t)
+                 (setq display-line-numbers-type 'relative)
+                 (display-line-numbers-mode 1))))
 
 (use-package emacs
   :after evil
   :hook ((evil-insert-state-entry
-          . (lambda ()
-              (when display-line-numbers
-                (setq display-line-numbers-type t)
-                (display-line-numbers-mode 1))))
-         (evil-insert-state-exit
-          . (lambda ()
-              (when display-line-numbers
-                (setq display-line-numbers-type 'relative)
-                (display-line-numbers-mode 1))))))
+          evil-insert-state-exit)
+         . my/evil-display-line-numbers))
 
 ;; Truncate long lines
-
-
 (set-default 'truncate-lines t)
 
 ;; Indent using 2 spaces
-
-
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 
 ;; Refresh buffers on change
-
 ;; Refreshs file automatically when its changed by other program.
-
-
 (use-package emacs
   :config
   (global-auto-revert-mode 1))
 
 ;; Use =ibuffer= (builtin) instead of list-buffers.
-
-
 (use-package emacs
   :bind ("C-x C-b" . ibuffer))
 
 ;; Persist minibuffer's history
-
 ;; In ~M-x~, ~C-x C-f~ and so on.
-
-
 (savehist-mode 1)
 (setq history-length 100)
 
 ;; Display date, time and battery in modeline
-
-
 (use-package emacs
   :after doom-modeline
   :config
@@ -195,27 +127,21 @@
   (display-time-mode 1)
   (display-battery-mode 1))
 
-;; Name minibuffer as "[parent buffer] - minibuffer" 
-
+;; Name minibuffer as "[parent buffer] - minibuffer"
 ;; This is useful for easily matching the category in ActivityWatch.
 ;; See [[id:1f7ea984-360c-4b70-814b-8fab7ed00965][activity-watch-mode below]].
+;; (use-package emacs
+;;   :preface
+;;   (defun my/rename-minibuffer()
+;;     (let* ((orig-buffer
+;;             (window-buffer (minibuffer-selected-window)))
+;;            (new-minibuf-name
+;;             (format "*Minibuf-1* - %s" (buffer-name orig-buffer))))
+;;       (rename-buffer new-minibuf-name)))
+;;   :hook (minibuffer-setup . my/rename-minibuffer))
 
-
-(use-package emacs
-  :preface
-  (defun my/rename-minibuffer()
-    (let* ((orig-buffer
-            (window-buffer (minibuffer-selected-window)))
-           (new-minibuf-name
-            (format "*Minibuf-1* - %s" (buffer-name orig-buffer))))
-      (rename-buffer new-minibuf-name)))
-  :hook (minibuffer-setup . my/rename-minibuffer))
-
-;; =evil-mode= - vim mode emulation
-
+;; evil-mode - vim mode emulation
 ;; evil mode and evil-collection provide vim-like bindings.
-
-
 (use-package evil
   :defer 1
   :straight t
@@ -240,21 +166,15 @@
   :config
   (evil-collection-init))
 
-;; =evil-surround= - surround text with parenthesis, quotes, and so on
-
+;; evil-surround - surround text with parenthesis, quotes, and so on
 ;; Works exactly like you-surround.
-
-
 (use-package evil-surround
   :after evil
   :config
   (global-evil-surround-mode 1))
 
-;; =key-chord= - time-based keymaps for evil
-
+;; key-chord - time-based keymaps for evil
 ;; I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
-
-
 (use-package key-chord
   :after evil
   :config
@@ -262,16 +182,12 @@
   (setq key-chord-two-keys-delay 0.2)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
-;; =hl-line-mode= - highlight current line
-
-
+;; hl-line-mode - highlight current line
 (use-package emacs
   :config
   (global-hl-line-mode 1))
 
-;; =all-the-icons= + =all-the-icons-dired= - icon packages
-
-
+;; all-the-icons + =all-the-icons-dired= - icon packages
 (use-package all-the-icons
   :after doom-modeline)
 
@@ -282,9 +198,7 @@
 ;;(all-the-icons-install-fonts t)
 ;;(nerd-icons-install-fonts t)
 
-;; =doom-themes= - nice themes
-
-
+;; doom-themes - nice themes
 (use-package doom-themes
   :defer 0.3
   :config
@@ -293,8 +207,6 @@
   (load-theme 'doom-one t))
 
 ;; cycle between favorite theme
-
-
 (use-package emacs
   :config
   (defvar favorite-themes '(doom-one-light doom-one))
@@ -307,9 +219,7 @@
            (theme (nth i-next favorite-themes)))
       (load-theme theme t))))
 
-;; =doom-modeline= - nice modeline
-
-
+;; doom-modeline - nice modeline
 (use-package doom-modeline
   :defer 1.2
   :config
@@ -322,28 +232,20 @@
   (setq doom-modeline-env-enable-python nil)
   (doom-modeline-mode 1))
 
-;; =flymake= (builtin) - syntax checking
-
-
+;; flymake (builtin) - syntax checking
 (use-package sideline-flymake
   :hook (flymake-mode . sideline-mode)
   :init
   (setq sideline-flymake-display-mode 'line)
   (setq sideline-backends-right '(sideline-flymake)))
 
-;; =eletrict-pair-mode= (builtin) - auto close pairs based on mode
-
-
+;; eletrict-pair-mode (builtin) - auto close pairs based on mode
 (electric-pair-mode 1)
 
-;; =project.el= (builtin) - managing projects
-
+;; project.el (builtin) - managing projects
 ;; Helps you manage projects based on version control systems, like
 ;; git repos. Check =C-x p p=.
-
 ;; Launch vterm in the project's root directory.
-
-
 (defun project-vterm ()
   (interactive)
   (let* ((proj-dir (car (last (project-current))))
@@ -356,8 +258,6 @@
 
 
 ;; Customize project.el commands.
-
-
 (use-package project
   :config
   (setq project-switch-commands
@@ -374,61 +274,44 @@
         ("t" . project-vterm)
         ("m" . magit-project-status)))
 
-;; =go-mode= - Go support
-
-
+;; go-mode - Go support
 (use-package go-mode :defer t)
 
-;; =go-tag= - automatically adding/removing struct tags
-
-
+;; go-tag - automatically adding/removing struct tags
 (use-package go-tag :defer t)
 
-;; =nix-mode= - Nix support
-
+;; nix-mode - Nix support
 (use-package nix-mode :defer t)
 
-;; =typescript-mode= - TypeScript support
-
+;; typescript-mode - TypeScript support
 (use-package typescript-mode
   :defer t
   :config
   (setq typescript-indent-level 2))
 
-;; =yaml-mode= - YAML support
-
+;; yaml-mode - YAML support
 (use-package yaml-mode :defer t)
 
-;; =markdown-mode= - Markdown support
-
+;; markdown-mode - Markdown support
 (use-package markdown-mode :defer t)
 
-;; =nxml-mode= (builtin) - XML support
-
-
+;; nxml-mode (builtin) - XML support
 (use-package emacs
   :config
   (setq nxml-child-indent 4)
   (setq nxml-attribute-indent 4))
 
-;; =vue-mode= - Vue support
-
-
+;; vue-mode - Vue support
 (use-package vue-mode :defer t)
 
-;; =c-mode= (builtin) - C/C++ support
-
-
+;; c-mode (builtin) - C/C++ support
 (use-package emacs
   :hook (c-mode . (lambda ()
                     (setq c-basic-offset 2)
                     (setq indent-tabs-mode nil))))
 
-;; =eglot= (builtin) - LSP client
-
+;; eglot (builtin) - LSP client
 ;; Eglot is a builtin LSP (Language Server Protocol) client for emacs.
-
-
 (use-package eglot
   :after evil
   :hook
@@ -439,7 +322,7 @@
           (call-interactively 'eglot-format)
           (call-interactively 'eglot-code-action-organize-imports))))
 
-   ;; start eglot only if file is not in nix store
+   ;; start eglot only if file is somewhere in home (avoid /nix/store and similar)
    (prog-mode . (lambda ()
                   (when (string-prefix-p (getenv "HOME") (buffer-file-name))
                       (eglot-ensure)))))
@@ -456,28 +339,20 @@
   ;; do not block when loading lsp
   (setq eglot-sync-connect nil))
 
-;; =eldoc= (builtin) - showing documentation of symbols
-
+;; eldoc (builtin) - showing documentation of symbols
 ;; It also retrieves data from =eglot=.
-
-
 (use-package emacs
   :config
   (setq eldoc-echo-area-use-multiline-p 1))
 
-;; =eldoc-box= - eldoc in a box below cursor
-
+;; eldoc-box - eldoc in a box below cursor
 ;; I use eldoc-box to show docs as a hover box instead of using echo area.
-
-
 (use-package eldoc-box
     :config
     (eldoc-box-hover-at-point-mode 1)
     (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
 
-;; =company= - completion popup like VS Code's
-
-
+;; company - completion popup like VS Code's
 (use-package company
   :hook (after-init . global-company-mode)
   :custom
@@ -492,21 +367,43 @@
    (:map company-active-map
          ("TAB" . company-complete))))
 
-;; =envrc= - direnv integration
-
+;; envrc - direnv integration
 ;; Works better than =direnv-mode= for me.
-
-
 (use-package envrc
   :defer 0.5
   :config
   (envrc-global-mode))
 
-;; =recentf-mode= (builtin) - persistent history of recent files
+(defun auth-get-password (host login)
+  (let* ((entry (nth 0 (auth-source-search
+                        :host host
+                        :login login
+                        :require '(:secret))))
+         (secret (plist-get entry :secret)))
+    (if (functionp secret)
+        (funcall secret)
+      secret)))
 
+;; aider
+(use-package aider
+  :straight
+  (:host
+   github
+   :repo "tninja/aider.el"
+   :files ("aider.el"
+           "aider-core.el"
+           "aider-file.el"
+           "aider-code-change.el"
+           "aider-discussion.el"
+           "aider-prompt-mode.el"))
+  :config
+  (setq aider-args '("--model" "gpt-4o"
+                     "--no-auto-commits"))
+  (setenv "OPENAI_API_KEY" (auth-get-password "openai" "key"))
+  :bind ("C-c i" . aider-transient-menu))
+
+;; recentf-mode (builtin) - persistent history of recent files
 ;; Show recent files with ~C-x C-r~.
-
-
 (use-package recentf
   :straight nil
   :config
@@ -516,13 +413,9 @@
   :bind ("C-x C-r" . recentf-open))
 
 ;; use-package org to avoid any bugs
-
-
 (use-package org :defer t)
 
-;; =olivetti= - horizontal paddings for windows
-
-
+;; olivetti - horizontal paddings for windows
 (use-package olivetti
   :hook ((prog-mode
           eww-mode
@@ -534,14 +427,10 @@
   :init
   (setq-default olivetti-body-width 100))
 
-;; =save-place-mode= - save cursor position per file
-
-
+;; save-place-mode - save cursor position per file
 (save-place-mode 1)
 
-;; =consult= - multiple search utilities
-
-
+;; consult - multiple search utilities
 (use-package consult
   :after evil
   :bind
@@ -558,51 +447,37 @@
         ;; buffer definitions
         ("SPC b d" . consult-imenu)))
 
-;; =tab-line= (builtin) - show buffers as tabs
-
+;; tab-line (builtin) - show buffers as tabs
 ;; It works per window, showing the recent buffers you opened in that window.
-
-
 (use-package emacs
   :config
   (setq tab-line-switch-cycling t))
 
-;; =tab-bar= (builtin) - tabs like vim
-
+;; tab-bar (builtin) - tabs like vim
 ;; I use it just to make 2 or 3 different "window layouts" and switch
 ;; between them
-
-
 (use-package emacs
   :config
   (setq tab-bar-show nil)
   :bind (("M-1" . tab-select)
          ("M-2" . tab-select)))
 
-;; =whitespace= (builtin) - show whitespaces as symbols
-
-
+;; whitespace (builtin) - show whitespaces as symbols
 (use-package whitespace
   :hook
   ((prog-mode conf-mode) . whitespace-mode)
   :config
   (setq whitespace-style '(face tabs spaces trailing space-mark tab-mark)))
 
-;; =restclient= - http client
-
-
+;; restclient - http client
 (use-package restclient
   :defer t
   :mode ("\\.http\\'" . restclient-mode))
 
-;; =simple-httpd= - static http server
-
-
+;; simple-httpd - static http server
 (use-package simple-httpd :defer t)
 
-;; =winner-mode= (builtin) - undo/redo window changes
-
-
+;; winner-mode (builtin) - undo/redo window changes
 (use-package emacs
   :after evil
   :bind
@@ -612,12 +487,9 @@
   :config
   (winner-mode 1))
 
-;; =dired= (builtin) - file manager
-
+;; dired (builtin) - file manager
 ;; - Hide details by default (show only filename + icon with =all-the-icons-dired=)
 ;; - Rename buffer to "dired - <path>"
-
-
 (use-package dired
   :straight nil
   :preface
@@ -640,18 +512,14 @@
         ("<normal-state> g x" . my/dired-xdg-open)
         ("M-o" . dired-omit-mode)))
 
-;; =dired-subtree= - add subtree view to dired
-
-
+;; dired-subtree - add subtree view to dired
 (use-package dired-subtree
   :after dired
   :bind
   (:map dired-mode-map
         ("TAB" . dired-subtree-toggle)))
 
-;; =dired-preview= - preview file contents (including images)
-
-
+;; dired-preview - preview file contents (including images)
 (use-package dired-preview
   :after dired
   :defer t
@@ -664,18 +532,13 @@
   (setq dired-preview-delay 0.3)
   (setq dired-preview-display-action-alist #'my/dired-preview-at-right))
 
-;; =magit= - git interface
-
+;; magit - git interface
 ;; I use the default ~C-x g~ binding.
-
-
 (use-package magit
   :bind
   ("C-x g" . magit))
 
-;; =diff-hl= - highlight uncommited changes
-
-
+;; diff-hl - highlight uncommited changes
 (use-package diff-hl
   :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
          (magit-post-refresh . diff-hl-magit-post-refresh)
@@ -683,24 +546,17 @@
   :config
   (global-diff-hl-mode 1))
 
-;; =blamer-mode= - git blame like gitlens
-
-
+;; blamer-mode - git blame like gitlens
 (use-package blamer :defer t)
 
-;; =whick-key= - suggests key combinations as you press them.
-
-
+;; whick-key - suggests key combinations as you press them.
 (use-package which-key
   :config
   (setq which-key-idle-delay 0.5)
   (which-key-mode))
 
-;; =vterm= - integrated terminal
-
+;; vterm - integrated terminal
 ;; Launch vterm with a custom buffer name.
-
-
 (defun my/vterm (name)
   (interactive "sname: ")
   (vterm (concat "vterm - " name)))
@@ -715,11 +571,8 @@
          (("M-1" . nil)
           ("M-2" . nil)))))
 
-;; =vertico= - vertical completion
-
+;; vertico - vertical completion
 ;; Improves minibuffer by showing multiple options in a vertical list.
-
-
 (use-package vertico
   :defer 0.4
   :config
@@ -734,29 +587,21 @@
         ("C-j" . vertico-next)
         ("C-k" . vertico-previous)))
 
-;; =marginalia= - show more data for help functions
-
+;; marginalia - show more data for help functions
+;;
 ;; - Adds description for commands in ~M-x~
 ;; - Adds extra info to find file
 ;; - Adds extra info to ~C-h v~
-
-
 (use-package marginalia
-  :defer 2.5
-  :init
-  (marginalia-mode))
+  :hook (after-init . marginalia-mode))
 
-;; =orderless= - fuzzy completion
-
-
+;; orderless - fuzzy completion
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
-;; =emms= - music player
-
-
+;; emms - music player
 (use-package emms
   :after evil
   :config
@@ -785,9 +630,7 @@
         ("C-c m s" . mpv-kill)
         ("C-c m e" . mpv-jump-to-playlist-entry)))
 
-;; =telega= - telegram client
-
-
+;; telega - telegram client
 (use-package telega
   :straight nil ;; installed and built through nix
   :hook (telega-mode . telega-mode-line-mode)
@@ -806,9 +649,7 @@
    (:map telega-msg-button-map
         ("SPC" . nil))))
 
-;; =elfeed= - client for Atom and RSS feeds
-
-
+;; elfeed - client for Atom and RSS feeds
 (use-package elfeed
   :commands elfeed
   :config
@@ -848,35 +689,26 @@
           ;;"https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA"
           )))
 
-;; =pdf-tools= - read PDFs in emacs
-
+;; pdf-tools - read PDFs in emacs
 ;; I tried default emacs doc-view-mode but it didn't work with the PDFs I tested.
-
-
 (use-package pdf-tools
   :hook (pdf-view-mode . pdf-view-themed-minor-mode)
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :config
   (pdf-tools-install))
 
-;; =nov-mode= - read EPUBs in emacs
-
-
+;; nov-mode - read EPUBs in emacs
 (use-package nov :defer t
   :mode ("\\.epub\\'" . nov-mode))
 
-;; =auth-sources= - "password manager" 
-
-
+;; auth-sources - "password manager" 
 (use-package auth-sources
   :straight nil
   :defer t
   :config
   (setq auth-sources '("~/.authinfo.gpg")))
 
-;; =pinentry= - for entrying pin for gpg
-
-
+;; pinentry - for entrying pin for gpg
 (use-package pinentry
   :defer 2
   :custom
@@ -884,11 +716,10 @@
   :config
   (pinentry-start))
 
-;; =gnus= - email client, news reader, maybe
-
-
+;; gnus - email client, news reader, maybe
 (use-package gnus
   :straight nil
+  :defer t
   :hook (gnus-after-getting-new-news . gnus-notifications)
   :custom
   (send-mail-function 'smtpmail-send-it)
@@ -911,11 +742,8 @@
              (nnimap-stream ssl)
              (nnimap-authinfo-file "~/.authinfo.gpg")))))
 
-;; =eww= (builtin) - simple browser
-
+;; eww (builtin) - simple browser
 ;; Wrap lines instead of truncating
-
-
 (use-package emacs
   :hook (eww-mode . visual-line-mode)
   :config
@@ -930,57 +758,50 @@
                     (truncate-string-to-width domain 20 nil nil "...")
                     (truncate-string-to-width title 30 nil nil "..."))))))
 
-;; =activity-watch-mode= - track emacs usage using [[https://activitywatch.net][ActivityWatch]]
+;; activity-watch-mode - track emacs usage using [[https://activitywatch.net][ActivityWatch]]
 ;; :PROPERTIES:
 ;; :ID:       1f7ea984-360c-4b70-814b-8fab7ed00965
 ;; :END:
+;; (use-package activity-watch-mode
+;;   :defer 5
+;;   :config
+;;   (global-activity-watch-mode 1))
 
-
-(use-package activity-watch-mode
-  :defer 5
-  :config
-  (global-activity-watch-mode 1))
-
-;; =gptel= - GPT inside emacs
-
-
+;; gptel - GPT inside emacs
 (use-package gptel
   :defer t
   :config
   (setq gptel-api-key nil))
 
-;; =dashboard= - initial buffer dashboard
+;; dashboard - initial buffer dashboard
+;; (use-package dashboard
+;;   :after all-the-icons
+;;   :init
+;;   (dashboard-setup-startup-hook)
+;;   :config
+;;   (setq
+;;    initial-buffer-choice (lambda ()
+;;                            (get-buffer-create dashboard-buffer-name))
+;;    dashboard-startup-banner 'logo
+;;    dashboard-center-content t
+;;    dashboard-vertically-center-content t
+;;    dashboard-banner-logo-title nil
+;;    dashboard-icon-type 'all-the-icons
+;;    dashboard-set-heading-icons t
 
+;;    ;; for some reason its being set to nil
+;;    dashboard-heading-icons '((recents . "history")
+;;                              (bookmarks . "bookmark")
+;;                              (agenda . "calendar")
+;;                              (projects . "rocket")
+;;                              (registers . "database"))
+;;    dashboard-set-file-icons t
+;;    dashboard-items '((recents . 10)
+;;                      (agenda . 5))))
 
-(use-package dashboard
-  :after all-the-icons
-  :init
-  (dashboard-setup-startup-hook)
-  :config
-  (setq
-   initial-buffer-choice (lambda ()
-                           (get-buffer-create dashboard-buffer-name))
-   dashboard-startup-banner 'logo
-   dashboard-center-content t
-   dashboard-vertically-center-content t
-   dashboard-banner-logo-title nil
-   dashboard-icon-type 'all-the-icons
-   dashboard-set-heading-icons t
-
-   ;; for some reason its being set to nil
-   dashboard-heading-icons '((recents . "history")
-                             (bookmarks . "bookmark")
-                             (agenda . "calendar")
-                             (projects . "rocket")
-                             (registers . "database"))
-   dashboard-set-file-icons t
-   dashboard-items '((recents . 10)
-                     (agenda . 5))))
-
-;; =mpv.el= - control mpv from emacs
-
-
-(use-package mpv :defer t
+;; mpv.el - control mpv from emacs
+(use-package mpv
+  :defer t
   :preface
   (defun mpv-playlist-shuffle ()
     (interactive)
@@ -988,14 +809,26 @@
   :custom
   (mpv-default-options '("--keep-open=no")))
 
-;; =org-mpv-notes= - control mpv from emacs
+;; find-file launches mpv
+(defvar find-file-open-in-mpv-exts
+  '("ogg" "mp3" "wav" "mpg" "mpeg" "wmv" "wma"
+    "mov" "avi" "divx" "ogm" "ogv" "asf" "mkv"
+    "rm" "rmvb" "mp4" "flac" "vob" "m4a" "ape"
+    "flv" "webm" "aif" "opus" "spc"))
 
+(defun find-file-open-in-mpv (orig-fun &rest args)
+  (let* ((filename (car args))
+         (ext (file-name-extension filename)))
+      (if (member ext find-file-open-in-mpv-exts)
+          (mpv-play filename)
+        (apply orig-fun args))))
 
+(advice-add 'find-file :around #'find-file-open-in-mpv)
+
+;; org-mpv-notes - control mpv from emacs
 (use-package org-mpv-notes :defer t)
 
-;; =yeetube= - youtube frontend
-
-
+;; yeetube - youtube frontend
 (use-package yeetube
   :after evil
 
@@ -1062,9 +895,7 @@
    (:map evil-motion-state-map
          ("RET" . nil))))
 
-;; =erc= (builtin) - emacs IRC client
-
-
+;; erc (builtin) - emacs IRC client
 (use-package erc
   :straight nil
   :defer t
@@ -1108,48 +939,32 @@
 
   (erc-log-enable))
 
-;; =erc-hl-nicks= - highlight user nicks with unique color
-
-
+;; erc-hl-nicks - highlight user nicks with unique color
 (use-package erc-hl-nicks
   :after erc
   :init
   (add-to-list 'erc-modules 'hl-nicks))
 
 ;; Org directory
-
-
 (setq org-directory "~/Sync/Org")
 
 ;; Org source block - open in the same window
-
 ;; Open ~C-c '~ in the same window
-
-
 (setq org-src-window-setup 'current-window)
 
 ;; Org babel languages
-
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((shell . t)))
-
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '((shell . t)))
 ;; Org indirect buffer - open in the same window
-
-
 (setq org-indirect-buffer-display 'current-window)
 
 ;; Org refile - save all buffers
-
-
 (setq org-outline-path-complete-in-steps t)
 (setq org-refile-targets nil)
 (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
 ;; Org priority - face and default value
-
-
 (setq org-priority-highest ?A)
 (setq org-priority-lowest ?D)
 (setq org-priority-default ?D)
@@ -1160,13 +975,9 @@
         (?D . (:foreground "gray"))))
 
 ;; Org tags - column
-
-
 (setq org-tags-column -89)
 
 ;; Org TODOs - keywords and state logging
-
-
 (use-package org
   :config
   (setq org-log-into-drawer t)
@@ -1184,24 +995,18 @@
    ("C-c C-x C-j" . org-clock-goto)))
 
 ;; Org Clock - keybindings
-
-
 (use-package org
   :bind
   (("C-c C-x C-o" . org-clock-out)
    ("C-c C-x C-j" . org-clock-goto)))
 
-;; =org-noter= - annotate PDFs, EPUBs, and so on
-
-
+;; org-noter - annotate PDFs, EPUBs, and so on
 (use-package org-noter
   :defer t
   :config
   (setq org-noter-highlight-selected-text t))
 
 ;; Org Capture - keybindings and templates
-
-
 (use-package org
   :bind
   (:map global-map
@@ -1220,17 +1025,12 @@
            "* %T - %?"))))
 
 ;; Org lists - Replace ~-~ by ~•~ on unordered lists.
-
-
 (font-lock-add-keywords 'org-mode
     '(("^ *\\([-]\\) "
     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 ;; Org Agenda - setup and custom views
-
 ;; Custom agenda views, agenda settings, and so on.
-
-
 (defun my/org-agenda-show-all-dates ()
   (interactive)
   (setq org-agenda-show-all-dates
@@ -1376,29 +1176,23 @@
          ("k" . org-agenda-previous-line))))
 
 ;; Show drawers folded by default
-
-
 (use-package org
   :hook (org-mode . org-fold-hide-drawer-all))
 
-;; =org-present= - make presentations using org mode
+;; org-present - make presentations using org mode
+;; (use-package org-present
+;;   :hook ((org-present-mode
+;;           . (lambda ()
+;;               (org-present-hide-cursor)
+;;               (setq display-line-numbers-type nil)
+;;               (display-line-numbers-mode 1)))
+;;          (org-present-mode-quit
+;;           . (lambda ()
+;;               (org-present-show-cursor)
+;;               (setq display-line-numbers-type 'relative)
+;;               (display-line-numbers-mode 1)))))
 
-
-(use-package org-present
-  :hook ((org-present-mode
-          . (lambda ()
-              (org-present-hide-cursor)
-              (setq display-line-numbers-type nil)
-              (display-line-numbers-mode 1)))
-         (org-present-mode-quit
-          . (lambda ()
-              (org-present-show-cursor)
-              (setq display-line-numbers-type 'relative)
-              (display-line-numbers-mode 1)))))
-
-;; =org-drill= - same idea as Anki
-
-
+;; org-drill - same idea as Anki
 (use-package org-drill
   :defer t
   :init
@@ -1411,18 +1205,13 @@
   :config
   (add-to-list 'org-modules 'org-drill))
 
-;; =toc-org= - generate table of contents
-
+;; toc-org - generate table of contents
 ;; Useful for github that doesn't create a TOC automatically
-
-
 (use-package toc-org
   :hook
   (org-mode . toc-org-mode))
 
-;; =org-music= - manage songs and playlists using org
-
-
+;; org-music - manage songs and playlists using org
 (use-package org-music
   :after evil
 
@@ -1472,15 +1261,11 @@
         ("C-c m R" . mpv-playlist-shuffle)
         ("C-c m p e" . org-music-enqueue-song-at-point)))
 
-;; =org-indent-mode= (builtin) - visually indent text inside headings
-
-
+;; org-indent-mode (builtin) - visually indent text inside headings
 (use-package org
   :hook (org-mode . org-indent-mode))
 
-;; =org-appear= - show emphasis markers when cursor is over the word.
-
-
+;; org-appear - show emphasis markers when cursor is over the word.
 (use-package org-appear
     :hook
     (org-mode . org-appear-mode)
@@ -1496,9 +1281,7 @@
     (setq org-appear-autokeywords t)
     (setq org-appear-inside-latex t))
 
-;; =org-fragtog= - display LaTeX automatically inside org buffers
-
-
+;; org-fragtog - display LaTeX automatically inside org buffers
 (use-package org-fragtog
   :after org
   :hook
@@ -1511,9 +1294,7 @@
    (plist-put org-format-latex-options :foreground 'auto)
    (plist-put org-format-latex-options :background 'auto)))
 
-;; =org-roam= - org knowledge management system
-
-
+;; org-roam - org knowledge management system
 (use-package org-roam
   :config
   (when (not (file-directory-p "~/Sync/Org/Roam"))
@@ -1532,19 +1313,13 @@
    ("C-c n i" . org-roam-node-insert)
    ("C-c n l" . org-roam-buffer-toggle)))
 
-;; =org-roam-ui= - visualize Org Roam graph in real time.
-
-
+;; org-roam-ui - visualize Org Roam graph in real time.
 (use-package org-roam-ui :defer t)
 
-;; =org-cliplink= - paste link with automatic title
-
-
+;; org-cliplink - paste link with automatic title
 (use-package org-cliplink :defer t)
 
-;; =org-download= - getting images into org 
-
-
+;; org-download - getting images into org
 (use-package org-download
   :defer t
   :config
@@ -1556,17 +1331,14 @@
   ("C-c o i R" . org-download-rename-at-point)
   ("C-c o i p" . org-download-clipboard))
 
-;; =eshell= (builtin)
-
-
+;; eshell (builtin)
 (use-package eshell-prompt-extras
+  :commands (eshell)
   :config
   (setq eshell-highlight-prompt nil)
   (setq eshell-prompt-function 'epe-theme-lambda))
 
-;; =deno=
-
-
+;; deno lsp
 (add-to-list 'eglot-server-programs '((js-mode typescript-mode (typescript-ts-base-mode :language-id "typescript")) . (eglot-deno "deno" "lsp")))
 
   (defclass eglot-deno (eglot-lsp-server) ()
