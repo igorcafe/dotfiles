@@ -65,9 +65,7 @@
 ;; Treat underline as part of the word
 (use-package emacs
   :hook ((fundamental-mode . (lambda ()
-                               (modify-syntax-entry ?_ "w")))
-         (emacs-lisp-mode . (lambda ()
-                               (modify-syntax-entry ?- "w")))))
+                               (modify-syntax-entry ?_ "w")))))
 
 ;; Show column number in modeline
 (column-number-mode 1)
