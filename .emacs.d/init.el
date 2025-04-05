@@ -85,13 +85,14 @@
   (when display-line-numbers
     (if (eq evil-state 'insert)
         (setq display-line-numbers-type t)
-      (setq display-line-numbers-type 'relative)
-      (display-line-numbers-mode 1))))
+      (setq display-line-numbers-type 'relative))
+    (display-line-numbers-mode 1)))
 
 (use-package emacs
   :after evil
   :hook ((evil-insert-state-entry
-          evil-insert-state-exit)
+          evil-normal-state-entry
+          evil-visual-state-entry)
          . my/evil-display-line-numbers))
 
 ;; Truncate long lines
