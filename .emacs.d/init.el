@@ -78,16 +78,17 @@
   :hook ((text-mode
           prog-mode
           conf-mode
+          go-dot-mod-mode
           restclient-mode) . display-line-numbers-mode))
 
 ;; Absolute and relative line numbers
 ;; Show absolute line numbers for insert state and relative for others.
 (defun my/evil-display-line-numbers ()
   (when display-line-numbers
-               (if (eq evil-state 'insert)
-                   (setq display-line-numbers-type t)
-                 (setq display-line-numbers-type 'relative)
-                 (display-line-numbers-mode 1))))
+    (if (eq evil-state 'insert)
+        (setq display-line-numbers-type t)
+      (setq display-line-numbers-type 'relative)
+      (display-line-numbers-mode 1))))
 
 (use-package emacs
   :after evil
@@ -398,8 +399,9 @@
            "aider-prompt-mode.el"))
   :config
   (setq aider-args '("--model" "gpt-4o"
-                     "--no-auto-commits"))
-  (setenv "OPENAI_API_KEY" (auth-get-password "openai" "key"))
+                     "--no-auto-commits"
+                     (format "--api-key openai=%s"
+                             (auth-get-password "openai" "key"))))
   :bind ("C-c i" . aider-transient-menu))
 
 ;; recentf-mode (builtin) - persistent history of recent files
@@ -418,6 +420,7 @@
 ;; olivetti - horizontal paddings for windows
 (use-package olivetti
   :hook ((prog-mode
+          go-dot-mod-mode
           eww-mode
           text-mode
           conf-mode
@@ -1332,8 +1335,22 @@
   ("C-c o i p" . org-download-clipboard))
 
 ;; eshell (builtin)
+(use-package eshell
+  :straight nil
+  :hook (eshell-mode . (lambda ()
+                         (setq-local company-idle-delay nil)))
+  :config
+  (bind-keys*
+   ("C-x e" . eshell)
+   ("C-l" . (lambda ()
+              (interactive)
+              (recenter-top-bottom 'top)))
+   ("C-c C-l" . (lambda ()
+                  (interactive)
+                  (eshell/clear-scrollback)
+                  (eshell-send-input)))))
+
 (use-package eshell-prompt-extras
-  :commands (eshell)
   :config
   (setq eshell-highlight-prompt nil)
   (setq eshell-prompt-function 'epe-theme-lambda))
