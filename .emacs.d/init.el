@@ -155,7 +155,10 @@
   :bind
   (("C-x C-h" . previous-buffer)
    ("C-x C-l" . next-buffer)
-   ("C-x C-u" . universal-argument))
+   ("C-x C-u" . universal-argument)
+   :map evil-insert-state-map
+   ("C-a" . nil)
+   ("C-e" . nil))
   :config
   (evil-set-leader 'normal (kbd "SPC"))
   (evil-mode 1))
@@ -242,6 +245,21 @@
 ;; eletrict-pair-mode (builtin) - auto close pairs based on mode
 (electric-pair-mode 1)
 
+;; keybindings for adding pairs -> ' " [ { (
+(use-package emacs
+  :after evil
+  :config
+  (dolist (pair '(("\"" "\"")
+                  ("'" "'")
+                  ("[" "]")
+                  ("{" "}")
+                  ("<" ">")))
+    (eval `(bind-key ,(concat "M-" (car pair))
+                     (lambda ()
+                       (interactive)
+                       (insert-pair nil ,(car pair) ,(car (last pair))))
+                     evil-visual-state-map))))
+
 ;; project.el (builtin) - managing projects
 ;; Helps you manage projects based on version control systems, like
 ;; git repos. Check =C-x p p=.
@@ -255,8 +273,6 @@
          (default-directory proj-dir))
     (vterm (format "vterm - %s" chosen-name))))
 
-
-
 ;; Customize project.el commands.
 (use-package project
   :config
@@ -266,7 +282,7 @@
           (project-find-dir "Find directory" ?d)
           (project-vterm "vterm" ?t)
           ;;(project-vc-dir "VC-Dir")
-          ;;(project-eshell "Eshell")
+          (project-eshell "Eshell")
           ;;(project-any-command "Other")
           (magit-project-status "Magit" ?m)))
   :bind
@@ -397,11 +413,13 @@
            "aider-discussion.el"
            "aider-prompt-mode.el"))
   :config
-  (setq aider-args '("--model" "gpt-4o"
-                     "--no-auto-commits"
-                     (format "--api-key openai=%s"
-                             (auth-get-password "openai" "key"))))
-  :bind ("C-c i" . aider-transient-menu))
+  (setq aider-args
+        '("--model" "gpt-4o"
+          "--no-auto-commits"
+          (format "--api-key openai=%s"
+                  (auth-get-password "openai" "key"))))
+  :bind
+  ("C-c i" . aider-transient-menu))
 
 ;; recentf-mode (builtin) - persistent history of recent files
 ;; Show recent files with ~C-x C-r~.
@@ -1333,34 +1351,66 @@
   ("C-c o i R" . org-download-rename-at-point)
   ("C-c o i p" . org-download-clipboard))
 
-;; eshell (builtin)
-(use-package eshell
+;; proced (builtin)
+(use-package proced
   :straight nil
-  :hook (eshell-mode . (lambda ()
-                         (setq-local company-idle-delay nil)))
+  :custom
+  (proced-auto-update-flag t)
+  (proced-auto-update-interval 2)
+  (proced-enable-color-flag t)
+  (proced-tree-flag t)
   :config
-  (bind-keys*
-   ("C-x e" . eshell)
+  ;; TODO: use advice
+  (defun proced-format-args (s)
+    (let* ((chunks (split-string s " "))
+           (cmd-path (car chunks))
+           (cmd-name (file-name-nondirectory cmd-path))
+           (new-chunks (append (list cmd-name) (cdr chunks))))
+      (mapconcat 'identity new-chunks " "))))
+
+;; eshell (builtin)
+(use-package esh-mode
+  :straight nil
+  :hook ((eshell-mode . (lambda ()
+                          (setq-local company-idle-delay nil)))
+         (eshell-pre-command . eshell-save-some-history))
+  :custom
+  (eshell-highlight-prompt t)
+  (eshell-history-size 1000)
+  (eshell-hist-ignoredups t)
+  :bind
+  (("C-x e" . eshell)
+   :map eshell-mode-map
+   ("C-a" . backward-sentence)
+   ("C-e" . forward-sentence)
    ("C-l" . (lambda ()
               (interactive)
+              (eshell/clear)
               (recenter-top-bottom 'top)))
    ("C-c C-l" . (lambda ()
                   (interactive)
-                  (eshell/clear-scrollback)
-                  (eshell-send-input)))))
+                  (let ((input (eshell-get-old-input)))
+                    (eshell/clear t)
+                    (eshell-send-input)
+                    (insert input))))))
 
 (use-package eshell-prompt-extras
   :config
-  (setq eshell-highlight-prompt nil)
   (setq eshell-prompt-function 'epe-theme-lambda))
 
 ;; deno lsp
-(add-to-list 'eglot-server-programs '((js-mode typescript-mode (typescript-ts-base-mode :language-id "typescript")) . (eglot-deno "deno" "lsp")))
+(use-package eglot
+  :defer
+  :config
+  (add-to-list
+   'eglot-server-programs
+   '((js-mode typescript-mode
+              (typescript-ts-base-mode :language-id "typescript"))
+     . (eglot-deno "deno" "lsp")))
 
   (defclass eglot-deno (eglot-lsp-server) ()
     :documentation "A custom class for deno lsp.")
 
   (cl-defmethod eglot-initialization-options ((server eglot-deno))
     "Passes through required deno initialization options"
-    (list :enable t
-    :lint t))
+    (list :enable t :lint t)))
