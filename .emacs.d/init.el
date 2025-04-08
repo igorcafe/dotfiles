@@ -251,14 +251,30 @@
 ;; Helps you manage projects based on version control systems, like
 ;; git repos. Check =C-x p p=.
 ;; Launch vterm in the project's root directory.
-(defun project-vterm ()
+;; (defun project-vterm ()
+;;   (interactive)
+;;   (let* ((proj-dir (car (last (project-current))))
+;;          (proj-name (file-name-nondirectory
+;;                      (directory-file-name proj-dir)))
+;;          (chosen-name (read-string "buffer name: " proj-name))
+;;          (default-directory proj-dir))
+;;     (vterm (format "vterm - %s" chosen-name))))
+
+
+;; custom function for launching eshell with descriptive buffer names
+(defun my/project-eshell ()
   (interactive)
-  (let* ((proj-dir (car (last (project-current))))
+  (let* ((default-directory (project-root (project-current t)))
          (proj-name (file-name-nondirectory
-                     (directory-file-name proj-dir)))
-         (chosen-name (read-string "buffer name: " proj-name))
-         (default-directory proj-dir))
-    (vterm (format "vterm - %s" chosen-name))))
+                     (directory-file-name default-directory)))
+         (buffer-name (read-string "buffer name: "
+                                   (format "eshell - %s" proj-name)))
+         (eshell-buffer (get-buffer buffer-name)))
+    (if eshell-buffer
+        (pop-to-buffer eshell-buffer)
+      (with-current-buffer (eshell t)
+        (rename-buffer buffer-name)))))
+
 
 ;; Customize project.el commands.
 (use-package project
@@ -269,12 +285,13 @@
           (project-find-dir "Find directory" ?d)
           (project-vterm "vterm" ?t)
           ;;(project-vc-dir "VC-Dir")
-          (project-eshell "Eshell")
+          (my/project-eshell "Eshell" ?e)
           ;;(project-any-command "Other")
           (magit-project-status "Magit" ?m)))
   :bind
   (:map project-prefix-map
         ("t" . project-vterm)
+        ("e" . my/project-eshell)
         ("m" . magit-project-status)))
 
 ;; go-mode - Go support
@@ -564,19 +581,24 @@
 
 ;; vterm - integrated terminal
 ;; Launch vterm with a custom buffer name.
-(defun my/vterm (name)
-  (interactive "sname: ")
-  (vterm (concat "vterm - " name)))
+;; (defun my/vterm (name)
+;;   (interactive "sname: ")
+;;   (vterm (concat "vterm - " name)))
 
-(use-package vterm
-  :straight nil
-  :after evil
-  :bind
-  ((:map evil-normal-state-map
-         (("SPC t" . my/vterm)))
-   (:map vterm-mode-map
-         (("M-1" . nil)
-          ("M-2" . nil)))))
+;; (use-package vterm
+;;   :straight nil
+;;   :after evil
+;;   :bind
+;;   ((:map evil-normal-state-map
+;;          (("SPC t" . my/vterm)))
+;;    (:map vterm-mode-map
+;;          (("M-1" . nil)
+;;           ("M-2" . nil)))))
+
+
+;; terminal emulator
+(use-package eat
+  :hook (eshell-mode . eat-eshell-mode))
 
 ;; vertico - vertical completion
 ;; Improves minibuffer by showing multiple options in a vertical list.
