@@ -1,4 +1,7 @@
-alias gss git status -s
-alias d dired $1
+alias gpsup git push -u {git remote} HEAD
+alias gcmsg git commit -m $1
+alias gaa git add -A
 alias ff find-file $1
-alias ➜  $*
+alias d dired $1
+alias gss git status -s
+alias ➜ $*
