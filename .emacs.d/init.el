@@ -1298,14 +1298,23 @@
   (setq org-roam-capture-templates
         '(("d" "default" plain "%?" :target
            (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "* ${title}")
+           :unnarrowed t)
+          ("p" "politics" plain "%?" :target
+           (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "* ${title} :politics:")
            :unnarrowed t)))
+
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry "* %(format-time-string \"%H:%M\") %?"
+           :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d> "))))
 
   (org-roam-db-autosync-enable)
 
   :bind
   (("C-c n f" . org-roam-node-find)
    ("C-c n i" . org-roam-node-insert)
-   ("C-c n l" . org-roam-buffer-toggle)))
+   ("C-c n l" . org-roam-buffer-toggle)
+   ("C-c n c" . org-roam-dailies-capture-today)
+   ("C-c n d" . org-roam-dailies-find-date)))
 
 ;; org-roam-ui - visualize Org Roam graph in real time.
 (use-package org-roam-ui :defer t)
