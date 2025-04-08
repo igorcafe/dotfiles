@@ -765,46 +765,11 @@
                     (truncate-string-to-width domain 20 nil nil "...")
                     (truncate-string-to-width title 30 nil nil "..."))))))
 
-;; activity-watch-mode - track emacs usage using [[https://activitywatch.net][ActivityWatch]]
-;; :PROPERTIES:
-;; :ID:       1f7ea984-360c-4b70-814b-8fab7ed00965
-;; :END:
-;; (use-package activity-watch-mode
-;;   :defer 5
-;;   :config
-;;   (global-activity-watch-mode 1))
-
 ;; gptel - GPT inside emacs
 (use-package gptel
   :defer t
   :config
   (setq gptel-api-key nil))
-
-;; dashboard - initial buffer dashboard
-;; (use-package dashboard
-;;   :after all-the-icons
-;;   :init
-;;   (dashboard-setup-startup-hook)
-;;   :config
-;;   (setq
-;;    initial-buffer-choice (lambda ()
-;;                            (get-buffer-create dashboard-buffer-name))
-;;    dashboard-startup-banner 'logo
-;;    dashboard-center-content t
-;;    dashboard-vertically-center-content t
-;;    dashboard-banner-logo-title nil
-;;    dashboard-icon-type 'all-the-icons
-;;    dashboard-set-heading-icons t
-
-;;    ;; for some reason its being set to nil
-;;    dashboard-heading-icons '((recents . "history")
-;;                              (bookmarks . "bookmark")
-;;                              (agenda . "calendar")
-;;                              (projects . "rocket")
-;;                              (registers . "database"))
-;;    dashboard-set-file-icons t
-;;    dashboard-items '((recents . 10)
-;;                      (agenda . 5))))
 
 ;; mpv.el - control mpv from emacs
 (use-package mpv
