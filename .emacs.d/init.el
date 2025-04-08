@@ -1087,7 +1087,7 @@
                      (org-deadline-warning-days 10)))))
           ("d" "To-do"
            ((agenda ""
-                    ((org-agenda-span 'day)
+                    ((org-agenda-span 3)
                      (org-agenda-time-grid '((daily today require-timed)
                         ()
                         " ┄┄┄┄┄ " ""))))
@@ -1114,8 +1114,8 @@
             ;;              '(org-agenda-skip-entry-if
             ;;                'regexp "CLOCK: \\[."
             ;;                'scheduled))))
-            ;; (todo "PROJ"
-            ;;       ((org-agenda-overriding-header "Projects")))
+            (todo "PROJ"
+                  ((org-agenda-overriding-header "Projects")))
             (todo "INBX"
                        ((org-agenda-overriding-header "Inbox")
                         (org-agenda-skip-function
