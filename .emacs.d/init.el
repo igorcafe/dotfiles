@@ -127,19 +127,6 @@
   (display-time-mode 1)
   (display-battery-mode 1))
 
-;; Name minibuffer as "[parent buffer] - minibuffer"
-;; This is useful for easily matching the category in ActivityWatch.
-;; See [[id:1f7ea984-360c-4b70-814b-8fab7ed00965][activity-watch-mode below]].
-;; (use-package emacs
-;;   :preface
-;;   (defun my/rename-minibuffer()
-;;     (let* ((orig-buffer
-;;             (window-buffer (minibuffer-selected-window)))
-;;            (new-minibuf-name
-;;             (format "*Minibuf-1* - %s" (buffer-name orig-buffer))))
-;;       (rename-buffer new-minibuf-name)))
-;;   :hook (minibuffer-setup . my/rename-minibuffer))
-
 ;; evil-mode - vim mode emulation
 ;; evil mode and evil-collection provide vim-like bindings.
 (use-package evil
