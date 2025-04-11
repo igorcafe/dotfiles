@@ -315,7 +315,7 @@
   :config
   (setq project-switch-commands
         '((project-find-file "Find file" ?f)
-          (project-find-regexp "Find regexp" ?g)
+          (consult-git-grep "Find regexp" ?g)
           (project-find-dir "Find directory" ?d)
           (project-vterm "vterm" ?t)
           ;;(project-vc-dir "VC-Dir")
@@ -326,6 +326,7 @@
   (:map project-prefix-map
         ("t" . project-vterm)
         ("e" . my/project-eshell)
+        ("g" . consult-git-grep)
         ("m" . magit-project-status)))
 
 ;; go-mode - Go support
@@ -464,11 +465,11 @@
 ;; Show recent files with ~C-x C-r~.
 (use-package recentf
   :straight nil
-  :config
+  :init
   (setq recentf-max-menu-items 100)
   (setq recentf-max-saved-items 100)
   (recentf-mode 1)
-  :bind ("C-x C-r" . recentf-open))
+  :bind ("C-x C-r" . consult-recent-file))
 
 ;; use-package org to avoid any bugs
 (use-package org :defer t)
@@ -498,11 +499,17 @@
    ;; analogous to project-find-regexp
    ("SPC p g" . consult-git-grep)
 
-   ;; analogous to project-find-file
-   ("SPC p f" . consult-project-buffer)
-
    ;; buffer errors
    ("SPC b e" . consult-flymake)
+
+   ;; find line
+   ("SPC b l" . consult-line)
+
+   ;; "paste from clipboard"
+   ("M-y" . consult-yank-from-kill-ring)
+
+   ;; commands by mode
+   ("M-X" . consult-mode-command)
 
    ;; buffer definitions
    ("SPC b d" . consult-imenu)))
@@ -556,7 +563,7 @@
 
   (defun my/persp-quick-create ()
     (interactive)
-    (use-package perspective)
+    (require 'perspective)
     (let* ((animals '("dog" "cat" "fly" "bee" "elk" "cow" "ant" "fox"))
            (persps (persp-names))
            (available (seq-remove (lambda (a) (member a persps)) animals)))
