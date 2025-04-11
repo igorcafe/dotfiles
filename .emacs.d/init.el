@@ -520,6 +520,19 @@
 ;;   :config
 ;;   (setq tab-bar-show nil))
 
+;; bookmarks: hack to remember last point position
+;; by default it always jump to the place where you saved the bookmark
+;; using this it will jump to the place where I was the last time
+(use-package emacs
+  :bind ("C-x r b" . (lambda ()
+                       (interactive)
+                       (find-file (bookmark-location
+                                   (bookmark-completing-read
+                                    "Jump to bookmark"
+                                    bookmark-current-bookmark))))))
+
+
+;; perspective - "isolated" workspaces
 (use-package perspective
   :bind (("C-c p p" . persp-switch)
          ("C-c p n" . my/persp-quick-create)
