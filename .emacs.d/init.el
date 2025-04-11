@@ -302,7 +302,7 @@
          (proj-name (file-name-nondirectory
                      (directory-file-name default-directory)))
          (buffer-name (read-string "buffer name: "
-                                   (concat "eshell - " proj-name)))
+                                   (concat "eshell - " proj-name))))
          (eshell-buffer (get-buffer buffer-name)))
     (if eshell-buffer
         (pop-to-buffer eshell-buffer)
