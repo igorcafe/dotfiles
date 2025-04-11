@@ -3,7 +3,7 @@ local utils = require "mp.utils"
 local msg = require "mp.msg"
 
 local opts = {
-    properties="volume,speed,saturation,contrast,gamma,brightness"
+    properties="volume,speed,saturation,contrast,gamma,brightness,mute"
 }
 
 local CONFIG_ROOT = (os.getenv('APPDATA') or os.getenv('HOME')..'/.config')..'/mpv/'
