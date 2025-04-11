@@ -108,6 +108,18 @@
   :config
   (global-auto-revert-mode 1))
 
+;; function to quickly delete file associated with current buffer
+;; and killing the buffer... use with cautious!
+(use-package emacs
+  :after (evil)
+  :config
+  (defun my/current-buffer-delete ()
+    (interactive)
+    (delete-file (buffer-file-name))
+    (kill-buffer (current-buffer)))
+  :bind (:map evil-normal-state-map
+        ("SPC b X" . my/current-buffer-delete)))
+
 ;; Use =ibuffer= (builtin) instead of list-buffers.
 (use-package emacs
   :bind ("C-x C-b" . ibuffer))
@@ -116,6 +128,9 @@
 ;; In ~M-x~, ~C-x C-f~ and so on.
 (savehist-mode 1)
 (setq history-length 100)
+
+;; Save emacs state
+(desktop-save-mode 1)
 
 ;; Display date, time and battery in modeline
 (use-package emacs
@@ -209,6 +224,25 @@
            (theme (nth i-next favorite-themes)))
       (load-theme theme t))))
 
+
+(use-package snake
+  :straight nil
+  :custom
+  (snake-initial-velocity-x 1)
+  (snake-dot-options '(((glyph colorize) (t 42))
+                       ((color-x color-x) (mono-x grid-x) (color-tty color-tty))
+                       (((glyph color-x) [1 0.2 0.1]) (color-tty "red"))))
+  (snake-snake-options '(((glyph colorize) (emacs-tty 79) (t 32))
+                         ((color-x color-x) (mono-x mono-x) (color-tty color-tty)
+                          (mono-tty mono-tty))
+                         (((glyph color-x) [0.3 0.7 0.1]) (color-tty "green"))))
+  (snake-border-options '(((glyph colorize) (t 43))
+                         ((color-x color-x) (mono-x grid-x) (color-tty color-tty))
+                         (((glyph color-x) [0.5 0.5 0.5]) (color-tty "white"))))
+  (snake-blank-options '(((glyph colorize) (t 32))
+                         ((color-x color-x) (mono-x grid-x) (color-tty color-tty))
+                         (((glyph color-x) [0.2 0.2 0.1]) (color-tty "black")))))
+
 ;; doom-modeline - nice modeline
 (use-package doom-modeline
   :defer 1.2
@@ -268,7 +302,7 @@
          (proj-name (file-name-nondirectory
                      (directory-file-name default-directory)))
          (buffer-name (read-string "buffer name: "
-                                   (format "eshell - %s" proj-name)))
+                                   (format "*eshell - %s*" proj-name)))
          (eshell-buffer (get-buffer buffer-name)))
     (if eshell-buffer
         (pop-to-buffer eshell-buffer)
@@ -417,6 +451,7 @@
            "aider-discussion.el"
            "aider-prompt-mode.el"))
   :config
+  (setq eshell-scroll-to-bottom-on-input t)
   (setq aider-args
         '("--model" "gpt-4o"
           "--no-auto-commits"
@@ -458,18 +493,19 @@
 (use-package consult
   :after evil
   :bind
-  (:map evil-normal-state-map
-        ;; analogous to project-find-regexp
-        ("SPC p g" . consult-git-grep)
+  (("C-x b" . consult-buffer)
+   :map evil-normal-state-map
+   ;; analogous to project-find-regexp
+   ("SPC p g" . consult-git-grep)
 
-        ;; analogous to project-find-file
-        ("SPC p f" . consult-project-buffer)
+   ;; analogous to project-find-file
+   ("SPC p f" . consult-project-buffer)
 
-        ;; buffer errors
-        ("SPC b e" . consult-flymake)
+   ;; buffer errors
+   ("SPC b e" . consult-flymake)
 
-        ;; buffer definitions
-        ("SPC b d" . consult-imenu)))
+   ;; buffer definitions
+   ("SPC b d" . consult-imenu)))
 
 ;; tab-line (builtin) - show buffers as tabs
 ;; It works per window, showing the recent buffers you opened in that window.
@@ -480,11 +516,59 @@
 ;; tab-bar (builtin) - tabs like vim
 ;; I use it just to make 2 or 3 different "window layouts" and switch
 ;; between them
-(use-package emacs
+;; (use-package emacs
+;;   :config
+;;   (setq tab-bar-show nil))
+
+(use-package perspective
+  :bind (("C-c p p" . persp-switch)
+         ("C-c p n" . my/persp-quick-create)
+         ("C-c p k" . persp-remove-buffer)
+         ("C-c p x" . my/persp-kill-current)
+         ("C-c p X" . persp-kill)
+         ("C-c p r" . persp-rename)
+         ("C-c p b" . persp-switch-to-buffer)
+         ("C-c p a" . persp-add-buffer)
+         ("C-c p A" . persp-set-buffer)
+         ("C-c p m" . persp-merge)
+         ("C-c p u" . persp-unmerge))
+  :init
+  ;; I don't want a prefix key
+  (setq persp-suppress-no-prefix-key-warning t)
+  (setq persp-initial-frame-name "temp")
+
+  (defun my/persp-kill-current ()
+    (interactive)
+    (persp-kill (persp-name (persp-curr))))
+
+  (defun my/persp-quick-create ()
+    (interactive)
+    (use-package perspective)
+    (let* ((animals '("dog" "cat" "fly" "bee" "elk" "cow" "ant" "fox"))
+           (persps (persp-names))
+           (available (seq-remove (lambda (a) (member a persps)) animals)))
+      (persp-switch (car available))))
+
   :config
-  (setq tab-bar-show nil)
-  :bind (("M-1" . tab-select)
-         ("M-2" . tab-select)))
+  (persp-mode 1)
+  (use-package consult)
+
+  ;; keep previous/next buffer history per perspective
+  (setq switch-to-prev-buffer-skip
+        (lambda (win buff bury-or-kill)
+          (not (persp-is-current-buffer buff))))
+
+  ;; consult integration
+  (consult-customize consult--source-buffer :hidden t :default nil)
+  (add-to-list 'consult-buffer-sources persp-consult-source)
+
+  ;; thats how I managed to do it lul
+  (setq persp-sort 'created)
+  (dolist (num '(1 2 3 4 5 6 7 8 9))
+    (eval `(bind-key ,(format "M-%d" num)
+                     (lambda ()
+                       (interactive)
+                       (persp-switch-by-number ,num))))))
 
 ;; whitespace (builtin) - show whitespaces as symbols
 (use-package whitespace
@@ -568,6 +652,7 @@
          (magit-post-refresh . diff-hl-magit-post-refresh)
          (after-save . diff-hl-update))
   :config
+  (setq diff-hl-show-staged-changes nil)
   (global-diff-hl-mode 1))
 
 ;; blamer-mode - git blame like gitlens
@@ -597,8 +682,8 @@
 
 
 ;; terminal emulator
-(use-package eat
-  :hook (eshell-mode . eat-eshell-mode))
+;; (use-package eat
+;;   :hook (eshell-mode . eat-eshell-mode))
 
 ;; vertico - vertical completion
 ;; Improves minibuffer by showing multiple options in a vertical list.
@@ -1237,6 +1322,12 @@
     (interactive)
     (find-file org-music-file))
 
+  ;; (defun org-music-playlist-import (url)
+  ;;   )
+  ;; (shell-command-to-string "yt-dlp --flat-playlist --print '** \%(uploader)s - \%(title)s\n:PROPERTIES:\nTYPE: song\nQUERY: \%(uploader)s - \%(title)s\n:END:' 'https://music.youtube.com/playlist?list=PLRVUgK64Wzw0_zuHPme0GJgrqItat3oT2'")
+
+  ;; (org-music-playlist-import)
+
   :init
   (setq
    org-music-file "~/Sync/Org/music.org"
@@ -1297,10 +1388,10 @@
 
   (setq org-roam-capture-templates
         '(("d" "default" plain "%?" :target
-           (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "* ${title}")
+           (file+head "${slug}.org" "* ${title}")
            :unnarrowed t)
           ("p" "politics" plain "%?" :target
-           (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "* ${title} :politics:")
+           (file+head "${slug}.org" "* ${title} :politics:")
            :unnarrowed t)))
 
   (setq org-roam-dailies-capture-templates
@@ -1315,6 +1406,34 @@
    ("C-c n l" . org-roam-buffer-toggle)
    ("C-c n c" . org-roam-dailies-capture-today)
    ("C-c n d" . org-roam-dailies-find-date)))
+
+;; org-roam-ql - query language for org roam
+(use-package org-roam-ql :defer)
+
+;; maybe i should use org-roam-dailies here?
+(defun my/org-roam-timeline (&optional query)
+  (interactive)
+  (let* ((query (or query '(funcall (lambda (node) t))))
+         (nodes (org-roam-ql-nodes
+                 `(and (title "^[0-9]\\{4\\}/[0-9]\\{2\\}/[0-9]\\{2\\}")
+                       ,query)
+                 "title")))
+    (generate-new-buffer "*org-roam-timeline*")
+    (switch-to-buffer "*org-roam-timeline*")
+    (erase-buffer)
+    (setq my/last-date nil)
+    (mapc (lambda (node)
+            (let* ((full-title (org-roam-node-title node))
+                   (parts (string-split full-title ": "))
+                   (date (car parts))
+                   (title (car (cdr parts))))
+              (if (and my/last-date (string= my/last-date date))
+                  (insert (concat "- " title "\n"))
+                (when my/last-date
+                  (insert "\n"))
+                (setq my/last-date date)
+                (insert (concat date ":\n" "- " title "\n")))))
+          nodes)))
 
 ;; org-roam-ui - visualize Org Roam graph in real time.
 (use-package org-roam-ui :defer t)
