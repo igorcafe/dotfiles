@@ -429,16 +429,6 @@
   :config
   (envrc-global-mode))
 
-(defun auth-get-password (host login)
-  (let* ((entry (nth 0 (auth-source-search
-                        :host host
-                        :login login
-                        :require '(:secret))))
-         (secret (plist-get entry :secret)))
-    (if (functionp secret)
-        (funcall secret)
-      secret)))
-
 ;; aider
 (use-package aider
   :straight
@@ -835,12 +825,22 @@
 (use-package nov :defer t
   :mode ("\\.epub\\'" . nov-mode))
 
-;; auth-sources - "password manager" 
+;; auth-sources - "password manager"
 (use-package auth-sources
   :straight nil
   :defer t
   :config
   (setq auth-sources '("~/.authinfo.gpg")))
+
+(defun auth-get-password (host login)
+  (let* ((entry (car (auth-source-search
+                        :host host
+                        :login login
+                        :require '(:secret))))
+         (val (plist-get entry key)))
+    (if (functionp val)
+        (funcall val)
+      val)))
 
 ;; pinentry - for entrying pin for gpg
 (use-package pinentry
