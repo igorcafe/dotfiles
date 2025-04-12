@@ -311,12 +311,12 @@
          (proj-name (file-name-nondirectory
                      (directory-file-name default-directory)))
          (buffer-name (read-string "buffer name: "
-                                   (concat "eshell - " proj-name))))
+                                   (concat "eshell - " proj-name)))
          (eshell-buffer (get-buffer buffer-name)))
     (if eshell-buffer
         (pop-to-buffer eshell-buffer)
       (with-current-buffer (eshell t)
-        (rename-buffer (concat "*" buffer-name "*")))))
+        (rename-buffer (concat "*" buffer-name "*"))))))
 
 
 ;; Customize project.el commands.
