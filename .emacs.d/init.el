@@ -160,9 +160,18 @@
    ("C-x C-u" . universal-argument)
    :map evil-insert-state-map
    ("C-a" . nil)
-   ("C-e" . nil))
+   ("C-e" . nil)
+   :map evil-normal-state-map
+   ("SPC" . nil)
+   ("C-#" . evil-search-word-backward)
+   ("C-*" . evil-search-word-forward)
+   ("#" . (lambda ()
+            (interactive)
+            (evil-search-word-backward 1 (thing-at-point 'symbol))))
+   ("*" . (lambda ()
+            (interactive)
+            (evil-search-word-forward 1 (thing-at-point 'symbol)))))
   :config
-  (evil-set-leader 'normal (kbd "SPC"))
   (evil-mode 1))
 
 (use-package evil-collection
