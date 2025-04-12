@@ -665,6 +665,14 @@
   :bind
   ("C-x g" . magit))
 
+;; ediff (builtin) - diff files, commits, and so on
+(use-package ediff
+  :straight nil
+  :config
+  (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain
+        ediff-split-window-function 'split-window-horizontally))
+
 ;; diff-hl - highlight uncommited changes
 (use-package diff-hl
   :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
