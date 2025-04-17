@@ -1,11 +1,13 @@
-alias ll ls -l $1
-alias gpf git push --force-with-lease
-alias ga git add $1
-alias gp git push
-alias ➜ $*
-alias gss git status -s
-alias d dired $1
-alias ff find-file $1
-alias gaa git add -A
-alias gcmsg git commit -m $1
+alias gl git pull
+alias gd git diff $@
 alias gpsup git push -u {git remote} HEAD
+alias gcmsg git commit -m $1
+alias gaa git add -A
+alias ff find-file $1
+alias d dired $1
+alias gss git status -s
+alias ➜ $*
+alias gp git push
+alias ga git add $1
+alias gpf git push --force-with-lease
+alias ll ls -l $1

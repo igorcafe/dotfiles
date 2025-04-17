@@ -4,31 +4,49 @@
 ;; show GC messages
 (setq garbage-collection-messages t)
 
-;; setup straight.el
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name
-        "straight/repos/straight.el/bootstrap.el"
-        (or (bound-and-true-p straight-base-dir)
-            user-emacs-directory)))
-      (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+;;
+(require 'package)
 
-(straight-use-package 'use-package)
+(setq package-archives
+      '(("org" . "https://orgmode.org/elpa/")
+        ("gnu" . "https://elpa.gnu.org/packages/")
+        ("melpa" . "https://melpa.org/packages/")))
+
+(package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(setq use-package-always-ensure t)
+
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+;; setup straight.el
+;; (defvar bootstrap-version)
+;; (let ((bootstrap-file
+;;        (expand-file-name
+;;         "straight/repos/straight.el/bootstrap.el"
+;;         (or (bound-and-true-p straight-base-dir)
+;;             user-emacs-directory)))
+;;       (bootstrap-version 7))
+;;   (unless (file-exists-p bootstrap-file)
+;;     (with-current-buffer
+;;         (url-retrieve-synchronously
+;;          "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+;;          'silent 'inhibit-cookies)
+;;       (goto-char (point-max))
+;;       (eval-print-last-sexp)))
+;;   (load bootstrap-file nil 'nomessage))
+
+;; (straight-use-package 'use-package)
 
 ;; Always use straight unless specificied not to
-(setq straight-use-package-by-default t)
+;; (setq straight-use-package-by-default t)
 
 ;; Don't check for modifications on startup
 ;; use M-x straight-rebuild-package instead
-(setq straight-check-for-modification 'never)
+;; (setq straight-check-for-modification 'never)
 
 ;; Auto-tangle config
 ;; Automatically generate =init.el= and =early-init.el= when I save this file.
@@ -146,7 +164,6 @@
 ;; evil mode and evil-collection provide vim-like bindings.
 (use-package evil
   :defer 1
-  :straight t
   :custom
   (evil-want-integration t)
   (evil-want-C-u-scroll t)
@@ -158,9 +175,12 @@
   (("C-x C-h" . previous-buffer)
    ("C-x C-l" . next-buffer)
    ("C-x C-u" . universal-argument)
+   ("C-d" . nil)
    :map evil-insert-state-map
    ("C-a" . nil)
    ("C-e" . nil)
+   ("C-r" . nil)
+   ("C-d" . nil)
    :map evil-normal-state-map
    ("SPC" . nil)
    ("C-#" . evil-search-word-backward)
@@ -176,7 +196,6 @@
 
 (use-package evil-collection
   :after evil
-  :straight t
   :config
   (evil-collection-init))
 
@@ -201,7 +220,7 @@
   :config
   (global-hl-line-mode 1))
 
-;; all-the-icons + =all-the-icons-dired= - icon packages
+;; all-the-icons + all-the-icons-dired - icon packages
 (use-package all-the-icons
   :after doom-modeline)
 
@@ -235,22 +254,44 @@
 
 
 (use-package snake
-  :straight nil
-  :custom
-  (snake-initial-velocity-x 1)
-  (snake-dot-options '(((glyph colorize) (t 42))
+  :ensure nil
+  :config
+  (setq snake-initial-velocity-x 1)
+  (setq snake-dot-options '(((glyph colorize) (t 42))
                        ((color-x color-x) (mono-x grid-x) (color-tty color-tty))
                        (((glyph color-x) [1 0.2 0.1]) (color-tty "red"))))
-  (snake-snake-options '(((glyph colorize) (emacs-tty 79) (t 32))
+  (setq snake-snake-options '(((glyph colorize) (emacs-tty 79) (t 32))
                          ((color-x color-x) (mono-x mono-x) (color-tty color-tty)
                           (mono-tty mono-tty))
                          (((glyph color-x) [0.3 0.7 0.1]) (color-tty "green"))))
-  (snake-border-options '(((glyph colorize) (t 43))
+  (setq snake-border-options '(((glyph colorize) (t 43))
                          ((color-x color-x) (mono-x grid-x) (color-tty color-tty))
                          (((glyph color-x) [0.5 0.5 0.5]) (color-tty "white"))))
-  (snake-blank-options '(((glyph colorize) (t 32))
+  (setq snake-blank-options '(((glyph colorize) (t 32))
                          ((color-x color-x) (mono-x grid-x) (color-tty color-tty))
                          (((glyph color-x) [0.2 0.2 0.1]) (color-tty "black")))))
+
+;; automatically change to light/dark theme following system theme
+(use-package dbus
+  :ensure nil
+  :config
+  (defun my/handle-dbus-setting-changed (a setting values)
+    (when (string= setting "ColorScheme")
+      (let ((scheme (car values)))
+        (cond
+         ((string-match-p "Dark" scheme)
+          (load-theme 'doom-one t))
+         ((string-match-p "Light" scheme)
+          (load-theme 'doom-one-light t))
+         (t
+          (warn "I don't know how to handle this ColorScheme: %s" scheme))))))
+
+  (dbus-register-signal :session
+                        "org.freedesktop.portal"
+                        "/org/freedesktop/portal/desktop"
+                        "org.freedesktop.impl.portal.Settings"
+                        "SettingChanged"
+                        #'my/handle-dbus-setting-changed))
 
 ;; doom-modeline - nice modeline
 (use-package doom-modeline
@@ -322,20 +363,23 @@
 ;; Customize project.el commands.
 (use-package project
   :config
+  (defun my/consult-git-grep ()
+    (interactive)
+    (consult-git-grep nil (thing-at-point 'symbol)))
   (setq project-switch-commands
         '((project-find-file "Find file" ?f)
-          (consult-git-grep "Find regexp" ?g)
+          (my/consult-git-grep "Find regexp" ?g)
           (project-find-dir "Find directory" ?d)
-          (project-vterm "vterm" ?t)
+          (eat-project "terminal (eat)" ?t)
           ;;(project-vc-dir "VC-Dir")
           (my/project-eshell "Eshell" ?e)
           ;;(project-any-command "Other")
           (magit-project-status "Magit" ?m)))
   :bind
   (:map project-prefix-map
-        ("t" . project-vterm)
+        ("t" . eat-project)
         ("e" . my/project-eshell)
-        ("g" . consult-git-grep)
+        ("g" . my/consult-git-grep)
         ("m" . magit-project-status)))
 
 ;; go-mode - Go support
@@ -429,7 +473,57 @@
   ((:map global-map
          ("C-SPC" . company-complete))
    (:map company-active-map
-         ("TAB" . company-complete))))
+         ("TAB" . nil)
+         ("<backtab>" . nil))))
+
+;; yasnippet - snippets
+(use-package yasnippet
+  :hook ((prog-mode . yas-minor-mode)
+         (eglot-managed-mode
+          . (lambda ()
+              (setq company-backends '((company-capf :with company-yasnippet))))))
+  :bind (:map yas-minor-mode-map
+              ("TAB" . nil)
+              ("M-i" . yas-expand))
+  :init
+  (defun my/yas-auto-expand ())
+
+  :config
+  (yas-define-snippets
+   'typescript-mode
+   '(("lv" "console.log(\"${1:var}:\", $1)")))
+  (yas-define-snippets
+   'go-mode
+   '(("erris" "errors.Is(err, $1)")
+     ("erras" "errors.As(err, &$1)")
+     ("iferr" "if err != nil {\n\treturn err\n}")
+     ("errf" "fmt.Errorf(\"$0: %w\", err)")
+     ("co" "const ${1:name} = ${2:value}")
+     ("wr" "${1:w} http.ResponseWriter, ${2:r} *http.Request")
+     ("hf" "http.HandleFunc(\"/$1\", func(w http.ResponseWriter, r *http.Request) {\n\t$0\n}")
+     ("hand" "func $1(w http.ResponseWriter, r *http.Request) {\n\t$0\n}")
+     ("herr" "http.Error(w, ${1:err.Error()}, ${3:http.StatusInternalServerError})")
+     ("go" "go func($1) {\n\t$0\n}($2)")
+     ("func" "func $1($2) $3 {\n\t$0\n}")
+     ("meth" "func (${1:receiver} ${2:type}) ${3:method}($4) $5 {\n\t$0\n}")
+     ("tyf" "type ${1:name} func($3) $4")
+     ("tyi" "type ${1:name} interface {\n\t$0\n}")
+     ("tys" "type ${1:name} struct {\n\t$0\n}")
+     ("pkgm" "package main\n\nfunc main() {\n\t$0\n}")
+     ("switch" "switch ${1:expression} {\ncase ${2:condition}:\n\t$0\n}")
+     ("sel" "select {\ncase ${1:condition}:\n\t$0\n}")
+     ("cs" "case ${1:condition}:$0")
+     ("for" "for ${1:i} := ${2:0}; $1 < ${3:count}; $1${4:++} {\n\t$0\n}")
+     ("forr" "for ${1:_}, ${2:v} := range ${3:v} {\n\t$0\n}")
+     ("fp" "fmt.Println(\"$1\")")
+     ("ff" "fmt.Printf(\"$1\", ${2:var})")
+     ("pv" "fmt.Printf(\"${1:var}: %#+v\\\\n\", ${1:var})")
+     ("lp" "log.Println(\"$1\")")
+     ("lf" "log.Printf(\"$1\", ${2:var})")
+     ("lv" "log.Printf(\"${1:var}: %#+v\\\\n\", ${1:var})")
+     ("var" "var ${1:name} ${2:type}")
+     ("tf" "func Test$1(t *testing.T) {\n\t$0\n}")
+     ("bf" "func Benchmark$1(b *testing.B) {\n\tfor i := 0; i < b.N; i++ {\n\t\t$0\n\t}\n}"))))
 
 ;; envrc - direnv integration
 ;; Works better than =direnv-mode= for me.
@@ -440,16 +534,7 @@
 
 ;; aider
 (use-package aider
-  :straight
-  (:host
-   github
-   :repo "tninja/aider.el"
-   :files ("aider.el"
-           "aider-core.el"
-           "aider-file.el"
-           "aider-code-change.el"
-           "aider-discussion.el"
-           "aider-prompt-mode.el"))
+  :vc (:url "https://github.com/tninja/aider.el.git")
   :config
   (setq eshell-scroll-to-bottom-on-input t)
   (setq aider-args
@@ -463,7 +548,7 @@
 ;; recentf-mode (builtin) - persistent history of recent files
 ;; Show recent files with ~C-x C-r~.
 (use-package recentf
-  :straight nil
+  :ensure nil
   :init
   (setq recentf-max-menu-items 100)
   (setq recentf-max-saved-items 100)
@@ -618,7 +703,7 @@
 ;; - Hide details by default (show only filename + icon with =all-the-icons-dired=)
 ;; - Rename buffer to "dired - <path>"
 (use-package dired
-  :straight nil
+  :ensure nil
   :preface
   (defun my/dired-rename ()
     (rename-buffer (format "dired - %s" dired-directory)))
@@ -667,7 +752,7 @@
 
 ;; ediff (builtin) - diff files, commits, and so on
 (use-package ediff
-  :straight nil
+  :ensure nil
   :config
   (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
   (setq ediff-window-setup-function 'ediff-setup-windows-plain
@@ -698,7 +783,7 @@
 ;;   (vterm (concat "vterm - " name)))
 
 ;; (use-package vterm
-;;   :straight nil
+;;   :ensure nil
 ;;   :after evil
 ;;   :bind
 ;;   ((:map evil-normal-state-map
@@ -708,9 +793,12 @@
 ;;           ("M-2" . nil)))))
 
 
-;; terminal emulator
-;; (use-package eat
-;;   :hook (eshell-mode . eat-eshell-mode))
+
+;; eat- Emulate A Terminal: terminal emulator
+(use-package eat
+  :vc (:url "https://codeberg.org/akib/emacs-eat.git")
+  :hook ((eshell-load . eat-eshell-mode)
+         (eshell-load . eat-eshell-visual-command-mode)))
 
 ;; vertico - vertical completion
 ;; Improves minibuffer by showing multiple options in a vertical list.
@@ -773,7 +861,7 @@
 
 ;; telega - telegram client
 (use-package telega
-  :straight nil ;; installed and built through nix
+  :ensure nil ;; installed and built through nix
   :hook (telega-mode . telega-mode-line-mode)
   :config
   (setq telega-use-images t)
@@ -844,7 +932,7 @@
 
 ;; auth-sources - "password manager"
 (use-package auth-sources
-  :straight nil
+  :ensure nil
   :defer t
   :config
   (setq auth-sources '("~/.authinfo.gpg")))
@@ -869,7 +957,7 @@
 
 ;; gnus - email client, news reader, maybe
 (use-package gnus
-  :straight nil
+  :ensure nil
   :defer t
   :hook (gnus-after-getting-new-news . gnus-notifications)
   :custom
@@ -974,8 +1062,7 @@
       (yeetube-display-content-from-url
        (format "https://youtube.com/@%s/videos" channel-id))))
 
-  :straight
-  (:type git :host nil :repo "https://git.thanosapollo.org/yeetube")
+  :vc (:url "https://git.thanosapollo.org/yeetube")
 
   :init
   (setq yeetube-org-file "youtube.org")
@@ -1013,7 +1100,7 @@
 
 ;; erc (builtin) - emacs IRC client
 (use-package erc
-  :straight nil
+  :ensure nil
   :defer t
   :preface
   ;; (defun my/erc-buffer-rename ()
@@ -1082,13 +1169,14 @@
 
 ;; Org priority - face and default value
 (setq org-priority-highest ?A)
-(setq org-priority-lowest ?D)
+(setq org-priority-lowest ?E)
 (setq org-priority-default ?D)
 (setq org-priority-faces
       '((?A . (:foreground "gray"))
         (?B . (:foreground "gray"))
         (?C . (:foreground "gray"))
-        (?D . (:foreground "gray"))))
+        (?D . (:foreground "gray"))
+        (?E . (:foreground "gray"))))
 
 ;; Org tags - column
 (setq org-tags-column -89)
@@ -1102,7 +1190,7 @@
   (setq org-log-redeadline t)
   (setq org-hierarchical-todo-statistics t) ;; TODO cookie count not recursive
   (setq org-todo-keywords
-        '((sequence "TODO" "|" "DONE")))
+        '((sequence "TODO(!)" "|" "DONE(!)")))
   (set-face-attribute 'org-done nil)
   (set-face-attribute 'org-headline-done nil :strike-through t :foreground "gray")
   :bind
@@ -1134,7 +1222,7 @@
            "Capture to inbox"
            entry
            (file+headline "tasks.org" "Tasks")
-           "* INBX %?\n%U")
+           "* TODO %?\n%U")
           ("j" "Journal"
            entry
            (file+headline "journal.org" "Journal")
@@ -1147,22 +1235,80 @@
 
 ;; Org Agenda - setup and custom views
 ;; Custom agenda views, agenda settings, and so on.
-(defun my/org-agenda-show-all-dates ()
-  (interactive)
-  (setq org-agenda-show-all-dates
-        (if org-agenda-show-all-dates nil t))
-  (org-agenda-redo))
-
-(defun my/org-agenda-breadcrumb ()
-  (let ((parent (cdr (org-get-outline-path))))
-    (if parent
-        (format "[%s] " (mapconcat 'identity parent " > "))
-      "")))
-
-
 (use-package org-agenda
-  :straight nil
-  :init
+  :ensure nil
+  :config
+
+  (defun my/org-agenda-show-all-dates ()
+    (interactive)
+    (setq org-agenda-show-all-dates (not org-agenda-show-all-dates))
+    (org-agenda-redo))
+
+  (defun my/org-agenda-breadcrumb ()
+    (let* ((parent-title nil)
+           (parent-todo nil)
+           (todo (org-entry-get nil "TODO"))
+           (priority (org-entry-get nil "PRIORITY"))
+           (priority-str (if priority
+                             (format " [#%s]" priority)
+                           "")))
+      (save-excursion
+        (when (org-up-heading-safe)
+          (setq parent-todo (org-entry-get nil "TODO")
+                parent-title (org-entry-get nil "ITEM"))))
+      (if parent-todo
+          (format "%s%s %s > " todo priority-str parent-title)
+        (format "%s%s " todo priority-str))))
+
+  (defun my/org-project-p ()
+    (let ((has-todo nil))
+      (when (= (org-outline-level) 2)
+        (org-map-tree
+         (lambda ()
+           (when (and (not has-todo)
+                      (= (org-outline-level) 3)
+                      (org-entry-is-todo-p))
+             (setq has-todo t)))))
+      has-todo))
+
+  (defun my/org-project-stuck-p ()
+    (save-excursion
+      (let ((not-stuck nil))
+        (when (my/org-project-p)
+          (org-map-tree
+           (lambda ()
+             (when (and (not not-stuck)
+                        (= (org-outline-level) 3)
+                        (org-entry-is-todo-p)
+                        (my/org-next-action-p))
+               (setq not-stuck t))))
+          (not not-stuck)))))
+
+  (defun my/org-wip-p ()
+    (and (org-entry-is-todo-p)
+         (not (org-get-repeat))
+         (not (my/org-project-p))
+         (string-match "CLOCK: \\[."
+                       (substring-no-properties (org-get-entry)))))
+
+  (defun my/org-next-action-p ()
+    (and (org-entry-is-todo-p)
+         (not (my/org-project-p))
+         (not (my/org-wip-p))
+         (not (string> (org-entry-get nil "PRIORITY") "C"))))
+
+  (defun my/org-inbox-p ()
+    (and (org-entry-is-todo-p)
+         (not (org-get-scheduled-time nil))
+         (not (my/org-wip-p))
+         (not (my/org-project-p))
+         (string= "D" (org-entry-get nil "PRIORITY"))))
+
+  (defun my/org-agenda-breadcrumb ()
+    (if (= (org-outline-level) 3)
+        " ↳ "
+      ""))
+
   (setq org-scheduled-past-days 100
         org-agenda-start-with-log-mode nil
         org-agenda-window-setup 'current-window
@@ -1182,15 +1328,14 @@
         org-agenda-current-time-string "←"
         org-agenda-files '("tasks.org")
         org-agenda-log-mode-items '(closed state)
-        org-stuck-projects '("TODO=\"PROJ\"" ("NEXT" "WAIT") nil "")
         org-agenda-scheduled-leaders '(" " "!")
         org-agenda-deadline-leaders '(" " "!")
-
+        org-agenda-hide-tags-regexp "^agenda$"
         org-agenda-todo-keyword-format "%s"
-        org-agenda-prefix-format '((agenda . "  %-12t %s %(my/org-agenda-breadcrumb)")
-                                   (todo . "  %(my/org-agenda-breadcrumb)")
-                                   (tags . "  %(my/org-agenda-breadcrumb)")
-                                   (search . "  %(my/org-agenda-breadcrumb)"))
+        org-agenda-prefix-format '((agenda . "  %-12t %s")
+                                   (todo . "  %s")
+                                   (tags . "  %s")
+                                   (search . "  %s"))
 
         org-agenda-time-grid
         '((daily today require-timed)
@@ -1198,64 +1343,68 @@
           " ┄┄┄┄┄ " "")
 
         org-agenda-custom-commands
-        '(("p" "Projects"
-           ((todo "PROJ"
-                      ((org-agenda-overriding-header "Projects")))
-           ))
-          ("a" "Agenda"
+        '(("a" "Agenda"
            ((agenda ""
-                    ((org-agenda-span 10)
+                    ((org-agenda-span 'month)
                      (org-scheduled-past-days 100)
                      (org-deadline-warning-days 10)))))
           ("d" "To-do"
+           ;; 3 day agenda
            ((agenda ""
                     ((org-agenda-span 3)
                      (org-agenda-time-grid '((daily today require-timed)
-                        ()
-                        " ┄┄┄┄┄ " ""))))
+                                             ()
+                                             " ┄┄┄┄┄ " ""))
+                     (org-agenda-show-all-dates t)))
+
+            ;; Urgent
             (tags-todo "+PRIORITY=\"A\""
                        ((org-agenda-overriding-header "Urgent")))
-            (todo "NEXT"
+
+            ;; In progress
+            (tags-todo ".*"
                        ((org-agenda-overriding-header "In progress")
                         (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if 'notregexp "CLOCK: \\[." 'scheduled))))
-            (todo "WAIT"
-                  ((org-agenda-overriding-header "Waiting")
-                   (org-agenda-sorting-strategy '(alpha-up))))
-            (tags-todo "+TODO=\"NEXT\""
+                         '(if (my/org-wip-p)
+                              nil
+                            (org-goto-sibling)
+                            (point)))))
+
+            ;; ;; Next actions
+            (tags-todo ".*"
                        ((org-agenda-overriding-header "Next actions")
-                        (org-agenda-sorting-strategy '(alpha-up))
+                        (org-agenda-prefix-format '((tags . "  %(my/org-agenda-breadcrumb)")))
                         (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if
-                           'regexp "CLOCK: \\[."
-                           'scheduled))))
-            ;; (tags-todo "+TODO=\"NEXT\"+LEVEL=3"
-            ;;            ((org-agenda-overriding-header "Project next tasks")
-            ;;             (org-agenda-sorting-strategy '(alpha-up))
-            ;;             (org-agenda-skip-function
-            ;;              '(org-agenda-skip-entry-if
-            ;;                'regexp "CLOCK: \\[."
-            ;;                'scheduled))))
-            (todo "PROJ"
-                  ((org-agenda-overriding-header "Projects")))
-            (todo "INBX"
+                         '(if (or (my/org-next-action-p)
+                                  (and (my/org-project-p)
+                                       (not (my/org-project-stuck-p))))
+                              nil
+                            (org-goto-sibling)
+                            (point)))))
+
+            ;; Stuck projects
+            (tags-todo ".*"
+                       ((org-agenda-overriding-header "Stuck projects")
+                        (org-agenda-skip-function
+                         '(if (my/org-project-stuck-p)
+                              nil
+                            (org-goto-sibling)
+                            (point)))))
+
+            ;; Inbox
+            (tags-todo "+TODO=\"TODO\"+LEVEL=2+PRIORITY=\"D\""
                        ((org-agenda-overriding-header "Inbox")
                         (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if
-                           'regexp "CLOCK: \\[."
-                           'scheduled 'done))))
-            (todo "SMDY"
-                       ((org-agenda-overriding-header "Someday")
-                        (org-agenda-skip-function
-                         '(org-agenda-skip-entry-if 'scheduled 'done))))))
-          ("w" "Agenda"
-           ((agenda ""
-                    ((org-agenda-files '("work.org"))
-                     (org-agenda-span 100)
-                     (org-scheduled-past-days 0)
-                     (org-deadline-warning-days 0)))))
+                         '(if (my/org-inbox-p)
+                              nil
+                            (org-goto-sibling)
+                            (point)))))
+
+            ;; Someday
+            (tags-todo "+TODO=\"TODO\"+PRIORITY=\"E\""
+                       ((org-agenda-overriding-header "Someday")))))
           ("e" "Tasks by effort"
-           ((tags-todo "-TODO=\"DONE\"-TODO=\"FINI\"+Effort>\"\""
+           ((tags-todo "+TODO=\"TODO\"+Effort>\"\""
                        ((org-agenda-overriding-header "Tasks by effort")
                         (org-agenda-sorting-strategy '(effort-up))
                         (org-agenda-skip-function
@@ -1271,9 +1420,14 @@
    '(org-agenda-current-time ((t (:foreground "green" :weight bold)))))
 
   :bind
-  ((:map global-map
+  ((:map org-mode-map
+         ("C-'" . nil))
+   (:map global-map
          ("C-c a" . org-agenda)
-         ("C-'" . org-cycle-agenda-files))
+         ("C-'" . (lambda ()
+                    (interactive)
+                    (require 'org-roam)
+                    (find-file (expand-file-name "tasks.org" org-roam-directory)))))
    (:map org-agenda-mode-map
          ("C-a" . my/org-agenda-show-all-dates)
          ("j" . org-agenda-next-line)
@@ -1312,6 +1466,9 @@
 (use-package org-drill
   :defer t
   :init
+  (defun org-drill-agenda ()
+    (interactive)
+    (org-drill 'agenda))
   (advice-add 'org-drill-time-to-inactive-org-timestamp :override
               (lambda (time)
                 "Convert TIME into org-mode timestamp."
@@ -1331,8 +1488,8 @@
 (use-package org-music
   :after evil
 
-  :straight
-  (:host github :repo "debanjum/org-music" :branch "master")
+  :vc
+  (:url "https://github.com/debanjum/org-music.git")
 
   :preface
   (defun org-music-jump-to-current-song ()
@@ -1418,6 +1575,24 @@
 
 ;; org-roam - org knowledge management system
 (use-package org-roam
+  :init
+  ;; add roam node files that contains specific tags to agenda
+  (defun my/add-roam-files-to-agenda (&rest args)
+    (require 'org-roam)
+    (let ((files (org-roam-db-query "
+select n.file
+from nodes n
+join tags t on t.node_id = n.id
+where t.tag in ('\"agenda\"', '\"drill\"')
+limit 10
+")))
+      (setq org-agenda-files nil)
+      (mapc (lambda (item)
+              (add-to-list 'org-agenda-files (car item)))
+            files)
+      nil))
+
+  (advice-add 'org-agenda :before #'my/add-roam-files-to-agenda)
   :config
   (when (not (file-directory-p "~/Sync/Org/Roam"))
     (make-directory "~/Sync/Org/Roam"))
@@ -1426,6 +1601,9 @@
   (setq org-roam-capture-templates
         '(("d" "default" plain "%?" :target
            (file+head "${slug}.org" "* ${title}")
+           :unnarrowed t)
+          ("P" "public" plain "%?" :target
+           (file+head "${slug}.org" "* ${title} :public:")
            :unnarrowed t)
           ("p" "politics" plain "%?" :target
            (file+head "${slug}.org" "* ${title} :politics:")
@@ -1492,7 +1670,7 @@
 
 ;; proced (builtin)
 (use-package proced
-  :straight nil
+  :ensure nil
   :custom
   (proced-auto-update-flag t)
   (proced-auto-update-interval 2)
@@ -1509,7 +1687,18 @@
 
 ;; eshell (builtin)
 (use-package esh-mode
-  :straight nil
+  :ensure nil
+  :init
+  (defun my/eshell-search-history ()
+    (interactive)
+    (let* ((input (eshell-get-old-input))
+           (hist (ring-elements eshell-history-ring))
+           (cmd nil))
+      (setq cmd
+            (completing-read "command from history: " hist nil t input))
+      (when cmd
+        (eshell-kill-input)
+        (insert cmd))))
   :hook ((eshell-mode . (lambda ()
                           (setq-local company-idle-delay nil)))
          (eshell-pre-command . eshell-save-some-history))
@@ -1522,10 +1711,14 @@
    :map eshell-mode-map
    ("C-a" . backward-sentence)
    ("C-e" . forward-sentence)
+   ("C-r" . my/eshell-search-history)
    ("C-l" . (lambda ()
               (interactive)
-              (eshell/clear)
-              (recenter-top-bottom 'top)))
+              (let ((input (eshell-get-old-input)))
+                (eshell-kill-input)
+                (eshell/clear)
+                (recenter-top-bottom 'top)
+                (insert input))))
    ("C-c C-l" . (lambda ()
                   (interactive)
                   (let ((input (eshell-get-old-input)))
@@ -1533,7 +1726,22 @@
                     (eshell-send-input)
                     (insert input))))))
 
+;; eshell: unbind C-c C-l
+(use-package em-hist
+  :ensure nil
+  :bind (:map eshell-hist-mode-map
+         ("C-c C-l" . nil)))
+
+;; eshell: use TAB for company popup
+(use-package em-cmpl
+  :ensure nil
+  :after (esh-mode company)
+  :bind
+  (:map eshell-cmpl-mode-map
+   ("TAB" . company-complete)))
+
 (use-package eshell-prompt-extras
+  :after esh-mode
   :config
   (setq eshell-prompt-function 'epe-theme-lambda))
 
