@@ -227,6 +227,7 @@
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
 
+(defun all-the-icons-dired-mode (&rest args))
 ;; run once
 ;;(all-the-icons-install-fonts t)
 ;;(nerd-icons-install-fonts t)
@@ -560,14 +561,15 @@
 
 ;; olivetti - horizontal paddings for windows
 (use-package olivetti
-  :hook ((prog-mode
+  :hook (((prog-mode
           go-dot-mod-mode
           eww-mode
           text-mode
           conf-mode
           org-agenda-mode
           restclient-mode)
-         . olivetti-mode)
+          . olivetti-mode)
+         (olivetti-mode . toggle-truncate-lines))
   :init
   (setq-default olivetti-body-width 100))
 
@@ -1198,8 +1200,10 @@
   (("C-c C-x C-o" . org-clock-out)
    ("C-c C-x C-j" . org-clock-goto)))
 
-;; Org Clock - keybindings
+;; Org Clock
 (use-package org
+  :config
+  (setq org-duration-format 'h:mm)
   :bind
   (("C-c C-x C-o" . org-clock-out)
    ("C-c C-x C-j" . org-clock-goto)))
@@ -1218,20 +1222,60 @@
         ("C-c C" . org-capture-goto-last-stored))
   :config
   (setq org-capture-templates
-        '(("c"
-           "Capture to inbox"
+        '(("t"
+           "Capture current task"
            entry
            (file+headline "tasks.org" "Tasks")
-           "* TODO %?\n%U")
+           "* TODO %^{task}\n%U"
+           :prepend t
+           :clock-in t
+           :clock-keep t
+           :immediate-finish t)
+          ("n"
+           "Capture next action"
+           entry
+           (file+headline "tasks.org" "Tasks")
+           "* TODO %^{task}\n%U\n%?"
+           :prepend t
+           :jump-to-captured t)
+          ("c" "Card"
+           entry
+           (file "flashcards.org")
+           "* review card :drill:\n\n%i%?"
+           :empty-lines-before 1
+           :jump-to-captured t
+           :before-finalize org-id-get-create)
+          ("C" "Card with link"
+           entry
+           (file "flashcards.org")
+           "* review card :drill:\n\n%i%?\n\n%a"
+           :empty-lines-before 1
+           :jump-to-captured t
+           :before-finalize org-id-get-create)
           ("j" "Journal"
            entry
-           (file+headline "journal.org" "Journal")
-           "* %T - %?"))))
+           (file+olp+datetree "journal.org")
+           "* %<%H:%M> - %?\n%U\n\n%i")
+          ("s" "Steal"
+           entry
+           (file+olp+datetree "journal.org")
+           "* %<%H:%M> - %?\n%U\n\n#+begin_quote\n%i\n#+end_quote\n\n%a\n"))))
 
 ;; Org lists - Replace ~-~ by ~•~ on unordered lists.
 (font-lock-add-keywords 'org-mode
     '(("^ *\\([-]\\) "
     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+;; Org Habits - tracking habits
+(use-package org-habit
+  :ensure nil
+  :config
+  (add-to-list 'org-modules 'org-habit)
+  (setq org-habit-graph-column 79
+        org-habit-completed-glyph ?.
+        org-habit-following-days 1
+        org-habit-show-habits nil
+        org-habit-show-all-today t))
 
 ;; Org Agenda - setup and custom views
 ;; Custom agenda views, agenda settings, and so on.
@@ -1245,69 +1289,112 @@
     (org-agenda-redo))
 
   (defun my/org-agenda-breadcrumb ()
-    (let* ((parent-title nil)
-           (parent-todo nil)
-           (todo (org-entry-get nil "TODO"))
-           (priority (org-entry-get nil "PRIORITY"))
-           (priority-str (if priority
-                             (format " [#%s]" priority)
-                           "")))
-      (save-excursion
-        (when (org-up-heading-safe)
-          (setq parent-todo (org-entry-get nil "TODO")
-                parent-title (org-entry-get nil "ITEM"))))
-      (if parent-todo
-          (format "%s%s %s > " todo priority-str parent-title)
-        (format "%s%s " todo priority-str))))
-
-  (defun my/org-project-p ()
-    (let ((has-todo nil))
-      (when (= (org-outline-level) 2)
-        (org-map-tree
-         (lambda ()
-           (when (and (not has-todo)
-                      (= (org-outline-level) 3)
-                      (org-entry-is-todo-p))
-             (setq has-todo t)))))
-      has-todo))
-
-  (defun my/org-project-stuck-p ()
-    (save-excursion
-      (let ((not-stuck nil))
-        (when (my/org-project-p)
-          (org-map-tree
-           (lambda ()
-             (when (and (not not-stuck)
-                        (= (org-outline-level) 3)
-                        (org-entry-is-todo-p)
-                        (my/org-next-action-p))
-               (setq not-stuck t))))
-          (not not-stuck)))))
-
-  (defun my/org-wip-p ()
-    (and (org-entry-is-todo-p)
-         (not (org-get-repeat))
-         (not (my/org-project-p))
-         (string-match "CLOCK: \\[."
-                       (substring-no-properties (org-get-entry)))))
-
-  (defun my/org-next-action-p ()
-    (and (org-entry-is-todo-p)
-         (not (my/org-project-p))
-         (not (my/org-wip-p))
-         (not (string> (org-entry-get nil "PRIORITY") "C"))))
-
-  (defun my/org-inbox-p ()
-    (and (org-entry-is-todo-p)
-         (not (org-get-scheduled-time nil))
-         (not (my/org-wip-p))
-         (not (my/org-project-p))
-         (string= "D" (org-entry-get nil "PRIORITY"))))
-
-  (defun my/org-agenda-breadcrumb ()
     (if (= (org-outline-level) 3)
         " ↳ "
       ""))
+
+  (defun my/org-project-p ()
+    (and (= (org-outline-level) 2)
+         (string-match "\\[[0-9]*[/%][0-9]*\\]"
+                       (org-entry-get nil "ITEM"))))
+
+  (defun my/org-todo-next-p ()
+    (and (org-entry-is-todo-p)
+         (not (org-get-scheduled-time nil))
+         (not (my/org-project-p))))
+
+  (defun my/org-project-next-p ()
+    (and (my/org-project-p)
+         (not (my/org-project-stuck-p))))
+
+  (defun my/org-todo-index ()
+    (let ((index -1)
+          (level (org-outline-level))
+          (found nil)
+          (line (line-number-at-pos)))
+      (save-excursion
+        (org-up-element)
+        (org-map-tree
+         (lambda ()
+           (when (and (not found)
+                      (org-entry-is-todo-p)
+                      (= (org-outline-level) level))
+             (setq index (+ index 1))
+             (setq found (= line (line-number-at-pos)))))))
+      index))
+
+  (defun my/org-next-p ()
+    (if (my/org-project-p)
+        (setq org-agenda-todo-keyword-format "VISH %s")
+      (setq org-agenda-todo-keyword-format "%s"))
+
+    (and (org-entry-is-todo-p)
+         (not (org-get-scheduled-time nil))
+         (or
+          ;; level 2 TODO = projects or single step tasks
+          (and (= (org-outline-level) 2)
+               (not (my/org-project-stuck-p)))
+
+          ;; first level 3 TODO = project next action
+          (and (= (org-outline-level) 3)
+               (= (my/org-todo-index) 0)))))
+
+  (defun my/org-project-stuck-p ()
+    (let ((free nil))
+      (when (my/org-project-p)
+        (org-map-tree
+         (lambda ()
+           (when (and (not free)
+                      (= (org-outline-level) 3)
+                      (org-entry-is-todo-p))
+             (setq free t))))
+        (not free))))
+
+  (defun my/org-project-wip-p ()
+    (and (my/org-project-p)
+         (let ((wip nil))
+           (org-map-tree
+            (lambda ()
+              (when (and (not wip)
+                         (= (org-outline-level) 3)
+                         (my/org-todo-wip-p))
+                (setq wip t))))
+           wip)))
+
+  (defun my/org-todo-wip-p ()
+    (when (and (org-entry-is-todo-p)
+               (not (my/org-project-p)))
+
+      (let* ((line (line-number-at-pos))
+             (date (format-time-string "%Y-%m-%d"))
+             (is-clocking (string-match
+                           "CLOCK: \\[.*?\\]$"
+                           (substring-no-properties (org-get-entry))))
+             (clocked (string-match
+                       "CLOCK: \\[.*?\\]--\\[.*?\\]"
+                       (substring-no-properties (org-get-entry))))
+             (clocked-today (string-match
+                             (format "CLOCK: .*%s" date)
+                             (substring-no-properties (org-get-entry)))))
+
+        (if (org-get-repeat)
+            ;; if its a repeating task, only consider it if it is being/was clocked today
+            (or is-clocking clocked-today)
+
+          ;; if its not a repeating task, its in progress if its being clocked or was ever clocked
+          (or is-clocking clocked)))))
+
+  (defun my/org-wip-p ()
+    (or (my/org-project-wip-p)
+        (my/org-todo-wip-p)))
+
+  ;; (defun my/org-inbox-p ()
+  ;;   (and (org-entry-is-todo-p)
+  ;;        (not (org-get-scheduled-time nil))
+  ;;        (not (my/org-wip-p))
+  ;;        (not (my/org-project-p))
+  ;;        (string= "D" (org-entry-get nil "PRIORITY"))))
+
 
   (setq org-scheduled-past-days 100
         org-agenda-start-with-log-mode nil
@@ -1330,19 +1417,20 @@
         org-agenda-log-mode-items '(closed state)
         org-agenda-scheduled-leaders '(" " "!")
         org-agenda-deadline-leaders '(" " "!")
-        org-agenda-hide-tags-regexp "^agenda$"
+        org-agenda-hide-tags-regexp "^\\(agenda\\|public\\)$"
         org-agenda-todo-keyword-format "%s"
+        org-agenda-tag-filter-preset nil
+        org-agenda-tag-filter nil
         org-agenda-prefix-format '((agenda . "  %-12t %s")
                                    (todo . "  %s")
-                                   (tags . "  %s")
+                                   (tags . "  %(my/org-agenda-breadcrumb)")
                                    (search . "  %s"))
-
         org-agenda-time-grid
         '((daily today require-timed)
           (800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200)
-          " ┄┄┄┄┄ " "")
+          " ┄┄┄┄┄ " ""))
 
-        org-agenda-custom-commands
+  (setq org-agenda-custom-commands
         '(("a" "Agenda"
            ((agenda ""
                     ((org-agenda-span 'month)
@@ -1351,15 +1439,16 @@
           ("d" "To-do"
            ;; 3 day agenda
            ((agenda ""
-                    ((org-agenda-span 3)
+                    ((org-deadline-warning-days 0)
+                     (org-agenda-span 3)
                      (org-agenda-time-grid '((daily today require-timed)
                                              ()
                                              " ┄┄┄┄┄ " ""))
                      (org-agenda-show-all-dates t)))
 
             ;; Urgent
-            (tags-todo "+PRIORITY=\"A\""
-                       ((org-agenda-overriding-header "Urgent")))
+            ;; (tags-todo "+PRIORITY=\"A\""
+            ;;            ((org-agenda-overriding-header "Urgent")))
 
             ;; In progress
             (tags-todo ".*"
@@ -1373,11 +1462,8 @@
             ;; ;; Next actions
             (tags-todo ".*"
                        ((org-agenda-overriding-header "Next actions")
-                        (org-agenda-prefix-format '((tags . "  %(my/org-agenda-breadcrumb)")))
                         (org-agenda-skip-function
-                         '(if (or (my/org-next-action-p)
-                                  (and (my/org-project-p)
-                                       (not (my/org-project-stuck-p))))
+                         '(if (my/org-next-p)
                               nil
                             (org-goto-sibling)
                             (point)))))
@@ -1389,20 +1475,20 @@
                          '(if (my/org-project-stuck-p)
                               nil
                             (org-goto-sibling)
-                            (point)))))
+                            (point)))))))
 
             ;; Inbox
-            (tags-todo "+TODO=\"TODO\"+LEVEL=2+PRIORITY=\"D\""
-                       ((org-agenda-overriding-header "Inbox")
-                        (org-agenda-skip-function
-                         '(if (my/org-inbox-p)
-                              nil
-                            (org-goto-sibling)
-                            (point)))))
+            ;; (tags-todo "+TODO=\"TODO\"+LEVEL=2+PRIORITY=\"D\""
+            ;;            ((org-agenda-overriding-header "Inbox")
+            ;;             (org-agenda-skip-function
+            ;;              '(if (my/org-inbox-p)
+            ;;                   nil
+            ;;                 (org-goto-sibling)
+            ;;                 (point)))))
 
             ;; Someday
-            (tags-todo "+TODO=\"TODO\"+PRIORITY=\"E\""
-                       ((org-agenda-overriding-header "Someday")))))
+            ;; (tags-todo "+TODO=\"TODO\"+PRIORITY=\"E\""
+            ;;            ((org-agenda-overriding-header "Someday")))))
           ("e" "Tasks by effort"
            ((tags-todo "+TODO=\"TODO\"+Effort>\"\""
                        ((org-agenda-overriding-header "Tasks by effort")
@@ -1427,7 +1513,7 @@
          ("C-'" . (lambda ()
                     (interactive)
                     (require 'org-roam)
-                    (find-file (expand-file-name "tasks.org" org-roam-directory)))))
+                    (find-file (expand-file-name "tasks.org" org-directory)))))
    (:map org-agenda-mode-map
          ("C-a" . my/org-agenda-show-all-dates)
          ("j" . org-agenda-next-line)
@@ -1449,6 +1535,32 @@
 (use-package org
   :hook (org-mode . org-fold-hide-drawer-all))
 
+;; format org after capture
+(use-package org
+  :hook (org-capture-before-finalize . my/org-format)
+  :config
+  (defun my/org-align-all-properties ()
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "^[ \t]*:PROPERTIES:[ \t]*$" nil t)
+        (let ((drawer-start (point))
+              drawer-end)
+          (when (re-search-forward "^[ \t]*:END:[ \t]*$" nil t)
+            (setq drawer-end (point))
+            (goto-char drawer-start)
+            (while (< (point) drawer-end)
+              (when (looking-at "^[ \t]*:\\w+:")
+                (org--align-node-property))
+              (forward-line 1)))))))
+
+  (defun my/org-format ()
+    (interactive)
+    (when (derived-mode-p 'org-mode)
+      (org-align-all-tags)
+      (org-update-statistics-cookies t)
+      (my/org-align-all-properties))))
+
 ;; org-present - make presentations using org mode
 ;; (use-package org-present
 ;;   :hook ((org-present-mode
@@ -1469,6 +1581,9 @@
   (defun org-drill-agenda ()
     (interactive)
     (org-drill 'agenda))
+  (defun org-drill-cram-agenda ()
+    (interactive)
+    (org-drill-cram 'agenda))
   (advice-add 'org-drill-time-to-inactive-org-timestamp :override
               (lambda (time)
                 "Convert TIME into org-mode timestamp."
@@ -1476,13 +1591,16 @@
                  (concat "[" (cdr org-time-stamp-formats) "]")
                  time)))
   :config
-  (add-to-list 'org-modules 'org-drill))
+  (add-to-list 'org-modules 'org-drill)
+  (setq org-drill-add-random-noise-to-intervals-p t)
+  ;;(setq org-drill-sm5-initial-interval 1.0)
+  (setq org-drill-spaced-repetition-algorithm 'sm2))
 
 ;; toc-org - generate table of contents
 ;; Useful for github that doesn't create a TOC automatically
-(use-package toc-org
-  :hook
-  (org-mode . toc-org-mode))
+;; (use-package toc-org
+;;   :hook
+;;   (org-mode . toc-org-mode))
 
 ;; org-music - manage songs and playlists using org
 (use-package org-music
@@ -1498,9 +1616,7 @@
     (let* ((song-path (mpv-get-property "path"))
            (outline-name (when (string-match ".*/\\(.*\\)\\.m4a" song-path)
                            (match-string 1 song-path)))
-
            (outline-marker (org-find-exact-headline-in-buffer outline-name)))
-
       (when outline-marker
         (goto-char outline-marker))))
 
@@ -1551,7 +1667,7 @@
     :config
     (setq org-hide-emphasis-markers t)
     (setq org-link-descriptive t)
-    (setq org-pretty-entities t)
+    (setq org-pretty-entities nil)
     (setq org-hidden-keywords nil)
     (setq org-appear-autoemphasis t)
     (setq org-appear-autolinks t)
@@ -1580,11 +1696,11 @@
   (defun my/add-roam-files-to-agenda (&rest args)
     (require 'org-roam)
     (let ((files (org-roam-db-query "
-select n.file
+select distinct n.file
 from nodes n
 join tags t on t.node_id = n.id
 where t.tag in ('\"agenda\"', '\"drill\"')
-limit 10
+limit 20
 ")))
       (setq org-agenda-files nil)
       (mapc (lambda (item)
@@ -1592,11 +1708,27 @@ limit 10
             files)
       nil))
 
+  (defun my/org-roam-node-sort (cmp-a cmp-b)
+    (let ((a (cdr cmp-a))
+          (b (cdr cmp-b)))
+      (cond
+       ((member "drill" (org-roam-node-tags a)) nil)
+       ((member "agenda" (org-roam-node-tags a)) nil)
+       ((member "journal" (org-roam-node-tags a)) nil)
+       ((member "drill" (org-roam-node-tags b)) t)
+       ((member "agenda" (org-roam-node-tags b)) t)
+       ((member "journal" (org-roam-node-tags b)) t)
+       (t (org-roam-node-read-sort-by-file-atime cmp-a cmp-b)))))
+
+  (defun my/org-roam-node-find ()
+    (interactive)
+    (org-roam-node-visit (org-roam-node-read nil nil 'my/org-roam-node-sort)))
+
   (advice-add 'org-agenda :before #'my/add-roam-files-to-agenda)
   :config
-  (when (not (file-directory-p "~/Sync/Org/Roam"))
-    (make-directory "~/Sync/Org/Roam"))
-  (setq org-roam-directory "~/Sync/Org/Roam")
+  (when (not (file-directory-p "~/Sync/Org"))
+    (make-directory "~/Sync/Org"))
+  (setq org-roam-directory "~/Sync/Org")
 
   (setq org-roam-capture-templates
         '(("d" "default" plain "%?" :target
@@ -1617,6 +1749,8 @@ limit 10
 
   :bind
   (("C-c n f" . org-roam-node-find)
+   ("C-c n F" . my/org-roam-node-find)
+   ("C-c n w" . org-roam-refile)
    ("C-c n i" . org-roam-node-insert)
    ("C-c n l" . org-roam-buffer-toggle)
    ("C-c n c" . org-roam-dailies-capture-today)
