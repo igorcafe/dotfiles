@@ -1299,21 +1299,18 @@
            entry
            (file+headline "tasks.org" "Tasks")
            "* TODO %^{task}\n%U\n%?"
-           :prepend t
-           :jump-to-captured t)
-          ("c" "Card"
+           :prepend t)
+          ("C" "Card"
            entry
            (file "flashcards.org")
-           "* review card :drill:\n\n%i%?"
+           "* TODO review card :drill:\n\n%i%?"
            :empty-lines-before 1
-           :jump-to-captured t
            :before-finalize org-id-get-create)
-          ("C" "Card with link"
+          ("c" "Card with source link"
            entry
            (file "flashcards.org")
-           "* review card :drill:\n\n%i%?\n\n%a"
+           "* TODO review card :drill:\n\n%i%?\n\n[[%L][%(buffer-name (nth 1 (buffer-list)))]]"
            :empty-lines-before 1
-           :jump-to-captured t
            :before-finalize org-id-get-create)
           ("j" "Journal"
            entry
