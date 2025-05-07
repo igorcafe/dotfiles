@@ -483,15 +483,17 @@
 
 ;; eglot (builtin) - LSP client
 ;; Eglot is a builtin LSP (Language Server Protocol) client for emacs.
+
+(defun my/eglot-format-on-save ()
+  (when (and (fboundp 'eglot-managed-p) (eglot-managed-p))
+    (ignore-errors (call-interaively 'eglot-format))
+    (ignore-errors (call-interactively 'eglot-code-action-organize-imports))))
+
 (use-package eglot
   :after evil
   :hook
   ;; before saving, if eglot is enabled, try to format and organize imports
-  ((before-save
-    . (lambda ()
-        (when (and (fboundp 'eglot-managed-p) (eglot-managed-p))
-          (call-interactively 'eglot-format)
-          (call-interactively 'eglot-code-action-organize-imports))))
+  ((before-save . my/eglot-format-on-save)
 
    ;; start eglot only if file is somewhere in home (avoid /nix/store and similar)
    (prog-mode . (lambda ()
