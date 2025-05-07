@@ -472,8 +472,14 @@
   (setq nxml-child-indent 4)
   (setq nxml-attribute-indent 4))
 
-;; vue-mode - Vue support
-(use-package vue-mode :defer t)
+;; Enhanced Web and Vue support
+(use-package web-mode
+  :mode ("\\.vue\\'" . vue-mode)
+  :init
+  (define-derived-mode vue-mode web-mode "Vue")
+  (setq web-mode-script-padding 0
+        web-mode-markup-indent-offset 2
+        web-mode-code-indent-offset 2))
 
 ;; c-mode (builtin) - C/C++ support
 (use-package emacs
