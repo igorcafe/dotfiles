@@ -332,19 +332,77 @@
                        (insert-pair nil ,(car pair) ,(car (last pair))))
                      evil-visual-state-map))))
 
+;; compile - run commands and easily follow errors
+
+(defun my/compilation-buffers (&optional project)
+  (mapcar (lambda (buf)
+            (buffer-name buf))
+          (seq-filter
+           (lambda (buf)
+             (with-current-buffer buf
+               (and (eq major-mode 'compilation-mode)
+                    (or (eq project nil)
+                        (string= (project-root project)
+                                 (project-root (project-current)))))))
+           (buffer-list))))
+
+(defun my/compilation-buffer-name (name project)
+  (if project
+      (format "*[%s] compilation - %s*" (project-name project) name)
+    (format "*compilation - %s*" name)))
+
+(defun my/compile-switch-to-buffer (&optional project)
+  (interactive)
+  (let ((buffer (completing-read "Compilation buffer: "
+                                 (my/compilation-buffers project)
+                                 nil
+                                 t)))
+    (switch-to-buffer buffer)))
+
+(defun my/compile-switch-to-project-buffer (project)
+  (interactive (list (project-current t)))
+  (my/compile-switch-to-buffer project))
+
+
+(defun my/compile (cmd-or-buffer &optional project name)
+  (interactive (list (completing-read "[Re]compile: "
+                                (my/compilation-buffers))))
+  (let* ((buffer (get-buffer cmd-or-buffer))
+         (default-directory (if project
+                                (project-root project)
+                              default-directory))
+         (compilation-save-buffers-predicate
+          (lambda ()
+            (string-prefix-p default-directory
+                             (buffer-file-name)))))
+    (if buffer
+        (with-current-buffer buffer
+          (recompile))
+      (compilation-start
+       cmd-or-buffer
+       nil
+       (eval `(lambda (_)
+                ,(my/compilation-buffer-name (or name cmd-or-buffer) project)))))))
+
+(defun my/project-compile (cmd-or-buffer &optional project name)
+  (interactive (list (completing-read "Project [re]compile: "
+                                      (my/compilation-buffers))
+                     (project-current t)))
+  (my/compile cmd-or-buffer project name))
+
+(use-package compile
+  :ensure nil
+  :defer
+  :init
+  ;; :hook
+  ;; (compilation-filter . ansi-color-compilation-filter)
+  :config
+  (setq compilation-scroll-output t)
+  (setq compilation-always-kill t))
+
 ;; project.el (builtin) - managing projects
 ;; Helps you manage projects based on version control systems, like
 ;; git repos. Check =C-x p p=.
-;; Launch vterm in the project's root directory.
-;; (defun project-vterm ()
-;;   (interactive)
-;;   (let* ((proj-dir (car (last (project-current))))
-;;          (proj-name (file-name-nondirectory
-;;                      (directory-file-name proj-dir)))
-;;          (chosen-name (read-string "buffer name: " proj-name))
-;;          (default-directory proj-dir))
-;;     (vterm (format "vterm - %s" chosen-name))))
-
 
 ;; custom function for launching eshell with descriptive buffer names
 (defun my/project-eshell ()
@@ -360,26 +418,30 @@
       (with-current-buffer (eshell t)
         (rename-buffer (concat "*" buffer-name "*"))))))
 
+;; Replace default project grep with consult
+(defun my/consult-git-grep ()
+  (interactive)
+  (consult-git-grep nil (thing-at-point 'symbol)))
 
 ;; Customize project.el commands.
 (use-package project
   :config
-  (defun my/consult-git-grep ()
-    (interactive)
-    (consult-git-grep nil (thing-at-point 'symbol)))
   (setq project-switch-commands
         '((project-find-file "Find file" ?f)
           (my/consult-git-grep "Find regexp" ?g)
           (project-find-dir "Find directory" ?d)
-          (eat-project "terminal (eat)" ?t)
-          ;;(project-vc-dir "VC-Dir")
+          (eat-project "Eat" ?t)
+          (consult-project-buffer "Buffers" ?b)
           (my/project-eshell "Eshell" ?e)
-          ;;(project-any-command "Other")
+          ;; (my/project-compile "Compile" ?c)
           (magit-project-status "Magit" ?m)))
   :bind
   (:map project-prefix-map
         ("t" . eat-project)
         ("e" . my/project-eshell)
+        ("b" . consult-project-buffer)
+        ("c" . my/project-compile)
+        ("C" . my/compile-switch-to-project-buffer)
         ("g" . my/consult-git-grep)
         ("m" . magit-project-status)))
 
@@ -800,7 +862,8 @@
 (use-package eat
   :vc (:url "https://codeberg.org/akib/emacs-eat.git")
   :hook ((eshell-load . eat-eshell-mode)
-         (eshell-load . eat-eshell-visual-command-mode)))
+         (eshell-load . eat-eshell-visual-command-mode)
+         (eat-mode . compilation-shell-minor-mode)))
 
 ;; vertico - vertical completion
 ;; Improves minibuffer by showing multiple options in a vertical list.
@@ -1605,7 +1668,6 @@
 ;; org-music - manage songs and playlists using org
 (use-package org-music
   :after evil
-
   :vc
   (:url "https://github.com/debanjum/org-music.git")
 
@@ -1822,6 +1884,7 @@ limit 20
 ;; eshell (builtin)
 (use-package esh-mode
   :ensure nil
+  :after compile
   :init
   (defun my/eshell-search-history ()
     (interactive)
@@ -1835,6 +1898,7 @@ limit 20
         (insert cmd))))
   :hook ((eshell-mode . (lambda ()
                           (setq-local company-idle-delay nil)))
+         (eshell-mode . compilation-shell-minor-mode)
          (eshell-pre-command . eshell-save-some-history))
   :custom
   (eshell-highlight-prompt t)
