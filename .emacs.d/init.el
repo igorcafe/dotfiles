@@ -1263,6 +1263,37 @@
   (("C-c C-x C-o" . org-clock-out)
    ("C-c C-x C-j" . org-clock-goto)))
 
+;; org C-c C-c on timestamp will also show (X days) for X days remaining
+(use-package emacs
+  :after org
+  :config
+  (defun my/org-timestamp-add-days-remaining (&rest args)
+    (interactive)
+    (let* ((line (line-number-at-pos))
+           (start nil)
+           (end nil)
+           (now (format-time-string "%Y-%m-%d"))
+           (then nil)
+           (remaining nil))
+      (save-excursion
+        (if (looking-at "[\[<]")
+            (setq start (point))
+          (setq start (re-search-backward "[\[<]"))
+          (when (/= line (line-number-at-pos))
+            (user-error "no timestamp here")))
+        (setq end (re-search-forward "[\]>]"))
+        (message "%s %s" start end)
+        (setq then (buffer-substring-no-properties start end))
+        (setq remaining (and then
+                             (days-between then now)))
+        (message "%s" (if (< remaining 0)
+                          (format "(%d days ago)" (abs remaining))
+                        (if (= remaining 0)
+                            "(today)"
+                          (format "(in %d days)" remaining)))))))
+
+  (advice-add 'org-timestamp-change :after #'my/org-timestamp-add-days-remaining))
+
 ;; Org Clock
 (use-package org
   :config
