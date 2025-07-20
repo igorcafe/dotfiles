@@ -126,6 +126,11 @@
   :config
   (global-auto-revert-mode 1))
 
+;; persistent scratch file
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (find-file (expand-file-name "scratch.el" user-emacs-directory))))
+
 ;; function to quickly delete file associated with current buffer
 ;; and killing the buffer... use with cautious!
 (use-package emacs
@@ -148,7 +153,7 @@
 (setq history-length 100)
 
 ;; Save emacs state
-(desktop-save-mode 1)
+;; (desktop-save-mode 1)
 
 ;; Display date, time and battery in modeline
 (use-package emacs
@@ -181,6 +186,12 @@
    ("C-e" . nil)
    ("C-r" . nil)
    ("C-d" . nil)
+   ("C-y" . nil)
+   :map evil-motion-state-map
+   ("C-w >" . (lambda () (interactive) (evil-window-increase-width 10)))
+   ("C-w <" . (lambda () (interactive) (evil-window-decrease-width 10)))
+   ("C-y" . nil)
+   ("SPC" . nil)
    :map evil-normal-state-map
    ("SPC" . nil)
    ("C-#" . evil-search-word-backward)
@@ -191,6 +202,7 @@
    ("*" . (lambda ()
             (interactive)
             (evil-search-word-forward 1 (thing-at-point 'symbol)))))
+   ("C-y" . nil)
   :config
   (evil-mode 1))
 
@@ -305,6 +317,8 @@
   (setq doom-modeline-irc nil)
   (setq doom-modeline-lsp-icon nil)
   (setq doom-modeline-env-enable-python nil)
+  (setq doom-modeline-persp-name nil)
+  (setq doom-modeline-persp-icon nil)
   (doom-modeline-mode 1))
 
 ;; flymake (builtin) - syntax checking
@@ -492,7 +506,7 @@
 
 (defun my/eglot-format-on-save ()
   (when (and (fboundp 'eglot-managed-p) (eglot-managed-p))
-    (ignore-errors (call-interaively 'eglot-format))
+    (ignore-errors (call-interactively 'eglot-format))
     (ignore-errors (call-interactively 'eglot-code-action-organize-imports))))
 
 (use-package eglot
@@ -527,9 +541,12 @@
 ;; eldoc-box - eldoc in a box below cursor
 ;; I use eldoc-box to show docs as a hover box instead of using echo area.
 (use-package eldoc-box
-    :config
-    (eldoc-box-hover-at-point-mode 1)
-    (advice-add 'eldoc-doc-buffer :override 'eldoc-box-help-at-point))
+  :hook (eldoc-mode . eldoc-box-hover-at-point-mode)
+  :after evil
+  :config
+  :bind
+  (:map evil-normal-state-map
+        ("K" . eldoc-box-help-at-point)))
 
 ;; company - completion popup like VS Code's
 (use-package company
@@ -610,14 +627,12 @@
   (setq eshell-scroll-to-bottom-on-input t)
   (setq aider-args
         '("--model" "gpt-4o"
-          "--no-auto-commits"
-          (format "--api-key openai=%s"
-                  (auth-get-password "openai" "key"))))
+          "--no-auto-commits"))
   :bind
   ("C-c i" . aider-transient-menu))
 
 ;; recentf-mode (builtin) - persistent history of recent files
-;; Show recent files with ~C-x C-r~.
+;; Show recent files with `C-x C-r'.
 (use-package recentf
   :ensure nil
   :init
@@ -639,9 +654,11 @@
           org-agenda-mode
           restclient-mode)
           . olivetti-mode)
-         (olivetti-mode . toggle-truncate-lines))
+         (olivetti-mode . (lambda () (toggle-truncate-lines 1))))
   :init
-  (setq-default olivetti-body-width 100))
+  (setq-default olivetti-body-width 100)
+  :config
+  (remove-hook 'olivetti-mode-on-hook 'visual-line-mode))
 
 ;; save-place-mode - save cursor position per file
 (save-place-mode 1)
@@ -698,7 +715,6 @@
 ;; perspective - "isolated" workspaces
 (use-package perspective
   :bind (("C-c p p" . persp-switch)
-         ("C-c p n" . my/persp-quick-create)
          ("C-c p k" . persp-remove-buffer)
          ("C-c p x" . my/persp-kill-current)
          ("C-c p X" . persp-kill)
@@ -716,14 +732,6 @@
   (defun my/persp-kill-current ()
     (interactive)
     (persp-kill (persp-name (persp-curr))))
-
-  (defun my/persp-quick-create ()
-    (interactive)
-    (require 'perspective)
-    (let* ((animals '("dog" "cat" "fly" "bee" "elk" "cow" "ant" "fox"))
-           (persps (persp-names))
-           (available (seq-remove (lambda (a) (member a persps)) animals)))
-      (persp-switch (car available))))
 
   :config
   (persp-mode 1)
@@ -819,8 +827,21 @@
 ;; magit - git interface
 ;; I use the default ~C-x g~ binding.
 (use-package magit
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  (magit-diff-refine-hunk 'all)
+  (transient-display-buffer-action '(display-buffer-below-selected))
   :bind
-  ("C-x g" . magit))
+  ("C-x g" . magit)
+  (:map magit-section-mode-map
+        ("M-1" . nil)
+        ("<normal-state> M-1" . nil)
+        ("M-2" . nil)
+        ("<normal-state> M-2" . nil)
+        ("M-3" . nil)
+        ("<normal-state> M-3" . nil)
+        ("M-4" . nil)
+        ("<normal-state> M-4" . nil)))
 
 ;; ediff (builtin) - diff files, commits, and so on
 (use-package ediff
@@ -871,7 +892,16 @@
   :vc (:url "https://codeberg.org/akib/emacs-eat.git")
   :hook ((eshell-load . eat-eshell-mode)
          (eshell-load . eat-eshell-visual-command-mode)
-         (eat-mode . compilation-shell-minor-mode)))
+         (eat-mode . compilation-shell-minor-mode))
+  :bind
+  (:map eat-mode-map
+        ("C-y" . eat-yank))
+  (:map eat-eshell-semi-char-mode-map
+        ("M-1" . nil)
+        ("M-2" . nil)
+        ("M-3" . nil)
+        ("M-4" . nil)))
+
 
 ;; vertico - vertical completion
 ;; Improves minibuffer by showing multiple options in a vertical list.
@@ -916,12 +946,13 @@
   ;; "path/to/songs/Author - Song Name.m4a"
   ;; this function replaces it by only "🎵 Song Name"
   (setq emms-mode-line-mode-line-function
-        (lambda ()
-          (let* ((path (emms-track-description
-                        (emms-playlist-current-selected-track)))
-                 (song (when (string-match ".*? - \\(.*\\)\\.m4a$" path)
-                         (match-string 1 path))))
-            (format "🎵 %s  " song))))
+        ;; (lambda ()
+        ;;   (let* ((path (emms-track-description
+        ;;                 (emms-playlist-current-selected-track)))
+        ;;          (song (when (string-match ".*? - \\(.*\\)\\.m4a$" path)
+        ;;                  (match-string 1 path))))
+        ;;     (format "🎵 %s  " song)))
+        nil)
   :bind
   (:map global-map
         ("C-c m j" . mpv-playlist-next)
@@ -930,7 +961,8 @@
         ("C-c m ." . mpv-seek-forward)
         ("C-c m SPC" . mpv-pause)
         ("C-c m s" . mpv-kill)
-        ("C-c m e" . mpv-jump-to-playlist-entry)))
+        ("C-c m e" . mpv-jump-to-playlist-entry)
+        ("C-c m R" . mpv-playlist-shuffle)))
 
 ;; telega - telegram client
 (use-package telega
@@ -1060,15 +1092,19 @@
   :hook (eww-mode . visual-line-mode)
   :config
   ;; name buffers as [ domain ] - [ title ]
-  (setq eww-auto-rename-buffer
-        (lambda ()
-          (let ((domain
-                 (url-host
-                         (url-generic-parse-url (plist-get eww-data :url))))
-                (title (plist-get eww-data :title)))
-            (format "%s - %s # eww"
-                    (truncate-string-to-width domain 20 nil nil "...")
-                    (truncate-string-to-width title 30 nil nil "..."))))))
+  (setq eww-readable-urls '(".*"))
+  (setq eww-auto-rename-buffer "url")
+  ;; (setq eww-auto-rename-buffer
+  ;;       (lambda ()
+  ;;         (let* ((url (plist-get eww-data :url))
+  ;;                (domain (url-host (url-generic-parse-url url)))
+  ;;                (title (plist-get eww-data :title)))
+  ;;           (if (and title (not (string= title ""))
+  ;;                      domain (not (string= domain "")))
+  ;;               (format "*%s - %s*" domain title)
+  ;;             (if ))
+  ;;           nil)))
+  )
 
 ;; gptel - GPT inside emacs
 (use-package gptel
@@ -1244,12 +1280,12 @@
 (setq org-priority-highest ?A)
 (setq org-priority-lowest ?E)
 (setq org-priority-default ?D)
-(setq org-priority-faces
-      '((?A . (:foreground "gray"))
-        (?B . (:foreground "gray"))
-        (?C . (:foreground "gray"))
-        (?D . (:foreground "gray"))
-        (?E . (:foreground "gray"))))
+;; (setq org-priority-faces
+;;       '((?A . (:foreground "gray"))
+;;         (?B . (:foreground "gray"))
+;;         (?C . (:foreground "gray"))
+;;         (?D . (:foreground "gray"))
+;;         (?E . (:foreground "gray"))))
 
 ;; Org tags - column
 (setq org-tags-column -89)
@@ -1264,11 +1300,16 @@
   (setq org-hierarchical-todo-statistics t) ;; TODO cookie count not recursive
   (setq org-todo-keywords
         '((sequence "TODO(!)" "|" "DONE(!)")))
-  (set-face-attribute 'org-done nil)
   (set-face-attribute 'org-headline-done nil :strike-through t :foreground "gray")
+  (defun my/org-clock-in ()
+    (interactive)
+    (if (eq major-mode 'org-mode)
+        (call-interactively 'org-clock-in)
+      (call-interactively 'org-clock-in-last)))
   :bind
   ;; the keybindings are the same, just made them global
-  (("C-c C-x C-o" . org-clock-out)
+  (("C-c C-x C-i" . my/org-clock-in)
+   ("C-c C-x C-o" . org-clock-out)
    ("C-c C-x C-j" . org-clock-goto)))
 
 ;; org C-c C-c on timestamp will also show (X days) for X days remaining
@@ -1325,19 +1366,23 @@
   :config
   (setq org-capture-templates
         '(("t"
-           "Capture current task"
+           "Create and start clocking a task"
            entry
            (file+headline "tasks.org" "Tasks")
-           "* TODO %^{task}\n%U"
+           "* TODO %?\n%U"
            :prepend t
            :clock-in t
-           :clock-keep t
-           :immediate-finish t)
+           :clock-keep t)
+          ("d"
+           "Capture to the task I'm currently [d]oing"
+           entry
+           (clock)
+           "* %?\n%U")
           ("n"
            "Capture next action"
            entry
            (file+headline "tasks.org" "Tasks")
-           "* TODO %^{task}\n%U\n%?"
+           "* TODO %?\n%U\n"
            :prepend t)
           ("C" "Card"
            entry
@@ -1368,6 +1413,7 @@
 ;; Org Habits - tracking habits
 (use-package org-habit
   :ensure nil
+  :after org
   :config
   (add-to-list 'org-modules 'org-habit)
   (setq org-habit-graph-column 79
@@ -1516,7 +1562,7 @@
         org-agenda-log-mode-items '(closed state)
         org-agenda-scheduled-leaders '(" " "!")
         org-agenda-deadline-leaders '(" " "!")
-        org-agenda-hide-tags-regexp "^\\(agenda\\|public\\)$"
+        org-agenda-hide-tags-regexp "^\\(agenda\\|public\\|draft\\|drill\\|draft\\|birthdate\\)$"
         org-agenda-todo-keyword-format "%s"
         org-agenda-tag-filter-preset nil
         org-agenda-tag-filter nil
@@ -1751,7 +1797,6 @@
         ("C-c m l p" . org-music-play-list)
         ("C-c m l e" . org-music-enqueue-list)
         ("C-c m p p" . org-music-play-song-at-point)
-        ("C-c m R" . mpv-playlist-shuffle)
         ("C-c m p e" . org-music-enqueue-song-at-point)))
 
 ;; org-indent-mode (builtin) - visually indent text inside headings
@@ -1826,11 +1871,13 @@ limit 20
   :config
   (when (not (file-directory-p "~/Sync/Org"))
     (make-directory "~/Sync/Org"))
+
+  (setq org-roam-db-location "~/Sync/Org/org-roam.db")
   (setq org-roam-directory "~/Sync/Org")
 
   (setq org-roam-capture-templates
         '(("d" "default" plain "%?" :target
-           (file+head "${slug}.org" "* ${title}")
+           (file+head "${slug}.org" "#+title: ${title}")
            :unnarrowed t)
           ("P" "public" plain "%?" :target
            (file+head "${slug}.org" "* ${title} :public:")
@@ -1963,8 +2010,10 @@ limit 20
 ;; eshell: unbind C-c C-l
 (use-package em-hist
   :ensure nil
+  :after esh-mode
   :bind (:map eshell-hist-mode-map
-         ("C-c C-l" . nil)))
+              ("C-c C-l" . nil)
+              ("C-c C-x" . nil)))
 
 ;; eshell: use TAB for company popup
 (use-package em-cmpl
