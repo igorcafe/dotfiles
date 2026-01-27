@@ -252,6 +252,17 @@
   (setq doom-themes-enable-italic t)
   (load-theme 'doom-one t))
 
+;; utility for switching themes
+(defun switch-theme (theme &optional no-confirm no-enable)
+  (interactive
+   (list
+    (intern (completing-read "Switch to theme: "
+                             (mapcar #'symbol-name
+                                     (custom-available-themes))))
+    nil nil))
+  (mapc 'disable-theme custom-enabled-themes)
+  (load-theme theme))
+
 ;; cycle between favorite theme
 (use-package emacs
   :config
@@ -322,11 +333,13 @@
   (doom-modeline-mode 1))
 
 ;; flymake (builtin) - syntax checking
-(use-package sideline-flymake
-  :hook (flymake-mode . sideline-mode)
-  :init
-  (setq sideline-flymake-display-mode 'line)
-  (setq sideline-backends-right '(sideline-flymake)))
+(use-package flymake
+  :ensure nil
+  :config
+  ;; TODO: advice
+  (defun flymake-after-change-function (start stop pre-change-len))
+  (setq flymake-no-changes-timeout 1.0)
+  (setq flymake-show-diagnostics-at-end-of-line 'short))
 
 ;; eletrict-pair-mode (builtin) - auto close pairs based on mode
 (electric-pair-mode 1)
@@ -449,6 +462,8 @@
           (my/project-eshell "Eshell" ?e)
           ;; (my/project-compile "Compile" ?c)
           (magit-project-status "Magit" ?m)))
+
+  (setq project-vc-merge-submodules nil)
   :bind
   (:map project-prefix-map
         ("t" . eat-project)
@@ -626,10 +641,14 @@
   :config
   (setq eshell-scroll-to-bottom-on-input t)
   (setq aider-args
-        '("--model" "gpt-4o"
-          "--no-auto-commits"))
+        '("--model" "gpt-5"
+          "--no-auto-accept-architect"
+          "--no-auto-commits"
+          "--map-tokens" "8192"))
+  ;;(aider-magit-setup-transients)
   :bind
   ("C-c i" . aider-transient-menu))
+
 
 ;; recentf-mode (builtin) - persistent history of recent files
 ;; Show recent files with `C-x C-r'.
@@ -891,8 +910,7 @@
 (use-package eat
   :vc (:url "https://codeberg.org/akib/emacs-eat.git")
   :hook ((eshell-load . eat-eshell-mode)
-         (eshell-load . eat-eshell-visual-command-mode)
-         (eat-mode . compilation-shell-minor-mode))
+         (eshell-load . eat-eshell-visual-command-mode))
   :bind
   (:map eat-mode-map
         ("C-y" . eat-yank))
@@ -1140,6 +1158,36 @@
 
 ;; org-mpv-notes - control mpv from emacs
 (use-package org-mpv-notes :defer t)
+
+;; org notifications (reminders) with appt
+(use-package emacs
+  :config
+  ;; start warning X minutes before the appointment
+  (setq appt-message-warning-time 30)
+
+  ;; warn me every X minutes
+  (setq appt-display-interval 10)
+
+  (setq appt-disp-window-function
+        ;; for mac, use org-show-notification, which is more limited
+        (if (eq system-type 'darwin)
+            (lambda (remaining new-time msg)
+              (org-show-notification msg))
+
+          ;; for other systems, use notifications.el
+          (lambda (remaining new-time msg)
+            (require 'notifications)
+            (notifications-notify
+             :title (format "In %s minutes" remaining)
+             :body msg
+             :urgency 'critical))))
+
+  (advice-add 'appt-check
+              :before
+              (lambda (&rest args)
+                (org-agenda-to-appt t)))
+
+  (appt-activate t))
 
 ;; yeetube - youtube frontend
 (use-package yeetube
@@ -1981,7 +2029,6 @@ limit 20
         (insert cmd))))
   :hook ((eshell-mode . (lambda ()
                           (setq-local company-idle-delay nil)))
-         (eshell-mode . compilation-shell-minor-mode)
          (eshell-pre-command . eshell-save-some-history))
   :custom
   (eshell-highlight-prompt t)
