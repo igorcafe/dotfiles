@@ -43,6 +43,12 @@
             "after":["<Esc>"],
         }
     ],
+    "vim.handleKeys": {
+        "<C-d>": true,
+        "<C-s>": false,
+        "<C-z>": false,
+        "<C-t>": false
+    },
     "go.toolsEnvVars": {
         "GOPATH": "/Users/igor.melo/go",
     },
