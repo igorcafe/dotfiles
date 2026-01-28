@@ -82,6 +82,8 @@
     #   ];
     # })
 
+    transmission_4
+
     ncdu
     neovim
     gnumake
@@ -233,7 +235,7 @@
   ];
 
   services.scx = {
-    enable = true;
+    enable = false;
     # bpfland is the current speed leader for raw single-app throughput
     scheduler = "scx_bpfland";
     # -m 1: Gaming mode (prioritizes high-utilization threads)
