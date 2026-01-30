@@ -8,7 +8,7 @@
   outputs = { nixpkgs, ... }: {
     nixosConfigurations.amdpc = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [ ./nixos/configuration.nix ]; # TODO: mkdir amdpc
+      modules = [ ./nixos/amdpc/configuration.nix ];
     };
     nixosConfigurations.acer  = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
