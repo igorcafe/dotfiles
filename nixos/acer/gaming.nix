@@ -23,6 +23,9 @@
       # cores.beetle-psx
     ]))
 
+    vulkan-tools
+    mesa-demos
+
     ## games
     xonotic
     clonehero
