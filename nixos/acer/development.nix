@@ -26,7 +26,8 @@
     # pkg-config
     # cmake
     # gnumake
-    # ghc
+    ghc
+    haskell-language-server
     cargo
     rustc
     rust-analyzer
