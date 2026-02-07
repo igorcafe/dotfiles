@@ -773,6 +773,14 @@
                        (interactive)
                        (persp-switch-by-number ,num))))))
 
+;; perspective-tabs - syncs persp mode with tab-bar-mode
+(use-package perspective-tabs
+  :vc (:url "https://git.sr.ht/~woozong/perspective-tabs")
+  :after perspective
+  :config
+  (perspective-tabs-mode +1)
+  (persp-turn-off-modestring))
+
 ;; whitespace (builtin) - show whitespaces as symbols
 (use-package whitespace
   :hook
