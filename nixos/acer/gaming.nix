@@ -83,6 +83,8 @@
   security.rtkit.enable = true;
   services.power-profiles-daemon.enable = false;
 
+  powerManagement.cpuFreqGovernor = "performance";
+
   services.tlp = {
     enable = false;
     settings = {
