@@ -19,7 +19,7 @@
       dosbox
       beetle-gba
       # cores.desmume
-      # cores.pcsx2
+      pcsx2
       # cores.beetle-psx
     ]))
 
