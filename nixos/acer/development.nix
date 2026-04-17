@@ -50,6 +50,10 @@
     # flutter
     # jdk8
 
+    gcc
+
+    binutils
+
     ## game dev
     godot_4
 
