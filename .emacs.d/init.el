@@ -474,6 +474,20 @@
         ("g" . my/consult-git-grep)
         ("m" . magit-project-status)))
 
+;; python mode + black formatting
+(use-package reformatter
+  :vc (:url "https://github.com/purcell/emacs-reformatter.git")
+  :init
+  (reformatter-define black-format
+    :program "black"
+    :args '("-")))
+
+
+;; (use-package python-black
+;;   :after python
+;;   :hook (python-mode . (lambda ()
+;;                          (add-hook 'before-save-hook 'python-black-buffer))))
+
 ;; go-mode - Go support
 (use-package go-mode :defer t)
 
@@ -520,9 +534,13 @@
 ;; Eglot is a builtin LSP (Language Server Protocol) client for emacs.
 
 (defun my/eglot-format-on-save ()
-  (when (and (fboundp 'eglot-managed-p) (eglot-managed-p))
+  (interactive)
+  (cond
+   ((eq major-mode 'python-mode)
+    black-format-buffer)
+   ((and (fboundp 'eglot-managed-p) (eglot-managed-p))
     (ignore-errors (call-interactively 'eglot-format))
-    (ignore-errors (call-interactively 'eglot-code-action-organize-imports))))
+    (ignore-errors (call-interactively 'eglot-code-action-organize-imports)))))
 
 (use-package eglot
   :after evil
