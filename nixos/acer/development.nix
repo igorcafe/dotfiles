@@ -15,7 +15,7 @@
     python3
     pyright
     python312Packages.pip
-    python312Packages.debugpy
+    # python312Packages.debugpy
     deno
     nodejs
     vue-language-server
@@ -26,11 +26,11 @@
     # pkg-config
     # cmake
     # gnumake
-    ghc
-    haskell-language-server
-    cargo
-    rustc
-    rust-analyzer
+    # ghc
+    # haskell-language-server
+    # cargo
+    # rustc
+    # rust-analyzer
     tokei
 
     ## dependency management
@@ -40,7 +40,7 @@
     ## databases and tools
     # mariadb
     # beekeeper-studio
-    dbeaver-bin
+    # dbeaver-bin
     (sqlite.override {
       interactive = true;
     })

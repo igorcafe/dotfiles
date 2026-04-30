@@ -115,14 +115,14 @@
     # postman
 
     aircrack-ng
-    qemu
+    # qemu
 
 
 
     nmap
 
 
-    protonvpn-gui
+    # protonvpn-gui
     # logmein-hamachi
     # haguichi
   ];
