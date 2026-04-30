@@ -1,5 +1,19 @@
 { pkgs, ...}:
 {
+  nixpkgs.overlays = [
+    (final: prev: {
+      retroarch-bare = prev.retroarch-bare.overrideAttrs (old: {
+        version = "master-2026-04-21";
+        src = prev.fetchFromGitHub {
+          owner = "libretro";
+          repo = "RetroArch";
+          rev = "3cfde0ffe71ac9eceb36100448804d941bb1e1cc";
+          hash = "sha256-aj93iGX2+z+4c4cb9D/Z0CCjpjOJpph/CHHFxXd40JI=";
+        };
+      });
+    })
+  ];
+
   environment.systemPackages = with pkgs; [
     ## emulation
     (retroarch.withCores (cores: with cores; [
