@@ -76,7 +76,7 @@
     audacity
     reaper
     # neural-amp-modeler-lv2
-    # kdePackages.kdenlive
+    kdePackages.kdenlive
     obs-studio
 
     kdePackages.plasma-browser-integration
