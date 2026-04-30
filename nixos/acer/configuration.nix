@@ -58,6 +58,7 @@
     lsof
     jq
 
+    libnotify
 
     # stow
     # ispell
