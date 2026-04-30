@@ -17,25 +17,49 @@
   environment.systemPackages = with pkgs; [
     ## emulation
     (retroarch.withCores (cores: with cores; [
-      genesis-plus-gx
-      fceumm
-      snes9x
+      genesis-plus-gx # sega genesis / megadrive
+      fceumm # nes
+      snes9x # snes
+      # mupen64plus # n64
       (mupen64plus.overrideAttrs (old: {
-        version = "222acbd3f98391458a047874d0372fe78e14fe94";
+        version = "0-unstable-2026-04-02";
         src = pkgs.fetchFromGitHub {
           owner = "libretro";
           repo = "mupen64plus-libretro-nx";
-          rev = "222acbd3f98391458a047874d0372fe78e14fe94";
-          hash = "sha256-esssh/0nxNUDW/eMDQbWEdcSPuqLjnKLkK4mKN17HjQ=";
+          rev = "58b9daf940fb43f09c3984c6a7c730f4b4c24861";
+          hash = "sha256-9d1gbDDK2rOt/a9NNRQVJJmiE+UdohM/yPI5WstNmtA=";
         };
+        patches = [];
       }))
-      citra
-      dosbox
-      beetle-gba
-      # cores.desmume
-      pcsx2
-      # cores.beetle-psx
+      dosbox# dos
+      beetle-gba # gba
+      desmume # nds
+      citra # 3ds
+      pcsx2 # ps2 (lrps2)
+      fmsx # msx
+      snes9x2010 # snes (fixed version for netplay)
+      # dolphin # gamecube / wii
+      (dolphin.overrideAttrs (_: {
+        version = "0-unstable-2026-04-08";
+        src = pkgs.fetchFromGitHub {
+          owner = "libretro";
+          repo = "dolphin";
+          rev = "0cd3bb89c29535db9b7552fc86871867ccf5b471";
+          hash = "sha256-cSiJO/EvspNvHopo/RLfuz8ONpbXk2NrrSDhkiAm7/s=";
+          fetchSubmodules = true;
+        };
+        dontUseCmakeBuildDir = false;
+      }))
+      beetle-psx # ps1 / psx
+      beetle-psx-hw # ps1 / psx
+      ppsspp # psp
+      picodrive # SG-1000, SC-3000, Master System/Mark III, Game Gear, Mega Drive/Genesis, Sega/Mega CD, 32X, Pico
+      mrboom # bomberman clone
+      stella2014 # atari 2600
     ]))
+
+    rpcs3 # ps3
+    pcsx2 # ps2
 
     vulkan-tools
     mesa-demos
