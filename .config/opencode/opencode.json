@@ -1,7 +1,34 @@
 {
     "$schema": "https://opencode.ai/config.json",
+    "default_agent": "plan",
+    "mcp": {
+        "duckduckgo": {
+            "type": "local",
+            "command": [
+                "docker",
+                "run",
+                "-i",
+                "--rm",
+                "mcp/duckduckgo"
+            ],
+            "enabled": true
+        },
+        "playwright": {
+            "type": "local",
+            "command": [
+                "docker",
+                "run",
+                "-i",
+                "--rm",
+                "mcp/playwright"
+            ],
+            "enabled": true
+        }
+    },
     "permission": {
         "*": "ask",
+        "playwright_*": "allow",
+        "duckduckgo_*": "allow",
         "external_directory": "deny",
         "task": "allow",
         "todoread": "allow",
@@ -82,11 +109,10 @@
             "xargs *": "allow",
             "yes *": "allow",
             "mkdir *": "allow",
-            "deno *": "allow",
-            "npm *": "allow",
-            "npx *": "allow",
-            "node *": "allow",
             "ffmpeg *": "allow",
+            "strings *": "allow",
+            "readelf *": "allow",
+            "nm *": "allow",
             "docker *": "allow",
             "docker* prune*": "ask",
             "docker* rm *": "ask",
@@ -104,7 +130,10 @@
             "sleep *": "allow",
             "google-chrome *": "allow",
             "touch *": "allow",
-            "host *": "allow"
+            "host *": "allow",
+            // check syntax:
+            "python -m py_compile *": "allow",
+            "deno check *": "allow"
         }
     }
 }
