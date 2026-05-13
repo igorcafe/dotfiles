@@ -7,22 +7,23 @@
 
     ## editors
     vim
-    vscode
+    neovim
+    # vscode
 
     ## compilers, LSPs and other tools
-    go
-    gopls
+    # go
+    # gopls
     python3
     pyright
-    python312Packages.pip
-    # python312Packages.debugpy
+    # python312Packages.pip
+    # # python312Packages.debugpy
     deno
-    nodejs
-    vue-language-server
+    # nodejs
+    # vue-language-server
     clang-tools
-    nixd
+    # nixd
     # nodePackages.typescript-language-server
-    # gcc
+    gcc
     # pkg-config
     # cmake
     # gnumake
@@ -45,17 +46,45 @@
       interactive = true;
     })
 
+    bubblewrap
+
+    distrobox
+
     ## mobile tools
     # android-studio
     # flutter
-    # jdk8
+    # jdk17
+    # gradle
+    # (pkgs.androidenv.composeAndroidPackages {
+    #   platformVersions = [ "34" "35" "36" ];
+    #   buildToolsVersions = [ "28.0.3" "34.0.0" "35.0.0" ];
+    #   includeEmulator = false;
+    #   includeNDK = true;
+    #   ndkVersions = [ "26.3.11579264" "28.2.13676358" ];
+    #   cmakeVersions = [ "3.22.1" ];
+    #   includeSources = false;
+    #   includeSystemImages = false;
+    #   abiVersions = [ "arm64-v8a" "x86_64" ];
+    #   extraLicenses = [
+    #     "android-googletv-license"
+    #     "android-sdk-arm-dbt-license"
+    #     "android-sdk-license"
+    #     "android-sdk-preview-license"
+    #     "google-gdk-license"
+    #     "intel-android-extra-license"
+    #     "intel-android-sysimage-license"
+    #     "mips-android-sysimage-license"
+    #   ];
+    # }).androidsdk
 
-    gcc
+    # gcc
+
+    gdb
 
     binutils
 
     ## game dev
-    godot_4
+    # godot_4
 
     # AI coding tools
     # aider-chat-with-playwright
@@ -81,10 +110,9 @@
     ]));
   };
 
-  # services.ollama = {
-  #   enable = true;
-  #   package = unstable.ollama;
-  # };
+  services.ollama = {
+    enable = false;
+  };
 
   services.redis.servers."".enable = false;
 }

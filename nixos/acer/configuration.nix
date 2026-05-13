@@ -13,7 +13,10 @@
     ./hardware-configuration.nix
   ];
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    android_sdk.accept_license = true;
+  };
 
   nix = {
     nixPath = [
@@ -35,7 +38,7 @@
   users.users.igor = {
     isNormalUser = true;
     description = "igor";
-    extraGroups = [ "networkmanager" "wheel" "docker" "jackaudio" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "jackaudio" "ydotool" ];
   };
 
   environment.interactiveShellInit = ''
@@ -44,7 +47,7 @@
 
   environment.systemPackages = with pkgs; [
     google-chrome
-    firefox
+    # firefox
 
     ## CLI general utilities
     unzip
@@ -58,7 +61,9 @@
     lsof
     jq
 
+    # openai-whisper
     libnotify
+
 
     # stow
     # ispell
@@ -70,24 +75,24 @@
     ## audio/video/image production
     easyeffects
     ffmpeg
-    musescore
-    gimp
+    # musescore
+    # gimp
     # guitarix
-    audacity
-    reaper
+    # audacity
+    # reaper
     # neural-amp-modeler-lv2
-    kdePackages.kdenlive
+    # kdePackages.kdenlive
     obs-studio
 
     kdePackages.plasma-browser-integration
     kdePackages.kcalc
-    kdePackages.kdeconnect-kde
-    blender
-    transmission_4-qt6
+    # kdePackages.kdeconnect-kde
+    # blender
+    # transmission_4-qt6
     bitwarden-desktop
     wl-clipboard-rs
 
-    xournalpp
+    # xournalpp
     logseq
 
     # mermaid-cli
@@ -99,9 +104,9 @@
 
     pinentry-qt
     pinentry-emacs
-    mpv
+    # mpv
     # svp
-    yt-dlp
+    # yt-dlp
     # activitywatch
     # stremio # disabled because of qtwebengine
 
@@ -114,18 +119,23 @@
 
     # postman
 
-    aircrack-ng
+    # aircrack-ng
     # qemu
 
 
 
-    nmap
+    # nmap
 
 
     # protonvpn-gui
     # logmein-hamachi
     # haguichi
   ];
+
+
+  programs.ydotool = {
+    enable = false;
+  };
 
   programs.nix-ld = {
     enable = false;
@@ -163,7 +173,7 @@
   services.guix.enable = false;
 
   services.syncthing = {
-    enable = true;
+    enable = false;
     openDefaultPorts = true;
     systemService = true;
     user = "igor";

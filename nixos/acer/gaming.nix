@@ -1,14 +1,14 @@
-{ pkgs, ...}:
+{ pkgs, lib, ...}:
 {
   nixpkgs.overlays = [
     (final: prev: {
       retroarch-bare = prev.retroarch-bare.overrideAttrs (old: {
-        version = "master-2026-04-21";
+        version = "master-2026-05-08";
         src = prev.fetchFromGitHub {
           owner = "libretro";
           repo = "RetroArch";
-          rev = "3cfde0ffe71ac9eceb36100448804d941bb1e1cc";
-          hash = "sha256-aj93iGX2+z+4c4cb9D/Z0CCjpjOJpph/CHHFxXd40JI=";
+          rev = "d1c4f72747bc0152a6e4d3b95f4cbeddeef466ab";
+          hash = "sha256-0/ppwZZHqOdigcqqdGwAInXK45dAfsyF5aoLUUYjxjk=";
         };
       });
     })
@@ -17,7 +17,7 @@
   environment.systemPackages = with pkgs; [
     ## emulation
     (retroarch.withCores (cores: with cores; [
-      genesis-plus-gx # sega genesis / megadrive
+      # genesis-plus-gx # sega genesis / megadrive
       fceumm # nes
       snes9x # snes
       # mupen64plus # n64
@@ -32,45 +32,33 @@
         patches = [];
       }))
       dosbox# dos
-      beetle-gba # gba
-      desmume # nds
+      # beetle-gba # gba
+      # desmume # nds
       citra # 3ds
       pcsx2 # ps2 (lrps2)
-      fmsx # msx
-      snes9x2010 # snes (fixed version for netplay)
-      # dolphin # gamecube / wii
-      (dolphin.overrideAttrs (_: {
-        version = "0-unstable-2026-04-08";
-        src = pkgs.fetchFromGitHub {
-          owner = "libretro";
-          repo = "dolphin";
-          rev = "0cd3bb89c29535db9b7552fc86871867ccf5b471";
-          hash = "sha256-cSiJO/EvspNvHopo/RLfuz8ONpbXk2NrrSDhkiAm7/s=";
-          fetchSubmodules = true;
-        };
-        dontUseCmakeBuildDir = false;
-      }))
-      beetle-psx # ps1 / psx
-      beetle-psx-hw # ps1 / psx
-      ppsspp # psp
+      # fmsx # msx
+      # snes9x2010 # snes (fixed version for netplay)
+      dolphin # gamecube / wii
+      # beetle-psx-hw # ps1 / psx
+      # ppsspp # psp
       picodrive # SG-1000, SC-3000, Master System/Mark III, Game Gear, Mega Drive/Genesis, Sega/Mega CD, 32X, Pico
       mrboom # bomberman clone
-      stella2014 # atari 2600
+      # stella2014 # atari 2600
     ]))
 
-    rpcs3 # ps3
-    pcsx2 # ps2
+    # rpcs3 # ps3
+    # pcsx2 # ps2
 
     vulkan-tools
     mesa-demos
 
     ## games
-    xonotic
-    clonehero
-    supermariowar
+    # xonotic
+    # clonehero
+    # supermariowar
 
     ## game launchers and compatibility layers
-    lutris
+    # lutris
     # heroic = heroic-2_19.heroic;
 
     mangohud
