@@ -8,7 +8,7 @@
            common-header-mode-line company consult-eglot dape
            desktop-environment diff-hl dired-preview dired-subtree
            dockerfile-mode doom-modeline doom-themes eat edit-indirect
-           eldoc-box elfeed emmet-mode envrc erc-hl-nicks
+           eldoc-box elfeed elfeed-org emmet-mode envrc erc-hl-nicks
            eshell-prompt-extras esup evil-collection evil-numbers
            evil-surround exwm eyebrowse glsl-mode gnuplot go-tag gptel
            graphviz-dot-mode haskell-mode htmlize key-chord marginalia

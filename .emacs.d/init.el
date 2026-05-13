@@ -1029,43 +1029,14 @@
 
 ;; elfeed - client for Atom and RSS feeds
 (use-package elfeed
-  :commands elfeed
+:vc (:url "https://github.com/emacs-elfeed/elfeed.git" :rev :newest)
+  :commands elfeed)
+
+(use-package elfeed-org
+  :after elfeed
   :config
-  (setq elfeed-feeds
-        '(
-          ;; DHH
-          ("https://world.hey.com/dhh/feed.atom")
-
-          ;; Martin Fowler
-          ("https://martinfowler.com/feed.atom")
-
-          ;; Go Blog
-          ("https://go.dev/blog/feed.atom" golang)
-
-          ;; Lakka News
-          ("https://www.lakka.tv/articles/feed.xml")
-
-          ;; Igor Melo (dev.to)
-          ("https://dev.to/feed/igormelo")
-
-          ;; Things of Interest - Blog
-          ("https://qntm.org/rss.php?blog")
-
-          ;; Jesse Li
-          ("https://blog.jse.li/index.xml")
-
-          ;; Planet Emacslife
-          ("https://planet.emacslife.com/atom.xml" emacs)
-
-          ("https://g1.globo.com/dynamo/economia/rss2.xml")
-
-          ;; ThePrimeTime
-          ;;"https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ"
-          ;; Mental Outlaw
-          ;;"https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA"
-          ;; Fireship
-          ;;"https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA"
-          )))
+  (elfeed-org)
+  (setq rmh-elfeed-org-files (list (expand-file-name "elfeed.org" org-directory))))
 
 ;; pdf-tools - read PDFs in emacs
 ;; I tried default emacs doc-view-mode but it didn't work with the PDFs I tested.
@@ -2117,3 +2088,6 @@ limit 20
   (cl-defmethod eglot-initialization-options ((server eglot-deno))
     "Passes through required deno initialization options"
     (list :enable t :lint t)))
+(put 'narrow-to-region 'disabled nil)
+
+(add-hook 'after-init-hook #'server-start)

@@ -135,5 +135,34 @@
             "python -m py_compile *": "allow",
             "deno check *": "allow"
         }
+    },
+    "enabled_providers": ["aoai", "az-anthropic"],
+    "provider": {
+        "aoai": {
+            "npm": "@ai-sdk/openai",
+            "name": "Azure OpenAI (Responses API)",
+            "options": {
+                "baseURL": "{file:~/.config/opencode/secrets/aoai-base-url}",
+                "apiKey": "{file:~/.config/opencode/secrets/aoai-api-key}"
+            },
+            "models": {
+                "gpt-5.2": { "limit": { "context": 300000, "output": 128000 } },
+                "gpt-5.3-codex": { "limit": { "context": 300000, "output": 128000 } },
+                "gpt-5.4": { "limit": { "context": 1000000, "output": 128000 } },
+                "gpt-5.5": {
+                    "limit": {
+                        "context": 1000000,
+                        "output": 128000
+                    },
+                    "variants": {
+                        "xhigh": {
+                            "reasoningEffort": "xhigh",
+                            "textVerbosity": "low",
+                            "reasoningSummary": "auto"
+                        }
+                    }
+                }
+            }
+        }
     }
 }
