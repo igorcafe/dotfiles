@@ -14,6 +14,9 @@ zplug load
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+HISTSIZE=100000
+SAVEHIST=100000
+
 eval "$(direnv hook zsh)"
 export PATH="$PATH:$(go env GOPATH)/bin"
 
@@ -24,3 +27,6 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 
 export CHROME_EXECUTABLE="google-chrome-stable"
 export EDITOR="emacsclient -c -r"
+
+alias vim="nvim"
+
