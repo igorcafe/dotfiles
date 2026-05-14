@@ -4,6 +4,9 @@
 ;; show GC messages
 (setq garbage-collection-messages t)
 
+(setq debug-on-error t)
+;; (add-hook 'after-init-hook (lambda () (setq debug-on-error nil)))
+
 ;;
 (require 'package)
 
@@ -246,11 +249,11 @@
 
 ;; doom-themes - nice themes
 (use-package doom-themes
-  :defer 0.3
+  :defer
   :config
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic t)
-  (load-theme 'doom-one t))
+  (when nil (load-theme 'doom-one t)))
 
 ;; utility for switching themes
 (defun switch-theme (theme &optional no-confirm no-enable)
@@ -261,7 +264,10 @@
                                      (custom-available-themes))))
     nil nil))
   (mapc 'disable-theme custom-enabled-themes)
-  (load-theme theme))
+  (load-theme theme no-confirm no-enable))
+
+;; set theme
+(switch-theme 'modus-operandi t)
 
 ;; cycle between favorite theme
 (use-package emacs
@@ -1029,14 +1035,58 @@
 
 ;; elfeed - client for Atom and RSS feeds
 (use-package elfeed
-:vc (:url "https://github.com/emacs-elfeed/elfeed.git" :rev :newest)
-  :commands elfeed)
+  :after (evil)
+  :vc (:url "https://github.com/emacs-elfeed/elfeed.git" :rev :newest)
+  :preface
+  (defun my/elfeed-search-show-entry (entry)
+    (interactive (list (elfeed-search-selected :ignore-region))
+                 elfeed-search-mode)
+    (let* ((link (elfeed-entry-link entry)))
+      (if (not link)
+          nil
+        (cond
+         ((string-search "nitter.net" link)
+          (elfeed-search-show-entry entry))
+         (t
+          (elfeed-search-browse-url))))))
+  :hook (elfeed-mode . elfeed-update)
+  :config
+  (setq elfeed-search-filter "-politics")
+  (evil-define-key 'normal elfeed-search-mode-map
+    (kbd "<return>") #'my/elfeed-search-show-entry
+    (kbd "S-<return>") #'elfeed-search-show-entry))
 
+;; elfeed-org - configure elfeed channels through org file
 (use-package elfeed-org
-  :after elfeed
+  :after (elfeed org)
   :config
   (elfeed-org)
   (setq rmh-elfeed-org-files (list (expand-file-name "elfeed.org" org-directory))))
+
+;; eww (builtin) - simple browser
+(use-package eww
+  :defer t
+  :preface
+  ;; `eww-readable-urls' will activate readable mode for almost all pages.
+  ;; but this won't work on pages that don't use semantic html5 tags.
+  ;; some sites have this "Skip to content" button for screen readers...
+  ;; if it exists, click it right after eww renders page
+  (defun my/eww-skip-to-content ()
+    (interactive)
+    (goto-char (point-min))
+    (when (search-forward "Skip to content")
+      (backward-word)
+      (eww-follow-link)
+      (recenter 0)))
+  :hook ((eww-mode . visual-line-mode)
+         (eww-after-render . my/eww-skip-to-content))
+  :init
+  ;; skip to readable part in sites that is possible
+  (setq eww-readable-urls
+        '(("\bnitter\b" . nil)
+          (".*" . t)))
+  (setq browse-url-browser-function 'eww-browse-url)
+  (setq browse-url-secondary-browser-function 'browse-url-default-browser))
 
 ;; pdf-tools - read PDFs in emacs
 ;; I tried default emacs doc-view-mode but it didn't work with the PDFs I tested.
@@ -1101,26 +1151,6 @@
              (nnimap-stream ssl)
              (nnimap-authinfo-file "~/.authinfo.gpg")))))
 
-;; eww (builtin) - simple browser
-;; Wrap lines instead of truncating
-(use-package emacs
-  :hook (eww-mode . visual-line-mode)
-  :config
-  ;; name buffers as [ domain ] - [ title ]
-  (setq eww-readable-urls '(".*"))
-  (setq eww-auto-rename-buffer "url")
-  ;; (setq eww-auto-rename-buffer
-  ;;       (lambda ()
-  ;;         (let* ((url (plist-get eww-data :url))
-  ;;                (domain (url-host (url-generic-parse-url url)))
-  ;;                (title (plist-get eww-data :title)))
-  ;;           (if (and title (not (string= title ""))
-  ;;                      domain (not (string= domain "")))
-  ;;               (format "*%s - %s*" domain title)
-  ;;             (if ))
-  ;;           nil)))
-  )
-
 ;; gptel - GPT inside emacs
 (use-package gptel
   :defer t
@@ -1134,6 +1164,16 @@
   (defun mpv-playlist-shuffle ()
     (interactive)
     (mpv-run-command "playlist-shuffle"))
+
+  (defun my/mpv-force-unpause ()
+    (require 'mpv)
+    (when (eq (mpv-get-property "pause") t)
+      (mpv-pause)))
+
+  (defun my/mpv-force-pause ()
+    (require 'mpv)
+    (unless (eq (mpv-get-property "pause") t)
+      (mpv-pause)))
   :custom
   (mpv-default-options '("--keep-open=no")))
 
@@ -1880,6 +1920,20 @@
 ;; org-roam - org knowledge management system
 (use-package org-roam
   :init
+  (defun my/org-roam-link-capture ()
+    (interactive)
+    (require 'org-cliplink)
+    (let* ((url (org-cliplink-clipboard-content))
+           (title (org-cliplink-retrieve-title-synchronously url))
+           (prefix (cond ((string-match-p "youtube" url) "Video")
+                         (t "Article"))))
+      (when (null title)
+        (user-error "Invalid url: '%s'" url))
+      (org-roam-node-find nil
+                          (format "%s: %s" prefix title))
+      (goto-char (point-max))
+      (insert (format "* [[%s][%s]]\n** " url title))))
+
   ;; add roam node files that contains specific tags to agenda
   (defun my/add-roam-files-to-agenda (&rest args)
     (require 'org-roam)
@@ -1941,8 +1995,9 @@ limit 20
   (("C-c n f" . org-roam-node-find)
    ("C-c n F" . my/org-roam-node-find)
    ("C-c n w" . org-roam-refile)
+   ("C-c n b" . org-roam-buffer-toggle)
    ("C-c n i" . org-roam-node-insert)
-   ("C-c n l" . org-roam-buffer-toggle)
+   ("C-c n l" . my/org-roam-link-capture)
    ("C-c n c" . org-roam-dailies-capture-today)
    ("C-c n d" . org-roam-dailies-find-date)))
 
@@ -2091,3 +2146,4 @@ limit 20
 (put 'narrow-to-region 'disabled nil)
 
 (add-hook 'after-init-hook #'server-start)
+(put 'list-timers 'disabled nil)
