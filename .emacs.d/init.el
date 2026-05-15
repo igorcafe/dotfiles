@@ -536,6 +536,13 @@
                     (setq c-basic-offset 2)
                     (setq indent-tabs-mode nil))))
 
+;; elisp -- fix horrible indent
+(use-package elisp-mode
+  :ensure nil
+  :hook
+  (emacs-lisp-mode . (lambda ()
+                       (setq tab-width 8))))
+
 ;; eglot (builtin) - LSP client
 ;; Eglot is a builtin LSP (Language Server Protocol) client for emacs.
 
@@ -685,7 +692,7 @@
   :bind ("C-x C-r" . consult-recent-file))
 
 ;; use-package org to avoid any bugs
-(use-package org :defer t)
+(use-package org :defer t :ensure nil)
 
 ;; olivetti - horizontal paddings for windows
 (use-package olivetti
@@ -1038,6 +1045,12 @@
   :after (evil)
   :vc (:url "https://github.com/emacs-elfeed/elfeed.git" :rev :newest)
   :preface
+  ;; advice for always updating elfeed on runnig M-x elfeed
+  (defun my/elfeed-advice (&rest _)
+    (elfeed-org)
+    (elfeed-update))
+
+  ;; show nitter urls on feed preview and show all other urls in eww
   (defun my/elfeed-search-show-entry (entry)
     (interactive (list (elfeed-search-selected :ignore-region))
                  elfeed-search-mode)
@@ -1049,8 +1062,10 @@
           (elfeed-search-show-entry entry))
          (t
           (elfeed-search-browse-url))))))
-  :hook (elfeed-mode . elfeed-update)
+
+  :hook (elfeed-search-mode . elfeed-update)
   :config
+  (advice-add 'elfeed :after #'my/elfeed-advice)
   (setq elfeed-search-filter "-politics")
   (evil-define-key 'normal elfeed-search-mode-map
     (kbd "<return>") #'my/elfeed-search-show-entry
@@ -1087,6 +1102,19 @@
           (".*" . t)))
   (setq browse-url-browser-function 'eww-browse-url)
   (setq browse-url-secondary-browser-function 'browse-url-default-browser))
+
+;; browse-url -- builtin package for launching urls
+(use-package browse-url
+  :ensure nil
+  :after evil
+  :preface
+  (defun my/browse-url-at-point-secondary ()
+    (interactive)
+    (let ((browse-url-browser-function browse-url-secondary-browser-function))
+      (call-interactively 'browse-url-at-point)))
+  :config
+  (evil-define-key 'normal 'global
+    (kbd "g X") #'my/browse-url-at-point-secondary))
 
 ;; pdf-tools - read PDFs in emacs
 ;; I tried default emacs doc-view-mode but it didn't work with the PDFs I tested.
@@ -1929,10 +1957,11 @@
                          (t "Article"))))
       (when (null title)
         (user-error "Invalid url: '%s'" url))
-      (org-roam-node-find nil
-                          (format "%s: %s" prefix title))
+      (org-roam-node-find nil (format "%s: %s" prefix title))
       (goto-char (point-max))
-      (insert (format "* [[%s][%s]]\n** " url title))))
+      (org-roam-dailies-find-today)
+      (goto-char (point-max))
+      (insert (format "\n* [[%s][%s]]\n** " url title))))
 
   ;; add roam node files that contains specific tags to agenda
   (defun my/add-roam-files-to-agenda (&rest args)
