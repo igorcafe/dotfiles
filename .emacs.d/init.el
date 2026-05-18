@@ -25,6 +25,68 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
+;; evil-mode - vim mode emulation
+;; evil mode and evil-collection provide vim-like bindings.
+(use-package evil
+  :custom
+  (evil-want-integration t)
+  (evil-want-C-u-scroll t)
+  (evil-want-keybinding nil) ; what? idk
+  ;;(evil-want-minibuffer t)
+  (evil-undo-system 'undo-redo)
+  (evil-cross-lines t)
+  :bind
+  (("s-k" . previous-buffer)
+   ("s-j" . next-buffer)
+   ("C-x C-x" . universal-argument)
+   ("C-d" . nil)
+   :map evil-insert-state-map
+   ("C-a" . nil)
+   ("C-e" . nil)
+   ("C-r" . nil)
+   ("C-d" . nil)
+   ("C-y" . nil)
+   :map evil-motion-state-map
+   ("C-w >" . (lambda () (interactive) (evil-window-increase-width 10)))
+   ("C-w <" . (lambda () (interactive) (evil-window-decrease-width 10)))
+   ("C-y" . nil)
+   ("SPC" . nil)
+   :map evil-normal-state-map
+   ("SPC" . nil)
+   ("C-#" . evil-search-word-backward)
+   ("C-*" . evil-search-word-forward)
+   ("#" . (lambda ()
+            (interactive)
+            (evil-search-word-backward 1 (thing-at-point 'symbol))))
+   ("*" . (lambda ()
+            (interactive)
+            (evil-search-word-forward 1 (thing-at-point 'symbol)))))
+   ("C-y" . nil)
+  :init
+  (evil-mode 1)
+  (evil-define-key 'insert 'global (kbd "C-k") 'kill-line))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+
+;; evil-surround - surround text with parenthesis, quotes, and so on
+;; Works exactly like you-surround.
+(use-package evil-surround
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
+
+;; key-chord - time-based keymaps for evil
+;; I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
+(use-package key-chord
+  :after evil
+  :config
+  (key-chord-mode 1)
+  (setq key-chord-two-keys-delay 0.2)
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
+
 ;; setup straight.el
 ;; (defvar bootstrap-version)
 ;; (let ((bootstrap-file
@@ -167,68 +229,6 @@
   (setq display-time-default-load-average nil)
   (display-time-mode 1)
   (display-battery-mode 1))
-
-;; evil-mode - vim mode emulation
-;; evil mode and evil-collection provide vim-like bindings.
-(use-package evil
-  :defer 1
-  :custom
-  (evil-want-integration t)
-  (evil-want-C-u-scroll t)
-  (evil-want-keybinding nil) ; what? idk
-  ;;(evil-want-minibuffer t)
-  (evil-undo-system 'undo-redo)
-  (evil-cross-lines t)
-  :bind
-  (("C-x C-h" . previous-buffer)
-   ("C-x C-l" . next-buffer)
-   ("C-x C-u" . universal-argument)
-   ("C-d" . nil)
-   :map evil-insert-state-map
-   ("C-a" . nil)
-   ("C-e" . nil)
-   ("C-r" . nil)
-   ("C-d" . nil)
-   ("C-y" . nil)
-   :map evil-motion-state-map
-   ("C-w >" . (lambda () (interactive) (evil-window-increase-width 10)))
-   ("C-w <" . (lambda () (interactive) (evil-window-decrease-width 10)))
-   ("C-y" . nil)
-   ("SPC" . nil)
-   :map evil-normal-state-map
-   ("SPC" . nil)
-   ("C-#" . evil-search-word-backward)
-   ("C-*" . evil-search-word-forward)
-   ("#" . (lambda ()
-            (interactive)
-            (evil-search-word-backward 1 (thing-at-point 'symbol))))
-   ("*" . (lambda ()
-            (interactive)
-            (evil-search-word-forward 1 (thing-at-point 'symbol)))))
-   ("C-y" . nil)
-  :config
-  (evil-mode 1))
-
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
-
-;; evil-surround - surround text with parenthesis, quotes, and so on
-;; Works exactly like you-surround.
-(use-package evil-surround
-  :after evil
-  :config
-  (global-evil-surround-mode 1))
-
-;; key-chord - time-based keymaps for evil
-;; I only use it to map ~jk~ to ~<Escape>~, aka switch to normal mode.
-(use-package key-chord
-  :after evil
-  :config
-  (key-chord-mode 1)
-  (setq key-chord-two-keys-delay 0.2)
-  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
 ;; hl-line-mode - highlight current line
 (use-package emacs
