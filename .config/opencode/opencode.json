@@ -29,7 +29,10 @@
         "*": "ask",
         "playwright_*": "allow",
         "duckduckgo_*": "allow",
-        "external_directory": "deny",
+        "external_directory": {
+            "*": "deny",
+            "/tmp/opencode/*": "allow"
+        },
         "task": "allow",
         "todoread": "allow",
         "todowrite": "allow",
