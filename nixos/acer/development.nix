@@ -10,6 +10,9 @@
     neovim
     # vscode
 
+    ## OS
+    emacs-gtk
+
     ## compilers, LSPs and other tools
     # go
     # gopls
@@ -103,7 +106,7 @@
   # ];
 
   services.emacs = {
-    enable = true;
+    enable = false;
     package = (pkgs.emacs-gtk.pkgs.withPackages (epkgs: with epkgs; [
       vterm
       # melpaPackages.telega
