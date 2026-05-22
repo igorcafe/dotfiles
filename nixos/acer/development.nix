@@ -30,8 +30,8 @@
     # pkg-config
     # cmake
     # gnumake
-    # ghc
-    # haskell-language-server
+    ghc
+    haskell-language-server
     # cargo
     # rustc
     # rust-analyzer
@@ -87,7 +87,7 @@
     binutils
 
     ## game dev
-    # godot_4
+    godot_4
 
     # AI coding tools
     # aider-chat-with-playwright

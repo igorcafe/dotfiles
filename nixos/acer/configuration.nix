@@ -64,6 +64,8 @@
     # openai-whisper
     libnotify
 
+    tetex
+
 
     # stow
     # ispell
@@ -109,6 +111,7 @@
     # yt-dlp
     # activitywatch
     # stremio # disabled because of qtwebengine
+    stremio-linux-shell # replacement for above
 
     # for exwm
     # scrot
