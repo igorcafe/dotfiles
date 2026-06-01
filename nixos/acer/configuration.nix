@@ -41,9 +41,9 @@
     extraGroups = [ "networkmanager" "wheel" "docker" "jackaudio" "ydotool" ];
   };
 
-  environment.interactiveShellInit = ''
-  alias youtube-dl=yt-dlp
-  '';
+  environment.shellAliases = {
+    youtube-dl = "yt-dlp";
+  };
 
   environment.systemPackages = with pkgs; [
     google-chrome
@@ -176,7 +176,7 @@
   services.guix.enable = false;
 
   services.syncthing = {
-    enable = false;
+    enable = true;
     openDefaultPorts = true;
     systemService = true;
     user = "igor";

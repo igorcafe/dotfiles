@@ -14,8 +14,8 @@
     emacs-gtk
 
     ## compilers, LSPs and other tools
-    # go
-    # gopls
+    go
+    gopls
     python3
     pyright
     # python312Packages.pip
@@ -107,10 +107,14 @@
 
   services.emacs = {
     enable = false;
-    package = (pkgs.emacs-gtk.pkgs.withPackages (epkgs: with epkgs; [
-      vterm
-      # melpaPackages.telega
-    ]));
+    package = pkgs.emacs-gtk.pkgs;
+    defaultEditor = true;
+    startWithGraphical = true;
+  };
+
+  environment.shellAliases = {
+    vim = "nvim";
+    ll = "ls -lha";
   };
 
   services.ollama = {
