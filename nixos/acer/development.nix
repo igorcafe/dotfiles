@@ -12,6 +12,7 @@
 
     ## compilers, LSPs and other tools
     go
+    delve
     gopls
     python3
     pyright
