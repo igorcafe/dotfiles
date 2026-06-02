@@ -12,6 +12,11 @@
         };
       });
     })
+    (final: prev: {
+      openldap = prev.openldap.overrideAttrs (_: {
+        doCheck = !prev.stdenv.hostPlatform.isi686;
+      });
+    })
   ];
 
   environment.systemPackages = with pkgs; [
@@ -58,7 +63,7 @@
     # supermariowar
 
     ## game launchers and compatibility layers
-    # lutris
+    lutris
     # heroic = heroic-2_19.heroic;
 
     mangohud
