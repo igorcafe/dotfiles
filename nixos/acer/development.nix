@@ -10,9 +10,6 @@
     neovim
     # vscode
 
-    ## OS
-    emacs-gtk
-
     ## compilers, LSPs and other tools
     go
     gopls
@@ -106,8 +103,8 @@
   # ];
 
   services.emacs = {
-    enable = false;
-    package = pkgs.emacs-gtk.pkgs;
+    enable = true;
+    package = pkgs.emacs-gtk;
     defaultEditor = true;
     startWithGraphical = true;
   };
