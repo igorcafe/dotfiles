@@ -1,2 +1,4 @@
 commit_files.sh
 .config/opencode/secrets/
+.config/mpv/*.jpg
+.config/mpv/persistent_config.json
