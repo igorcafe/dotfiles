@@ -36,22 +36,19 @@
   (evil-undo-system 'undo-redo)
   (evil-cross-lines t)
   :bind
-  (("s-k" . previous-buffer)
-   ("s-j" . next-buffer)
-   ("C-x C-x" . universal-argument)
-   ("C-d" . nil)
-   :map evil-insert-state-map
+  (:map evil-insert-state-map
    ("C-a" . nil)
    ("C-e" . nil)
+   ("C-y" . nil)
+   ("C-k" . nil)
    ("C-r" . nil)
    ("C-d" . nil)
-   ("C-y" . nil)
-   :map evil-motion-state-map
-   ("C-w >" . (lambda () (interactive) (evil-window-increase-width 10)))
-   ("C-w <" . (lambda () (interactive) (evil-window-decrease-width 10)))
-   ("C-y" . nil)
-   ("SPC" . nil)
+   ("RET" . nil)
    :map evil-normal-state-map
+   ("C-a" . nil)
+   ("C-e" . nil)
+   ("C-y" . nil)
+   ("C-k" . nil)
    ("SPC" . nil)
    ("C-#" . evil-search-word-backward)
    ("C-*" . evil-search-word-forward)
@@ -60,11 +57,24 @@
             (evil-search-word-backward 1 (thing-at-point 'symbol))))
    ("*" . (lambda ()
             (interactive)
-            (evil-search-word-forward 1 (thing-at-point 'symbol)))))
+            (evil-search-word-forward 1 (thing-at-point 'symbol))))
+   :map evil-motion-state-map
+   ("C-a" . nil)
+   ("C-e" . nil)
    ("C-y" . nil)
+   ("C-k" . nil)
+   ("C-w >" . (lambda () (interactive) (evil-window-increase-width 10)))
+   ("C-w <" . (lambda () (interactive) (evil-window-decrease-width 10)))
+   ("C-y" . nil)
+   ("SPC" . nil))
   :init
   (evil-mode 1)
-  (evil-define-key 'insert 'global (kbd "C-k") 'kill-line))
+  :config
+  ;; force this bindings on any mode
+  (dolist (pair '(("C-x C-h" . previous-buffer)
+                  ("C-x C-l" . next-buffer)
+                  ("C-x C-x" . universal-argument)))
+    (bind-key* (car pair) (cdr pair))))
 
 (use-package evil-collection
   :after evil
@@ -86,6 +96,15 @@
   (key-chord-mode 1)
   (setq key-chord-two-keys-delay 0.2)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
+
+
+(defun my/profiler-toggle ()
+  (interactive)
+  (if (profiler-running-p)
+      (progn
+        (profiler-stop)
+        (profiler-report))
+    (call-interactively 'profiler-start)))
 
 ;; setup straight.el
 ;; (defvar bootstrap-version)
@@ -191,22 +210,28 @@
   :config
   (global-auto-revert-mode 1))
 
+(use-package emacs
+  :bind ("C-M-'" . (lambda ()
+                     (interactive)
+                     (find-file user-init-file))))
+
 ;; persistent scratch file
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (find-file (expand-file-name "scratch.el" user-emacs-directory))))
+            (find-file user-init-file)))
 
 ;; function to quickly delete file associated with current buffer
 ;; and killing the buffer... use with cautious!
 (use-package emacs
   :after (evil)
   :config
-  (defun my/current-buffer-delete ()
+  (defun my/delete-current-buffer-file ()
     (interactive)
     (delete-file (buffer-file-name))
     (kill-buffer (current-buffer)))
-  :bind (:map evil-normal-state-map
-        ("SPC b X" . my/current-buffer-delete)))
+  ;; :bind (:map evil-normal-state-map
+  ;;             ("SPC b X" . my/delete-current-buffer-file))
+  )
 
 ;; Use =ibuffer= (builtin) instead of list-buffers.
 (use-package emacs
@@ -267,7 +292,9 @@
   (load-theme theme no-confirm no-enable))
 
 ;; set theme
-(switch-theme 'modus-operandi t)
+(use-package emacs
+  :hook (emacs-startup . (lambda ()
+                           (switch-theme 'modus-operandi t))))
 
 ;; cycle between favorite theme
 (use-package emacs
@@ -283,49 +310,49 @@
       (load-theme theme t))))
 
 
-(use-package snake
-  :ensure nil
-  :config
-  (setq snake-initial-velocity-x 1)
-  (setq snake-dot-options '(((glyph colorize) (t 42))
-                       ((color-x color-x) (mono-x grid-x) (color-tty color-tty))
-                       (((glyph color-x) [1 0.2 0.1]) (color-tty "red"))))
-  (setq snake-snake-options '(((glyph colorize) (emacs-tty 79) (t 32))
-                         ((color-x color-x) (mono-x mono-x) (color-tty color-tty)
-                          (mono-tty mono-tty))
-                         (((glyph color-x) [0.3 0.7 0.1]) (color-tty "green"))))
-  (setq snake-border-options '(((glyph colorize) (t 43))
-                         ((color-x color-x) (mono-x grid-x) (color-tty color-tty))
-                         (((glyph color-x) [0.5 0.5 0.5]) (color-tty "white"))))
-  (setq snake-blank-options '(((glyph colorize) (t 32))
-                         ((color-x color-x) (mono-x grid-x) (color-tty color-tty))
-                         (((glyph color-x) [0.2 0.2 0.1]) (color-tty "black")))))
+;; (use-package snake
+;;   :ensure nil
+;;   :config
+;;   (setq snake-initial-velocity-x 1)
+;;   (setq snake-dot-options '(((glyph colorize) (t 42))
+;;                        ((color-x color-x) (mono-x grid-x) (color-tty color-tty))
+;;                        (((glyph color-x) [1 0.2 0.1]) (color-tty "red"))))
+;;   (setq snake-snake-options '(((glyph colorize) (emacs-tty 79) (t 32))
+;;                          ((color-x color-x) (mono-x mono-x) (color-tty color-tty)
+;;                           (mono-tty mono-tty))
+;;                          (((glyph color-x) [0.3 0.7 0.1]) (color-tty "green"))))
+;;   (setq snake-border-options '(((glyph colorize) (t 43))
+;;                          ((color-x color-x) (mono-x grid-x) (color-tty color-tty))
+;;                          (((glyph color-x) [0.5 0.5 0.5]) (color-tty "white"))))
+;;   (setq snake-blank-options '(((glyph colorize) (t 32))
+;;                          ((color-x color-x) (mono-x grid-x) (color-tty color-tty))
+;;                          (((glyph color-x) [0.2 0.2 0.1]) (color-tty "black")))))
 
 ;; automatically change to light/dark theme following system theme
-(use-package dbus
-  :ensure nil
-  :config
-  (defun my/handle-dbus-setting-changed (a setting values)
-    (when (string= setting "ColorScheme")
-      (let ((scheme (car values)))
-        (cond
-         ((string-match-p "Dark" scheme)
-          (load-theme 'doom-one t))
-         ((string-match-p "Light" scheme)
-          (load-theme 'doom-one-light t))
-         (t
-          (warn "I don't know how to handle this ColorScheme: %s" scheme))))))
+;; (use-package dbus
+;;   :ensure nil
+;;   :config
+;;   (defun my/handle-dbus-setting-changed (a setting values)
+;;     (when (string= setting "ColorScheme")
+;;       (let ((scheme (car values)))
+;;         (cond
+;;          ((string-match-p "Dark" scheme)
+;;           (load-theme 'doom-one t))
+;;          ((string-match-p "Light" scheme)
+;;           (load-theme 'doom-one-light t))
+;;          (t
+;;           (warn "I don't know how to handle this ColorScheme: %s" scheme))))))
 
-  (dbus-register-signal :session
-                        "org.freedesktop.portal"
-                        "/org/freedesktop/portal/desktop"
-                        "org.freedesktop.impl.portal.Settings"
-                        "SettingChanged"
-                        #'my/handle-dbus-setting-changed))
+;;   (dbus-register-signal :session
+;;                         "org.freedesktop.portal"
+;;                         "/org/freedesktop/portal/desktop"
+;;                         "org.freedesktop.impl.portal.Settings"
+;;                         "SettingChanged"
+;;                         #'my/handle-dbus-setting-changed))
 
 ;; doom-modeline - nice modeline
 (use-package doom-modeline
-  :defer 1.2
+  :hook (emacs-startup . doom-modeline-mode)
   :config
   ;; (setq doom-modeline-buffer-name nil)
   (setq doom-modeline-buffer-encoding nil)
@@ -335,11 +362,11 @@
   (setq doom-modeline-lsp-icon nil)
   (setq doom-modeline-env-enable-python nil)
   (setq doom-modeline-persp-name nil)
-  (setq doom-modeline-persp-icon nil)
-  (doom-modeline-mode 1))
+  (setq doom-modeline-persp-icon nil))
 
 ;; flymake (builtin) - syntax checking
 (use-package flymake
+  :defer
   :ensure nil
   :config
   ;; TODO: advice
@@ -348,116 +375,47 @@
   (setq flymake-show-diagnostics-at-end-of-line 'short))
 
 ;; eletrict-pair-mode (builtin) - auto close pairs based on mode
-(electric-pair-mode 1)
+(use-package emacs
+  :hook (emacs-startup . (lambda ()
+                           (electric-pair-mode 1))))
 
 ;; keybindings for adding pairs -> ' " [ { (
 (use-package emacs
-  :after evil
-  :config
-  (dolist (pair '(("\"" "\"")
-                  ("'" "'")
-                  ("[" "]")
-                  ("{" "}")
-                  ("<" ">")))
-    (eval `(bind-key ,(concat "M-" (car pair))
-                     (lambda ()
-                       (interactive)
-                       (insert-pair nil ,(car pair) ,(car (last pair))))
-                     evil-visual-state-map))))
-
-;; compile - run commands and easily follow errors
-
-(defun my/compilation-buffers (&optional project)
-  (mapcar (lambda (buf)
-            (buffer-name buf))
-          (seq-filter
-           (lambda (buf)
-             (with-current-buffer buf
-               (and (eq major-mode 'compilation-mode)
-                    (or (eq project nil)
-                        (string= (project-root project)
-                                 (project-root (project-current)))))))
-           (buffer-list))))
-
-(defun my/compilation-buffer-name (name project)
-  (if project
-      (format "*[%s] compilation - %s*" (project-name project) name)
-    (format "*compilation - %s*" name)))
-
-(defun my/compile-switch-to-buffer (&optional project)
-  (interactive)
-  (let ((buffer (completing-read "Compilation buffer: "
-                                 (my/compilation-buffers project)
-                                 nil
-                                 t)))
-    (switch-to-buffer buffer)))
-
-(defun my/compile-switch-to-project-buffer (project)
-  (interactive (list (project-current t)))
-  (my/compile-switch-to-buffer project))
-
-
-(defun my/compile (cmd-or-buffer &optional project name)
-  (interactive (list (completing-read "[Re]compile: "
-                                (my/compilation-buffers))))
-  (let* ((buffer (get-buffer cmd-or-buffer))
-         (default-directory (if project
-                                (project-root project)
-                              default-directory))
-         (compilation-save-buffers-predicate
-          (lambda ()
-            (string-prefix-p default-directory
-                             (buffer-file-name)))))
-    (if buffer
-        (with-current-buffer buffer
-          (recompile))
-      (compilation-start
-       cmd-or-buffer
-       nil
-       (eval `(lambda (_)
-                ,(my/compilation-buffer-name (or name cmd-or-buffer) project)))))))
-
-(defun my/project-compile (cmd-or-buffer &optional project name)
-  (interactive (list (completing-read "Project [re]compile: "
-                                      (my/compilation-buffers))
-                     (project-current t)))
-  (my/compile cmd-or-buffer project name))
-
-(use-package compile
-  :ensure nil
-  :defer
-  :init
-  ;; :hook
-  ;; (compilation-filter . ansi-color-compilation-filter)
-  :config
-  (setq compilation-scroll-output t)
-  (setq compilation-always-kill t))
+  :hook (emacs-startup . (lambda ()
+                           (dolist (pair '(("\"" "\"")
+                                           ("'" "'")
+                                           ("[" "]")
+                                           ("{" "}")
+                                           ("<" ">")))
+                             (eval `(bind-key ,(concat "M-" (car pair))
+                                              (lambda ()
+                                                (interactive)
+                                                (insert-pair nil ,(car pair) ,(car (last pair))))
+                                              evil-visual-state-map))))))
 
 ;; project.el (builtin) - managing projects
 ;; Helps you manage projects based on version control systems, like
 ;; git repos. Check =C-x p p=.
-
-;; custom function for launching eshell with descriptive buffer names
-(defun my/project-eshell ()
-  (interactive)
-  (let* ((default-directory (project-root (project-current t)))
-         (proj-name (file-name-nondirectory
-                     (directory-file-name default-directory)))
-         (buffer-name (read-string "buffer name: "
-                                   (concat "eshell - " proj-name)))
-         (eshell-buffer (get-buffer buffer-name)))
-    (if eshell-buffer
-        (pop-to-buffer eshell-buffer)
-      (with-current-buffer (eshell t)
-        (rename-buffer (concat "*" buffer-name "*"))))))
-
-;; Replace default project grep with consult
-(defun my/consult-git-grep ()
-  (interactive)
-  (consult-git-grep nil (thing-at-point 'symbol)))
-
-;; Customize project.el commands.
 (use-package project
+  :preface
+  ;; custom function for launching eshell with descriptive buffer names
+  (defun my/project-eshell ()
+    (interactive)
+    (let* ((default-directory (project-root (project-current t)))
+           (proj-name (file-name-nondirectory
+                       (directory-file-name default-directory)))
+           (buffer-name (format "*eshell - %s*" proj-name))
+           (eshell-buffer (get-buffer buffer-name)))
+      (if eshell-buffer
+          (switch-to-buffer eshell-buffer)
+        (with-current-buffer (eshell t)
+          (rename-buffer buffer-name)))))
+
+  ;; Replace default project grep with consult
+  (defun my/consult-git-grep ()
+    (interactive)
+    (consult-git-grep nil (thing-at-point 'symbol)))
+
   :config
   (setq project-switch-commands
         '((project-find-file "Find file" ?f)
@@ -496,6 +454,9 @@
 
 ;; go-mode - Go support
 (use-package go-mode :defer t)
+
+;; go-mode - Go support
+(use-package haskell-mode :defer t)
 
 ;; go-tag - automatically adding/removing struct tags
 (use-package go-tag :defer t)
@@ -543,6 +504,26 @@
   (emacs-lisp-mode . (lambda ()
                        (setq tab-width 8))))
 
+;; debugging
+(use-package dape
+  :if nil
+  :config
+  (setq dape-buffer-window-arrangement 'right)
+  (dape-initialize-configs)
+  (setq dape-configs (assoc-delete-all 'gdb-go dape-configs))
+  (add-to-list 'dape-configs
+               `(delve-test
+                 modes (go-mode go-ts-mode)
+                 command "dlv"
+                 command-args ("dap" "--listen" "127.0.0.1::autoport")
+                 command-cwd dape-cwd-fn
+                 port :autoport
+                 :type "debug"
+                 :request "launch"
+                 :mode "test"
+                 :program dape-cwd-fn)))
+
+
 ;; eglot (builtin) - LSP client
 ;; Eglot is a builtin LSP (Language Server Protocol) client for emacs.
 
@@ -563,8 +544,7 @@
 
    ;; start eglot only if file is somewhere in home (avoid /nix/store and similar)
    (prog-mode . (lambda ()
-                  (when (string-prefix-p (getenv "HOME") (buffer-file-name))
-                      (eglot-ensure)))))
+                  (when (string-prefix-p (getenv "HOME") (buffer-file-name))))))
 
   :bind
   (:map evil-normal-state-map
@@ -575,8 +555,7 @@
         ("SPC l a a" . eglot-code-actions)
         ("SPC l a e" . eglot-code-action-extract))
   :init
-  ;; do not block when loading lsp
-  (setq eglot-sync-connect nil))
+  (setq eglot-sync-connect t))
 
 ;; eldoc (builtin) - showing documentation of symbols
 ;; It also retrieves data from =eglot=.
@@ -599,8 +578,8 @@
   :hook (after-init . global-company-mode)
   :custom
   (company-tooltip-limit 10)
-  (company-idle-delay 0.15)
-  (company-minimum-prefix-length 2)
+  (company-idle-delay nil)
+  (company-minimum-prefix-length 5)
   (company-selection-wrap-around t)
   (company-require-match 'never)
   :bind
@@ -662,34 +641,19 @@
 ;; envrc - direnv integration
 ;; Works better than =direnv-mode= for me.
 (use-package envrc
-  :defer 0.5
+  :disabled
   :config
   (envrc-global-mode))
 
-;; aider
-(use-package aider
-  :vc (:url "https://github.com/tninja/aider.el.git")
-  :config
-  (setq eshell-scroll-to-bottom-on-input t)
-  (setq aider-args
-        '("--model" "gpt-5"
-          "--no-auto-accept-architect"
-          "--no-auto-commits"
-          "--map-tokens" "8192"))
-  ;;(aider-magit-setup-transients)
-  :bind
-  ("C-c i" . aider-transient-menu))
-
-
 ;; recentf-mode (builtin) - persistent history of recent files
 ;; Show recent files with `C-x C-r'.
-(use-package recentf
-  :ensure nil
-  :init
-  (setq recentf-max-menu-items 100)
-  (setq recentf-max-saved-items 100)
-  (recentf-mode 1)
-  :bind ("C-x C-r" . consult-recent-file))
+;; (use-package recentf
+;;   :ensure nil
+;;   :init
+;;   (setq recentf-max-menu-items 100)
+;;   (setq recentf-max-saved-items 100)
+;;   (recentf-mode 1)
+;;   :bind ("C-x C-r" . consult-recent-file))
 
 ;; use-package org to avoid any bugs
 (use-package org :defer t :ensure nil)
@@ -711,7 +675,8 @@
   (remove-hook 'olivetti-mode-on-hook 'visual-line-mode))
 
 ;; save-place-mode - save cursor position per file
-(save-place-mode 1)
+(use-package emacs
+  :hook (emacs-startup . save-place-mode))
 
 ;; consult - multiple search utilities
 (use-package consult
@@ -764,6 +729,7 @@
 
 ;; perspective - "isolated" workspaces
 (use-package perspective
+  :vc (:url https://github.com/nex3/perspective-el :rev "230cabf")
   :bind (("C-c p p" . persp-switch)
          ("C-c p k" . persp-remove-buffer)
          ("C-c p x" . my/persp-kill-current)
@@ -808,9 +774,14 @@
 (use-package perspective-tabs
   :vc (:url "https://git.sr.ht/~woozong/perspective-tabs")
   :after perspective
+  :hook (persp-created . perspective-tabs-mode)
   :config
-  (perspective-tabs-mode +1)
-  (persp-turn-off-modestring))
+  (tab-bar-history-mode 1)
+  (persp-turn-off-modestring)
+  :bind
+  (:map tab-bar-mode-map
+        ("M-[" . tab-bar-history-back)
+        ("M-]" . tab-bar-history-forward)))
 
 ;; whitespace (builtin) - show whitespaces as symbols
 (use-package whitespace
@@ -904,6 +875,7 @@
 ;; ediff (builtin) - diff files, commits, and so on
 (use-package ediff
   :ensure nil
+  :defer t
   :config
   (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
   (setq ediff-window-setup-function 'ediff-setup-windows-plain
@@ -946,27 +918,27 @@
 
 
 ;; eat- Emulate A Terminal: terminal emulator
-(use-package eat
-  :vc (:url "https://codeberg.org/akib/emacs-eat.git")
-  :hook ((eshell-load . eat-eshell-mode)
-         (eshell-load . eat-eshell-visual-command-mode))
-  :bind
-  (:map eat-mode-map
-        ("C-y" . eat-yank))
-  (:map eat-eshell-semi-char-mode-map
-        ("M-1" . nil)
-        ("M-2" . nil)
-        ("M-3" . nil)
-        ("M-4" . nil)))
+;; (use-package eat
+;;   :vc (:url "https://codeberg.org/akib/emacs-eat.git")
+;;   :hook ((eshell-load . eat-eshell-mode)
+;;          (eshell-load . eat-eshell-visual-command-mode))
+;;   :bind
+;;   (:map eat-mode-map
+;;         ("C-y" . eat-yank))
+;;   (:map eat-eshell-semi-char-mode-map
+;;         ("M-1" . nil)
+;;         ("M-2" . nil)
+;;         ("M-3" . nil)
+;;         ("M-4" . nil)))
 
 
 ;; vertico - vertical completion
 ;; Improves minibuffer by showing multiple options in a vertical list.
 (use-package vertico
-  :defer 0.4
+  :hook (emacs-startup . vertico-mode)
   :config
-  (vertico-mode 1)
-  (vertico-mouse-mode 1)
+  ;; (vertico-mode 1)
+  ;; (vertico-mouse-mode 1)
   (setq vertico-count 20)
   (setq vertico-cycle t)
   (setq vertico-sort-function 'vertico-sort-history-alpha)
@@ -1042,13 +1014,14 @@
 
 ;; elfeed - client for Atom and RSS feeds
 (use-package elfeed
-  :after (evil)
+  :after (evil eww)
   :vc (:url "https://github.com/emacs-elfeed/elfeed.git" :rev :newest)
   :preface
+  ;; disabled for taking too long with many feeds
   ;; advice for always updating elfeed on runnig M-x elfeed
-  (defun my/elfeed-advice (&rest _)
-    (elfeed-org)
-    (elfeed-update))
+  ;; (defun my/elfeed-advice (&rest _)
+  ;;   (elfeed-org)
+  ;;   (elfeed-update))
 
   ;; show nitter urls on feed preview and show all other urls in eww
   (defun my/elfeed-search-show-entry (entry)
@@ -1058,14 +1031,19 @@
       (if (not link)
           nil
         (cond
-         ((string-search "nitter.net" link)
+         ((my/eww-is-external link)
           (elfeed-search-show-entry entry))
          (t
           (elfeed-search-browse-url))))))
 
+  (defun my/elfeed-search-org-capture (entry)
+    (interactive (list (elfeed-search-selected :ignore-region))
+                 elfeed-search-mode)
+    (my/org-roam-link-capture (elfeed-entry-link entry)))
+
   :hook (elfeed-search-mode . elfeed-update)
   :config
-  (advice-add 'elfeed :after #'my/elfeed-advice)
+  ;; (advice-add 'elfeed :after #'my/elfeed-advice)
   (setq elfeed-search-filter "-politics")
   (evil-define-key 'normal elfeed-search-mode-map
     (kbd "<return>") #'my/elfeed-search-show-entry
@@ -1081,27 +1059,45 @@
 ;; eww (builtin) - simple browser
 (use-package eww
   :defer t
-  :preface
-  ;; `eww-readable-urls' will activate readable mode for almost all pages.
+  :hook ((eww-mode . visual-line-mode)
+         (eww-after-render . my/eww-skip-to-content))
+  :init
+  ;; TODO: list of sites to open on external browser
+  ;; open automatically on secondary browser
+  (setq my/eww-external-urls
+        '(("\\bnitter\\b" . t)
+          (".*" . nil)))
+
+  (defun my/eww-is-external (url)
+    (seq-find (lambda (pair)
+                (and (cdr pair)
+                     (string-match (car pair) url)))
+              my/eww-external-urls))
+
+  ;; `eww-readable-urls' works, but i prefer to just try to set readable to all pages.
   ;; but this won't work on pages that don't use semantic html5 tags.
   ;; some sites have this "Skip to content" button for screen readers...
   ;; if it exists, click it right after eww renders page
   (defun my/eww-skip-to-content ()
     (interactive)
+    (ignore-errors (eww-readable))
     (goto-char (point-min))
-    (when (search-forward "Skip to content")
+    (when (search-forward "Skip to content" nil t)
       (backward-word)
       (eww-follow-link)
       (recenter 0)))
-  :hook ((eww-mode . visual-line-mode)
-         (eww-after-render . my/eww-skip-to-content))
-  :init
-  ;; skip to readable part in sites that is possible
-  (setq eww-readable-urls
-        '(("\bnitter\b" . nil)
-          (".*" . t)))
+
+  (defun my/eww-advice (orig-fun &rest args)
+    (let* ((url (car args)))
+      (if (my/eww-is-external url)
+          (eww-browse-with-external-browser url)
+        (apply orig-fun args))))
+
+  (advice-add 'eww :around #'my/eww-advice)
+  (advice-add 'eww-browse-url :around #'my/eww-advice)
+
   (setq browse-url-browser-function 'eww-browse-url)
-  (setq browse-url-secondary-browser-function 'browse-url-default-browser))
+  (setq browse-url-econdary-browser-function 'browse-url-default-browser))
 
 ;; browse-url -- builtin package for launching urls
 (use-package browse-url
@@ -1147,37 +1143,36 @@
 
 ;; pinentry - for entrying pin for gpg
 (use-package pinentry
-  :defer 2
   :custom
   (epg-pinentry-mode 'loopback)
   :config
   (pinentry-start))
 
 ;; gnus - email client, news reader, maybe
-(use-package gnus
-  :ensure nil
-  :defer t
-  :hook (gnus-after-getting-new-news . gnus-notifications)
-  :custom
-  (send-mail-function 'smtpmail-send-it)
-  (smtpmail-smtp-server "smtp.gmail.com")
-  (smtpmail-smtp-service 587)
-  (user-full-name "Igor Melo")
-  (user-mail-address "imelodev@gmail.com")
-  (message-directory "~/public/mail")
-  (mail-source-directory message-directory)
-  (gnus-home-directory (expand-file-name "gnus" user-emacs-directory))
-  (gnus-directory (expand-file-name "news" gnus-home-directory))
-  (gnus-article-save-directory gnus-directory)
-  (gnus-cache-directory (expand-file-name "cache" gnus-directory))
-  (gnus-select-method '(nnnil))
-  (gnus-secondary-select-methods
-   '(
-     (nnimap "gmail"
-             (nnimap-address "imap.gmail.com")
-             (nnimap-server-port 993)
-             (nnimap-stream ssl)
-             (nnimap-authinfo-file "~/.authinfo.gpg")))))
+;; (use-package gnus
+;;   :ensure nil
+;;   :defer t
+;;   :hook (gnus-after-getting-new-news . gnus-notifications)
+;;   :custom
+;;   (send-mail-function 'smtpmail-send-it)
+;;   (smtpmail-smtp-server "smtp.gmail.com")
+;;   (smtpmail-smtp-service 587)
+;;   (user-full-name "Igor Melo")
+;;   (user-mail-address "imelodev@gmail.com")
+;;   (message-directory "~/public/mail")
+;;   (mail-source-directory message-directory)
+;;   (gnus-home-directory (expand-file-name "gnus" user-emacs-directory))
+;;   (gnus-directory (expand-file-name "news" gnus-home-directory))
+;;   (gnus-article-save-directory gnus-directory)
+;;   (gnus-cache-directory (expand-file-name "cache" gnus-directory))
+;;   (gnus-select-method '(nnnil))
+;;   (gnus-secondary-select-methods
+;;    '(
+;;      (nnimap "gmail"
+;;              (nnimap-address "imap.gmail.com")
+;;              (nnimap-server-port 993)
+;;              (nnimap-stream ssl)
+;;              (nnimap-authinfo-file "~/.authinfo.gpg")))))
 
 ;; gptel - GPT inside emacs
 (use-package gptel
@@ -1226,6 +1221,7 @@
 
 ;; org notifications (reminders) with appt
 (use-package emacs
+  :after org
   :config
   ;; start warning X minutes before the appointment
   (setq appt-message-warning-time 30)
@@ -1948,20 +1944,34 @@
 ;; org-roam - org knowledge management system
 (use-package org-roam
   :init
-  (defun my/org-roam-link-capture ()
-    (interactive)
+  (defun my/validate-url (url)
+    (let ((parsed (url-generic-parse-url url)))
+      (and (url-type parsed)
+           (url-host parsed))))
+
+  (defun my/get-url-dwim ()
+    (let ((at-point (url-get-url-at-point))
+          (kill (substring-no-properties (current-kill 0 t))))
+      (or (and at-point (my/validate-url at-point))
+          (and (my/validate-url kill)
+               kill)
+          (and (eq major-mode 'elfeed-search-mode)
+               (elfeed-entry-link (elfeed-search-selected :ignore-region)))
+          (and (eq major-mode 'eww-mode)
+               (plist-get eww-data :url)))))
+
+  (defun my/org-roam-link-capture (url)
+    (interactive (list (read-string "URL: " (my/get-url-dwim))))
     (require 'org-cliplink)
-    (let* ((url (org-cliplink-clipboard-content))
-           (title (org-cliplink-retrieve-title-synchronously url))
+    (let* ((title (org-cliplink-retrieve-title-synchronously url))
            (prefix (cond ((string-match-p "youtube" url) "Video")
                          (t "Article"))))
       (when (null title)
         (user-error "Invalid url: '%s'" url))
-      (org-roam-node-find nil (format "%s: %s" prefix title))
-      (goto-char (point-max))
-      (org-roam-dailies-find-today)
-      (goto-char (point-max))
-      (insert (format "\n* [[%s][%s]]\n** " url title))))
+      (org-roam-dailies-capture-today)
+      (insert (format "[[%s][%s]]\n** " url title))))
+
+  ;; https://www.phoronix.com/news/Linux-7.1-Kernel-Docs-AI-Bugs
 
   ;; add roam node files that contains specific tags to agenda
   (defun my/add-roam-files-to-agenda (&rest args)
@@ -2007,15 +2017,16 @@ limit 20
         '(("d" "default" plain "%?" :target
            (file+head "${slug}.org" "#+title: ${title}")
            :unnarrowed t)
-          ("P" "public" plain "%?" :target
-           (file+head "${slug}.org" "* ${title} :public:")
-           :unnarrowed t)
-          ("p" "politics" plain "%?" :target
-           (file+head "${slug}.org" "* ${title} :politics:")
-           :unnarrowed t)))
+          ;; ("P" "public" plain "%?" :target
+          ;;  (file+head "${slug}.org" "* ${title} :public:")
+          ;;  :unnarrowed t)
+          ;; ("p" "politics" plain "%?" :target
+          ;;  (file+head "${slug}.org" "* ${title} :politics:")
+          ;;  :unnarrowed t)
+          ))
 
   (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry "* %(format-time-string \"%H:%M\") %?"
+        '(("d" "default" entry "* %(format-time-string \"%H:%M\") - %?"
            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d> "))))
 
   (org-roam-db-autosync-enable)
@@ -2062,7 +2073,10 @@ limit 20
 (use-package org-roam-ui :defer t)
 
 ;; org-cliplink - paste link with automatic title
-(use-package org-cliplink :defer t)
+(use-package org-cliplink
+  :defer t
+  :config
+  (setq org-cliplink-max-length 150))
 
 ;; org-download - getting images into org
 (use-package org-download
@@ -2093,68 +2107,168 @@ limit 20
            (new-chunks (append (list cmd-name) (cdr chunks))))
       (mapconcat 'identity new-chunks " "))))
 
-;; eshell (builtin)
+;; eshell - builtin shell
 (use-package esh-mode
   :ensure nil
-  :after compile
-  :init
+  :hook ((eshell-pre-command . eshell-save-some-history)
+         (eshell-directory-change . my/eshell-directory-changed))
+  :bind
+  (:map global-map
+        ("C-x e" . eshell))
+  (:map eshell-mode-map
+        ("RET" . eshell-send-input)
+        ("C-w" . backward-kill-word)
+        ("C-l" . my/eshell-clear)
+        ("C-r" . my/eshell-search-history)
+        ("C-r" . my/eshell-search-history)
+        ("C-c =" . my/eshell-jump-to-dir))
+
+  :config
+  (setq eshell-highlight-prompt t)
+  (setq eshell-history-size 1000)
+  (setq eshell-hist-ignoredups t)
+
+  (defun my/eshell-clear ()
+    (interactive)
+    (let ((input (eshell-get-old-input)))
+      (eshell-kill-input)
+      (eshell/clear t)
+      (eshell-send-input)
+      (recenter-top-bottom 'top)
+      (insert input)))
+
   (defun my/eshell-search-history ()
     (interactive)
     (let* ((input (eshell-get-old-input))
            (hist (ring-elements eshell-history-ring))
-           (cmd nil))
-      (setq cmd
-            (completing-read "command from history: " hist nil t input))
+           (cmd (completing-read "command from history: " hist nil t input)))
       (when cmd
         (eshell-kill-input)
         (insert cmd))))
-  :hook ((eshell-mode . (lambda ()
-                          (setq-local company-idle-delay nil)))
-         (eshell-pre-command . eshell-save-some-history))
-  :custom
-  (eshell-highlight-prompt t)
-  (eshell-history-size 1000)
-  (eshell-hist-ignoredups t)
-  :bind
-  (("C-x e" . eshell)
-   :map eshell-mode-map
-   ("C-a" . backward-sentence)
-   ("C-e" . forward-sentence)
-   ("C-r" . my/eshell-search-history)
-   ("C-l" . (lambda ()
-              (interactive)
-              (let ((input (eshell-get-old-input)))
-                (eshell-kill-input)
-                (eshell/clear)
-                (recenter-top-bottom 'top)
-                (insert input))))
-   ("C-c C-l" . (lambda ()
-                  (interactive)
-                  (let ((input (eshell-get-old-input)))
-                    (eshell/clear t)
-                    (eshell-send-input)
-                    (insert input))))))
 
-;; eshell: unbind C-c C-l
-(use-package em-hist
-  :ensure nil
-  :after esh-mode
-  :bind (:map eshell-hist-mode-map
-              ("C-c C-l" . nil)
-              ("C-c C-x" . nil)))
+  (defun my/eshell-directory-changed ()
+    (when (tramp-tramp-file-p default-directory)
+      (setq my/eshell-host-env (eshell-copy-environment))
+      (eshell-set-path (shell-command-to-string "echo $PATH"))
+      (and nil (let* ((new-env (and nil (string-split (shell-command-to-string "env"))))
+                      (new-path ))
+                 (setq process-environment new-env)))))
 
-;; eshell: use TAB for company popup
-(use-package em-cmpl
-  :ensure nil
-  :after (esh-mode company)
-  :bind
-  (:map eshell-cmpl-mode-map
-   ("TAB" . company-complete)))
+  (defun my/eshell-jump-to-dir ()
+    (interactive)
+    (let* ((dirs (ring-elements eshell-last-dir-ring))
+           (dir (completing-read "Directory: " dirs nil t))
+           (input (eshell-get-old-input)))
+      (eshell-kill-input)
+      (insert "cd " dir)
+      (eshell-send-input)
+      (insert input)))
+
+  (evil-define-key '(insert normal) eshell-mode-map
+    (kbd "RET") 'eshell-send-input)
+  (evil-define-key '(insert normal) eshell-mode-map
+    (kbd "C-p") 'eshell-previous-matching-input-from-input)
+  (evil-define-key '(insert normal) eshell-mode-map
+    (kbd "C-n") 'eshell-next-matching-input-from-input)
+
+  )
 
 (use-package eshell-prompt-extras
   :after esh-mode
   :config
   (setq eshell-prompt-function 'epe-theme-lambda))
+
+
+
+;; eat - Emulate A Terminal: terminal emulator
+(use-package eat
+  :vc (:url "https://codeberg.org/akib/emacs-eat.git")
+  :hook (eshell-load . my/eshell-on-load)
+  :bind
+  (:map eat-mode-map
+        ("C-y" . eat-yank)
+        ("C-k" . my/eat-kill-line))
+  :config
+  (dolist (key (mapcar (lambda (k) (vconcat (kbd k)))
+                       '("C-k" "M-1" "M-2" "M-3" "M-4")))
+    (add-to-list 'eat-eshell-semi-char-non-bound-keys key)
+    (add-to-list 'eat-semi-char-non-bound-keys key))
+  (eat-update-semi-char-mode-map)
+  (eat-eshell-update-semi-char-mode-map)
+
+  (defun my/eat-kill-line ()
+    (interactive)
+    (kill-line)
+    (eat-self-input 1 (vconcat (kbd "C-k"))))
+
+  (defun my/eshell-on-load ()
+    (eat-eshell-mode 1)
+    (eat-eshell-visual-command-mode 1)))
+
+(use-package em-compl
+  :ensure nil
+  :after (esh-mode company)
+  :bind
+  (:map eshell-cmpl-mode-map
+        ("TAB" . company-complete)))
+
+;; ;; eshell (builtin)
+;; (use-package esh-mode
+;;   :ensure nil
+;;   :after compile
+;;   :init
+;;   (defun my/eshell-search-history ()
+;;     (interactive)
+;;     (let* ((input (eshell-get-old-input))
+;;            (hist (ring-elements eshell-history-ring))
+;;            (cmd nil))
+;;       (setq cmd
+;;             (completing-read "command from history: " hist nil t input))
+;;       (when cmd
+;;         (eshell-kill-input)
+;;         (insert cmd))))
+;;   :hook ((eshell-mode . (lambda ()
+;;                           (setq-local company-idle-delay nil)))
+;;          (eshell-pre-command . eshell-save-some-history))
+;;   :custom
+;;   (eshell-highlight-prompt t)
+;;   (eshell-history-size 1000)
+;;   (eshell-hist-ignoredups t)
+;;   :bind
+;;   (("C-x e" . eshell)
+;;    :map eshell-mode-map
+;;    ("C-a" . backward-sentence)
+;;    ("C-e" . forward-sentence)
+;;    ("C-r" . my/eshell-search-history)
+;;    ("C-l" . (lambda ()
+;;               (interactive)
+;;               (let ((input (eshell-get-old-input)))
+;;                 (eshell-kill-input)
+;;                 (eshell/clear)
+;;                 (recenter-top-bottom 'top)
+;;                 (insert input))))
+;;    ("C-c C-l" . (lambda ()
+;;                   (interactive)
+;;                   (let ((input (eshell-get-old-input)))
+;;                     (eshell/clear t)
+;;                     (eshell-send-input)
+;;                     (insert input))))))
+
+;; ;; eshell: unbind C-c C-l
+;; (use-package em-hist
+;;   :ensure nil
+;;   :after esh-mode
+;;   :bind (:map eshell-hist-mode-map
+;;               ("C-c C-l" . nil)
+;;               ("C-c C-x" . nil)))
+
+;; ;; eshell: use TAB for company popup
+;; (use-package em-cmpl
+;;   :ensure nil
+;;   :after (esh-mode company)
+;;   :bind
+;;   (:map eshell-cmpl-mode-map
+;;    ("TAB" . company-complete)))
 
 ;; deno lsp
 (use-package eglot
@@ -2174,5 +2288,5 @@ limit 20
     (list :enable t :lint t)))
 (put 'narrow-to-region 'disabled nil)
 
-(add-hook 'after-init-hook #'server-start)
+;; (add-hook 'after-init-hook #'server-start)
 (put 'list-timers 'disabled nil)
