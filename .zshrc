@@ -26,7 +26,5 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 . "$HOME/.local/bin/env"
 
 export CHROME_EXECUTABLE="google-chrome-stable"
-export EDITOR="emacsclient -c -r"
 
-alias vim="nvim"
-
+export EDITOR="emacseditor"
