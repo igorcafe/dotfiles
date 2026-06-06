@@ -3,6 +3,9 @@
 { pkgs, ... }:
 {
   imports = [
+    # AIC8800 USB Wi-Fi adapter driver and firmware
+    ../modules/aic8800.nix
+
     # games, launchers, graphics, performance tools, custom kernel and power settings
     ./gaming.nix
 

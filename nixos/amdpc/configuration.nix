@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
   imports = [
+    # AIC8800 USB Wi-Fi adapter driver and firmware
+    ../modules/aic8800.nix
+
     ./hardware-configuration.nix
   ];
 
