@@ -25,7 +25,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing.enable = false;
 
   # Enable sound with pipewire.
   # sound.enable = true;
@@ -81,43 +81,43 @@
     #   ];
     # })
 
-    transmission_4
+    # transmission_4
 
-    ncdu
+    # ncdu
     neovim
-    gnumake
-    vulkan-tools
-    go
-    fd
-    libnotify
-    python3
+    # gnumake
+    # vulkan-tools
+    # go
+    # fd
+    # libnotify
+    # python3
     git
     ripgrep
-    mangohud
-    jq
+    # mangohud
+    # jq
     #xonotic
-    direnv
+    # direnv
     # unstable.kdePackages.kdenlive
-    tealdeer
-    unrar
-    unzip
-    htop
-    fzf
-    p7zip
-    google-chrome
-    lsd
-    obs-studio
-    ffmpeg
-    gimp
-    vlc
-    telegram-desktop
+    # tealdeer
+    # unrar
+    # unzip
+    # htop
+    # fzf
+    # p7zip
+    # google-chrome
+    # lsd
+    # obs-studio
+    # ffmpeg
+    # gimp
+    # vlc
+    # telegram-desktop
     file
 
-    bottles
-    lutris
-    umu-launcher
-    protonup-qt
-    ryubing
+    # bottles
+    # lutris
+    # umu-launcher
+    # protonup-qt
+    # ryubing
   ];
 
   services.ollama = {
@@ -126,7 +126,7 @@
   };
 
   services.emacs = {
-    enable = true;
+    enable = false;
     package = (pkgs.emacs-gtk.pkgs.withPackages (epkgs: with epkgs; [
         melpaPackages.telega
         vterm
@@ -138,7 +138,7 @@
   programs.zsh.enable = true;
 
   programs.steam = {
-    enable = true;
+    enable = false;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
@@ -146,7 +146,7 @@
   programs.gamemode.enable = true;
 
   virtualisation.docker = {
-    enable = true;
+    enable = false;
   };
 
   users.users.user = {
