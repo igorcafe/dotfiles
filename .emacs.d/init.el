@@ -1275,13 +1275,13 @@
         (error "no recent video found"))))
 
   (defun yeetube-org-find-file ()
-    (require 'yeetube)
     (interactive)
+    (require 'yeetube)
     (find-file (expand-file-name yeetube-org-file org-directory)))
 
   (defun yeetube-org-channel-videos ()
-    (require 'yeetube)
     (interactive)
+    (require 'yeetube)
     (let ((channel-id (or (org-entry-get (point) "CHANNEL")
                           (org-entry-get (point) "ITEM"))))
       (setf yeetube--channel-id channel-id)
