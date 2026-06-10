@@ -1261,9 +1261,9 @@
 ;; yeetube - youtube frontend
 (use-package yeetube
   :after evil
-
-  :preface
-  (defvar yeetube-org-file)
+  :vc (:url "https://git.thanosapollo.org/yeetube")
+  :config
+  (defvar yeetube-org-file "youtube.org")
 
   (defun org-insert-yeetube-link ()
     (interactive)
@@ -1288,12 +1288,7 @@
       (yeetube-display-content-from-url
        (format "https://youtube.com/@%s/videos" channel-id))))
 
-  :vc (:url "https://git.thanosapollo.org/yeetube")
 
-  :init
-  (setq yeetube-org-file "youtube.org")
-
-  :config
   (evil-define-key 'normal yeetube-mode-map
     "RET" 'yeetube-play
     "M-RET" 'yeetube-search
