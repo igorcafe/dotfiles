@@ -25,6 +25,21 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
+(use-package tab-line
+  :ensure nil
+  :init
+  (global-tab-line-mode 1)
+  (dolist (num (number-sequence 0 9))
+    (eval `(bind-key*
+            ,(format "M-%d" num)
+            (lambda ()
+              (interactive)
+              (let* ((buffers (funcall tab-line-tabs-function))
+                     (idx (if (or (= ,num 0) (>= ,num (length buffers)))
+                              (- (length buffers) 1)
+                            (- ,num 1))))
+                (switch-to-buffer (nth idx buffers))))))))
+
 ;; evil-mode - vim mode emulation
 ;; evil mode and evil-collection provide vim-like bindings.
 (use-package evil
@@ -70,11 +85,8 @@
   :init
   (evil-mode 1)
   :config
-  ;; force this bindings on any mode
-  (dolist (pair '(("C-x C-h" . previous-buffer)
-                  ("C-x C-l" . next-buffer)
-                  ("C-x C-x" . universal-argument)))
-    (bind-key* (car pair) (cdr pair))))
+  ;; force these bindings on any mode
+  (bind-key* "C-x C-x" 'universal-argument))
 
 (use-package evil-collection
   :after evil
@@ -729,6 +741,7 @@
 
 ;; perspective - "isolated" workspaces
 (use-package perspective
+  :if nil
   :vc (:url https://github.com/nex3/perspective-el :rev "230cabf")
   :bind (("C-c p p" . persp-switch)
          ("C-c p k" . persp-remove-buffer)
@@ -763,12 +776,7 @@
   (add-to-list 'consult-buffer-sources persp-consult-source)
 
   ;; thats how I managed to do it lul
-  (setq persp-sort 'created)
-  (dolist (num '(1 2 3 4 5 6 7 8 9))
-    (eval `(bind-key ,(format "M-%d" num)
-                     (lambda ()
-                       (interactive)
-                       (persp-switch-by-number ,num))))))
+  (setq persp-sort 'created))
 
 ;; perspective-tabs - syncs persp mode with tab-bar-mode
 (use-package perspective-tabs
