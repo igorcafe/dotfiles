@@ -25,10 +25,30 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
+
+(defun my/seq-move (sequence pos delta)
+  (let* ((new-pos (max 0 (min (+ pos delta) (length sequence))))
+         (filtered (and (/= pos new-pos) (seq-remove-at-position sequence pos)))
+         (item (nth pos sequence)))
+    (if (= pos new-pos)
+        sequence
+      (append
+       (seq-take filtered new-pos)
+       (list item)
+       (seq-drop filtered new-pos)))))
+
+;; tab-line (builtin) - show buffers as tabs
+;; It works per window, showing the recent buffers you opened in that window.
 (use-package tab-line
   :ensure nil
+  ;; :bind
+  ;; ("M-h" . bury-buffer)
   :init
+  (setq tab-line-switch-cycling t)
+  (setq tab-line-tab-name-function 'tab-line-tab-name-truncated-buffer)
   (global-tab-line-mode 1)
+  (bind-key* "C-<tab>" 'tab-line-switch-to-next-tab)
+  (bind-key* "C-S-<iso-lefttab>" 'tab-line-switch-to-prev-tab)
   (dolist (num (number-sequence 0 9))
     (eval `(bind-key*
             ,(format "M-%d" num)
@@ -38,7 +58,27 @@
                      (idx (if (or (= ,num 0) (>= ,num (length buffers)))
                               (- (length buffers) 1)
                             (- ,num 1))))
-                (switch-to-buffer (nth idx buffers))))))))
+                (switch-to-buffer (nth idx buffers)))))))
+
+  (defun my/tab-line-move (window buffer delta)
+    (let* ((buffers (window-parameter window 'tab-line-buffers))
+           (pos (cl-position buffer buffers))
+           (new-buffers (my/seq-move buffers pos delta)))
+      (set-window-parameter window 'tab-line-buffers new-buffers)
+      (set-window-parameter window 'tab-line-cache nil)
+      (with-selected-window window (force-mode-line-update))
+      t))
+
+  (defun my/tab-line-move-left (window buffer)
+    (interactive (list (selected-window) (current-buffer)))
+    (my/tab-line-move window buffer -1))
+
+  (defun my/tab-line-move-right (window buffer)
+    (interactive (list (selected-window) (current-buffer)))
+    (my/tab-line-move window buffer 1))
+
+  (bind-key* "C-x C-h" 'my/tab-line-move-left)
+  (bind-key* "C-x C-l" 'my/tab-line-move-right))
 
 ;; evil-mode - vim mode emulation
 ;; evil mode and evil-collection provide vim-like bindings.
@@ -713,12 +753,6 @@
 
    ;; buffer definitions
    ("SPC b d" . consult-imenu)))
-
-;; tab-line (builtin) - show buffers as tabs
-;; It works per window, showing the recent buffers you opened in that window.
-(use-package emacs
-  :config
-  (setq tab-line-switch-cycling t))
 
 ;; tab-bar (builtin) - tabs like vim
 ;; I use it just to make 2 or 3 different "window layouts" and switch
