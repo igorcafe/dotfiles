@@ -2330,3 +2330,22 @@ limit 20
 
 ;; (add-hook 'after-init-hook #'server-start)
 (put 'list-timers 'disabled nil)
+
+(use-package popper
+  :bind (("C-`"   . popper-toggle)
+         ("M-C-`"   . popper-cycle)
+         ("C-~" . popper-toggle-type))
+  :init
+  (setq popper-display-function 'popper-select-popup-at-bottom)
+  (setq popper-window-height 20)
+  (setq popper-reference-buffers
+        '("\\*Messages\\*"
+          "Output\\*$"
+          "\\*Async Shell Command\\*"
+          "^\\*eldoc"
+          "^\\*SQL:"
+          "^CAPTURE-"
+          help-mode
+          compilation-mode))
+  (popper-mode +1)
+  (popper-echo-mode -1))
