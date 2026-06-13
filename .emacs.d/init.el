@@ -262,15 +262,11 @@
   :config
   (global-auto-revert-mode 1))
 
-(use-package emacs
-  :bind ("C-M-'" . (lambda ()
-                     (interactive)
-                     (find-file user-init-file))))
-
-;; persistent scratch file
+;; load init.el on startup
+(setq initial-buffer-choice user-init-file)
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (find-file user-init-file)))
+            (kill-buffer "*scratch*")))
 
 ;; function to quickly delete file associated with current buffer
 ;; and killing the buffer... use with cautious!
@@ -516,14 +512,16 @@
 ;; nix-mode - Nix support
 (use-package nix-mode :defer t)
 
+;; replaced typescript-mode and yaml-mode with treesit
+;;
 ;; typescript-mode - TypeScript support
-(use-package typescript-mode
-  :defer t
-  :config
-  (setq typescript-indent-level 2))
-
+;; (use-package typescript-mode
+;;   :defer t
+;;   :config
+;;   (setq typescript-indent-level 2))
+;;
 ;; yaml-mode - YAML support
-(use-package yaml-mode :defer t)
+;; (use-package yaml-mode :defer t)
 
 ;; markdown-mode - Markdown support
 (use-package markdown-mode :defer t)
@@ -898,13 +896,18 @@
 ;; magit - git interface
 ;; I use the default ~C-x g~ binding.
 (use-package magit
-  :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
-  (magit-diff-refine-hunk 'all)
-  (transient-display-buffer-action '(display-buffer-below-selected))
+  :config
+  (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  (setq magit-diff-refine-hunk 'all)
+  (setq transient-display-buffer-action '(display-buffer-below-selected))
+  (evil-define-key
+    '(normal visual motion)
+    magit-section-mode-map
+    (kbd "C-<tab>") nil)
   :bind
   ("C-x g" . magit)
   (:map magit-section-mode-map
+        ("C-<tab>" . nil)
         ("M-1" . nil)
         ("<normal-state> M-1" . nil)
         ("M-2" . nil)
