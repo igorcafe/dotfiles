@@ -1,0 +1,30 @@
+name: NixOS build
+
+on:
+  push:  
+  workflow_dispatch:
+
+jobs:
+  build-nixos:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Build acer config
+        run: |
+          nix build .#nixosConfigurations.acer.config.system.build.toplevel \
+            --no-link \
+            --print-build-logs
+            
+      - name: Build amdpc config
+        run: |
+          nix build .#nixosConfigurations.amdpc.config.system.build.toplevel \
+            --no-link \
+            --print-build-logs
